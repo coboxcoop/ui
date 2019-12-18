@@ -1,18 +1,14 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <welcomeScreen v-if="!$store.getters.hasBeenWelcomed" />
+  <div v-else>You are welcomed</div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import WelcomeScreen from '@/components/WelcomeScreen.vue'
 
 export default {
-  name: 'home',
   components: {
-    HelloWorld
+    WelcomeScreen
   }
 }
 </script>
