@@ -8,14 +8,13 @@
 
 <script>
 export default {
+  name: 'welcome-screen',
   data: () => ({
     name: '',
   }),
   methods: {
     onSubmit() {
       this.$store.dispatch('submitName', this.name)
-
-      this.name = ''
     }
   }
 }

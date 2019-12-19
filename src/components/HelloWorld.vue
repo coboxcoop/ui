@@ -1,6 +1,6 @@
 <template>
   <welcomeScreen v-if="!$store.getters.hasBeenWelcomed" />
-  <div v-else>You are welcomed</div>
+  <!-- <div v&#45;else>You are welcomed</div> -->
 </template>
 
 <script>

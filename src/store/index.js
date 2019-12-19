@@ -15,7 +15,9 @@ export default new Vuex.Store({
   getters: {
     hasBeenWelcomed(state) {
       return !!state.name
-    }
+    },
+    handleClick() {
+    },
   },
   actions: {
     submitName({commit}, name) {
