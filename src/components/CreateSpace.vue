@@ -1,5 +1,5 @@
 <template>
-  <div id="create-sapce">
+  <div id="create-space">
     <button v-on:click.prevent="handleClick">Create Space</button>
   </div>
 </template>
@@ -8,15 +8,15 @@
 export default {
   name: 'create-space',
   data: () => ({
-    methods: {
-      // https://www.taniarascia.com/getting-started-with-vue/#methods
-      // onSubmit() {
-      //   this.store.dispatch('submitClick')
-      // },
-      handleClick() {
-        console.log('testing handleClick')
-      }
+  }),
+  methods: {
+  // https://www.taniarascia.com/getting-started-with-vue/#methods
+  // onSubmit() {
+  //   this.store.dispatch('submitClick')
+  // },
+    handleClick() {
+      console.log('testing handleClick')
     }
-  })
+  }
 }
 </script>
