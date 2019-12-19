@@ -1,6 +1,6 @@
 <template>
   <div id="create-space">
-    <button v-on:click.prevent="onClick">Create Space</button>
+    <button v-on:click.prevent="onClick" v-model="space">Create Space</button>
   </div>
 </template>
 
