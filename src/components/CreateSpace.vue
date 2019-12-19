@@ -1,6 +1,6 @@
 <template>
   <div id="create-space">
-    <button v-on:click.prevent="handleClick">Create Space</button>
+    <button v-on:click.prevent="onClick">Create Space</button>
   </div>
 </template>
 
@@ -8,14 +8,14 @@
 export default {
   name: 'create-space',
   data: () => ({
+    space: '',
   }),
   methods: {
-  // https://www.taniarascia.com/getting-started-with-vue/#methods
-  // onSubmit() {
-  //   this.store.dispatch('submitClick')
-  // },
-    handleClick() {
-      console.log('testing handleClick')
+    onClick() {
+      console.log(`testing onClick this.space`)
+      this.$store.dispatch('startCreateSpace', this.space)
+      // when i click this i want to go to the making a space
+      // page
     }
   }
 }
