@@ -12,7 +12,7 @@ export default {
   }),
   methods: {
     onClick() {
-      console.log(`testing onClick this.space`)
+      console.log("testing onClick {this.space}")
       this.$store.dispatch('startCreateSpace', this.space)
       // when i click this i want to go to the making a space
       // page
