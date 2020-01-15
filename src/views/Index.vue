@@ -1,10 +1,10 @@
 <template>
 <div>
   <MeHeader />
-  <IndexSection :show="showSection('network')">
-  <template slot="heading">Network 1 <Dot /></template>
+  <IndexSection :show="showSection('network')" @toggle="toggleSection('network')">
+    <template slot="heading">Network 1 <Dot /></template>
   </IndexSection>
-  <IndexSection :show="showSection('spaces')">
+  <IndexSection :show="showSection('spaces')" @toggle="toggleSection('spaces')">
     <template slot="heading">Spaces <Plus /></template>
     <div>Hey Paul, what would you like your space to be called?</div>
     <div><input type="text"><Plus /></div>
@@ -15,7 +15,7 @@
       <div>Paul <Dot /></div>
     </div>
   </IndexSection>
-  <IndexSection :show="showSection('devices')">
+  <IndexSection :show="showSection('devices')" @toggle="toggleSection('devices')">
     <template slot="heading">Devices <Plus /></template>
     <div><Tick /> Magma 20%</div>
   </IndexSection>
@@ -45,7 +45,8 @@ export default {
      return this.openSections.includes(name)
     },
     toggleSection(name) {
-      if(this.showSections(name)) {
+      console.log(name)
+      if(this.showSection(name)) {
         this.openSections = this.openSections.filter(n => n != name)
       } else {
         this.openSections.push(name)
