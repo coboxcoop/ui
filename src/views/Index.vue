@@ -1,14 +1,14 @@
 <template>
 <div>
   <MeHeader />
-  <IndexSection :show="showSection('network')" @toggle="toggleSection('network')">
+  <Section :show="showSection('network')" @toggle="toggleSection('network')">
     <template slot="heading">Network 1 <Dot /></template>
-  </IndexSection>
-  <SpaceIndexSection :show="showSection('spaces')" @toggle="toggleSection('spaces')" />
-  <IndexSection :show="showSection('devices')" @toggle="toggleSection('devices')">
+  </Section>
+  <SpaceSection :show="showSection('spaces')" @toggle="toggleSection('spaces')" />
+  <Section :show="showSection('devices')" @toggle="toggleSection('devices')">
     <template slot="heading">Devices <Plus /></template>
     <div><Tick /> Magma 20%</div>
-  </IndexSection>
+  </Section>
 </div>
 </template>
 
@@ -17,8 +17,8 @@ import MeHeader from '@/components/MeHeader.vue'
 import Dot from '@/components/Dot.vue'
 import Plus from '@/components/Plus.vue'
 import Tick from '@/components/Tick.vue'
-import IndexSection from '@/components/IndexSection.vue'
-import SpaceIndexSection from '@/components/SpaceIndexSection.vue'
+import Section from '@/components/Section.vue'
+import SpaceSection from '@/components/SpaceSection.vue'
 
 export default {
   components: {
@@ -26,8 +26,8 @@ export default {
     Dot,
     Plus,
     Tick,
-    IndexSection,
-    SpaceIndexSection
+    Section,
+    SpaceSection
   },
   data: () => ({
     openSections: []

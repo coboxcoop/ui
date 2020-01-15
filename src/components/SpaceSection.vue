@@ -1,5 +1,5 @@
 <template>
-  <IndexSection :show="show" @toggle="$emit('toggle')">
+  <Section :show="show" @toggle="$emit('toggle')">
     <template slot="heading">Spaces <Plus /></template>
     <div v-if="showCreate">
       Hey Paul, what would you like your space to be called?
@@ -11,11 +11,11 @@
         <div v-for="member in space.members" :key="member.id">{{member.name}} <Dot /></div>
       </div>
     </div>
-  </IndexSection>
+  </Section>
 </template>
 
 <script>
-import IndexSection from '@/components/IndexSection.vue'
+import Section from '@/components/Section.vue'
 import Dot from '@/components/Dot.vue'
 import Plus from '@/components/Plus.vue'
 import Tick from '@/components/Tick.vue'
@@ -25,7 +25,7 @@ export default {
     Dot,
     Plus,
     Tick,
-    IndexSection
+    Section
   },
   props: {
     show: Boolean
