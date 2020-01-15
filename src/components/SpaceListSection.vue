@@ -5,17 +5,13 @@
       Hey Paul, what would you like your space to be called?
       <div><input type="text"><Plus /></div>
     </div>
-    <Section v-for="space in spaces" :key="space.id" :show="showSection(space.name)" @toggle="toggleSection(space.name)">
-      <template slot="heading"><Tick /> {{space.name}} {{space.members.length}} <Plus /></template>
-      <div>
-        <div v-for="member in space.members" :key="member.id">{{member.name}} <Dot /></div>
-      </div>
-    </Section>
+    <SpaceSection v-for="space in spaces" :key="space.id" :show="showSection(space.name)" @toggle="toggleSection(space.name)" :space="space" />
   </Section>
 </template>
 
 <script>
 import Section from '@/components/Section.vue'
+import SpaceSection from '@/components/SpaceSection.vue'
 import Dot from '@/components/Dot.vue'
 import Plus from '@/components/Plus.vue'
 import Tick from '@/components/Tick.vue'
@@ -25,7 +21,8 @@ export default {
     Dot,
     Plus,
     Tick,
-    Section
+    Section,
+    SpaceSection
   },
   props: {
     show: Boolean
