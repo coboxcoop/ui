@@ -5,12 +5,12 @@
       Hey Paul, what would you like your space to be called?
       <div><input type="text"><Plus /></div>
     </div>
-    <div v-for="space in spaces" :key="space.id">
-      <Tick /> {{space.name}} {{space.members.length}}
+    <Section v-for="space in spaces" :key="space.id" :show="showSection(space.name)" @toggle="toggleSection(space.name)">
+      <template slot="heading"><Tick /> {{space.name}} {{space.members.length}} <Plus /></template>
       <div>
         <div v-for="member in space.members" :key="member.id">{{member.name}} <Dot /></div>
       </div>
-    </div>
+    </Section>
   </Section>
 </template>
 
@@ -30,7 +30,21 @@ export default {
   props: {
     show: Boolean
   },
+  methods: {
+    showSection(name) {
+     return this.openSections.includes(name)
+    },
+    toggleSection(name) {
+      console.log(name)
+      if(this.showSection(name)) {
+        this.openSections = this.openSections.filter(n => n != name)
+      } else {
+        this.openSections.push(name)
+      }
+    }
+  },
   data: () => ({
+    openSections: [],
     showCreate: false,
     spaces: [{
       id: 0,

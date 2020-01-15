@@ -4,7 +4,7 @@
   <Section :show="showSection('network')" @toggle="toggleSection('network')">
     <template slot="heading">Network 1 <Dot /></template>
   </Section>
-  <SpaceSection :show="showSection('spaces')" @toggle="toggleSection('spaces')" />
+  <SpaceListSection :show="showSection('spaces')" @toggle="toggleSection('spaces')" />
   <Section :show="showSection('devices')" @toggle="toggleSection('devices')">
     <template slot="heading">Devices <Plus /></template>
     <div><Tick /> Magma 20%</div>
@@ -18,7 +18,7 @@ import Dot from '@/components/Dot.vue'
 import Plus from '@/components/Plus.vue'
 import Tick from '@/components/Tick.vue'
 import Section from '@/components/Section.vue'
-import SpaceSection from '@/components/SpaceSection.vue'
+import SpaceListSection from '@/components/SpaceListSection.vue'
 
 export default {
   components: {
@@ -27,7 +27,7 @@ export default {
     Plus,
     Tick,
     Section,
-    SpaceSection
+    SpaceListSection
   },
   data: () => ({
     openSections: []
