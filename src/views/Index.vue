@@ -4,17 +4,7 @@
   <IndexSection :show="showSection('network')" @toggle="toggleSection('network')">
     <template slot="heading">Network 1 <Dot /></template>
   </IndexSection>
-  <IndexSection :show="showSection('spaces')" @toggle="toggleSection('spaces')">
-    <template slot="heading">Spaces <Plus /></template>
-    <div>Hey Paul, what would you like your space to be called?</div>
-    <div><input type="text"><Plus /></div>
-    <Tick /> Public Office 3
-    <div>
-      <div>Dan <Dot /></div>
-      <div>Matt <Dot /></div>
-      <div>Paul <Dot /></div>
-    </div>
-  </IndexSection>
+  <SpaceIndexSection :show="showSection('spaces')" @toggle="toggleSection('spaces')" />
   <IndexSection :show="showSection('devices')" @toggle="toggleSection('devices')">
     <template slot="heading">Devices <Plus /></template>
     <div><Tick /> Magma 20%</div>
@@ -28,6 +18,7 @@ import Dot from '@/components/Dot.vue'
 import Plus from '@/components/Plus.vue'
 import Tick from '@/components/Tick.vue'
 import IndexSection from '@/components/IndexSection.vue'
+import SpaceIndexSection from '@/components/SpaceIndexSection.vue'
 
 export default {
   components: {
@@ -35,7 +26,8 @@ export default {
     Dot,
     Plus,
     Tick,
-    IndexSection
+    IndexSection,
+    SpaceIndexSection
   },
   data: () => ({
     openSections: []
