@@ -1,13 +1,15 @@
 <template>
   <IndexSection :show="show" @toggle="$emit('toggle')">
     <template slot="heading">Spaces <Plus /></template>
-    <div>Hey Paul, what would you like your space to be called?</div>
-    <div><input type="text"><Plus /></div>
-    <Tick /> Public Office 3
-    <div>
-      <div>Dan <Dot /></div>
-      <div>Matt <Dot /></div>
-      <div>Paul <Dot /></div>
+    <div v-if="showCreate">
+      Hey Paul, what would you like your space to be called?
+      <div><input type="text"><Plus /></div>
+    </div>
+    <div v-for="space in spaces" :key="space.id">
+      <Tick /> {{space.name}} {{space.members.length}}
+      <div>
+        <div v-for="member in space.members" :key="member.id">{{member.name}} <Dot /></div>
+      </div>
     </div>
   </IndexSection>
 </template>
@@ -27,6 +29,36 @@ export default {
   },
   props: {
     show: Boolean
-  }
+  },
+  data: () => ({
+    showCreate: false,
+    spaces: [{
+      id: 0,
+      name: 'public office',
+      members: [{
+        id: 0,
+        name: 'dan'
+      }, {
+        id: 1,
+        name: 'matt'
+      },{
+        id: 2,
+        name: 'paul'
+      }]
+    }, {
+      id: 1,
+      name: 'magma collective',
+      members: [{
+        id: 0,
+        name: 'daniel'
+      }, {
+        id: 1,
+        name: 'jaya'
+      }, {
+        id: 2,
+        name: 'mu'
+      }]
+    }]
+  })
 }
 </script>
