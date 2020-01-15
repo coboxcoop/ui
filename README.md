@@ -39,3 +39,12 @@ git checkout master
 git merge develop
 git branch -d feature_branch
 ```
+
+### TODOs
+
+2020-01-15
+* inputing name of new person within a space in SpaceSection
+  * input box for that
+  * closing the input person if not meant (hide the content)
+  * hide the content and place new name if person has been added 
+* at some point go back to look at onboarding

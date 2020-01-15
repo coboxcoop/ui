@@ -5,7 +5,7 @@
       Hey Paul, what would you like your space to be called?
       <div><input type="text"><Plus /></div>
     </div>
-    <SpaceSection v-for="space in spaces" :key="space.id" :show="showSection(space.name)" @toggle="toggleSection(space.name)" :space="space" />
+    <SpaceSection v-for="space in spaces" :key="space.id" :show="showSection(space.name)" @toggle="toggleSection(space.name)" @open="open => openSection(space.name, open)" :space="space" />
   </Section>
 </template>
 
@@ -34,9 +34,16 @@ export default {
     toggleSection(name) {
       console.log(name)
       if(this.showSection(name)) {
-        this.openSections = this.openSections.filter(n => n != name)
+        this.openSection(name, false)
       } else {
+        this.openSection(name, true)
+      }
+    },
+    openSection(name, open) {
+      if(open) {
         this.openSections.push(name)
+      } else {
+        this.openSections = this.openSections.filter(n => n != name)
       }
     }
   },
