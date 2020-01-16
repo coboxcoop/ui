@@ -5,35 +5,55 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    name: '',
-    space: {},
+    spaces: [{
+      id: 0,
+      name: 'public office',
+      members: [{
+        id: 0,
+        name: 'dan'
+      }, {
+        id: 1,
+        name: 'matt'
+      },{
+        id: 2,
+        name: 'paul'
+      }]
+    }, {
+      id: 1,
+      name: 'magma collective',
+      members: [{
+        id: 0,
+        name: 'daniel'
+      }, {
+        id: 1,
+        name: 'jaya'
+      }, {
+        id: 2,
+        name: 'mu'
+      }]
+    }]
   },
   mutations: {
-    updateName(state, name) {
-      state.name = name
-    },
-    createSpace(state, key) {
-    //initialise an empty space within the global space 
-    //in the next page we'll then assign properties
-      state.space[key] = key
+    addPeerToSpace(state, {id, peerKey}) {
+      let spaces = [...state.spaces]
+      spaces = spaces.map(space => {
+        if(space.id === id) {
+          space.members.push({
+            id: space.members.length,
+            name: 'fake',
+            peerKey
+          })
+        }
+        return space
+      })
+      state.spaces = spaces
     }
   },
   getters: {
-    hasBeenWelcomed(state) {
-      return !!state.name
-    },
-    startedMakingASpace(state) {
-      return !!state.space
-    }
   },
   actions: {
-    submitName({commit}, name) {
-      //submit name to server
-      commit('updateName', name)
-    },
-    startCreateSpace({commit}) {
-      //start creation process to the server?
-      commit('createSpace')
+    addPeerToSpace({commit}, {id, peerKey}) {
+      commit('addPeerToSpace', {id, peerKey})
     }
   },
   modules: {

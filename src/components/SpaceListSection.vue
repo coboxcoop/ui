@@ -5,7 +5,7 @@
       Hey Paul, what would you like your space to be called?
       <div><input type="text"><Plus /></div>
     </div>
-    <SpaceSection v-for="space in spaces" :key="space.id" :show="showSection(space.name)" @toggle="toggleSection(space.name)" @open="open => openSection(space.name, open)" :space="space" />
+    <SpaceSection v-for="space in $store.state.spaces" :key="space.id" :show="showSection(space.name)" @toggle="toggleSection(space.name)" @open="open => openSection(space.name, open)" :space="space" />
   </Section>
 </template>
 
@@ -50,33 +50,6 @@ export default {
   data: () => ({
     openSections: [],
     showCreate: false,
-    spaces: [{
-      id: 0,
-      name: 'public office',
-      members: [{
-        id: 0,
-        name: 'dan'
-      }, {
-        id: 1,
-        name: 'matt'
-      },{
-        id: 2,
-        name: 'paul'
-      }]
-    }, {
-      id: 1,
-      name: 'magma collective',
-      members: [{
-        id: 0,
-        name: 'daniel'
-      }, {
-        id: 1,
-        name: 'jaya'
-      }, {
-        id: 2,
-        name: 'mu'
-      }]
-    }]
   })
 }
 </script>
