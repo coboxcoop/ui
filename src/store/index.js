@@ -12,6 +12,9 @@ export default new Vuex.Store({
     addMyName(state, name) {
       state.me = {name}
     },
+    addSpace(state, space) {
+      state.spaces = [...state.spaces, space]
+    },
     addPeerToSpace(state, {id, peerKey}) {
       let spaces = [...state.spaces]
       spaces = spaces.map(space => {
@@ -30,8 +33,17 @@ export default new Vuex.Store({
   getters: {
   },
   actions: {
-    addMyName({commit}, name) {
+    addMyName({commit, dispatch}, name) {
       commit('addMyName', name)
+      dispatch('createInitialSpace', name)
+    },
+    createInitialSpace({commit}, name) {
+      const initialSpace = {
+        id: 0,
+        name: `${name}'s Space`,
+        members: []
+      }
+      commit('addSpace', initialSpace)
     },
     addPeerToSpace({commit}, {id, peerKey}) {
       commit('addPeerToSpace', {id, peerKey})
