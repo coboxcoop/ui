@@ -5,9 +5,9 @@
     <Plus @click.native.stop="onClickPlus" />
   </template>
   <div v-if="showAdd"> 
-    <p>What is the name of the person that you want to add?</p>
+    <p>Who are you adding to {{space.name}}?</p>
     <form @submit.prevent="onSubmit">
-      <input type="text" v-model="peerKeyToAdd" />
+      <input v-model="peerKeyToAdd" type="text" placeholder="Peers Key" />
       <button type="submit">Ok</button>
     </form>
   </div>
