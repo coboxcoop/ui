@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import faker from 'faker'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,7 @@ export default new Vuex.Store({
         if(space.id === id) {
           space.members.push({
             id: space.members.length,
-            name: 'fake',
+            name: faker.fake('{{name.firstName}}'),
             peerKey
           })
         }
