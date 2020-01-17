@@ -1,11 +1,18 @@
 <template>
 <Section :show="show" @toggle="$emit('toggle')">
-  <template slot="heading"><Tick /> {{space.name}} {{space.members.length}} <Plus @click.native.stop="onClickPlus" /></template>
+  <template slot="heading">
+    <Tick /> {{space.name}} {{space.members.length + 1}} 
+    <Plus @click.native.stop="onClickPlus" />
+  </template>
   <div v-if="showAdd"> 
     <p>What is the name of the person that you want to add?</p>
-    <form @submit.prevent="onSubmit"><input type="text" v-model="peerKeyToAdd" /><button type="submit">Ok</button></form>
+    <form @submit.prevent="onSubmit">
+      <input type="text" v-model="peerKeyToAdd" />
+      <button type="submit">Ok</button>
+    </form>
   </div>
   <div>
+    <div>{{$store.state.me.name}} <Dot /></div>
     <div v-for="member in space.members" :key="member.id">{{member.name}} <Dot /></div>
   </div>
 </Section>

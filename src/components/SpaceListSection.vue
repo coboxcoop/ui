@@ -1,11 +1,22 @@
 <template>
   <Section :show="show" @toggle="$emit('toggle')">
-    <template slot="heading">Spaces <Plus /></template>
+    <template slot="heading">Spaces 
+      <Plus @click.stop.native="showCreate = true" />
+    </template>
     <div v-if="showCreate">
-      Hey {{$store.state.me.name}}, what would you like your space to be called?
-      <div><input type="text"><Plus /></div>
+      <p>Hey {{$store.state.me.name}}, what would you like your space to be called?</p>
+      <form @submit.prevent="onSubmitCreateSpace">
+        <input v-model="newSpaceName" type="text" />
+        <button type="submit">Ok</button>
+      </form>
     </div>
-    <SpaceSection v-for="space in $store.state.spaces" :key="space.id" :show="showSection(space.name)" @toggle="toggleSection(space.name)" @open="open => openSection(space.name, open)" :space="space" />
+    <SpaceSection 
+      v-for="space in $store.state.spaces" 
+      @toggle="toggleSection(space.name)" 
+      @open="open => openSection(space.name, open)" 
+      :key="space.id" 
+      :show="showSection(space.name)" 
+      :space="space" />
   </Section>
 </template>
 
@@ -27,7 +38,16 @@ export default {
   props: {
     show: Boolean
   },
+  data: () => ({
+    openSections: [],
+    showCreate: false,
+    newSpaceName: ''
+  }),
   methods: {
+    onSubmitCreateSpace() {
+      this.$store.dispatch('createSpace', this.newSpaceName)
+      this.newSpaceName = ''
+    },
     showSection(name) {
      return this.openSections.includes(name)
     },
@@ -46,10 +66,6 @@ export default {
         this.openSections = this.openSections.filter(n => n != name)
       }
     }
-  },
-  data: () => ({
-    openSections: [],
-    showCreate: false,
-  })
+  }
 }
 </script>

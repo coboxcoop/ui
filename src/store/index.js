@@ -37,13 +37,17 @@ export default new Vuex.Store({
       commit('addMyName', name)
       dispatch('createInitialSpace', name)
     },
-    createInitialSpace({commit}, name) {
-      const initialSpace = {
-        id: 0,
-        name: `${name}'s Space`,
+    createInitialSpace({dispatch}, name) {
+      const spaceName = `${name}'s Space`
+      dispatch('createSpace', spaceName)
+    },
+    createSpace({commit, state}, name) {
+      const space  = {
+        id: state.spaces.length,
+        name,
         members: []
       }
-      commit('addSpace', initialSpace)
+      commit('addSpace', space)
     },
     addPeerToSpace({commit}, {id, peerKey}) {
       commit('addPeerToSpace', {id, peerKey})
