@@ -43,8 +43,21 @@ git branch -d feature_branch
 ### TODOs
 
 2020-01-15
-* inputing name of new person within a space in SpaceSection
-  * input box for that
-  * closing the input person if not meant (hide the content)
-  * hide the content and place new name if person has been added 
-* at some point go back to look at onboarding
+* [x] inputing name of new person within a space in SpaceSection
+  * [x] input box for that
+  * [x] closing the input person if not meant (hide the content)
+  * [x] hide the content and place new name if person has been added 
+
+2020-01-17
+* [ ] change plus to a cancel if it's open for peerKey (rabbit hole)
+* [ ] adding global styling
+* [ ] dan to replicate spaces functionality in devices and network
+* [ ] what happens when we click a peers name (figma)
+* [ ] what is in network? (figma)
+* [ ] discuss colors vs avatars 
+  * [ ] displaying connection status
+  * [ ] import/inherit color scheme of a peer or assign locally (can i override?)
+    * [ ] what about color clashes
+* [ ] refactor network, device and space duplication? (if comes up)
+* [ ] cobox-core API integration (may be session after next)
+* [ ] create branch for desired data shape using swagger for kieran to sync with
