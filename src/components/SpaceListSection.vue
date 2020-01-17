@@ -47,6 +47,7 @@ export default {
     onSubmitCreateSpace() {
       this.$store.dispatch('createSpace', this.newSpaceName)
       this.newSpaceName = ''
+      this.showCreate = false
     },
     showSection(name) {
      return this.openSections.includes(name)

@@ -1,5 +1,5 @@
 <template>
-<Section :show="show" @toggle="$emit('toggle')">
+<Section :show="show" @toggle="onToggleSection">
   <template slot="heading">
     <Tick /> {{space.name}} {{space.members.length + 1}} 
     <Plus @click.native.stop="onClickPlus" />
@@ -43,10 +43,21 @@ export default {
     onSubmit() {
       this.$store.dispatch('addPeerToSpace', {id: this.space.id, peerKey: this.peerKeyToAdd})
       this.peerKeyToAdd = ''
+      // this.showAdd = false
     },
     onClickPlus() {
-      this.showAdd = true
-      this.$emit('open', true)
+      if(this.show) {
+        this.showAdd = !this.showAdd
+      } else {
+        this.showAdd = true
+        this.$emit('open', true)
+      }
+    },
+    onToggleSection() {
+      this.$emit('toggle')
+      if(!this.show) {
+        this.showAdd = false
+      }
     }
   }
 }
