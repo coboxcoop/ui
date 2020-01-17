@@ -4,8 +4,12 @@
   <Section :show="showSection('network')" @toggle="toggleSection('network')">
     <template slot="heading">Network 1 <Dot /></template>
   </Section>
-  <SpaceListSection :show="showSection('spaces')" @toggle="toggleSection('spaces')" />
-  <Section :show="showSection('devices')" @toggle="toggleSection('devices')">
+  <SpaceListSection
+    :show="showSection('spaces')"
+    @toggle="toggleSection('spaces')" />
+  <Section
+    :show="showSection('devices')"
+    @toggle="toggleSection('devices')">
     <template slot="heading">Devices <Plus /></template>
     <div><Tick /> Magma 20%</div>
   </Section>
