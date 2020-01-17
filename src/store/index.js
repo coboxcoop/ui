@@ -5,35 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    spaces: [{
-      id: 0,
-      name: 'public office',
-      members: [{
-        id: 0,
-        name: 'dan'
-      }, {
-        id: 1,
-        name: 'matt'
-      },{
-        id: 2,
-        name: 'paul'
-      }]
-    }, {
-      id: 1,
-      name: 'magma collective',
-      members: [{
-        id: 0,
-        name: 'daniel'
-      }, {
-        id: 1,
-        name: 'jaya'
-      }, {
-        id: 2,
-        name: 'mu'
-      }]
-    }]
+    me: null,
+    spaces: []
   },
   mutations: {
+    addMyName(state, name) {
+      state.me = {name}
+    },
     addPeerToSpace(state, {id, peerKey}) {
       let spaces = [...state.spaces]
       spaces = spaces.map(space => {
@@ -52,6 +30,9 @@ export default new Vuex.Store({
   getters: {
   },
   actions: {
+    addMyName({commit}, name) {
+      commit('addMyName', name)
+    },
     addPeerToSpace({commit}, {id, peerKey}) {
       commit('addPeerToSpace', {id, peerKey})
     }

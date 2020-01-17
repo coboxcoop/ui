@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Dot color="green"/> Paul 0%
+  <Dot color="green"/> {{$store.state.me.name}} 0%
 </div>
 </template>
 

@@ -2,7 +2,7 @@
   <Section :show="show" @toggle="$emit('toggle')">
     <template slot="heading">Spaces <Plus /></template>
     <div v-if="showCreate">
-      Hey Paul, what would you like your space to be called?
+      Hey {{$store.state.me.name}}, what would you like your space to be called?
       <div><input type="text"><Plus /></div>
     </div>
     <SpaceSection v-for="space in $store.state.spaces" :key="space.id" :show="showSection(space.name)" @toggle="toggleSection(space.name)" @open="open => openSection(space.name, open)" :space="space" />
