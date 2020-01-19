@@ -7,12 +7,9 @@
   <SpaceListSection
     :show="showSection('spaces')"
     @toggle="toggleSection('spaces')" />
-  <Section
+  <DeviceListSection
     :show="showSection('devices')"
-    @toggle="toggleSection('devices')">
-    <template slot="heading">Devices <Plus /></template>
-    <div><Tick /> Magma 20%</div>
-  </Section>
+    @toggle="toggleSection('devices')" />
 </div>
 </template>
 
@@ -23,6 +20,7 @@ import Plus from '@/components/Plus.vue'
 import Tick from '@/components/Tick.vue'
 import Section from '@/components/Section.vue'
 import SpaceListSection from '@/components/SpaceListSection.vue'
+import DeviceListSection from '@/components/DeviceListSection.vue'
 
 export default {
   components: {
@@ -31,7 +29,8 @@ export default {
     Plus,
     Tick,
     Section,
-    SpaceListSection
+    SpaceListSection,
+    DeviceListSection
   },
   data: () => ({
     openSections: []

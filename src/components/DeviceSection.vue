@@ -1,11 +1,11 @@
 <template>
 <Section :show="show" @toggle="onToggleSection">
   <template slot="heading">
-    <Tick /> {{space.name}} {{space.members.length + 1}}
+    <Tick /> {{device.name}} {{device.members.length + 1}}
     <Plus @click.native.stop="onClickPlus" />
   </template>
   <div v-if="showAdd">
-    <p>Who are you adding to {{space.name}}?</p>
+    <p>Who are you adding to {{device.name}}?</p>
     <form @submit.prevent="onSubmit">
       <input v-model="peerKeyToAdd" type="text" placeholder="Peers Key" />
       <button type="submit">Ok</button>
@@ -13,7 +13,7 @@
   </div>
   <div>
     <div>{{$store.state.me.name}} <Dot /></div>
-    <div v-for="member in space.members" :key="member.id">{{member.name}} <Dot /></div>
+    <div v-for="member in device.members" :key="member.id">{{member.name}} <Dot /></div>
   </div>
 </Section>
 </template>
@@ -33,7 +33,7 @@ export default {
   },
   props: {
     show: Boolean,
-    space: Object
+    device: Object
   },
   data: () => ({
     showAdd: false,
@@ -41,7 +41,7 @@ export default {
   }),
   methods: {
     onSubmit() {
-      this.$store.dispatch('addPeerToSpace', {id: this.space.id, peerKey: this.peerKeyToAdd})
+      this.$store.dispatch('addPeerToDevice', {id: this.device.id, peerKey: this.peerKeyToAdd})
       this.peerKeyToAdd = ''
       // this.showAdd = false
     },

@@ -1,28 +1,28 @@
 <template>
 <Section :show="show" @toggle="$emit('toggle')">
-  <template slot="heading">Spaces
+  <template slot="heading">Devices
     <Plus @click.stop.native="showCreate = true" />
   </template>
   <div v-if="showCreate">
-    <p>Hey {{$store.state.me.name}}, what would you like your space to be called?</p>
-    <form @submit.prevent="onSubmitCreateSpace">
-      <input v-model="newSpaceName" type="text" />
+    <p>Hey {{$store.state.me.name}}, what would you like your device to be called?</p>
+    <form @submit.prevent="onSubmitCreateDevice">
+      <input v-model="newDeviceName" type="text" />
       <button type="submit">Ok</button>
     </form>
   </div>
-  <SpaceSection
-    v-for="space in $store.state.spaces"
-    @toggle="toggleSection(space.name)"
-    @open="open => openSection(space.name, open)"
-    :key="space.id"
-    :show="showSection(space.name)"
-    :space="space" />
+  <DeviceSection
+    v-for="device in $store.state.devices"
+    @toggle="toggleSection(device.name)"
+    @open="open => openSection(device.name, open)"
+    :key="device.id"
+    :show="showSection(device.name)"
+    :device="device" />
 </Section>
 </template>
 
 <script>
 import Section from '@/components/Section.vue'
-import SpaceSection from '@/components/SpaceSection.vue'
+import DeviceSection from '@/components/DeviceSection.vue'
 import Dot from '@/components/Dot.vue'
 import Plus from '@/components/Plus.vue'
 import Tick from '@/components/Tick.vue'
@@ -33,7 +33,7 @@ export default {
     Plus,
     Tick,
     Section,
-    SpaceSection
+    DeviceSection
   },
   props: {
     show: Boolean
@@ -41,12 +41,12 @@ export default {
   data: () => ({
     openSections: [],
     showCreate: false,
-    newSpaceName: ''
+    newDeviceName: ''
   }),
   methods: {
-    onSubmitCreateSpace() {
-      this.$store.dispatch('createSpace', this.newSpaceName)
-      this.newSpaceName = ''
+    onSubmitCreateDevice() {
+      this.$store.dispatch('createDevice', this.newDeviceName)
+      this.newDeviceName = ''
       this.showCreate = false
     },
     showSection(name) {

@@ -7,11 +7,29 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     me: null,
-    spaces: []
+    spaces: [],
+    devices: []
   },
   mutations: {
     addMyName(state, name) {
       state.me = {name}
+    },
+    addDevice(state, device) {
+      state.devices = [...state.devices, device]
+    },
+    addPeerToDevice(state, {id, peerKey}) {
+      let devices = [...state.devices]
+      devices = devices.map(device => {
+        if(device.id === id) {
+          device.members.push({
+            id: device.members.length,
+            name: faker.fake('{{name.firstName}}'),
+            peerKey
+          })
+        }
+        return device
+      })
+      state.devices = devices
     },
     addSpace(state, space) {
       state.spaces = [...state.spaces, space]
@@ -52,6 +70,17 @@ export default new Vuex.Store({
     },
     addPeerToSpace({commit}, {id, peerKey}) {
       commit('addPeerToSpace', {id, peerKey})
+    },
+    createDevice({commit, state}, name) {
+      const device  = {
+        id: state.devices.length,
+        name,
+        members: []
+      }
+      commit('addDevice', device)
+    },
+    addPeerToDevice({commit}, {id, peerKey}) {
+      commit('addPeerToDevice', {id, peerKey})
     }
   },
   modules: {
