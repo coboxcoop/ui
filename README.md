@@ -51,10 +51,12 @@ git branch -d feature_branch
 2020-01-17
 * [ ] change plus to a cancel if it's open for peerKey (rabbit hole)
 * [ ] adding global styling
-* [ ] dan to replicate spaces functionality in devices and network
+* [ ] dan to replicate spaces functionality in 
+  * [x] devices and 
+  * [ ] network
 * [ ] what happens when we click a peers name (figma)
 * [ ] what is in network? (figma)
-* [ ] discuss colors vs avatars 
+* [ ] discuss colors vs avatars (like ssb, deterministic from parentKey)
   * [ ] displaying connection status
   * [ ] import/inherit color scheme of a peer or assign locally (can i override?)
     * [ ] what about color clashes
