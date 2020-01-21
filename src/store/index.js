@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import faker from 'faker'
+import api from './api'
 
 Vue.use(Vuex)
 
