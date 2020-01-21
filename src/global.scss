@@ -1,3 +1,7 @@
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('./assets/fonts/NHaasGroteskDSPro-55Rg.woff');
+}
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +18,9 @@ html {
 
 body {
   font-size: 2.4rem;
-  font-family: sans-serif;
+  font-family: 'Neue Haas Grotesk', sans-serif;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
 }
 
 sup {
