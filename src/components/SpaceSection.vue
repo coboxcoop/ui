@@ -2,7 +2,7 @@
 <Section :show="show" @toggle="onToggleSection">
   <template slot="heading">
     <div>
-      <Tick /> {{space.name}} {{space.members.length + 1}}
+      <Tick /> {{space.name}} <sup>{{space.members.length + 1}}</sup>
     </div>
     <Plus @click.native.stop="onClickPlus" />
   </template>
@@ -14,11 +14,18 @@
     </form>
   </div>
   <div>
-    <div>{{$store.state.me.name}} <Dot /></div>
-    <div v-for="member in space.members" :key="member.id">{{member.name}} <Dot /></div>
+    <div class="space-member">{{$store.state.me.name}} <Dot /></div>
+    <div class="space-member" v-for="member in space.members" :key="member.id">{{member.name}} <Dot /></div>
   </div>
 </Section>
 </template>
+
+<style scoped lang="scss">
+.space-member {
+  display: flex;
+  justify-content: space-between;
+}
+</style>
 
 <script>
 import Section from '@/components/Section.vue'

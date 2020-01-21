@@ -2,7 +2,10 @@
 <div>
   <MeHeader />
   <Section :show="showSection('network')" @toggle="toggleSection('network')">
-    <template slot="heading">Network 1 <Dot /></template>
+    <template slot="heading">
+      <div>Network <sup>1</sup></div>
+      <Dot />
+    </template>
   </Section>
   <SpaceListSection
     :show="showSection('spaces')"

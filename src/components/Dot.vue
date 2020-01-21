@@ -1,5 +1,7 @@
 <template>
-  <div class="dot" :style="{background: color}" />
+  <div class="dot" :style="{background: color}">
+    <slot />
+  </div>
 </template>
 
 <script>
@@ -11,11 +13,12 @@ export default {
 </script>
 
 <style scoped>
-.dot{
+.dot {
   border-radius: 50%;
   width: 0.75em;
   height: 0.75em;
   background: black;
   display: inline-block;
+  position: relative;
 }
 </style>

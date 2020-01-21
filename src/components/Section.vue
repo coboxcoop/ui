@@ -19,11 +19,15 @@ export default {
 
 <style scoped>
 .section {
+  border-bottom: 1px solid;
 }
 .body {
 }
 .heading {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
 }
 </style>

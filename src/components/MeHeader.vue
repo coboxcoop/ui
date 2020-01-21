@@ -1,8 +1,16 @@
 <template>
-<div>
-  <Dot color="green"/> {{$store.state.me.name}} 0%
+<div class="header">
+  <div><Dot color="green"/> {{$store.state.me.name}}</div>
+  <div>0%</div>
 </div>
 </template>
+
+<style scoped lang="scss">
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+</style>
 
 <script>
 import Dot from '@/components/Dot.vue'

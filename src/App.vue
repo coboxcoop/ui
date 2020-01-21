@@ -7,6 +7,9 @@
 <style lang="scss" scoped>
 #app {
   padding: 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 </style>
 
