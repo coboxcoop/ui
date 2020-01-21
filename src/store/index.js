@@ -91,7 +91,5 @@ export default new Vuex.Store({
     addPeerToDevice({commit}, {id, peerKey}) {
       commit('addPeerToDevice', {id, peerKey})
     }
-  },
-  modules: {
   }
 })
