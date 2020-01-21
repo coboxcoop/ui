@@ -47,7 +47,7 @@ export default new Vuex.Store({
         return space
       })
       state.spaces = spaces
-    }
+    },
   },
   getters: {
   },
@@ -64,6 +64,14 @@ export default new Vuex.Store({
       const space  = {
         id: state.spaces.length,
         name,
+        members: []
+      }
+      commit('addSpace', space)
+    },
+    joinSpace({commit, state}, spaceKeyToJoin) {
+      const space  = {
+        id: state.spaces.length,
+        name: faker.fake('{{name.lastName}} SPACE'),
         members: []
       }
       commit('addSpace', space)

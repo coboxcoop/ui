@@ -40,6 +40,11 @@ export default {
     peerKeyToAdd: ''
   }),
   methods: {
+    onSubmitSpaceKey() {
+      this.$store.dispatch('joinSpace', this.spaceKeyToJoin)
+      this.spaceKeyToJoin = ''
+      // this.showAdd = false
+    },
     onSubmit() {
       this.$store.dispatch('addPeerToSpace', {id: this.space.id, peerKey: this.peerKeyToAdd})
       this.peerKeyToAdd = ''

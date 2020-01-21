@@ -9,6 +9,14 @@
       <input v-model="newSpaceName" type="text" />
       <button type="submit">Ok</button>
     </form>
+    <div v-if="showCreate">
+      <p>Or would you like to join a space?</p>
+      <form @submit.prevent="onSubmitSpaceKey">
+        <!-- <input v&#45;model="peerKeyToAdd" type="text" placeholder="Peers Key" /> -->
+        <input v-model="spaceKeyToJoin" type="text" placeholder="Space address" />
+        <button type="submit">Ok</button>
+      </form>
+    </div>
   </div>
   <SpaceSection
     v-for="space in $store.state.spaces"
@@ -44,6 +52,11 @@ export default {
     newSpaceName: ''
   }),
   methods: {
+    onSubmitSpaceKey() {
+      this.$store.dispatch('joinSpace', this.spaceKeyToJoin)
+      this.spaceKeyToJoin = ''
+      this.showCreate = false
+    },
     onSubmitCreateSpace() {
       this.$store.dispatch('createSpace', this.newSpaceName)
       this.newSpaceName = ''
