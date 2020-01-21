@@ -18,10 +18,12 @@ export default {
 </script>
 
 <style scoped>
-.section{
-  border: 1px solid red;
+.section {
 }
-.body{
-  border: 1px solid blue;
+.body {
+}
+.heading {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

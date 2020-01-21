@@ -4,5 +4,10 @@
 </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+#app {
+  padding: 1rem;
+}
 </style>
+
+<style lang="scss" src="@/global.scss" />

@@ -1,7 +1,9 @@
 <template>
 <Section :show="show" @toggle="onToggleSection">
   <template slot="heading">
-    <Tick /> {{space.name}} {{space.members.length + 1}}
+    <div>
+      <Tick /> {{space.name}} {{space.members.length + 1}}
+    </div>
     <Plus @click.native.stop="onClickPlus" />
   </template>
   <div v-if="showAdd">
