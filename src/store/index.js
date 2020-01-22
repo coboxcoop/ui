@@ -9,7 +9,8 @@ export default new Vuex.Store({
   state: {
     me: null,
     spaces: [],
-    devices: []
+    devices: [],
+    groups: []
   },
   mutations: {
     addMyName(state, name) {
@@ -49,6 +50,9 @@ export default new Vuex.Store({
       })
       state.spaces = spaces
     },
+    receiveGroups(state, groups) {
+      state.groups = groups
+    }
   },
   getters: {
   },
@@ -56,6 +60,7 @@ export default new Vuex.Store({
     addMyName({commit, dispatch}, name) {
       commit('addMyName', name)
       dispatch('createInitialSpace', name)
+      dispatch('fetchGroups')
     },
     createInitialSpace({dispatch}, name) {
       const spaceName = `${name}'s Space`
@@ -90,6 +95,10 @@ export default new Vuex.Store({
     },
     addPeerToDevice({commit}, {id, peerKey}) {
       commit('addPeerToDevice', {id, peerKey})
-    }
+    },
+    async fetchGroups({commit}) {
+      const {data} = await api.get('/groups')
+      commit('receiveGroups', data)
+    },
   }
 })
