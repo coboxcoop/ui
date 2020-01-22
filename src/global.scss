@@ -11,18 +11,18 @@
   background: none;
   box-sizing: border-box;
 }
-
 html {
   font-size: 10px;
 }
-
 body {
   font-size: 2.4rem;
   font-family: 'Neue Haas Grotesk', sans-serif;
   letter-spacing: 0.02em;
   line-height: 1.5;
 }
-
 sup {
   font-size: 60%;
+}
+input[type='text'] {
+  border-bottom: 1px solid;
 }
