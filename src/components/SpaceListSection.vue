@@ -49,7 +49,8 @@ export default {
   data: () => ({
     openSections: [],
     showCreate: false,
-    newSpaceName: ''
+    newSpaceName: '',
+    spaceKeyToJoin: ''
   }),
   methods: {
     onSubmitSpaceKey() {
