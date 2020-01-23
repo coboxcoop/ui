@@ -18,19 +18,19 @@
       </form>
     </div>
   </div>
-  <SpaceSection
-    v-for="space in $store.state.spaces"
-    @toggle="toggleSection(space.name)"
-    @open="open => openSection(space.name, open)"
-    :key="space.id"
-    :show="showSection(space.name)"
-    :space="space" />
+  <GroupSection
+    v-for="group in $store.state.groups"
+    @toggle="toggleSection(group.address)"
+    @open="open => openSection(group.address, open)"
+    :key="group.address"
+    :show="showSection(group.address)"
+    :group="group" />
 </Section>
 </template>
 
 <script>
 import Section from '@/components/Section.vue'
-import SpaceSection from '@/components/SpaceSection.vue'
+import GroupSection from '@/components/GroupSection.vue'
 import Dot from '@/components/Dot.vue'
 import Plus from '@/components/Plus.vue'
 import Tick from '@/components/Tick.vue'
@@ -41,7 +41,7 @@ export default {
     Plus,
     Tick,
     Section,
-    SpaceSection
+    GroupSection
   },
   props: {
     show: Boolean
@@ -49,25 +49,24 @@ export default {
   data: () => ({
     openSections: [],
     showCreate: false,
-    newSpaceName: '',
-    spaceKeyToJoin: ''
+    newGroupName: '',
+    groupAddressToJoin: ''
   }),
   methods: {
-    onSubmitSpaceKey() {
-      this.$store.dispatch('joinSpace', this.spaceKeyToJoin)
-      this.spaceKeyToJoin = ''
+    onSubmitGroupAddress() {
+      this.$store.dispatch('joinGroup', this.groupAddressToJoin)
+      this.groupAddressToJoin = ''
       this.showCreate = false
     },
-    onSubmitCreateSpace() {
-      this.$store.dispatch('createSpace', this.newSpaceName)
-      this.newSpaceName = ''
+    onSubmitCreateGroup() {
+      this.$store.dispatch('createGroup', this.newGroupName)
+      this.newGroupName = ''
       this.showCreate = false
     },
     showSection(name) {
      return this.openSections.includes(name)
     },
     toggleSection(name) {
-      console.log(name)
       if(this.showSection(name)) {
         this.openSection(name, false)
       } else {

@@ -2,20 +2,20 @@
 <Section :show="show" @toggle="onToggleSection">
   <template slot="heading">
     <div>
-      <Tick /> {{space.name}} <sup>{{space.members.length + 1}}</sup>
+      <Tick /> {{group.name}} <sup>{{0}}</sup>
     </div>
     <Plus @click.native.stop="onClickPlus" />
   </template>
   <div v-if="showAdd">
-    <p>Who are you adding to {{space.name}}?</p>
+    <p>Who are you adding to {{group.name}}?</p>
     <form @submit.prevent="onSubmit">
       <input v-model="peerKeyToAdd" type="text" placeholder="Peers Key" />
       <button type="submit">Ok</button>
     </form>
   </div>
   <div>
-    <div class="space-member">{{$store.state.me.name}} <Dot /></div>
-    <div class="space-member" v-for="member in space.members" :key="member.id">{{member.name}} <Dot /></div>
+    <div class="group-member">{{$store.state.me.name}} <Dot /></div>
+    <div class="group-member" v-for="member in []" :key="member.id">{{member.name}} <Dot /></div>
   </div>
 </Section>
 </template>
@@ -42,7 +42,7 @@ export default {
   },
   props: {
     show: Boolean,
-    space: Object
+    group: Object
   },
   data: () => ({
     showAdd: false,

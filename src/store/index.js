@@ -57,14 +57,23 @@ export default new Vuex.Store({
   getters: {
   },
   actions: {
+    async init({dispatch, commit}) {
+      // this is where we would fetch "me", my name, my parentKey
+      await dispatch('fetchGroups')
+      // this is a stub, when the above is done, then this will become an api call/check
+      commit('addMyName', 'dan')
+    },
     addMyName({commit, dispatch}, name) {
       commit('addMyName', name)
-      dispatch('createInitialSpace', name)
-      dispatch('fetchGroups')
+      dispatch('createInitialGroup', name)
     },
-    createInitialSpace({dispatch}, name) {
-      const spaceName = `${name}'s Space`
-      dispatch('createSpace', spaceName)
+    createInitialGroup({dispatch}, name) {
+      const groupName = `${name}'s Space`
+      dispatch('createGroup', groupName)
+    },
+    async createGroup({dispatch, commit, state}, name) {
+      const{data} = await api.post('/groups', {name})
+      dispatch('fetchGroups')
     },
     createSpace({commit, state}, name) {
       const space  = {

@@ -4,6 +4,14 @@
 </div>
 </template>
 
+<script>
+export default {
+  mounted() {
+    this.$store.dispatch('init')
+  }
+}
+</script>
+
 <style lang="scss" scoped>
 #app {
   padding: 1rem;
