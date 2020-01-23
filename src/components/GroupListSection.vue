@@ -4,16 +4,15 @@
     <Plus @click.stop.native="showCreate = true" />
   </template>
   <div v-if="showCreate">
-    <p>Hey {{$store.state.me.name}}, what would you like your space to be called?</p>
-    <form @submit.prevent="onSubmitCreateSpace">
-      <input v-model="newSpaceName" type="text" />
+    <p>Hey {{$store.state.me.name}}, what would you like your group to be called?</p>
+    <form @submit.prevent="onSubmitCreateGroup">
+      <input v-model="newGroupName" type="text" />
       <button type="submit">Ok</button>
     </form>
     <div v-if="showCreate">
-      <p>Or would you like to join a space?</p>
-      <form @submit.prevent="onSubmitSpaceKey">
-        <!-- <input v&#45;model="peerKeyToAdd" type="text" placeholder="Peers Key" /> -->
-        <input v-model="spaceKeyToJoin" type="text" placeholder="Space address" />
+      <p>Or would you like to join a group?</p>
+      <form @submit.prevent="onSubmitGroupAddress">
+        <input v-model="groupAddressToJoin" type="text" placeholder="Group address" />
         <button type="submit">Ok</button>
       </form>
     </div>

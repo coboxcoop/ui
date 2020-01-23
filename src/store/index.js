@@ -75,6 +75,11 @@ export default new Vuex.Store({
       const{data} = await api.post('/groups', {name})
       dispatch('fetchGroups')
     },
+    async joinGroup({dispatch, commit, state}, groupAddressToJoin) {
+      // Joining a group is `cobox groups join -n 'the-chicken-coop' -A 'HASH'`
+      // Join = find, or create, with an address and an encryption key (necessary), then create an open connection
+      // joining is not a particular end-point but a series of end points. atm thats find or create, then swarm, it could also be mount too.
+    },
     createSpace({commit, state}, name) {
       const space  = {
         id: state.spaces.length,
