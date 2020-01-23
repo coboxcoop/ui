@@ -50,16 +50,23 @@ git branch -d feature_branch
 
 2020-01-17
 * [ ] change plus to a cancel if it's open for peerKey (rabbit hole)
-* [ ] adding global styling
+* [x] adding global styling
 * [ ] dan to replicate spaces functionality in 
   * [x] devices and 
   * [ ] network
-* [ ] what happens when we click a peers name (figma)
+* [x] what happens when we click a peers name (figma)
 * [ ] what is in network? (figma)
-* [ ] discuss colors vs avatars (like ssb, deterministic from parentKey)
-  * [ ] displaying connection status
-  * [ ] import/inherit color scheme of a peer or assign locally (can i override?)
-    * [ ] what about color clashes
-* [ ] refactor network, device and space duplication? (if comes up)
-* [ ] cobox-core API integration (may be session after next)
+* [x] discuss colors vs avatars (like ssb, deterministic from parentKey)
+  * [x] displaying connection status
+  * [x] import/inherit color scheme of a peer or assign locally (can i override?)
+    * [x] what about color clashes
+* [x] refactor network, device and space duplication? (if comes up)
+* [x] cobox-core API integration (may be session after next)
 * [ ] create branch for desired data shape using swagger for kieran to sync with
+
+2020-01-23
+* [ ] noted questions from session here: https://ledger-git.dyne.org/CoBox/cobox-ui/issues/1
+  * [ ] related notes: https://hackmd.io/huEdoSnJRLehl681IUqH0w
+* [ ] figure out CLI commands per UI clickable element e.g.
+  * [ ] onboarding giving name also `cobox groups create -n {{name}}` && `cobox groups mount -n {{name}}`
+
