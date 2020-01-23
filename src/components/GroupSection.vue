@@ -21,7 +21,7 @@
 </template>
 
 <style scoped lang="scss">
-.space-member {
+.group-member {
   display: flex;
   justify-content: space-between;
 }
