@@ -2,7 +2,7 @@
 <Section :show="show" @toggle="onToggleSection">
   <template slot="heading">
     <div>
-      <Dot :color="groupStatusColor(group.address)" /> {{group.name}} <sup>{{0}}</sup>
+      <Dot @click.native.stop="onClickDot(group.address)" :color="groupStatusColor(group.address)" /> {{group.name}} <sup>{{0}}</sup>
     </div>
     <Plus @click.native.stop="onClickPlus" />
   </template>
@@ -51,6 +51,9 @@ export default {
   methods: {
     groupStatusColor(address) {
       return this.$store.getters['groupStatusColor'](address)
+    },
+    onClickDot(address) {
+      this.$store.dispatch('toggleGroupConnection', address)
     },
     onSubmitSpaceKey() {
       this.$store.dispatch('joinSpace', this.spaceKeyToJoin)

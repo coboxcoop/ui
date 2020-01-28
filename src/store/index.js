@@ -16,13 +16,13 @@ export default new Vuex.Store({
   mutations: {
     updateConnectionStatus(state, {address, connected}) {
       if(connected) {
-        state.connections = { 
+        state.connections = {
           ...state.connections,
           [address]: true
         }
       } else {
-        let connections = {...connections}
-        delete connections[address]
+        let connections = {...state.connections}
+        Vue.delete(connections, address)
         state.connections = connections
       }
     },
@@ -74,15 +74,20 @@ export default new Vuex.Store({
         if(group) return group.name
       }
     },
-    groupStatusColor(state) {
+    groupStatusColor(state, getters) {
       return address => {
         let color = 'lightgrey'
-        if(address in state.connections) {
+        if(getters['groupConnected'](address)) {
           color = 'green'
         } else {
           color = 'orange'
         }
         return color
+      }
+    },
+    groupConnected(state) {
+      return address => {
+        return address in state.connections
       }
     }
   },
@@ -167,6 +172,22 @@ export default new Vuex.Store({
         // we're ignoring the error when we try and connect twice (to an already open connection)
       } catch(e) { }
       commit('updateConnectionStatus', {address, connected: true})
+    },
+    async disconnectGroup({commit, getters}, address) {
+      const name = getters['getNameOfGroup'](address)
+      let res 
+      try {
+        res = await api.delete(`/groups/${address}/connections`, {address, name})
+        // we're ignoring the error when we try and connect twice (to an already open connection)
+      } catch(e) { }
+      commit('updateConnectionStatus', {address, connected: false})
+    },
+    async toggleGroupConnection({dispatch, getters}, address) {
+      if(getters['groupConnected'](address)) {
+        dispatch('disconnectGroup', address)
+      } else {
+        dispatch('connectGroup', address)
+      }
     }
   }
 })
