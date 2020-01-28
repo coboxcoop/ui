@@ -70,3 +70,11 @@ git branch -d feature_branch
 * [ ] figure out CLI commands per UI clickable element e.g.
   * [ ] onboarding giving name also `cobox groups create -n {{name}}` && `cobox groups mount -n {{name}}`
 
+2020-01-28
+* [ ] different states of a space (network health)
+  * [ ] up-to-date
+  * [ ] swarming (connected)
+  * [ ] disconnected
+  * [ ] scheduled
+  * [ ] updating / busy
+  * [ ] online but no connections

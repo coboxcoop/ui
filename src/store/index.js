@@ -10,9 +10,22 @@ export default new Vuex.Store({
     me: null,
     spaces: [],
     devices: [],
-    groups: []
+    groups: [],
+    connections: {}
   },
   mutations: {
+    updateConnectionStatus(state, {address, connected}) {
+      if(connected) {
+        state.connections = { 
+          ...state.connections,
+          [address]: true
+        }
+      } else {
+        let connections = {...connections}
+        delete connections[address]
+        state.connections = connections
+      }
+    },
     addMyName(state, name) {
       state.me = {name}
     },
@@ -55,11 +68,29 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    getNameOfGroup(state) {
+      return address => {
+        const group = state.groups.find(group => group.address === address)
+        if(group) return group.name
+      }
+    },
+    groupStatusColor(state) {
+      return address => {
+        let color = 'lightgrey'
+        if(address in state.connections) {
+          color = 'green'
+        } else {
+          color = 'orange'
+        }
+        return color
+      }
+    }
   },
   actions: {
     async init({dispatch, commit}) {
       // this is where we would fetch "me", my name, my parentKey
       await dispatch('fetchGroups')
+      await dispatch('connectAllGroups')
       // this is a stub, when the above is done, then this will become an api call/check
       commit('addMyName', 'dan')
     },
@@ -123,5 +154,19 @@ export default new Vuex.Store({
       const {data} = await api.get('/groups')
       commit('receiveGroups', data)
     },
+    async connectAllGroups({dispatch, state}) {
+      return await Promise.all(state.groups.map(group => {
+        return dispatch('connectGroup', group.address)
+      }))
+    },
+    async connectGroup({commit, getters}, address) {
+      const name = getters['getNameOfGroup'](address)
+      let res 
+      try {
+        res = await api.post(`/groups/${address}/connections`, {address, name})
+        // we're ignoring the error when we try and connect twice (to an already open connection)
+      } catch(e) { }
+      commit('updateConnectionStatus', {address, connected: true})
+    }
   }
 })

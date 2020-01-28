@@ -2,7 +2,7 @@
 <Section :show="show" @toggle="onToggleSection">
   <template slot="heading">
     <div>
-      <Tick /> {{group.name}} <sup>{{0}}</sup>
+      <Dot :color="groupStatusColor(group.address)" /> {{group.name}} <sup>{{0}}</sup>
     </div>
     <Plus @click.native.stop="onClickPlus" />
   </template>
@@ -49,6 +49,9 @@ export default {
     peerKeyToAdd: ''
   }),
   methods: {
+    groupStatusColor(address) {
+      return this.$store.getters['groupStatusColor'](address)
+    },
     onSubmitSpaceKey() {
       this.$store.dispatch('joinSpace', this.spaceKeyToJoin)
       this.spaceKeyToJoin = ''

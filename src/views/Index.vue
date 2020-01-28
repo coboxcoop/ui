@@ -1,8 +1,6 @@
 <template>
 <div>
   <MeHeader />
-  <!--visibile console.log    -->
-  <pre>{{$store.state.groups}}</pre>
   <Section :show="showSection('network')" @toggle="toggleSection('network')">
     <template slot="heading">
       <div>Network <sup>1</sup></div>
