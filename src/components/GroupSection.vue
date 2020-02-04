@@ -3,6 +3,7 @@
   <template slot="heading">
     <div>
       <Dot @click.native.stop="onClickDot(group.address)" :color="groupStatusColor(group.address)" /> {{group.name}} <sup>{{0}}</sup>
+      <!--instead of 0 I want to know the number of people in the group -->
     </div>
     <Plus @click.native.stop="onClickPlus" />
   </template>
@@ -55,13 +56,13 @@ export default {
     onClickDot(address) {
       this.$store.dispatch('toggleGroupConnection', address)
     },
-    onSubmitSpaceKey() {
-      this.$store.dispatch('joinSpace', this.spaceKeyToJoin)
-      this.spaceKeyToJoin = ''
+    onSubmitGroupKey() {
+      this.$store.dispatch('joinGroup', this.groupKeyToJoin)
+      this.groupKeyToJoin = ''
       // this.showAdd = false
     },
     onSubmit() {
-      this.$store.dispatch('addPeerToSpace', {id: this.space.id, peerKey: this.peerKeyToAdd})
+      this.$store.dispatch('addPeerToGroup', {id: this.group.id, peerKey: this.peerKeyToAdd})
       this.peerKeyToAdd = ''
       // this.showAdd = false
     },

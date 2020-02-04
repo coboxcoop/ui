@@ -46,22 +46,22 @@ export default new Vuex.Store({
       })
       state.devices = devices
     },
-    addSpace(state, space) {
-      state.spaces = [...state.spaces, space]
+    addGroup(state, group) {
+      state.groups = [...state.groups, group]
     },
-    addPeerToSpace(state, {id, peerKey}) {
-      let spaces = [...state.spaces]
-      spaces = spaces.map(space => {
-        if(space.id === id) {
-          space.members.push({
-            id: space.members.length,
+    addPeerToGroup(state, {id, peerKey}) {
+      let groups = [...state.groups]
+      groups = groups.map(group => {
+        if(group.id === id) {
+          group.members.push({
+            id: group.members.length,
             name: faker.fake('{{name.firstName}}'),
             peerKey
           })
         }
-        return space
+        return group
       })
-      state.spaces = spaces
+      state.groups = groups
     },
     receiveGroups(state, groups) {
       state.groups = groups
@@ -104,7 +104,7 @@ export default new Vuex.Store({
       dispatch('createInitialGroup', name)
     },
     createInitialGroup({dispatch}, name) {
-      const groupName = `${name}'s Space`
+      const groupName = `${name}'s Group`
       dispatch('createGroup', groupName)
     },
     async createGroup({dispatch, commit, state}, name) {
@@ -125,24 +125,24 @@ export default new Vuex.Store({
       console.warn(res.data)
       dispatch('fetchGroups')
     },
-    createSpace({commit, state}, name) {
-      const space  = {
-        id: state.spaces.length,
+    createGroup({commit, state}, name) {
+      const group  = {
+        id: state.groups.length,
         name,
         members: []
       }
-      commit('addSpace', space)
+      commit('addGroup', group)
     },
-    joinSpace({commit, state}, spaceKeyToJoin) {
-      const space  = {
-        id: state.spaces.length,
-        name: faker.fake('{{name.lastName}} SPACE'),
+    joinGroup({commit, state}, groupKeyToJoin) {
+      const group  = {
+        id: state.groups.length,
+        name: faker.fake('{{name.lastName}} GROUP'),
         members: []
       }
-      commit('addSpace', space)
+      commit('addGroup', group)
     },
-    addPeerToSpace({commit}, {id, peerKey}) {
-      commit('addPeerToSpace', {id, peerKey})
+    addPeerToGroup({commit}, {id, peerKey}) {
+      commit('addPeerToGroup', {id, peerKey})
     },
     createDevice({commit, state}, name) {
       const device  = {
