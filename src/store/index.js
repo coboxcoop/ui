@@ -89,6 +89,11 @@ export default new Vuex.Store({
       return address => {
         return address in state.connections
       }
+    },
+    groupMembers(state) {
+      return address => {
+        return [state.me]
+      }
     }
   },
   actions: {

@@ -1,6 +1,6 @@
 <template>
 <Section :show="show" @toggle="$emit('toggle')">
-  <template slot="heading">Spaces
+  <template slot="heading">Groups
     <Plus @click.stop.native="showCreate = true" />
   </template>
   <div v-if="showCreate">

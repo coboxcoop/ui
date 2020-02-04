@@ -2,8 +2,7 @@
 <Section :show="show" @toggle="onToggleSection">
   <template slot="heading">
     <div>
-      <Dot @click.native.stop="onClickDot(group.address)" :color="groupStatusColor(group.address)" /> {{group.name}} <sup>{{0}}</sup>
-      <!--instead of 0 I want to know the number of people in the group -->
+      <Dot @click.native.stop="onClickDot(group.address)" :color="groupStatusColor(group.address)" /> {{group.name}} <sup>{{ $store.getters['groupMembers'](group.address).length}}</sup>
     </div>
     <Plus @click.native.stop="onClickPlus" />
   </template>
@@ -15,8 +14,7 @@
     </form>
   </div>
   <div>
-    <div class="group-member">{{$store.state.me.name}} <Dot /></div>
-    <div class="group-member" v-for="member in []" :key="member.id">{{member.name}} <Dot /></div>
+    <div class="group-member" v-for="member in $store.getters['groupMembers'](group.address)" :key="member.id">{{member.name}} <Dot /></div>
   </div>
 </Section>
 </template>
