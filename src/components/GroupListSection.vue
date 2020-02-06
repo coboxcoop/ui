@@ -1,6 +1,6 @@
 <template>
 <Section :show="show" @toggle="$emit('toggle')">
-  <template slot="heading"><span>Groups <sup>{{ $store.state.groups.length}}</sup></span>
+  <template slot="heading"><span>Groups <sup>{{$store.state.groups.length}}</sup></span>
     <Plus @click.stop.native="showCreate = true" />
   </template>
   <div v-if="showCreate">

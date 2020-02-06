@@ -63,6 +63,20 @@ export default new Vuex.Store({
       })
       state.groups = groups
     },
+    // addPeerToGroup(state, {id, peerKey}) {
+    //   let groupMembers = {...state.groupMembers}
+    //   groupMembers = groupMembers.map(member => {
+    //     if(member.peerKey === peerKey) {
+    //       groupMembers.push({
+    //         id: groupMembers.length,
+    //         name: faker.fake('{{name.firstName}}'),
+    //         peerKey
+    //       })
+    //     }
+    //     return member
+    //   })
+    //   state.groupMembers = groupMembers
+    // },
     receiveGroups(state, groups) {
       state.groups = groups
     }
@@ -138,16 +152,9 @@ export default new Vuex.Store({
       }
       commit('addGroup', group)
     },
-    joinGroup({commit, state}, groupKeyToJoin) {
-      const group  = {
-        id: state.groups.length,
-        name: faker.fake('{{name.lastName}} GROUP'),
-        members: []
-      }
-      commit('addGroup', group)
-    },
+    // how do we add a peer to a group
     addPeerToGroup({commit}, {id, peerKey}) {
-      commit('addPeerToGroup', {id, peerKey})
+      // commit('addPeerToGroup', {id, peerKey})
     },
     createDevice({commit, state}, name) {
       const device  = {
