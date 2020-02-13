@@ -11,7 +11,8 @@ export default new Vuex.Store({
     spaces: [],
     devices: [],
     groups: [],
-    connections: {}
+    connections: {},
+    showProfileModal: true
   },
   mutations: {
     receiveProfile(state, profile) {

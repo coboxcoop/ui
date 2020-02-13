@@ -13,6 +13,8 @@
   <DeviceListSection
     :show="showSection('devices')"
     @toggle="toggleSection('devices')" />
+  <ProfileModal
+    v-if="$store.state.showProfileModal" />
 </div>
 </template>
 
@@ -24,6 +26,7 @@ import Tick from '@/components/Tick.vue'
 import Section from '@/components/Section.vue'
 import GroupListSection from '@/components/GroupListSection.vue'
 import DeviceListSection from '@/components/DeviceListSection.vue'
+import ProfileModal from '@/components/ProfileModal.vue'
 
 export default {
   components: {
@@ -33,7 +36,8 @@ export default {
     Tick,
     Section,
     GroupListSection,
-    DeviceListSection
+    DeviceListSection,
+    ProfileModal
   },
   data: () => ({
     openSections: []
