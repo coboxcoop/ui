@@ -128,7 +128,7 @@ export default new Vuex.Store({
     },
     async updateName({commit, dispatch}, name) {
       const {data} = await api.patch('/profile', {name})
-      commit('receiveProfile')
+      commit('receiveProfile', data)
     },
     createInitialGroup({dispatch}, name) {
       const groupName = `${name}'s Group`
