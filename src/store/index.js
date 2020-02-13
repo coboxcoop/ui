@@ -7,13 +7,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    me: null,
+    profile: null,
     spaces: [],
     devices: [],
     groups: [],
     connections: {}
   },
   mutations: {
+    receiveProfile(state, profile) {
+      state.profile = profile
+    },
     updateConnectionStatus(state, {address, connected}) {
       if(connected) {
         state.connections = {
@@ -25,9 +28,6 @@ export default new Vuex.Store({
         Vue.delete(connections, address)
         state.connections = connections
       }
-    },
-    addMyName(state, name) {
-      state.me = {name}
     },
     addDevice(state, device) {
       state.devices = [...state.devices, device]
@@ -82,6 +82,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    onboardingComplete(state) {
+      return state.profile && state.profile.name
+    },
     getNameOfGroup(state) {
       return address => {
         const group = state.groups.find(group => group.address === address)
@@ -112,22 +115,27 @@ export default new Vuex.Store({
   },
   actions: {
     async init({dispatch, commit}) {
+      await dispatch('fetchProfile')
+      /*
       // this is where we would fetch "me", my name, my parentKey
       await dispatch('fetchGroups')
       await dispatch('connectAllGroups')
-      // this is a stub, when the above is done, then this will become an api call/check
-      commit('addMyName', 'dan')
+      */
     },
-    addMyName({commit, dispatch}, name) {
-      commit('addMyName', name)
-      dispatch('createInitialGroup', name)
+    async fetchProfile({commit}) {
+      const {data} = await api.get('/profile')
+      commit('receiveProfile', data)
+    },
+    async updateName({commit, dispatch}, name) {
+      const {data} = await api.patch('/profile', {name})
+      commit('receiveProfile')
     },
     createInitialGroup({dispatch}, name) {
       const groupName = `${name}'s Group`
       dispatch('createGroup', groupName)
     },
     async createGroup({dispatch, commit, state}, name) {
-      const{data} = await api.post('/groups', {name})
+      const {data} = await api.post('/groups', {name})
       dispatch('fetchGroups')
     },
     async joinGroup({dispatch, commit, state}, groupAddressToJoin) {

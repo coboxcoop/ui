@@ -12,7 +12,7 @@
     </form>
   </div>
   <div>
-    <div>{{$store.state.me.name}} <Dot /></div>
+    <div>{{$store.state.profile.name}} <Dot /></div>
     <div v-for="member in device.members" :key="member.id">{{member.name}} <Dot /></div>
   </div>
 </Section>

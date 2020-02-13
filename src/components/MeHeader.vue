@@ -1,6 +1,6 @@
 <template>
 <div class="header">
-  <div><Dot color="green"/> {{$store.state.me.name}}</div>
+  <div><Dot color="green"/> {{$store.state.profile.name}}</div>
   <div>0%</div>
 </div>
 </template>

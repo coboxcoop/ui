@@ -1,5 +1,5 @@
 <template>
-<Index v-if="$store.state.me" />
+<Index v-if="$store.getters['onboardingComplete']" />
 <Onboarding v-else />
 </template>
 

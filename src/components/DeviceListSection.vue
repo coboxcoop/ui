@@ -4,7 +4,7 @@
     <Plus @click.stop.native="showCreate = true" />
   </template>
   <div v-if="showCreate">
-    <p>Hey {{$store.state.me.name}}, what would you like your device to be called?</p>
+    <p>Hey {{$store.state.profile.name}}, what would you like your device to be called?</p>
     <form @submit.prevent="onSubmitCreateDevice">
       <input v-model="newDeviceName" type="text" />
       <button type="submit">Ok</button>

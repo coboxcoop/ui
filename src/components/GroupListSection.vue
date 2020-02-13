@@ -4,7 +4,7 @@
     <Plus @click.stop.native="showCreate = true" />
   </template>
   <div v-if="showCreate">
-    <p>Hey {{$store.state.me.name}}, what would you like your group to be called?</p>
+    <p>Hey {{$store.state.profile.name}}, what would you like your group to be called?</p>
     <form @submit.prevent="onSubmitCreateGroup">
       <input v-model="newGroupName" type="text" />
       <button type="submit">Ok</button>

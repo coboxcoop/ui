@@ -14,7 +14,9 @@
     </form>
   </div>
   <div>
-    <div class="group-member" v-for="member in $store.getters['groupMembers'](group.address)" :key="member.id">{{member.name}} <Dot /></div>
+    <!-- <div class="group-member" v-for="member in $store.getters['groupMembers'](group.address)" :key="member.id">{{member.name}} <Dot /></div> -->
+    <div class="group-member">{{$store.state.profile.name}} <Dot /></div>
+    <div class="group-member" v-for="member in []" :key="member.id">{{member.name}} <Dot /></div>
   </div>
 </Section>
 </template>
