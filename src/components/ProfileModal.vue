@@ -3,6 +3,7 @@
   <p>Update name</p>
   <input type="text" placeholder="My name" v-model="name" />
   <button type="submit">Submit</button>
+  <p>pubKey: {{$store.state.profile.publicKey}}</p>
 </form>
 </template>
 
