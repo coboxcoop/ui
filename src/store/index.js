@@ -153,14 +153,6 @@ export default new Vuex.Store({
       console.warn(res.data)
       dispatch('fetchGroups')
     },
-    createGroup({commit, state}, name) {
-      const group  = {
-        id: state.groups.length,
-        name,
-        members: []
-      }
-      commit('addGroup', group)
-    },
     // how do we add a peer to a group
     addPeerToGroup({commit}, {id, peerKey}) {
       // commit('addPeerToGroup', {id, peerKey})
