@@ -62,13 +62,13 @@ git branch -d feature_branch
     * [x] what about color clashes
 * [x] refactor network, device and space duplication? (if comes up)
 * [x] cobox-core API integration (may be session after next)
-* [ ] create branch for desired data shape using swagger for kieran to sync with
+* [x] create branch for desired data shape using swagger for kieran to sync with
 
 2020-01-23
-* [ ] noted questions from session here: https://ledger-git.dyne.org/CoBox/cobox-ui/issues/1
-  * [ ] related notes: https://hackmd.io/huEdoSnJRLehl681IUqH0w
-* [ ] figure out CLI commands per UI clickable element e.g.
-  * [ ] onboarding giving name also `cobox groups create -n {{name}}` && `cobox groups mount -n {{name}}`
+* [x] noted questions from session here: https://ledger-git.dyne.org/CoBox/cobox-ui/issues/1
+  * [x] related notes: https://hackmd.io/huEdoSnJRLehl681IUqH0w
+* [x] figure out CLI commands per UI clickable element e.g.
+  * [x] onboarding giving name also `cobox groups create -n {{name}}` && `cobox groups mount -n {{name}}`
 
 2020-01-28
 * [ ] different states of a space (network health)
@@ -78,3 +78,9 @@ git branch -d feature_branch
   * [ ] scheduled
   * [ ] updating / busy
   * [ ] online but no connections
+
+2020-02-13
+* [x] profile update name working
+* [ ] update websocket needs https://ledger-git.dyne.org/CoBox/cobox-server/pulls/35
+* [ ] matt to take on completion of groups 
+* [ ] dan to take on profile work 
