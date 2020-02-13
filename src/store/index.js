@@ -116,12 +116,19 @@ export default new Vuex.Store({
   },
   actions: {
     async init({dispatch, commit}) {
+      dispatch('connectWebsocket')
       await dispatch('fetchProfile')
       /*
       // this is where we would fetch "me", my name, my parentKey
       await dispatch('fetchGroups')
       await dispatch('connectAllGroups')
       */
+    },
+    connectWebsocket({commit}) {
+      const ws = new WebSocket(`ws://localhost:3000/api`)
+      ws.onmessage = e => console.info('ws', e)
+      ws.onerror = err => console.error('ws', err)
+      ws.onclose = () => console.warn('ws', 'closed')
     },
     async fetchProfile({commit}) {
       const {data} = await api.get('/profile')
