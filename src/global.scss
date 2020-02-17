@@ -18,7 +18,7 @@ body {
   font-size: 2.4rem;
   font-family: 'Neue Haas Grotesk', sans-serif;
   letter-spacing: 0.02em;
-  line-height: 1.5;
+  line-height: 1.2;
   background: #eee;
   display: flex;
   align-items: center;
@@ -29,7 +29,17 @@ sup {
 }
 input[type='text'] {
   border-bottom: 1px solid;
-  max-width: 100%;
+  width: 100%;
+}
+p {
+  margin-bottom: 1em;
+}
+form {
+  position: relative;
+  button {
+    position: absolute;
+    right: 0;
+  }
 }
 pre {
   font-family: monospace;

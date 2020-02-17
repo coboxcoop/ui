@@ -1,10 +1,12 @@
 <template>
 <div>
   <MeHeader />
+  <ProfileModal
+    v-if="$store.state.showProfileModal" />
   <Section :show="showSection('network')" @toggle="toggleSection('network')">
     <template slot="heading">
       <div>Network <sup>1</sup></div>
-      <Dot />
+      <Dot color="seagreen" />
     </template>
   </Section>
   <GroupListSection
@@ -14,8 +16,6 @@
   <DeviceListSection
     :show="showSection('devices')"
     @toggle="toggleSection('devices')" />
-  <ProfileModal
-    v-if="$store.state.showProfileModal" />
 </div>
 </template>
 

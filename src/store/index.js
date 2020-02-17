@@ -12,7 +12,7 @@ export default new Vuex.Store({
     devices: [],
     groups: [],
     connections: {},
-    showProfileModal: true
+    showProfileModal: false
   },
   mutations: {
     receiveProfile(state, profile) {
