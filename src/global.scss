@@ -19,6 +19,10 @@ body {
   font-family: 'Neue Haas Grotesk', sans-serif;
   letter-spacing: 0.02em;
   line-height: 1.5;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 sup {
   font-size: 60%;

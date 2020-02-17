@@ -15,9 +15,12 @@ export default {
 <style lang="scss" scoped>
 #app {
   padding: 1rem;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: white;
+  margin: auto;
+  width: 100%;
+  max-width: 38rem;
 }
 </style>
 
