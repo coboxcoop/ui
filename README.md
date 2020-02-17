@@ -88,6 +88,9 @@ git branch -d feature_branch
 2020-02-17
 /* due to bug in creating groups have worked on interface and styling  */
 
+* work in progress cobox site: https://sb-cobox.netlify.com/posts/first-designs/
+* work in progress style guide: https://gitlab.com/coboxcoop/style-guide
+
 ## States within CoBox
 ### Spaces/Groups
 * [ ] different states of a space (network health)
