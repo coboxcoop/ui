@@ -112,6 +112,24 @@ export default new Vuex.Store({
       return address => {
         return [state.me]
       }
+    },
+    keyColor(state) {
+      return key => {
+        const nums = [
+          key.slice(0, 5),
+          key.slice(5, 11),
+          key.slice(11, 16)
+        ].map(hex => parseInt(`0x${hex}`))
+
+        const h = nums[0] % 360
+        const s = `${70 + (nums[1] % 30)}%`
+        const l = `${30 + (nums[2] % 50)}%`
+        return `hsl(${h}, ${s}, ${l})`
+      }
+    },
+    myKeyColor(state, getters) {
+      const key = state.profile && state.profile.publicKey
+      if(key) return getters['keyColor'](key)
     }
   },
   actions: {
