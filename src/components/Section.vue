@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.section {
+.section:not(:last-of-type) {
   border-bottom: 1px solid;
 }
 .body {
