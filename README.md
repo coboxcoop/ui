@@ -82,5 +82,38 @@ git branch -d feature_branch
 2020-02-13
 * [x] profile update name working
 * [ ] update websocket needs https://ledger-git.dyne.org/CoBox/cobox-server/pulls/35
-* [ ] matt to take on completion of groups 
-* [ ] dan to take on profile work 
+* [ ] matt to take on completion of groups
+* [ ] dan to take on profile work
+
+2020-02-17
+/* due to bug in creating groups have worked on interface and styling  */
+
+## States within CoBox
+### Spaces/Groups
+* [ ] different states of a space (network health)
+  * [ ] up-to-date
+  * [ ] swarming (connected)
+  * [ ] disconnected
+  * [ ] scheduled
+  * [ ] updating / busy
+  * [ ] online but no connections
+### People/Peers
+* [ ] different states a person can be (profile icon)
+  * [ ] color assigned (derived from peers publicKey)
+  * [ ] online (connected to the network)
+  * [ ] offline (not connected to the netork)
+  /* connected to the network in this case means connected to wifi
+  AND connected to remote olimex */
+* [ ] peers publicKey derived profile icon color
+  * [ ] human peers connection status
+### CoBox hardware devices
+* [ ] blind replication groups
+  * [ ] uptodate (when there is a peers online and there are no more changes)
+  * [ ] connected and pingable
+  * [ ] disconnected not pingable
+### Disk Usage
+/* this can be within hardware device or witin our group/spaces  */
+* [ ] disk % usage
+  * [ ] full
+  * [ ] nearly full
+  * [ ] etc
