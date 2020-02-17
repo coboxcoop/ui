@@ -1,7 +1,7 @@
 <template>
-<Section :show="show" @toggle="$emit('toggle')">
+<Section :show="show" @toggle="onToggle">
   <template slot="heading"><span>Groups <sup>{{$store.state.groups.length}}</sup></span>
-    <Plus @click.stop.native="showCreate = true" />
+    <Plus @click.stop.native="onClickPlus" :minus="showCreate" />
   </template>
   <div v-if="showCreate">
     <p>Hey {{$store.state.profile.name}}, what would you like your group to be called?</p>
@@ -52,6 +52,20 @@ export default {
     groupAddressToJoin: ''
   }),
   methods: {
+    onToggle() {
+      if(this.show) this.showCreate = false
+      if(!this.show && !this.$store.state.groups.length) this.showCreate = true
+
+      this.$emit('toggle')
+    },
+    onClickPlus() {
+      if(this.show) {
+        this.showCreate = !this.showCreate
+      } else {
+        this.showCreate = true
+        this.$emit('open')
+      }
+    },
     onSubmitGroupAddress() {
       this.$store.dispatch('joinGroup', this.groupAddressToJoin)
       this.groupAddressToJoin = ''

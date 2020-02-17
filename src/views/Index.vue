@@ -9,7 +9,8 @@
   </Section>
   <GroupListSection
     :show="showSection('spaces')"
-    @toggle="toggleSection('spaces')" />
+    @toggle="toggleSection('spaces')"
+    @open="openSection('spaces')" />
   <DeviceListSection
     :show="showSection('devices')"
     @toggle="toggleSection('devices')" />
@@ -52,6 +53,9 @@ export default {
       } else {
         this.openSections.push(name)
       }
+    },
+    openSection(name) {
+      if(!this.showSection(name)) this.openSections.push(name)
     }
   }
 }
