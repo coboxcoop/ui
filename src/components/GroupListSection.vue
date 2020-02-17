@@ -6,7 +6,7 @@
   <div v-if="showCreate">
     <p>Hey {{$store.state.profile.name}}, what would you like your group to be called?</p>
     <form @submit.prevent="onSubmitCreateGroup">
-      <input v-model="newGroupName" type="text" />
+      <input v-model="newGroupName" type="text" placeholder="Group name" />
       <button type="submit">Ok</button>
     </form>
     <div v-if="showCreate">
