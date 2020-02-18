@@ -1,7 +1,7 @@
 <template>
 <div id="app"> 
-  <div v-if="$store.state.ready" class="router">
-    <RouterView v-if="$store.getters['onboardingComplete']" />
+  <div v-if="$store.state.ready" class="yield">
+    <Layout v-if="$store.getters['onboardingComplete']" />
     <OnboardingView v-else />
   </div>
   <div v-else>Please wait...</div>
@@ -9,10 +9,12 @@
 </template>
 
 <script>
+import Layout from '@/components/Layout.vue'
 import OnboardingView from '@/views/OnboardingView.vue'
 
 export default {
   components: {
+    Layout,
     OnboardingView
   },
   mounted() {
@@ -36,7 +38,7 @@ export default {
   border-radius: 4px;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
 }
-.router {
+.yield {
   flex: 1;
   display: flex;
   flex-direction: column;

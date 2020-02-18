@@ -54,34 +54,6 @@ export default new Vuex.Store({
     addGroup(state, group) {
       state.groups = [...state.groups, group]
     },
-    addPeerToGroup(state, {id, peerKey}) {
-      let groups = [...state.groups]
-      groups = groups.map(group => {
-        if(group.id === id) {
-          group.members.push({
-            id: group.members.length,
-            name: faker.fake('{{name.firstName}}'),
-            peerKey
-          })
-        }
-        return group
-      })
-      state.groups = groups
-    },
-    // addPeerToGroup(state, {id, peerKey}) {
-    //   let groupMembers = {...state.groupMembers}
-    //   groupMembers = groupMembers.map(member => {
-    //     if(member.peerKey === peerKey) {
-    //       groupMembers.push({
-    //         id: groupMembers.length,
-    //         name: faker.fake('{{name.firstName}}'),
-    //         peerKey
-    //       })
-    //     }
-    //     return member
-    //   })
-    //   state.groupMembers = groupMembers
-    // },
     receiveGroups(state, groups) {
       state.groups = groups
     }
@@ -141,11 +113,6 @@ export default new Vuex.Store({
       dispatch('connectWebsocket')
       await dispatch('fetchProfile')
       commit('ready')
-      /*
-      // this is where we would fetch "me", my name, my parentKey
-      await dispatch('fetchGroups')
-      await dispatch('connectAllGroups')
-      */
     },
     connectWebsocket({commit}) {
       const ws = new WebSocket(`ws://localhost:3000/api`)
@@ -185,7 +152,7 @@ export default new Vuex.Store({
     },
     // how do we add a peer to a group
     addPeerToGroup({commit}, {id, peerKey}) {
-      // commit('addPeerToGroup', {id, peerKey})
+      // ask api to add peer to group
     },
     createDevice({commit, state}, name) {
       const device  = {
