@@ -23,7 +23,11 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('init')
-    if(!this.hasName) this.$router.replace({name: 'home'})
+    if(this.hasName) {
+      this.$store.dispatch('groups/fetch')
+    } else {
+      this.$router.replace({name: 'home'})
+    }
   },
   computed: {
     ready() {

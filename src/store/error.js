@@ -9,7 +9,7 @@ export default {
         if('errors' in e.response.data) {
           const message = e.response.data.errors.map(error => {
             return error.msg
-          }).join('\n')
+          }).join(', ')
           return commit('receiveMessage', message)
         }
       }

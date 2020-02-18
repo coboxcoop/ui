@@ -1,8 +1,8 @@
 <template>
 <nav>
-  <RouterLink :to="{name: 'network'}">Network</RouterLink>
-  <RouterLink :to="{name: 'groups'}">Groups</RouterLink>
-  <RouterLink :to="{name: 'devices'}">Devices</RouterLink>
+  <RouterLink :to="{name: 'network'}">Network ({{networkCount}})</RouterLink>
+  <RouterLink :to="{name: 'groups'}">Groups ({{groupsCount}})</RouterLink>
+  <RouterLink :to="{name: 'devices'}">Devices ({{devicesCount}})</RouterLink>
 </nav>
 </template>
 
@@ -19,5 +19,17 @@ nav {
 </style>
 
 <script>
-export default {}
+export default {
+  computed: {
+    groupsCount() {
+      return this.$store.getters['groups/count']
+    },
+    networkCount() {
+      return 1
+    },
+    devicesCount() {
+      return 0
+    }
+  }
+}
 </script>

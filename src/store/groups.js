@@ -11,12 +11,21 @@ export default api => ({
     async create({dispatch}, name) {
       await api.post('/groups', {name})
       await dispatch('fetch')
+    },
+    async join({dispatch}, groupInviteKey) {
+      const [address, encryptionKey, name] = groupInviteKey.split(':')
+      await api.post('/groups', {name, encryptionKey, address})
+      await dispatch('fetch')
     }
   },
   mutations: {
     receiveData(state, data) {
-      console.warn('got data', data)
       state.data = data
+    }
+  },
+  getters: {
+    count(state) {
+      return state.data.length
     }
   }
 })
