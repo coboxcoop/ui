@@ -27,7 +27,7 @@ export default {
     name: ''
   }),
   methods: {
-    onSubmitName() {
+    async onSubmitName() {
       this.$store.dispatch('updateName', this.name)
       this.name = ''
     }

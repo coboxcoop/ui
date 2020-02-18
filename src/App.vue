@@ -1,11 +1,20 @@
 <template>
 <div id="app"> 
-  <router-view />
+  <div v-if="$store.state.ready" class="router">
+    <RouterView v-if="$store.getters['onboardingComplete']" />
+    <OnboardingView v-else />
+  </div>
+  <div v-else>Please wait...</div>
 </div>
 </template>
 
 <script>
+import OnboardingView from '@/views/OnboardingView.vue'
+
 export default {
+  components: {
+    OnboardingView
+  },
   mounted() {
     this.$store.dispatch('init')
   }
@@ -26,6 +35,11 @@ export default {
   max-height: 52rem;
   border-radius: 4px;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+}
+.router {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 </style>
 

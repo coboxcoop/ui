@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    ready: false,
     profile: null,
     spaces: [],
     devices: [],
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     showProfileModal: false
   },
   mutations: {
+    ready(state) {
+      state.ready = true
+    },
     receiveProfile(state, profile) {
       state.profile = profile
     },
@@ -136,6 +140,7 @@ export default new Vuex.Store({
     async init({dispatch, commit}) {
       dispatch('connectWebsocket')
       await dispatch('fetchProfile')
+      commit('ready')
       /*
       // this is where we would fetch "me", my name, my parentKey
       await dispatch('fetchGroups')
