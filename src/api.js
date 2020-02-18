@@ -1,7 +1,9 @@
 import axios from 'axios'
 
-const api = axios.create({
-  baseURL: 'http://localhost:3000/api'
+const port = 3000
+
+export const api = axios.create({
+  baseURL: `http://localhost:${port}/api`
 })
 
-export default api 
+export const ws = new WebSocket(`ws://localhost:${port}/api`)
