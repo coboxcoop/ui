@@ -1,11 +1,26 @@
 <template>
 <SubPage>
   <template v-slot:header>Groups</template>
-  <div v-for="group in groups" :key="group.address">
-    <Dot color="lightseagreen" /> {{group.name}}
-  </div>
+  <nav v-for="group in groups" :key="group.address">
+    <RouterLink :to="{name: 'group', params: {address: group.address}}">
+      <Dot color="lightseagreen" /> {{group.name}}
+    </RouterLink>
+  </nav>
 </SubPage>
 </template>
+
+<style lang="scss" scoped>
+nav {
+  margin-top: -0.6rem;
+  a {
+    display: block;
+    padding: 0.6rem 0;
+    &:not(:last-child) {
+      border-bottom: 1px solid;
+    }
+  }
+}
+</style>
 
 <script>
 import SubPage from '@/components/SubPage.vue'
