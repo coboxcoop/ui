@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import HomeView from '@/views/HomeView.vue'
 import NetworkView from '@/views/NetworkView.vue'
 import GroupsView from '@/views/GroupsView.vue'
