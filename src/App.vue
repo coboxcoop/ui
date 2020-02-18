@@ -1,7 +1,7 @@
 <template>
 <div id="app"> 
   <div v-if="ready" class="yield">
-    <Layout v-if="onboardingComplete" />
+    <Layout v-if="hasName" />
     <OnboardingView v-else />
   </div>
   <div v-else>Please wait...</div>
@@ -24,15 +24,8 @@ export default {
     ready() {
       return this.$store.state.ready
     },
-    onboardingComplete() {
-      return this.$store.getters['onboardingComplete']
-    }
-  },
-  watch: {
-    onboardingComplete(to, from)  {
-      if(to && !from && !this.$store.getters['hasAnyGroups']) {
-        this.$router.push({name: 'groups-init'})
-      }
+    hasName() {
+      return this.$store.getters['profile/hasName']
     }
   }
 }

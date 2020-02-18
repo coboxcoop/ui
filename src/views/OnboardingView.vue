@@ -28,8 +28,9 @@ export default {
   }),
   methods: {
     async onSubmitName() {
-      this.$store.dispatch('updateName', this.name)
+      this.$store.dispatch('profile/updateName', this.name)
       this.name = ''
+      this.$router.replace({name: 'groups-init'})
     }
   }
 }

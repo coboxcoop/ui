@@ -1,7 +1,7 @@
 <template>
 <SubPage>
   <div class="content">
-    <p>Hi {{$store.state.profile.name}}, what would you like to do?</p>
+    <p>Hi {{$store.getters['profile/myName']}}, what would you like to do?</p>
 
     <nav>
       <RouterLink :to="{name: 'groups-join'}">Join a group</RouterLink>

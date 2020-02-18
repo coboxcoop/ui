@@ -1,6 +1,6 @@
 <template>
 <div class="header">
-  <div><Dot :color="$store.getters['myKeyColor']"/> {{$store.state.profile.name}}</div>
+  <div><Dot :color="$store.getters['profile/myKeyColor']"/> {{$store.getters['profile/myName']}}</div>
   <div class="disk">0%</div>
 </div>
 </template>
