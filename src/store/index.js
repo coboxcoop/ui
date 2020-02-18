@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import api from '@/api'
+import {api, ws} from '@/api'
 
 import error from '@/store/error'
 import groups from '@/store/groups'
@@ -27,9 +27,6 @@ export default new Vuex.Store({
     async init({dispatch, commit}) {
       await dispatch('profile/fetch')
       commit('ready')
-      // dispatch('connectWebsocket')
-      // await dispatch('fetchProfile')
-      // commit('ready')
     }
   }
 })

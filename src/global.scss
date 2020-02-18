@@ -15,9 +15,12 @@
 }
 html {
   font-size: 10px;
+  --body: 2.8rem;
+  --small: 1.8rem;
+  --ease: cubic-bezier(0.19, 1, 0.22, 1);
 }
 body {
-  font-size: 2.8rem;
+  font-size: var(--body);
   font-family: 'Neue Haas Grotesk', sans-serif;
   letter-spacing: 0.02em;
   line-height: 1.2;

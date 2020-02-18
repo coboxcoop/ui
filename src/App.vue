@@ -1,24 +1,29 @@
 <template>
 <div id="app"> 
-  <div v-if="ready" class="yield">
-    <Layout v-if="hasName" />
-    <OnboardingView v-else />
-  </div>
-  <div v-else>Please wait...</div>
+  <transition name="fade">
+    <div v-if="ready" class="yield">
+      <Layout v-if="hasName" />
+      <OnboardingView v-else />
+    </div>
+  </transition>
+  <Errors />
 </div>
 </template>
 
 <script>
 import Layout from '@/components/Layout.vue'
 import OnboardingView from '@/views/OnboardingView.vue'
+import Errors from '@/components/Errors.vue'
 
 export default {
   components: {
+    Errors,
     Layout,
     OnboardingView
   },
-  mounted() {
-    this.$store.dispatch('init')
+  async mounted() {
+    await this.$store.dispatch('init')
+    if(!this.hasName) this.$router.replace({name: 'home'})
   },
   computed: {
     ready() {
@@ -33,6 +38,7 @@ export default {
 
 <style lang="scss" scoped>
 #app {
+  position: relative;
   padding: 1.6rem;
   display: flex;
   flex-direction: column;
@@ -45,6 +51,12 @@ export default {
   max-height: 52rem;
   border-radius: 4px;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s var(--ease);
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 .yield {
   flex: 1;

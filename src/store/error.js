@@ -1,10 +1,18 @@
 export default {
   namespaced: true,
   state: {
-    message: 'An error has ocurred'
+    message: null
   },
   actions: {
     handle({commit}, e) {
+      if(e.response && e.response.data) {
+        if('errors' in e.response.data) {
+          const message = e.response.data.errors.map(error => {
+            return error.msg
+          }).join('\n')
+          return commit('receiveMessage', message)
+        }
+      }
       commit('receiveMessage', e.message)
     },
     dismiss({commit}) {
