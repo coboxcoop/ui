@@ -60,7 +60,10 @@ export default new Vuex.Store({
   },
   getters: {
     onboardingComplete(state) {
-      return state.profile && state.profile.name
+      return !!(state.profile && state.profile.name)
+    },
+    hasAnyGroups(state) {
+      return state.groups.length
     },
     getNameOfGroup(state) {
       return address => {

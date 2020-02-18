@@ -1,7 +1,7 @@
 <template>
-<div>
-  <header>
-    <RouterLink class="back" :to="{name: 'home'}">
+<div class="subpage">
+  <header v-if="$slots.header">
+    <RouterLink class="back" :to="{name: 'home'}" >
       <TriangleIcon class="triangle" />
     </RouterLink>
     <slot name="header" />
@@ -26,7 +26,6 @@ export default {
 header {
   border-bottom: 1px solid;
   padding: 0.6rem 0;
-  margin-bottom: 0.6rem;
   .back {
     position: relative;
     width: 1em;
@@ -41,5 +40,16 @@ header {
     transform: translate(-50%, -50%) rotate(180deg);
     transform-origin: center center;
   }
+}
+.subpage {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.inner {
+  margin-top: 0.6rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
 <div id="app"> 
-  <div v-if="$store.state.ready" class="yield">
-    <Layout v-if="$store.getters['onboardingComplete']" />
+  <div v-if="ready" class="yield">
+    <Layout v-if="onboardingComplete" />
     <OnboardingView v-else />
   </div>
   <div v-else>Please wait...</div>
@@ -19,6 +19,21 @@ export default {
   },
   mounted() {
     this.$store.dispatch('init')
+  },
+  computed: {
+    ready() {
+      return this.$store.state.ready
+    },
+    onboardingComplete() {
+      return this.$store.getters['onboardingComplete']
+    }
+  },
+  watch: {
+    onboardingComplete(to, from)  {
+      if(to && !from && !this.$store.getters['hasAnyGroups']) {
+        this.$router.push({name: 'groups-init'})
+      }
+    }
   }
 }
 </script>
