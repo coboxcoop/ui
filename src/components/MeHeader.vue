@@ -10,10 +10,13 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid;
-  padding-bottom: 0.4rem;
+  padding-bottom: 0.6rem;
 }
 .disk {
   color: lightgray;
+}
+.dot {
+  margin-right: 0.3rem;
 }
 </style>
 

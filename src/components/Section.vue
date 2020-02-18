@@ -29,6 +29,6 @@ export default {
   align-items: center;
   cursor: pointer;
   user-select: none;
-  padding: 0.4rem 0;
+  padding: 0.6rem 0;
 }
 </style>
