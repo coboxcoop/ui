@@ -91,8 +91,8 @@ git branch -d feature_branch
 * work in progress cobox site: https://sb-cobox.netlify.com/posts/first-designs/
 * work in progress style guide: https://gitlab.com/coboxcoop/style-guide
 
-## States within CoBox
-### Spaces/Groups
+### States within CoBox
+#### Spaces/Groups
 * [ ] different states of a space (network health)
   * [ ] up-to-date
   * [ ] swarming (connected)
@@ -100,7 +100,7 @@ git branch -d feature_branch
   * [ ] scheduled
   * [ ] updating / busy
   * [ ] online but no connections
-### People/Peers
+#### People/Peers
 * [ ] different states a person can be (profile icon)
   * [ ] color assigned (derived from peers publicKey)
   * [ ] online (connected to the network)
@@ -109,14 +109,30 @@ git branch -d feature_branch
   AND connected to remote olimex */
 * [ ] peers publicKey derived profile icon color
   * [ ] human peers connection status
-### CoBox hardware devices
+#### CoBox hardware devices
 * [ ] blind replication groups
   * [ ] uptodate (when there is a peers online and there are no more changes)
   * [ ] connected and pingable
   * [ ] disconnected not pingable
-### Disk Usage
+#### Disk Usage
 /* this can be within hardware device or witin our group/spaces  */
 * [ ] disk % usage
   * [ ] full
   * [ ] nearly full
   * [ ] etc
+
+2020-02-18
+* [ ] admin invites?
+  * [ ] steps for getting added as an admin to an olimex
+    * [ ] one step? 
+      * [ ] share the admin passphrase with them
+    * [ ] multi step?
+      * [ ] initiator admin whitelists peer admin's public key
+      * [ ] generates invite code bound to specific peers public key (encrypted)
+      * [ ] shares this invite with peer
+      * [ ] peer inputs this in their software in `join device`
+        * [ ] software decrypts invite
+        * [ ] uses invite to register device
+      * [ ] peer is now an admin
+  * [ ] which of these is correct? if one step, then guess there is risk of leaking admin passphrase?
+
