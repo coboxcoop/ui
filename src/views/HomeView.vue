@@ -1,8 +1,8 @@
 <template>
 <nav>
-  <RouterLink :to="{name: 'network'}">Network ({{networkCount}})</RouterLink>
-  <RouterLink :to="{name: 'groups'}">Groups ({{groupsCount}})</RouterLink>
-  <RouterLink :to="{name: 'devices'}">Devices ({{devicesCount}})</RouterLink>
+  <RouterLink :to="{name: 'groups'}">Groups {{groupsCount}}</RouterLink>
+  <RouterLink :to="{name: 'devices'}">Devices {{devicesCount}}</RouterLink>
+  <RouterLink :to="{name: 'network'}">Network {{networkCount}}</RouterLink>
 </nav>
 </template>
 
