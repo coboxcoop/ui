@@ -1,8 +1,10 @@
 <template>
 <SubPage>
-  <div>
-    Joining a group here
-  </div>
+  <p>What is the public key of the group?</p>
+  <form @submit.prevent>
+    <input type="text" placeholder="Group key" />
+    <button type="submit">Ok</button>
+  </form>
 </SubPage>
 </template>
 
