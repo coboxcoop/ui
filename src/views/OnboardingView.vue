@@ -6,7 +6,7 @@
     <button type="submit">Ok</button>
   </form>
 
-  <div class="bottom">Restore identity</div>
+  <div class="bottom">Backup account</div>
 </div>
 </template>
 

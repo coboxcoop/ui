@@ -12,6 +12,7 @@ import DevicesView from '@/views/admin/DevicesView.vue'
 import DevicesInitView from '@/views/admin/DevicesInitView.vue'
 import DevicesJoinView from '@/views/admin/DevicesJoinView.vue'
 import DevicesSetupView from '@/views/admin/DevicesSetupView.vue'
+import BackupView from '@/views/BackupView.vue'
 
 Vue.use(VueRouter)
 
@@ -26,7 +27,8 @@ const routes = [
   {path: '/admin/devices',       name: 'admin-devices',       component: DevicesView},
   {path: '/admin/devices/init',  name: 'admin-devices-init',  component: DevicesInitView},
   {path: '/admin/devices/join',  name: 'admin-devices-join',  component: DevicesJoinView},
-  {path: '/admin/devices/setup', name: 'admin-devices-setup', component: DevicesSetupView}
+  {path: '/admin/devices/setup', name: 'admin-devices-setup', component: DevicesSetupView},
+  {path: '/backup',              name: 'backup',              component: BackupView}
 ]
 
 export default new VueRouter({
