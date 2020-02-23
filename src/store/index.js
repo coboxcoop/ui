@@ -9,6 +9,7 @@ import profile from '@/store/profile'
 import network from '@/store/network'
 import devices from '@/store/devices'
 import system from '@/store/system'
+import backup from '@/store/backup'
 
 Vue.use(Vuex)
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     profile: profile({api, events}),
     network: network(api),
     devices: devices({api, events}),
+    backup: backup(api),
     error
   },
   state: {
