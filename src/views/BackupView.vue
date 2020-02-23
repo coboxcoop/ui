@@ -5,7 +5,7 @@
     <p>Where would you like to save your account to?</p>
 
     <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="filesystem location" v-model="filesystemLocation" />
+      <input type="text" placeholder="Filesystem location" v-model="filesystemLocation" />
       <button type="submit">Ok</button>
     </form>
   </div>
@@ -16,6 +16,9 @@
 import SubPage from '@/components/SubPage.vue'
 
 export default {
+  data: () => ({
+    filesystemLocation: ''
+  }),
   components: {
     SubPage
   },
