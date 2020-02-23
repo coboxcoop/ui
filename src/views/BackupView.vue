@@ -20,8 +20,9 @@ export default {
     SubPage
   },
   methods: {
-    onSubmit() {
-      this.$store.dispatch('profile/backupProfile', this.filesystemLocation)
+    async onSubmit() {
+      await this.$store.dispatch('profile/backupProfile', this.filesystemLocation)
+      this.$router.push({name: 'home'})
     }
   }
 }
