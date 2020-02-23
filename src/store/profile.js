@@ -15,8 +15,7 @@ export default ({api}) => ({
       commit('receiveData', data)
     },
     async backupProfile({commit}, dir) {
-      const {data} = await api.put('/keys/export', {dir})
-      commit('receiveData', data)
+      await api.put('/keys/export', {dir})
     }
   },
   mutations: {
