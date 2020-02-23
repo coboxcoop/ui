@@ -5,7 +5,7 @@
     <p>Where would you like to save your account to?</p>
 
     <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="filesystem location" />
+      <input type="text" placeholder="filesystem location" v-model="filesystemLocation" />
       <button type="submit">Ok</button>
     </form>
   </div>
@@ -20,14 +20,8 @@ export default {
     SubPage
   },
   methods: {
-    async onSubmit() {
-      try {
-        await this.$store.dispatch('groups/create', this.groupName)
-        this.groupName = ''
-        this.$router.replace({name: 'groups'})
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
+    onSubmit() {
+      this.$store.dispatch('profile/backupProfile', this.filesystemLocation)
     }
   }
 }
