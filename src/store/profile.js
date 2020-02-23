@@ -13,9 +13,6 @@ export default api => ({
       if(!n) n = 'Anonymous'
       const {data} = await api.patch('/profile', {name: n})
       commit('receiveData', data)
-    },
-    async backupProfile({commit}, dir) {
-      await api.put('/keys/export', {dir})
     }
   },
   mutations: {

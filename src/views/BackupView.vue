@@ -1,30 +1,30 @@
 <template>
-<SubPage>
+<Screen :back="{name: 'home'}">
   <template v-slot:header>Backup</template>
   <div class="page">
     <p>Where would you like to save your account to?</p>
 
     <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="Filesystem location" v-model="filesystemLocation" />
+      <input type="text" placeholder="Filesystem location" v-model="path" />
       <button type="submit">Ok</button>
     </form>
   </div>
-</SubPage>
+</Screen>
 </template>
 
 <script>
-import SubPage from '@/components/SubPage.vue'
+import Screen from '@/components/Screen.vue'
 
 export default {
   data: () => ({
-    filesystemLocation: ''
+    path: ''
   }),
   components: {
-    SubPage
+    Screen
   },
   methods: {
     async onSubmit() {
-      await this.$store.dispatch('profile/backupProfile', this.filesystemLocation)
+      await this.$store.dispatch('backup/exportKeys', this.path)
       this.$router.push({name: 'home'})
     }
   }

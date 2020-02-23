@@ -8,6 +8,7 @@ import groups from '@/store/groups'
 import profile from '@/store/profile'
 import network from '@/store/network'
 import devices from '@/store/admin/devices'
+import backup from '@/store/backup'
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     profile: profile(api),
     network: network(api),
     devices: devices(api),
+    backup: backup(api),
     error
   },
   state: {
