@@ -9,7 +9,9 @@ export default api => ({
       commit('receiveData', data)
     },
     async updateName({commit}, name) {
-      const {data} = await api.patch('/profile', {name})
+      let n = name.trim()
+      if(!n) n = 'Anonymous'
+      const {data} = await api.patch('/profile', {name: n})
       commit('receiveData', data)
     }
   },

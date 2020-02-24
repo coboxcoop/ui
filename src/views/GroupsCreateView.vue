@@ -1,5 +1,5 @@
 <template>
-<SubPage>
+<Screen :back="{name: 'groups-init'}">
   <div class="page">
     <p>What would you like your group to be called?</p>
 
@@ -8,18 +8,25 @@
       <button type="submit">Ok</button>
     </form>
   </div>
-</SubPage>
+</Screen>
 </template>
 
+<style scoped lang="scss">
+.page {
+  border-top: 1px solid;
+  padding-top: 0.6rem;
+}
+</style>
+
 <script>
-import SubPage from '@/components/SubPage.vue'
+import Screen from '@/components/Screen.vue'
 
 export default {
   data: () => ({
     groupName: ''
   }),
   components: {
-    SubPage
+    Screen
   },
   methods: {
     async onSubmit() {

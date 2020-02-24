@@ -1,15 +1,15 @@
 <template>
-<SubPage>
+<Screen :back="{name: 'home'}">
   <template v-slot:header>Network</template>
-</SubPage>
+</Screen>
 </template>
 
 <script>
-import SubPage from '@/components/SubPage.vue'
+import Screen from '@/components/Screen.vue'
 
 export default {
   components: {
-    SubPage
+    Screen
   }
 }
 </script>
