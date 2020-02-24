@@ -1,11 +1,12 @@
 <template>
 <Screen :back="{name: 'home'}">
-  <template v-slot:header>Network</template>
+  <template v-slot:header>
+    Network <sup>{{$store.getters['network/count']}}</sup>
+  </template>
   <div class="container" ref="container">
     <svg class="network" :width="width" :height="height" />
   </div>
   <div class="footer">
-    {{nodes.length}} nodes, {{links.length}} links
   </div>
 </Screen>
 </template>

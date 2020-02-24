@@ -1,3 +1,5 @@
+import uniq from 'lodash/uniq'
+
 export default api => ({
   namespaced: true,
   state: {
@@ -21,5 +23,11 @@ export default api => ({
   mutations: {
   },
   getters: {
+    count(state) {
+      return uniq(
+        Object.values(state.groups).flatMap(g => g.members)
+          .concat(Object.keys(state.groups).map(gid => parseInt(gid)))
+      ).length
+    }
   }
 })

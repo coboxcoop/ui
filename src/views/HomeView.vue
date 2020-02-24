@@ -26,16 +26,6 @@
 </Screen>
 </template>
 
-<style lang="scss" scoped>
-nav {
-  .dot {
-    position: absolute;
-    top: 1.2rem;
-    right: 0;
-  }
-}
-</style>
-
 <script>
 import Screen from '@/components/Screen.vue'
 import Plus from '@/components/Plus.vue'
@@ -52,7 +42,7 @@ export default {
       return this.$store.getters['groups/count']
     },
     networkCount() {
-      return 1
+      return this.$store.getters['network/count']
     },
     devicesCount() {
       return 0

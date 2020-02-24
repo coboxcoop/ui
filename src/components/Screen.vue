@@ -8,10 +8,18 @@
 </div>
 </template>
 
+<style lang="scss">
+.screen header .plus {
+  position: absolute;
+  top: 1.2rem;
+  right: 0;
+}
+</style>
 <style lang="scss" scoped>
 header {
   border-top: 1px solid;
   padding: 0.6rem 0;
+  position: relative;
 }
 .screen {
   flex: 1;
