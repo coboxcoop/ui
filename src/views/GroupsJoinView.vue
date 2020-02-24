@@ -1,5 +1,5 @@
 <template>
-<Screen>
+<Screen :back="{name: 'groups-init'}">
   <div class="page">
     <p>What is the invite key of the group?</p>
     <form @submit.prevent="onSubmit">

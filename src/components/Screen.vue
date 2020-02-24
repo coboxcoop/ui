@@ -1,6 +1,6 @@
 <template>
 <div class="screen">
-  <MeHeader />
+  <MeHeader :back="back" />
   <slot />
 </div>
 </template>
@@ -17,6 +17,9 @@
 import MeHeader from '@/components/MeHeader.vue'
 
 export default {
+  props: {
+    back: Object
+  },
   components: {
     MeHeader
   }

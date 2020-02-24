@@ -1,5 +1,5 @@
 <template>
-<Screen>
+<Screen :back="{name: 'home'}">
   <template v-slot:header>Network</template>
 </Screen>
 </template>

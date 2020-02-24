@@ -1,5 +1,5 @@
 <template>
-<Screen>
+<Screen :back="{name: 'home'}">
   <template v-slot:header>Groups</template>
   <NavList v-for="group in groups" :key="group.address">
     <RouterLink :to="{name: 'group', params: {address: group.address}}">

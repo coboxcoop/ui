@@ -1,5 +1,5 @@
 <template>
-<Screen>
+<Screen :back="{name: 'groups-init'}">
   <div class="page">
     <p>What would you like your group to be called?</p>
 
