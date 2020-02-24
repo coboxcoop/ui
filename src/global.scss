@@ -55,3 +55,8 @@ pre {
   word-break: break-all;
   font-size: 1.6rem;
 }
+
+.disabled-feature {
+  text-decoration: line-through;
+  pointer-events: none;
+}

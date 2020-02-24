@@ -10,7 +10,7 @@
 
   <NavList>
     <RouterLink :to="{name: 'backup'}">Backup keys</RouterLink>
-    <RouterLink :to="{name: 'restore'}">Restore</RouterLink>
+    <RouterLink :to="{name: 'restore'}" class="disabled-feature">Restore</RouterLink>
   </NavList>
 
   <div class="footer">CoBox UI {{version}}</div>
