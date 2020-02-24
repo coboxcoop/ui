@@ -18,6 +18,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  border-top: 1px solid;
+  padding-top: 0.6rem;
 }
 .bottom {
   margin-top: auto;

@@ -24,8 +24,8 @@ export default {
 
 <style lang="scss" scoped>
 header {
-  border-bottom: 1px solid;
   padding: 0.6rem 0;
+  border-top: 1px solid;
   .back {
     position: relative;
     width: 1em;
@@ -47,7 +47,6 @@ header {
   flex-direction: column;
 }
 .inner {
-  margin-top: 0.6rem;
   flex: 1;
   display: flex;
   flex-direction: column;

@@ -11,6 +11,13 @@
 </SubPage>
 </template>
 
+<style scoped lang="scss">
+.page {
+  border-top: 1px solid;
+  padding-top: 0.6rem;
+}
+</style>
+
 <script>
 import SubPage from '@/components/SubPage.vue'
 
