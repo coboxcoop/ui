@@ -55,6 +55,7 @@ export default {
       this.editName = false
       await this.$store.dispatch('profile/updateName', this.name)
       this.resetName()
+      this.$refs.nameInput.blur()
     }
   }
 }
