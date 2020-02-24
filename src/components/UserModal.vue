@@ -11,14 +11,23 @@
       <a href="#" v-else @click.prevent="onClickEdit">(Edit)</a>
     </div>
   </div>
+
+  <NavList>
+    <RouterLink :to="{name: 'backup'}">Backup keys</RouterLink>
+    <RouterLink :to="{name: 'restore'}">Restore</RouterLink>
+  </NavList>
+
+  <div class="footer">CoBox UI {{version}}</div>
 </div>
 </template>
 
 <script>
 import Dot from '@/components/Dot.vue'
+import NavList from '@/components/NavList.vue'
 
 export default {
   components: {
+    NavList,
     Dot
   },
   data: () => ({
@@ -27,6 +36,11 @@ export default {
   }),
   mounted() {
     this.resetName()
+  },
+  computed: {
+    version() {
+      return process.env.VUE_APP_VERSION
+    }
   },
   methods: {
     resetName() {
@@ -54,9 +68,12 @@ export default {
   background: white;
   z-index: 5;
   padding: 1.6rem;
+  padding-bottom: 1.2rem;
   margin: 0.8rem;
   border-radius: 4px;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
 }
 .close {
   position: absolute;
@@ -68,6 +85,10 @@ export default {
   &:not(:hover) {
     color: lightgray;
   }
+}
+.nav-list  {
+  border-top: 1px solid;
+  margin-top: 3rem;
 }
 .profile {
   display: flex;
@@ -90,5 +111,9 @@ export default {
   .name-edit {
     font-size: var(--small);
   }
+}
+.footer {
+  margin-top: auto;
+  font-size: var(--small);
 }
 </style>

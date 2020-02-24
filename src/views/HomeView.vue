@@ -1,5 +1,5 @@
 <template>
-<nav>
+<NavList>
   <div>
     <RouterLink :to="{name: 'groups'}">
       Groups {{groupsCount}}
@@ -21,19 +21,11 @@
       Network {{networkCount}}
     </RouterLink>
   </div>
-</nav>
+</NavList>
 </template>
 
 <style lang="scss" scoped>
 nav {
-  > div {
-    display: block;
-    padding: 0.6rem 0;
-    position: relative;
-    &:not(:last-child) {
-      border-bottom: 1px solid;
-    }
-  }
   .dot {
     position: absolute;
     top: 1.2rem;
@@ -44,9 +36,11 @@ nav {
 
 <script>
 import Plus from '@/components/Plus.vue'
+import NavList from '@/components/NavList.vue'
 
 export default {
   components: {
+    NavList,
     Plus
   },
   computed: {

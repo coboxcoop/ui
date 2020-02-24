@@ -40,7 +40,7 @@ export default {
     UserModal
   },
   data: () => ({
-    showUserModal:  false
+    showUserModal: false
   })
 }
 </script>
