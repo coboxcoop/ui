@@ -136,3 +136,14 @@ git branch -d feature_branch
       * [ ] peer is now an admin
   * [ ] which of these is correct? if one step, then guess there is risk of leaking admin passphrase?
 
+2020-02-24
+* [ ] working on adding devices
+  * [ ] not sure how to set up a device to test the frontend
+  * [ ] is the order of a device
+    * [ ] olimex device is created automatically when an olimex is turned on for the first time
+      * [ ] handled by? https://ledger-git.dyne.org/CoBox/cobox-server/src/branch/development/app/controllers/admin/devices/index.js
+    * [ ] olimex device then broadcasts it's info over UDP
+      * [ ] broadcast 1
+      * [ ] broadcast 2
+      * [ ] etc
+  * [ ] 
