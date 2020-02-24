@@ -47,7 +47,7 @@ export default {
     },
     createData() {
       return {
-        nodes: Array.from(new Array(24)).map((_, n) => {
+        nodes: Array.from(new Array(22)).map((_, n) => {
           const address = crypto.createHash('sha256').update(crypto.randomBytes(32)).digest('hex')
           const color = this.$store.getters['profile/keyColor'](address)
           return ({id: n, address, color})
@@ -75,6 +75,7 @@ export default {
           {source: 12, target: 17},
           {source: 12, target: 18},
 
+          {source: 0, target: 20},
           {source: 19, target: 20},
           {source: 21, target: 20}
         ]
