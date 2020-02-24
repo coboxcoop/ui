@@ -3,7 +3,7 @@
   <NavList>
     <div>
       <RouterLink :to="{name: 'groups'}">
-        Groups {{groupsCount}}
+        Groups <sup>{{groupsCount}}</sup>
       </RouterLink>
       <RouterLink :to="{name: 'groups-init'}">
         <Plus />
@@ -11,7 +11,7 @@
     </div>
     <div>
       <RouterLink :to="{name: 'devices'}">
-        Devices {{devicesCount}}
+        Devices <sup>{{devicesCount}}</sup>
       </RouterLink>
       <RouterLink :to="{name: 'devices-add'}">
         <Plus />
@@ -19,7 +19,7 @@
     </div>
     <div>
       <RouterLink :to="{name: 'network'}">
-        Network {{networkCount}}
+        Network <sup>{{networkCount}}</sup>
       </RouterLink>
     </div>
   </NavList>
