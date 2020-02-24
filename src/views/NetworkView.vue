@@ -5,7 +5,7 @@
     <svg class="network" :width="width" :height="height" />
   </div>
   <div class="footer">
-    {{data.nodes.length}} nodes, {{data.links.length}} links
+    {{nodes.length}} nodes, {{links.length}} links
   </div>
 </Screen>
 </template>
@@ -14,6 +14,10 @@
 .container {
   width: 100%;
   height: 100%;
+}
+.network {
+  position: relative;
+  top: -7%;
 }
 .footer {
   position: absolute;
@@ -28,6 +32,12 @@
 import * as d3 from 'd3'
 import crypto from 'crypto'
 import Screen from '@/components/Screen.vue'
+import uniq from 'lodash/uniq'
+
+
+function fakeKey() {
+  return crypto.createHash('sha256').update(crypto.randomBytes(32)).digest('hex')
+}
 
 export default {
   components: {
@@ -35,9 +45,41 @@ export default {
   },
   data: () => ({
     width: 0,
-    height: 0,
-    data: {nodes: [], links: []}
+    height: 0
   }),
+  computed: {
+    network() {
+      return this.$store.state.network
+    },
+    nodes() {
+      const groups = Object.keys(this.network.groups).map(k => parseInt(k))
+
+      return uniq(
+        Object.values(this.network.groups)
+          .flatMap(g => g.members)
+          .concat(groups)
+      ).map(n => {
+        const key = fakeKey()
+        const color = this.$store.getters['profile/keyColor'](key)
+        return {
+          id: n,
+          color
+        }
+      })
+    },
+    links() {
+      const {network} = this
+
+      return Object.keys(network.groups).map(n => parseInt(n))
+        .flatMap(gid => {
+          const {members} = network.groups[gid]
+
+          return members.map(mid => {
+            return {source: mid, target: gid}
+          })
+        })
+    }
+  },
   methods: {
     measure() {
       const $container = this.$refs.container
@@ -45,51 +87,12 @@ export default {
       this.width = rect.width
       this.height = rect.height
     },
-    createData() {
-      return {
-        nodes: Array.from(new Array(22)).map((_, n) => {
-          const address = crypto.createHash('sha256').update(crypto.randomBytes(32)).digest('hex')
-          const color = this.$store.getters['profile/keyColor'](address)
-          return ({id: n, address, color})
-        }),
-        links: [
-          {source: 0, target: 1},
-          {source: 0, target: 2},
-          {source: 0, target: 3},
-          {source: 0, target: 4},
-          {source: 0, target: 5},
-
-          {source: 1, target: 6},
-          {source: 1, target: 7},
-          {source: 1, target: 8},
-
-          {source: 2, target: 9},
-          {source: 2, target: 10},
-
-          {source: 0, target: 11},
-          {source: 12, target: 11},
-          {source: 13, target: 12},
-          {source: 12, target: 14},
-          {source: 12, target: 15},
-          {source: 12, target: 16},
-          {source: 12, target: 17},
-          {source: 12, target: 18},
-
-          {source: 0, target: 20},
-          {source: 19, target: 20},
-          {source: 21, target: 20}
-        ]
-      }
-    }
   },
   mounted() {
     this.measure()
-    this.data = this.createData()
 
-    const data = this.data
-
-    const links = data.links.map(d => Object.create(d))
-    const nodes = data.nodes.map(d => Object.create(d))
+    const links = this.links.map(d => Object.create(d))
+    const nodes = this.nodes.map(d => Object.create(d))
 
     const simulation = d3.forceSimulation(nodes)
         .force('link', d3.forceLink(links).id(d => d.id))
@@ -101,13 +104,14 @@ export default {
 
     const link = svg.append('g')
         .attr('stroke', '#bbb')
+        .attr('stroke-width', 1.5)
       .selectAll('line')
       .data(links)
       .join('line')
 
     const node = svg.append('g')
         .attr('stroke', '#fff')
-        .attr('stroke-width', 1.5)
+        .attr('stroke-width', 4)
       .selectAll('circle')
       .data(nodes)
       .join('circle')
