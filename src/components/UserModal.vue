@@ -3,13 +3,9 @@
   <a class="close" href="#" @click.prevent="$emit('close')">&times;</a>
   <div class="profile">
     <Dot :color="$store.getters['profile/myKeyColor']" />
-    <form class="name" @submit.prevent="saveName">
-      <input v-model="name" type="text" placeholder="Your name" ref="nameInput" @click="editName = true" />
+    <form class="name" @submit.prevent="onSubmit">
+      <input v-model="name" type="text" placeholder="Your name" ref="nameInput" @focus="editName = true" @blur="saveName" />
     </form>
-    <div class="name-edit">
-      <a href="#" v-if="editName" @click.prevent="saveName">(Save)</a>
-      <a href="#" v-else @click.prevent="onClickEdit">(Edit)</a>
-    </div>
   </div>
 
   <NavList>
@@ -51,11 +47,13 @@ export default {
       this.name = ''
       this.$refs.nameInput.focus()
     },
+    onSubmit() {
+      this.$refs.nameInput.blur()
+    },
     async saveName() {
       this.editName = false
       await this.$store.dispatch('profile/updateName', this.name)
       this.resetName()
-      this.$refs.nameInput.blur()
     }
   }
 }
