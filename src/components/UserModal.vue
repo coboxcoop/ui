@@ -1,0 +1,94 @@
+<template>
+<div class="modal">
+  <a class="close" href="#" @click.prevent="$emit('close')">&times;</a>
+  <div class="profile">
+    <Dot :color="$store.getters['profile/myKeyColor']" />
+    <form class="name" @submit.prevent="saveName">
+      <input v-model="name" type="text" placeholder="Your name" ref="nameInput" @click="editName = true" />
+    </form>
+    <div class="name-edit">
+      <a href="#" v-if="editName" @click.prevent="saveName">(Save)</a>
+      <a href="#" v-else @click.prevent="onClickEdit">(Edit)</a>
+    </div>
+  </div>
+</div>
+</template>
+
+<script>
+import Dot from '@/components/Dot.vue'
+
+export default {
+  components: {
+    Dot
+  },
+  data: () => ({
+    editName: false,
+    name: ''
+  }),
+  mounted() {
+    this.resetName()
+  },
+  methods: {
+    resetName() {
+      this.name = this.$store.getters['profile/myName']
+    },
+    onClickEdit() {
+      this.editName = true
+      this.name = ''
+      this.$refs.nameInput.focus()
+    },
+    async saveName() {
+      this.editName = false
+      await this.$store.dispatch('profile/updateName', this.name)
+      this.resetName()
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.modal {
+  position: absolute;
+  top: 0; left: 0;
+  bottom: 0; right: 0;
+  background: white;
+  z-index: 5;
+  padding: 1.6rem;
+  margin: 0.8rem;
+  border-radius: 4px;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+}
+.close {
+  position: absolute;
+  top: 0; right: 0;
+  width: 1em;
+  height: 1em;
+  text-align: center;
+  font-size: 120%;
+  &:not(:hover) {
+    color: lightgray;
+  }
+}
+.profile {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  text-align: center;
+  .dot {
+    margin: auto;
+    width: 8rem;
+    height: 8rem;
+  }
+  .name {
+    margin-top: 0.6rem;
+    input {
+      text-align: center;
+      width: 100%;
+      border: none;
+    }
+  }
+  .name-edit {
+    font-size: var(--small);
+  }
+}
+</style>
