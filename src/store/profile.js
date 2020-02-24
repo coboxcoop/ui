@@ -9,7 +9,7 @@ export default api => ({
       commit('receiveData', data)
     },
     async updateName({commit}, name) {
-      const {data} = await api.patch('/profile', {name})
+      const {data} = await api.patch('/profile', {name: name.trim()})
       commit('receiveData', data)
     }
   },
