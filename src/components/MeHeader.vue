@@ -16,7 +16,6 @@
 .header {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid;
   padding-bottom: 0.6rem;
 }
 .user {

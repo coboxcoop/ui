@@ -88,7 +88,6 @@ export default {
   }
 }
 .nav-list  {
-  border-top: 1px solid;
   margin-top: 3rem;
 }
 .profile {

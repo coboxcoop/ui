@@ -3,10 +3,10 @@
   <div class="content">
     <p>Hi {{$store.getters['profile/myName']}}, what would you like to do?</p>
 
-    <nav>
+    <NavList>
       <RouterLink :to="{name: 'groups-join'}">Join a group</RouterLink>
       <RouterLink :to="{name: 'groups-create'}">Create a group</RouterLink>
-    </nav>
+    </NavList>
 
     <div class="bottom">or set up a new device</div>
   </div>
@@ -14,11 +14,6 @@
 </template>
 
 <style lang="scss" scoped>
-nav a {
-  display: block;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid;
-}
 .content {
   flex: 1;
   display: flex;
@@ -31,10 +26,12 @@ nav a {
 
 <script>
 import SubPage from '@/components/SubPage.vue'
+import NavList from '@/components/NavList.vue'
 
 export default {
   components: {
-    SubPage
+    SubPage,
+    NavList
   }
 }
 </script>
