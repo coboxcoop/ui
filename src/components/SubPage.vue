@@ -45,6 +45,7 @@ header {
   display: flex;
   flex: 1;
   flex-direction: column;
+  border: 3px solid green;
 }
 .inner {
   flex: 1;

@@ -1,5 +1,5 @@
 <template>
-<SubPage>
+<Screen>
   <div class="page">
     <p>What is the invite key of the group?</p>
     <form @submit.prevent="onSubmit">
@@ -7,7 +7,7 @@
       <button type="submit">Ok</button>
     </form>
   </div>
-</SubPage>
+</Screen>
 </template>
 
 <style scoped lang="scss">
@@ -18,11 +18,11 @@
 </style>
 
 <script>
-import SubPage from '@/components/SubPage.vue'
+import Screen from '@/components/Screen.vue'
 
 export default {
   components: {
-    SubPage
+    Screen
   },
   data: () => ({
     groupInviteKey: ''

@@ -1,5 +1,5 @@
 <template>
-<SubPage>
+<Screen>
   <div class="content">
     <p>Hi {{$store.getters['profile/myName']}}, what would you like to do?</p>
 
@@ -10,7 +10,7 @@
 
     <div class="bottom">or set up a new device</div>
   </div>
-</SubPage>
+</Screen>
 </template>
 
 <style lang="scss" scoped>
@@ -27,12 +27,12 @@
 </style>
 
 <script>
-import SubPage from '@/components/SubPage.vue'
+import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
 
 export default {
   components: {
-    SubPage,
+    Screen,
     NavList
   }
 }

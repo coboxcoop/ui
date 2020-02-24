@@ -1,12 +1,12 @@
 <template>
-<div class="layout">
+<div class="screen">
   <MeHeader />
-  <RouterView />
+  <slot />
 </div>
 </template>
 
 <style lang="scss" scoped>
-.layout {
+.screen {
   flex: 1;
   display: flex;
   flex-direction: column;

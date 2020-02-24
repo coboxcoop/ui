@@ -6,9 +6,11 @@
     </div>
     <div class="disk">0%</div>
   </div>
-  <UserModal
-    v-if="showUserModal"
-    @close="showUserModal = false" />
+  <transition name="pop">
+    <UserModal
+      v-if="showUserModal"
+      @close="showUserModal = false" />
+  </transition>
 </div>
 </template>
 
@@ -26,6 +28,13 @@
 }
 .dot {
   margin-right: 0.3rem;
+}
+.pop-enter, .pop-leave-to {
+  transform: translateY(-2rem);
+  opacity: 0;
+}
+.pop-enter-active, .pop-leave-active {
+  transition: transform 0.5s var(--ease), opacity 0.3s var(--ease);
 }
 </style>
 

@@ -1,15 +1,15 @@
 <template>
-<SubPage>
+<Screen>
   <template v-slot:header>Devices</template>
-</SubPage>
+</Screen>
 </template>
 
 <script>
-import SubPage from '@/components/SubPage.vue'
+import Screen from '@/components/Screen.vue'
 
 export default {
   components: {
-    SubPage
+    Screen
   }
 }
 </script>

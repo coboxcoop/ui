@@ -2,7 +2,7 @@
 <div id="app"> 
   <transition name="fade">
     <div v-if="ready" class="yield">
-      <Layout v-if="hasName" />
+      <RouterView v-if="hasName" />
       <OnboardingView v-else />
     </div>
   </transition>
@@ -11,14 +11,12 @@
 </template>
 
 <script>
-import Layout from '@/components/Layout.vue'
 import OnboardingView from '@/views/OnboardingView.vue'
 import Errors from '@/components/Errors.vue'
 
 export default {
   components: {
     Errors,
-    Layout,
     OnboardingView
   },
   async mounted() {
