@@ -201,6 +201,7 @@ Spoke with Kieran about connections
 - we can track when there has been a connection on the swarm, so we can start tracking activity anonimised
 
 todo:
+* for testing - is there a way we can change what port the ui uses, so that we can have two instances talking to two severs on different ports, like we have been doing with the cli
 * stub devices setup using hub and hard code address and EK
 * get invites working
 * get connections more granular
