@@ -185,14 +185,20 @@ Today was a day which felt like ground had been made. Unless otherwise stated ui
     * https://ledger-git.dyne.org/CoBox/cobox-server/pulls/51
   * UI pinned to /feature/backup_keys
     * https://ledger-git.dyne.org/CoBox/cobox-ui/pulls/11
-  * [ ] can kieran &/or peg check the server patch is best way of doing this?
-* [ ] generate and accept invite codes 
+  * [x] can kieran &/or peg check the server patch is best way of doing this?
+* [x] generate and accept invite codes 
   * https://ledger-git.dyne.org/CoBox/cobox-ui/pulls/15
   * currently getting a bug with invite code generated not being accepted
-    * [ ] need to debug with kieran and figure out what happening on server side
-* [ ] connections stuff over websockets
-  * [ ] need to talk with kieran about this issue
+    * [x] need to debug with kieran and figure out what happening on server side
+* [x] connections stuff over websockets
+  * [x] need to talk with kieran about this issue
     * https://ledger-git.dyne.org/CoBox/cobox-server/issues/50
+
+Spoke with Kieran about connections 
+- we can see over WS when a peer turns up with their key and their about message
+- don't have a materialised view or index for peer connections info
+- therefore won't have peer liveness in this release
+- we can track when there has been a connection on the swarm, so we can start tracking activity anonimised
 
 todo:
 * stub devices setup using hub and hard code address and EK
