@@ -44,6 +44,9 @@ export default api => ({
     myKeyColor(state, getters) {
       const key = state.data && state.data.publicKey
       if(key) return getters['keyColor'](key)
+    },
+    me(state) {
+      return state.data
     }
   }
 })
