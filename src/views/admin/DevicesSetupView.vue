@@ -1,5 +1,5 @@
 <template>
-<Screen>
+  <Screen :back="{name: 'admin-devices-init'}">
   <div class="page">
     <p>What would you like your device to be called?</p>
 

@@ -21,10 +21,10 @@ const routes = [
   {path: '/groups/init',         name: 'groups-init',          component: GroupsInitView},
   {path: '/groups/join',         name: 'groups-join',          component: GroupsJoinView},
   {path: '/groups/create',       name: 'groups-create',        component: GroupsCreateView},
-  {path: '/admin/devices',       name: 'admin/devices',       component: DevicesView},
-  {path: '/admin/devices/init',  name: 'admin/devices-init',  component: DevicesInitView},
-  {path: '/admin/devices/join',  name: 'admin/devices-join',  component: DevicesJoinView},
-  {path: '/admin/devices/setup', name: 'admin/devices-setup', component: DevicesSetupView}
+  {path: '/admin/devices',       name: 'admin-devices',       component: DevicesView},
+  {path: '/admin/devices/init',  name: 'admin-devices-init',  component: DevicesInitView},
+  {path: '/admin/devices/join',  name: 'admin-devices-join',  component: DevicesJoinView},
+  {path: '/admin/devices/setup', name: 'admin-devices-setup', component: DevicesSetupView}
 ]
 
 export default new VueRouter({

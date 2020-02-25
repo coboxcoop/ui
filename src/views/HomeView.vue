@@ -10,10 +10,10 @@
       </RouterLink>
     </div>
     <div>
-      <RouterLink :to="{name: 'admin/devices'}">
+      <RouterLink :to="{name: 'admin-devices'}">
         Devices <sup>{{devicesCount}}</sup>
       </RouterLink>
-      <RouterLink :to="{name: 'admin/devices-init'}">
+      <RouterLink :to="{name: 'admin-devices-init'}">
         <Plus />
       </RouterLink>
     </div>

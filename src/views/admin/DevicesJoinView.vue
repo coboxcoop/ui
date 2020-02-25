@@ -1,5 +1,5 @@
 <template>
-<Screen>
+  <Screen :back="{name: 'admin-devices-init'}">
   <p>What is the invite key of the device?</p>
   <form @submit.prevent="onSubmit">
     <input type="text" placeholder="Device invite key" v-model="deviceInviteKey" />

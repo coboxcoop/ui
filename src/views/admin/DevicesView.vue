@@ -2,7 +2,7 @@
 <Screen :back="{name: 'home'}">
   <template v-slot:header>
     Devices
-    <RouterLink :to="{name: 'devices-init'}">
+    <RouterLink :to="{name: 'admin-devices-init'}">
       <Plus />
     </RouterLink>
   </template>
