@@ -22,11 +22,6 @@
         Network <sup>{{networkCount}}</sup>
       </RouterLink>
     </div>
-    <div>
-      <RouterLink :to="{name: 'backup'}">
-        Backup
-      </RouterLink>
-    </div>
   </NavList>
 </Screen>
 </template>
