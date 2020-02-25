@@ -15,13 +15,13 @@
 
 <style scoped lang="scss">
 nav {
-  border-top: 1px solid;
+  border-top: 1px solid black;
   > * {
     display: block;
     padding: 0.6rem 0;
     position: relative;
     &:not(:last-child) {
-      border-bottom: 1px solid;
+      border-bottom: 1px solid black;
     }
   }
 }

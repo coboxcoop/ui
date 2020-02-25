@@ -13,7 +13,7 @@
 
 <style scoped lang="scss">
 .page {
-  border-top: 1px solid;
+  border-top: 1px solid black;
   padding-top: 0.6rem;
 }
 </style>
