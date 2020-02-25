@@ -1,19 +1,19 @@
 <template>
-<SubPage>
+<Screen>
   <p>What is the invite key of the device?</p>
   <form @submit.prevent="onSubmit">
     <input type="text" placeholder="Device invite key" v-model="deviceInviteKey" />
     <button type="submit">Ok</button>
   </form>
-</SubPage>
+</Screen>
 </template>
 
 <script>
-import SubPage from '@/components/SubPage.vue'
+import Screen from '@/components/Screen.vue'
 
 export default {
   components: {
-    SubPage
+    Screen
   },
   data: () => ({
     deviceInviteKey: ''

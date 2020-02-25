@@ -1,5 +1,5 @@
 <template>
-<SubPage>
+<Screen>
   <div class="content">
     <p>Hi {{$store.getters['profile/myName']}}, what would you like to do?</p>
 
@@ -9,7 +9,7 @@
     </nav>
 
   </div>
-</SubPage>
+</Screen>
 </template>
 
 <style lang="scss" scoped>
@@ -29,11 +29,11 @@ nav a {
 </style>
 
 <script>
-import SubPage from '@/components/SubPage.vue'
+import Screen from '@/components/Screen.vue'
 
 export default {
   components: {
-    SubPage
+    Screen
   }
 }
 </script>

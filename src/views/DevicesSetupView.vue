@@ -1,5 +1,5 @@
 <template>
-<SubPage>
+<Screen>
   <div class="page">
     <p>What would you like your device to be called?</p>
 
@@ -8,18 +8,18 @@
       <button type="submit">Ok</button>
     </form>
   </div>
-</SubPage>
+</Screen>
 </template>
 
 <script>
-import SubPage from '@/components/SubPage.vue'
+import Screen from '@/components/Screen.vue'
 
 export default {
   data: () => ({
     deviceName: ''
   }),
   components: {
-    SubPage
+    Screen
   },
   methods: {
     async onSubmit() {
