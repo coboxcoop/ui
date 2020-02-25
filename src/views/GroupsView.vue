@@ -1,6 +1,11 @@
 <template>
 <Screen :back="{name: 'home'}">
-  <template v-slot:header>Groups</template>
+  <template v-slot:header>
+    Groups
+    <RouterLink :to="{name: 'groups-init'}">
+      <Plus />
+    </RouterLink>
+  </template>
   <NavList v-for="group in groups" :key="group.address">
     <RouterLink :to="{name: 'group', params: {address: group.address}}">
       <Dot color="lightseagreen" /> {{group.name}}
@@ -13,12 +18,14 @@
 import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
 import Dot from '@/components/Dot.vue'
+import Plus from '@/components/Plus.vue'
 
 export default {
   components: {
     Dot,
     Screen,
-    NavList
+    NavList,
+    Plus
   },
   computed: {
     groups() {
