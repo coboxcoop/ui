@@ -30,6 +30,12 @@ body {
   align-items: center;
   justify-content: center;
 }
+a:hover, button:hover {
+  color: rgba(0, 0, 0, 0.7)
+}
+button {
+  cursor: pointer;
+}
 sup {
   font-size: 60%;
 }
@@ -39,7 +45,7 @@ p {
 form {
   position: relative;
   input[type='text'] {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid black;
     width: 100%;
     padding: 0.6rem 0;
   }

@@ -17,7 +17,7 @@
 </style>
 <style lang="scss" scoped>
 header {
-  border-top: 1px solid;
+  border-top: 1px solid black;
   padding: 0.6rem 0;
   position: relative;
 }
