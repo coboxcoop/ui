@@ -10,10 +10,10 @@
       </RouterLink>
     </div>
     <div>
-      <RouterLink :to="{name: 'devices'}">
+      <RouterLink :to="{name: 'admin-devices'}">
         Devices <sup>{{devicesCount}}</sup>
       </RouterLink>
-      <RouterLink :to="{name: 'devices-add'}">
+      <RouterLink :to="{name: 'admin-devices-init'}">
         <Plus />
       </RouterLink>
     </div>
@@ -45,8 +45,9 @@ export default {
       return this.$store.getters['network/count']
     },
     devicesCount() {
-      return 0
+      return this.$store.getters['devices/count']
     }
   }
 }
 </script>
+

@@ -7,6 +7,7 @@ import error from '@/store/error'
 import groups from '@/store/groups'
 import profile from '@/store/profile'
 import network from '@/store/network'
+import devices from '@/store/admin/devices'
 
 Vue.use(Vuex)
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     groups: groups(api),
     profile: profile(api),
     network: network(api),
+    devices: devices(api),
     error
   },
   state: {
