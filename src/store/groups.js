@@ -13,12 +13,14 @@ export default api => ({
       api.post(`/groups/${address}/connections`, {name, address})
       await dispatch('fetch')
     },
-    async join({dispatch}, groupInviteKey) {
-      const [address, encryptionKey, name] = groupInviteKey.split(':')
-      await api.post('/groups', {name, encryptionKey, address})
-      api.post(`/groups/${address}/connections`, {name, address})
+    async acceptInvite({dispatch}, code) {
+      const {data} = await api.get('/groups/invites/accept', {params: {code}})
       await dispatch('fetch')
-    }
+    },
+    async createInvite(_, {address, publicKey}) {
+      const {data} = await api.post(`/groups/${address}/invites`, {address, publicKey})
+      return data
+    },
   },
   mutations: {
     receiveData(state, data) {
@@ -28,6 +30,11 @@ export default api => ({
   getters: {
     count(state) {
       return state.data.length
+    },
+    single(state) {
+      return address => {
+        return state.data.find(g => g.address === address)
+      }
     }
   }
 })

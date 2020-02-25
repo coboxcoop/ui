@@ -1,9 +1,9 @@
 <template>
 <Screen :back="{name: 'groups-init'}">
   <div class="page">
-    <p>What is the invite key of the group?</p>
+    <p>What is the invite code of the group?</p>
     <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="Group invite key" v-model="groupInviteKey" />
+      <input type="text" placeholder="Invite code" v-model="inviteCode" />
       <button type="submit">Ok</button>
     </form>
   </div>
@@ -25,13 +25,14 @@ export default {
     Screen
   },
   data: () => ({
-    groupInviteKey: ''
+    inviteCode: ''
   }),
   methods: {
     async onSubmit() {
       try {
-        await this.$store.dispatch('groups/join', this.groupInviteKey)
-        this.groupInviteKey = ''
+        await this.$store.dispatch('groups/acceptInvite', this.inviteCode)
+        this.inviteCode = ''
+        this.$router.replace({name: 'groups'})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
