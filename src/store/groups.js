@@ -9,12 +9,14 @@ export default api => ({
       commit('receiveData', data)
     },
     async create({dispatch}, name) {
-      await api.post('/groups', {name})
+      const {data: {address}} = await api.post('/groups', {name})
+      api.post(`/groups/${address}/connections`, {name, address})
       await dispatch('fetch')
     },
     async join({dispatch}, groupInviteKey) {
       const [address, encryptionKey, name] = groupInviteKey.split(':')
       await api.post('/groups', {name, encryptionKey, address})
+      api.post(`/groups/${address}/connections`, {name, address})
       await dispatch('fetch')
     }
   },
