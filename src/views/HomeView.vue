@@ -13,7 +13,7 @@
       <RouterLink :to="{name: 'devices'}">
         Devices <sup>{{devicesCount}}</sup>
       </RouterLink>
-      <RouterLink :to="{name: 'devices-add'}">
+      <RouterLink :to="{name: 'devices-init'}">
         <Plus />
       </RouterLink>
     </div>
