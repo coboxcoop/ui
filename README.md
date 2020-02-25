@@ -198,8 +198,11 @@ todo:
 * stub devices setup using hub and hard code address and EK
 * get invites working
 * get connections more granular
+* disk usage stats, initial load, how much is being used
 * night mode
 * keys in profile
+* edit name visual icon?
+* server version emit from server for UI settings
 * device setup linked elsewhere in footer
 * UI change how admin/devices shown in menu
 * redesign pdf paper backup
