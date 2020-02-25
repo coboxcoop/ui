@@ -194,3 +194,13 @@ Today was a day which felt like ground had been made. Unless otherwise stated ui
   * [ ] need to talk with kieran about this issue
     * https://ledger-git.dyne.org/CoBox/cobox-server/issues/50
 
+todo:
+* stub devices setup using hub and hard code address and EK
+* get invites working
+* get connections more granular
+* night mode
+* keys in profile
+* device setup linked elsewhere in footer
+* UI change how admin/devices shown in menu
+* redesign pdf paper backup
+* think through address book / keychain & server
