@@ -45,7 +45,7 @@ export default {
       return this.$store.getters['network/count']
     },
     devicesCount() {
-      return 0
+      return this.$store.getters['devices/count']
     }
   }
 }
