@@ -1,12 +1,9 @@
 <template>
 <Screen :back="{name: 'home'}">
   <div class="page">
-    <p>Where would you like to save your account to?</p>
+    <p>Click the button below to export your keys to downloadable PDF file</p>
 
-    <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="Filesystem location" v-model="path" />
-      <button type="submit">Ok</button>
-    </form>
+    <a href="#" @click.prevent="onSubmit">Download paper keys</a>
   </div>
 </Screen>
 </template>
@@ -30,8 +27,11 @@ export default {
   },
   methods: {
     async onSubmit() {
-      await this.$store.dispatch('backup/exportKeys', this.path)
-      this.$router.push({name: 'home'})
+      const {data} = await this.$store.dispatch('backup/exportKeys')
+      const a = document.createElement('a')
+      a.href = data
+      a.download = 'key-backup.pdf'
+      a.click()
     }
   }
 }
