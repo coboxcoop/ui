@@ -214,3 +214,6 @@ todo:
 * redesign pdf paper backup
 * think through address book / keychain & server
 * fullscreen mode
+* toggle for mount filesystem
+* toggle for swarm/connect or not
+* mount and swarm automatically when turning on
