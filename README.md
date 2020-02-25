@@ -139,11 +139,58 @@ git branch -d feature_branch
 2020-02-24
 * [ ] working on adding devices
   * [ ] not sure how to set up a device to test the frontend
-  * [ ] is the order of a device
-    * [ ] olimex device is created automatically when an olimex is turned on for the first time
-      * [ ] handled by? https://ledger-git.dyne.org/CoBox/cobox-server/src/branch/development/app/controllers/admin/devices/index.js
-    * [ ] olimex device then broadcasts it's info over UDP
-      * [ ] broadcast 1
-      * [ ] broadcast 2
-      * [ ] etc
-  * [ ] 
+  * [x] is the order of a device
+    * [x] olimex device is created automatically when an olimex is turned on for the first time
+      * [x] handled by? https://ledger-git.dyne.org/CoBox/cobox-server/src/branch/development/app/controllers/admin/devices/index.js
+    * [x] olimex device then broadcasts it's info over UDP
+      * [x] broadcast 1
+      * [x] broadcast 2
+      * [x] etc
+
+2020-02-25
+
+Today was a day which felt like ground had been made. Unless otherwise stated ui feature branches are pinned to `development`. You can check current work:
+
+- `develop` is stable and has most features
+  - see profile
+    - change name
+  - groups
+    - navigation tweaks
+    - group index
+    - make new groups
+  - devices
+    - navigation
+    - join legless
+    - setup legless
+  - network
+    - view of your network visualised with d3
+
+- `feature/backup_keys` is pinned to server patch `feature/export_keys_web` and shows backup feature
+  - within profile ability to save to disk paper keys export 
+
+- `feature/invites`
+  - groups
+    - make invite (works?)
+    - accept invite (not working)
+
+* spoke with kieran about admin/devices
+  * an olimex is a group with one member, itself
+  * when you turn it on it broadcasts it's address and encryptionKey
+  * UI receives this over websocket and can then add ourself and name device
+  * then can shutoff the broadcast
+* [x] refactored UI devices interface to take into account /admin
+* [x] network has been added with d3
+* [x] backup feature
+  *  server pinned to /feature/export_keys_web
+    * https://ledger-git.dyne.org/CoBox/cobox-server/pulls/51
+  * UI pinned to /feature/backup_keys
+    * https://ledger-git.dyne.org/CoBox/cobox-ui/pulls/11
+  * [ ] can kieran &/or peg check the server patch is best way of doing this?
+* [ ] generate and accept invite codes 
+  * https://ledger-git.dyne.org/CoBox/cobox-ui/pulls/15
+  * currently getting a bug with invite code generated not being accepted
+    * [ ] need to debug with kieran and figure out what happening on server side
+* [ ] connections stuff over websockets
+  * [ ] need to talk with kieran about this issue
+    * https://ledger-git.dyne.org/CoBox/cobox-server/issues/50
+
