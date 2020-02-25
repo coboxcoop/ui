@@ -12,6 +12,13 @@
 </Screen>
 </template>
 
+<style lang="scss" scoped>
+.page {
+  border-top: 1px solid;
+  padding-top: 0.6rem;
+}
+</style>
+
 <script>
 import Screen from '@/components/Screen.vue'
 
