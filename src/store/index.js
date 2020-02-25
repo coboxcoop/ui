@@ -7,7 +7,7 @@ import error from '@/store/error'
 import groups from '@/store/groups'
 import profile from '@/store/profile'
 import network from '@/store/network'
-import devices from '@/store/devices'
+import devices from '@/store/admin/devices'
 
 Vue.use(Vuex)
 
