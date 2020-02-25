@@ -1,5 +1,5 @@
 <template>
-<Dot color="#f2f2f2" :class="{minus}">
+<Dot color="#f2f2f2" class="plus" :class="{minus}">
   <span v-if="minus">&ndash;</span>
   <span v-else>+</span>
 </Dot>
