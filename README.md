@@ -207,3 +207,4 @@ todo:
 * UI change how admin/devices shown in menu
 * redesign pdf paper backup
 * think through address book / keychain & server
+* fullscreen mode
