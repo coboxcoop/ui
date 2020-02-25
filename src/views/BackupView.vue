@@ -1,6 +1,5 @@
 <template>
 <Screen :back="{name: 'home'}">
-  <template v-slot:header>Backup</template>
   <div class="page">
     <p>Where would you like to save your account to?</p>
 
