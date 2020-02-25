@@ -34,6 +34,11 @@ export default {
     hasName() {
       return this.$store.getters['profile/hasName']
     }
+  },
+  watch: {
+    $route() {
+      this.$store.dispatch('error/dismiss')
+    }
   }
 }
 </script>
