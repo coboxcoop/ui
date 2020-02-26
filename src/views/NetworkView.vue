@@ -17,8 +17,9 @@
   height: 100%;
 }
 .network {
-  position: relative;
-  top: -7%;
+  position: absolute;
+  top: 53%; left: 50%;
+  transform: translate(-50%, -50%);
 }
 .footer {
   position: absolute;
