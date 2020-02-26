@@ -58,6 +58,8 @@ export default {
   max-height: 52rem;
   border-radius: 4px;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .fade-enter-active, .fade-leave-active {
   transition: opacity 1s var(--ease);
