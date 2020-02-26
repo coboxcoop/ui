@@ -36,7 +36,6 @@ import crypto from 'crypto'
 import Screen from '@/components/Screen.vue'
 import uniq from 'lodash/uniq'
 
-
 function fakeKey() {
   return crypto.createHash('sha256').update(crypto.randomBytes(32)).digest('hex')
 }
