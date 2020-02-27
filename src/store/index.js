@@ -8,11 +8,13 @@ import groups from '@/store/groups'
 import profile from '@/store/profile'
 import network from '@/store/network'
 import devices from '@/store/admin/devices'
+import system from '@/store/system'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
+    system: system(api),
     groups: groups(api),
     profile: profile(api),
     network: network(api),
@@ -21,21 +23,16 @@ export default new Vuex.Store({
   },
   state: {
     ready: false,
-    systemInfo: null
   },
   mutations: {
     ready(state) {
       state.ready = true
-    },
-    receiveSystemInfo(state, system) {
-      state.systemInfo = system
     }
   },
   actions: {
     async init({dispatch, commit}) {
+      await dispatch('system/fetch')
       await dispatch('profile/fetch')
-      const {data} = await api.get('/system')
-      commit('receiveSystemInfo', data)
       commit('ready')
     }
   }

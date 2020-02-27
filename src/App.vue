@@ -1,7 +1,14 @@
 <template>
 <div id="app"> 
   <transition name="fade">
-    <div v-if="ready" class="yield">
+    <div v-if="offline" class="offline">
+      <img src="@/assets/images/icons/CoBox-icon.png" />
+      <p>
+        Could not connect<br />to CoBox API server.<br />
+        <a @click.prevent="reload" href="#">Reload</a>
+      </p>
+    </div>
+    <div v-else-if="ready" class="yield">
       <RouterView v-if="hasName" />
       <OnboardingView v-else />
     </div>
@@ -31,6 +38,9 @@ export default {
     ready() {
       return this.$store.state.ready
     },
+    offline() {
+      return this.$store.state.system.offline
+    },
     hasName() {
       return this.$store.getters['profile/hasName']
     }
@@ -38,6 +48,11 @@ export default {
   watch: {
     $route() {
       this.$store.dispatch('error/dismiss')
+    }
+  },
+  methods: {
+    reload() {
+      window.location.reload()
     }
   }
 }
@@ -57,6 +72,19 @@ export default {
   max-height: 52rem;
   border-radius: 4px;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+}
+.offline {
+  text-align: center;
+  margin: auto;
+  font-size: 70%;
+  img {
+    width: auto;
+    height: 3em;
+    margin-bottom: 1em;
+  }
+  a {
+    text-decoration: underline;
+  }
 }
 .fade-enter-active, .fade-leave-active {
   transition: opacity 1s var(--ease);
