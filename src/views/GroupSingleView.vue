@@ -6,8 +6,10 @@
   </template>
 
   <NavList>
-    <a v-if="$store.getters['groups/connected'](group.address)" href="#" @click.prevent="leaveGroup">Disconnect</a>
+    <a v-if="connected" href="#" @click.prevent="leaveGroup">Disconnect</a>
     <a v-else href="#" @click.prevent="joinGroup">Connect</a>
+    <a v-if="mounted" href="#" @click.prevent="unmountGroup">Unmount</a>
+    <a v-else href="#" @click.prevent="mountGroup">Mount</a>
   </NavList>
 
   <br />
@@ -54,6 +56,12 @@ export default {
   computed: {
     group() {
       return this.$store.getters['groups/single'](this.$route.params.address)
+    },
+    connected() {
+      return this.$store.getters['groups/connected'](this.group.address)
+    },
+    mounted() {
+      return this.$store.getters['groups/mounted'](this.group.address)
     }
   },
   methods: {
@@ -82,7 +90,9 @@ export default {
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
-    }
+    },
+    async mountGroup() {},
+    async unmountGroup() {}
   }
 }
 </script>

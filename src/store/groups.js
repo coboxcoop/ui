@@ -63,6 +63,11 @@ export default api => ({
       return address => {
         return (address in state.connections) && state.connections[address]
       }
+    },
+    mounted(state) {
+      return address => {
+        return false
+      }
     }
   }
 })
