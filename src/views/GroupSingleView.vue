@@ -14,6 +14,8 @@
     <a v-else href="#" @click.prevent="mountGroup">Mount</a>
   </NavList>
 
+  <br />
+
   <div v-if="inviteCode">
     <p>Please send the following invite code to the new collaborator.</p>
     <pre>{{inviteCode}}</pre>
