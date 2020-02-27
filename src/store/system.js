@@ -9,7 +9,6 @@ export default api => ({
       try {
         const {data} = await api.get('/system')
         commit('receive', data)
-        console.warn(data)
       } catch(e) {
         commit('offline')
       }
@@ -17,7 +16,7 @@ export default api => ({
   },
   mutations: {
     receive(state, data) {
-      console.warn('recv', data)
+      state.info = data
     },
     offline(state) {
       state.offline = true

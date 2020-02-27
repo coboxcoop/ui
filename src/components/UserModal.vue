@@ -13,7 +13,7 @@
     <RouterLink :to="{name: 'restore'}" class="disabled-feature">Restore</RouterLink>
   </NavList>
 
-  <div class="footer">CoBox {{systemInfo.version}}, UI {{uiVersion}}</div>
+  <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
 </div>
 </template>
 
@@ -37,8 +37,8 @@ export default {
     uiVersion() {
       return process.env.VUE_APP_VERSION
     },
-    systemInfo() {
-      return this.$store.state.systemInfo
+    info() {
+      return this.$store.state.system.info
     }
   },
   methods: {
