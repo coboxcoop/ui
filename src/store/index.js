@@ -20,16 +20,22 @@ export default new Vuex.Store({
     error
   },
   state: {
-    ready: false
+    ready: false,
+    systemInfo: null
   },
   mutations: {
     ready(state) {
       state.ready = true
     },
+    receiveSystemInfo(state, system) {
+      state.systemInfo = system
+    }
   },
   actions: {
     async init({dispatch, commit}) {
       await dispatch('profile/fetch')
+      const {data} = await api.get('/system')
+      commit('receiveSystemInfo', data)
       commit('ready')
     }
   }
