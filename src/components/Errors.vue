@@ -37,6 +37,7 @@
   .message {
     flex: 1;
     padding-right: 4rem;
+    word-break: break-word;
   }
 }
 </style>
