@@ -28,6 +28,12 @@
 </Screen>
 </template>
 
+<style lang="scss" scoped>
+.group-icon {
+  margin-right: 0.3rem;
+}
+</style>
+
 <script>
 import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'

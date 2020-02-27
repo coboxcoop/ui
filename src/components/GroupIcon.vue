@@ -1,5 +1,5 @@
 <template>
-<Dot :color="color" />
+<Dot class="group-icon" :color="color" />
 </template>
 
 <script>
