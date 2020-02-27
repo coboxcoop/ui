@@ -1,8 +1,10 @@
 <template>
 <Screen :back="{name: 'groups'}" v-if="group">
   <template v-slot:header>
-    <GroupIcon :address="group.address" />
-    {{group.name}}
+    <div class="header">
+      <div><GroupIcon :address="group.address" /> {{group.name}}</div>
+      <div class="stat">{{stat.size | bytes}}</div>
+    </div>
   </template>
 
   <NavList>
@@ -11,8 +13,6 @@
     <a v-if="mounted" href="#" @click.prevent="unmountGroup">Unmount</a>
     <a v-else href="#" @click.prevent="mountGroup">Mount</a>
   </NavList>
-
-  <br />
 
   <div v-if="inviteCode">
     <p>Please send the following invite code to the new collaborator.</p>
@@ -31,6 +31,10 @@
 </template>
 
 <style lang="scss" scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+}
 .group-icon {
   margin-right: 0.3rem;
 }
@@ -62,6 +66,9 @@ export default {
     },
     mounted() {
       return this.$store.getters['groups/mounted'](this.group.address)
+    },
+    stat() {
+      return this.$store.getters['groups/stat'](this.group.address)
     }
   },
   methods: {

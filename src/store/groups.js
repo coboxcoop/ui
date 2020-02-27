@@ -2,12 +2,18 @@ export default api => ({
   namespaced: true,
   state: {
     data: [],
-    connections: {}
+    connections: {},
+    stat: {}
   },
   actions: {
     async fetch({commit}) {
       const {data} = await api.get('/groups')
       commit('receiveData', data)
+
+      data.forEach(async ({address}) => {
+        const {data} = await api.get(`/groups/${address}/drive/stat`)
+        commit('receiveStat', {address, stat: data})
+      })
     },
     async create({dispatch}, name) {
       const {data: {address}} = await api.post('/groups', {name})
@@ -43,6 +49,12 @@ export default api => ({
     receiveData(state, data) {
       state.data = data
     },
+    receiveStat(state, {address, stat}) {
+      state.stat = {
+        ...state.stat,
+        [address]: stat
+      }
+    },
     connected(state, {address, connected}) {
       state.connections = {
         ...state.connections,
@@ -62,6 +74,11 @@ export default api => ({
     connected(state) {
       return address => {
         return (address in state.connections) && state.connections[address]
+      }
+    },
+    stat(state) {
+      return address => {
+        return (address in state.stat) && state.stat[address]
       }
     },
     mounted(state) {

@@ -7,8 +7,11 @@
     </RouterLink>
   </template>
   <NavList v-for="group in groups" :key="group.address">
-    <RouterLink :to="{name: 'group', params: {address: group.address}}">
-      <GroupIcon :address="group.address" /> {{group.name}}
+    <RouterLink class="group" :to="{name: 'group', params: {address: group.address}}">
+      <div>
+        <GroupIcon :address="group.address" /> {{group.name}}
+      </div>
+      <div class="stat" v-if="stat(group.address)">{{stat(group.address).size | bytes}}</div>
     </RouterLink>
   </NavList>
 </Screen>
@@ -17,6 +20,10 @@
 <style scoped lang="scss">
 .group-icon {
   margin-right: 0.3rem;
+}
+.group {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
 
@@ -33,10 +40,15 @@ export default {
     NavList,
     Plus
   },
+  methods: {
+    stat(address) {
+      return this.$store.getters['groups/stat'](address)
+    }
+  },
   computed: {
     groups() {
       return this.$store.state.groups.data
-    }
+    },
   }
 }
 </script>
