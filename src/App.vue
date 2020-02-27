@@ -46,7 +46,6 @@ export default {
 <style lang="scss" scoped>
 #app {
   position: relative;
-  padding: 1.6rem;
   display: flex;
   flex-direction: column;
   background: white;
@@ -58,8 +57,6 @@ export default {
   max-height: 52rem;
   border-radius: 4px;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 .fade-enter-active, .fade-leave-active {
   transition: opacity 1s var(--ease);
@@ -71,6 +68,9 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 1.6rem;
 }
 </style>
 
