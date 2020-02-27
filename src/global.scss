@@ -29,6 +29,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 a:hover, button:hover {
   color: rgba(0, 0, 0, 0.7)
