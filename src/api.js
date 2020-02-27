@@ -7,6 +7,7 @@ export const api = axios.create({
 })
 
 const ws = new WebSocket(`ws://localhost:${port}/api`)
+const wsDev = new WebSocket(`ws://localhost:${port}/api/devices`)
 
 ws.onmessage = event => {
   const data = JSON.parse(event.data)
@@ -14,3 +15,10 @@ ws.onmessage = event => {
 }
 ws.onopen = () => console.warn('ws opened')
 ws.onerror = err => console.warn('ws error', err)
+
+wsDev.onmessage = event => {
+  const data = JSON.parse(event.data)
+  console.warn(data)
+}
+wsDev.onopen = () => console.warn('ws opened')
+wsDev.onerror = err => console.warn('ws error', err)
