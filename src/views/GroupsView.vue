@@ -8,7 +8,7 @@
   </template>
   <NavList v-for="group in groups" :key="group.address">
     <RouterLink :to="{name: 'group', params: {address: group.address}}">
-      <Dot color="lightseagreen" /> {{group.name}}
+      <GroupIcon :address="group.address" /> {{group.name}}
     </RouterLink>
   </NavList>
 </Screen>
@@ -17,12 +17,12 @@
 <script>
 import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
-import Dot from '@/components/Dot.vue'
+import GroupIcon from '@/components/GroupIcon.vue'
 import Plus from '@/components/Plus.vue'
 
 export default {
   components: {
-    Dot,
+    GroupIcon,
     Screen,
     NavList,
     Plus

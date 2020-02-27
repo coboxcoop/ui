@@ -1,9 +1,16 @@
 <template>
 <Screen :back="{name: 'groups'}" v-if="group">
   <template v-slot:header>
-    <Dot color="lightseagreen" />
+    <GroupIcon :address="group.address" />
     {{group.name}}
   </template>
+
+  <NavList>
+    <a v-if="$store.getters['groups/connected'](group.address)" href="#" @click.prevent="leaveGroup">Disconnect</a>
+    <a v-else href="#" @click.prevent="joinGroup">Connect</a>
+  </NavList>
+
+  <br />
 
   <div v-if="inviteCode">
     <p>Please send the following invite code to the new collaborator.</p>
@@ -24,12 +31,12 @@
 <script>
 import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
-import Dot from '@/components/Dot.vue'
+import GroupIcon from '@/components/GroupIcon.vue'
 import Plus from '@/components/Plus.vue'
 
 export default {
   components: {
-    Dot,
+    GroupIcon,
     Screen,
     NavList,
     Plus
@@ -55,6 +62,20 @@ export default {
       }
 
       this.publicKey = ''
+    },
+    async joinGroup() {
+      try {
+        await this.$store.dispatch('groups/join', this.group)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+    },
+    async leaveGroup() {
+      try {
+        await this.$store.dispatch('groups/leave', this.group)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
     }
   }
 }
