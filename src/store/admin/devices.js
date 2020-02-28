@@ -1,7 +1,11 @@
 export default ({api, events}) => ({
   namespaced: true,
   state: {
-    data: []
+    data: [],
+    // these have come from system.js, looking at how they do websocket
+    // start here
+    offline: false,
+    info: null
   },
   actions: {
     async subscribe() {
@@ -19,6 +23,15 @@ export default ({api, events}) => ({
       await dispatch('fetch')
       await dispatch('connect', address)
     },
+    async broadcastReceiver({commit}) {
+      //here i am wanting to listen on WS for UDP broadcast from cobox-hub
+      try {
+        const {data} = await api.get('/devices')
+        commit('receive', data)
+      } catch(e) {
+        commit('offline')
+      }
+    },
     async join({dispatch}, deviceInviteKey) {
       const [address, encryptionKey, name] = deviceInviteKey.split(':')
       await api.post('/admin/devices', {name, encryptionKey, address})
@@ -32,6 +45,12 @@ export default ({api, events}) => ({
   mutations: {
     receiveData(state, data) {
       state.data = data
+    },
+    receive(state, data) {
+      state.info = data
+    },
+    offline(state) {
+      state.offline = true
     }
   },
   getters: {
