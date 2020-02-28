@@ -8,8 +8,9 @@ export default api => ({
       const {data} = await api.get('/admin/devices')
       commit('receiveData', data)
     },
-    async create({dispatch}, name) {
-      await api.post('/admin/devices', {name})
+    async setup({dispatch}, name) {
+      const {data: {address}} = await api.post('/admin/devices', {name})
+      dispatch('join', {address, name})
       await dispatch('fetch')
     },
     async join({dispatch}, deviceInviteKey) {
