@@ -1,3 +1,4 @@
+import {EventEmitter} from 'events'
 import axios from 'axios'
 
 const port = process.env.API_PORT || 3000
@@ -22,3 +23,13 @@ wsDev.onmessage = event => {
 }
 wsDev.onopen = () => console.warn('ws opened')
 wsDev.onerror = err => console.warn('ws error', err)
+
+export const events = new EventEmitter()
+
+ws.onmessage = event => {
+  events.emit('event', event)
+}
+
+wsDev.onmessage = event => {
+  events.emit('event', event)
+}

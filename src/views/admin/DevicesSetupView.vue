@@ -24,7 +24,7 @@ export default {
   methods: {
     async onSubmit() {
       try {
-        await this.$store.dispatch('admin/devices/setup', this.deviceName)
+        await this.$store.dispatch('devices/setup', this.deviceName)
         this.deviceName = ''
         this.$router.replace({name: 'admin-devices'})
       } catch(e) {
