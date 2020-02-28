@@ -26,7 +26,7 @@ export default {
       try {
         await this.$store.dispatch('admin/devices/setup', this.deviceName)
         this.deviceName = ''
-        this.$router.replace({name: 'devices'})
+        this.$router.replace({name: 'admin-devices'})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
