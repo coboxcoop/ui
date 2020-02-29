@@ -2,11 +2,7 @@ export default ({api, events}) => ({
   namespaced: true,
   state: {
     data: [],
-    // these have come from system.js, looking at how they do websocket
-    // start here
-    devices: {},
-    offline: false,
-    info: null
+    devices: {}
   },
   actions: {
     async subscribe() {
@@ -18,6 +14,8 @@ export default ({api, events}) => ({
       const {data} = await api.get('/admin/devices')
       commit('receiveData', data)
     },
+    //3) When the user wants to create a device, send author field as publicKey in parameters. You should still provide a device name, so your params look like { name, publicKey }.
+    //https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
     async setup({dispatch}, name) {
       const {data: {address}} = await api.post('/admin/devices', {name})
       // dispatch('join', {address, name})
@@ -32,6 +30,8 @@ export default ({api, events}) => ({
         console.warn(data)
         commit('receive', data)
       } catch(e) {
+        // this has been borrowed from network.js
+        // haven't implemented offline mutation as am not sure this is the right strategy
         commit('offline')
       }
     },
@@ -49,14 +49,13 @@ export default ({api, events}) => ({
     receiveData(state, data) {
       state.data = data
     },
+    //2) Save the author, the type and the timestamp in your store. When its disconnected, make the device disappear, or delete it entirely from your store?
+    //https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
     receiveDevice(state, address) {
       state.devices = {
         ...state.devices,
         [address]: address
       }
-    },
-    offline(state) {
-      state.offline = true
     }
   },
   getters: {
