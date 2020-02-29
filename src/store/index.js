@@ -15,7 +15,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
     system: system(api),
-    groups: groups(api),
+    groups: groups({api, events}),
     profile: profile({api, events}),
     network: network(api),
     devices: devices({api, events}),

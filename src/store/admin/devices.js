@@ -19,7 +19,7 @@ export default ({api, events}) => ({
     // publicKey in parameters. You should still provide a device name
     // so your params look like { name, publicKey }.
     async setup({dispatch}, {name}) {
-      const publicKey = '1bc6c4bf6cab934357a7de4660c2a1d2cef3103854f672d7a79b41005df8bda1'
+      const publicKey = 'd8bca301c3af50ca86edd2e69d05c086e646d2b191abde679b54bc93ee97201d'
       await api.post('/admin/devices', {name, publicKey})
       await dispatch('fetch')
     },
