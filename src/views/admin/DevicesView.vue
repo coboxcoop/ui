@@ -7,8 +7,8 @@
     </RouterLink>
   </template>
   <NavList v-for="device in devices" :key="device.address">
-    <RouterLink :to="{name: 'device', params: {address: device.address}}">
-      <Dot color="magenta" /> {{device.name}}
+    <RouterLink class="device" :to="{name: 'device', params: {address: device.address}}">
+      <Dot color="magenta" :address="device.address" /> {{device.name}}
     </RouterLink>
   </NavList>
 </Screen>
