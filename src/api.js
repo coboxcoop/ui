@@ -19,8 +19,8 @@ ws.onerror = err => console.warn('ws error', err)
 const wsDev = new WebSocket(`ws://localhost:${port}/api/devices`)
 
 wsDev.onmessage = event => {
-  const data = JSON.parse(event.data)
-  console.warn(data)
+  const payload = JSON.parse(event.data)
+  events.emit(payload.type, payload)
 }
 wsDev.onopen = () => console.warn('ws opened')
 wsDev.onerror = err => console.warn('ws error', err)
@@ -29,8 +29,4 @@ export const events = new EventEmitter()
 
 ws.onmessage = event => {
   events.emit('event', event)
-}
-
-wsDev.onmessage = event => {
-  events.emit('deviceEvent', event)
 }

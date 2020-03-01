@@ -10,8 +10,8 @@ export default ({api, events}) => ({
     // When its disconnected, make the device disappear, or delete it
     // entirely from your store?
     async subscribe() {
-      events.on('deviceEvent', event => {
-        const device = JSON.parse(event.data)
+      events.on('DEVICE_CONNECTED', payload => {
+        const device = payload.data
         console.warn(device)
         commit('receiveDevice', device)
       })
