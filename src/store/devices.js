@@ -5,6 +5,10 @@ export default ({api, events}) => ({
     devices: {}
   },
   actions: {
+    // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
+    // 2) Save the author, the type and the timestamp in your store.
+    // When its disconnected, make the device disappear, or delete it
+    // entirely from your store?
     async subscribe() {
       events.on('deviceEvent', event => {
         const data = JSON.parse(event.data)
@@ -32,16 +36,6 @@ export default ({api, events}) => ({
   mutations: {
     receiveData(state, data) {
       state.data = data
-    },
-    //https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
-    //2) Save the author, the type and the timestamp in your store.
-    //When its disconnected, make the device disappear, or delete it
-    //entirely from your store?
-    receiveDevice(state, address) {
-      state.devices = {
-        ...state.devices,
-        [address]: address
-      }
     }
   },
   getters: {
