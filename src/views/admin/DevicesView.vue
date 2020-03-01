@@ -6,6 +6,7 @@
       <Plus />
     </RouterLink>
   </template>
+  <pre>{{$store.state.devices}}</pre>
   <NavList v-for="device in devices" :key="device.address">
     <RouterLink class="device" :to="{name: 'device', params: {address: device.address}}">
       <Dot color="magenta" :address="device.address" /> {{device.name}}
@@ -31,6 +32,9 @@ export default {
     devices() {
       return this.$store.state.devices.data
     }
+    // localDevice() {
+    //   return this.$store.state.device.data
+    // }
   }
 }
 </script>

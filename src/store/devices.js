@@ -2,14 +2,14 @@ export default ({api, events}) => ({
   namespaced: true,
   state: {
     data: [],
-    device: {}
+    localDevices: {}
   },
   actions: {
     // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
     // 2) Save the author, the type and the timestamp in your store.
     // When its disconnected, make the device disappear, or delete it
     // entirely from your store?
-    async subscribe() {
+    async subscribe({commit}) {
       events.on('DEVICE_CONNECTED', payload => {
         const device = payload.data
         console.warn(device)
@@ -35,7 +35,10 @@ export default ({api, events}) => ({
       state.data = data
     },
     receiveDevice(state, device) {
-      state.device = device
+      state.localDevices = {
+        ...state.localDevices,
+        [device.author]: device
+      }
     }
   },
   getters: {
