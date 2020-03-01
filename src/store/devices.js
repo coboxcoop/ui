@@ -6,7 +6,7 @@ export default ({api, events}) => ({
   },
   actions: {
     async subscribe() {
-      events.on('event', event => {
+      events.on('deviceEvent', event => {
         console.warn(event)
       })
     },

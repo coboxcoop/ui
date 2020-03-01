@@ -31,5 +31,5 @@ ws.onmessage = event => {
 }
 
 wsDev.onmessage = event => {
-  events.emit('event', event)
+  events.emit('deviceEvent', event)
 }
