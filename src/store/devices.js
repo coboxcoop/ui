@@ -2,7 +2,7 @@ export default ({api, events}) => ({
   namespaced: true,
   state: {
     data: [],
-    devices: {}
+    device: {}
   },
   actions: {
     // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
@@ -11,9 +11,9 @@ export default ({api, events}) => ({
     // entirely from your store?
     async subscribe() {
       events.on('deviceEvent', event => {
-        const data = JSON.parse(event.data)
-        console.warn(data)
-        // commit('receiveDevice', devices)
+        const device = JSON.parse(event.data)
+        console.warn(device)
+        commit('receiveDevice', device)
       })
     },
     async fetch({commit, dispatch}) {
@@ -33,6 +33,9 @@ export default ({api, events}) => ({
   mutations: {
     receiveData(state, data) {
       state.data = data
+    },
+    receiveDevice(state, device) {
+      state.device = device
     }
   },
   getters: {
