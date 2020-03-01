@@ -7,12 +7,14 @@ export default ({api, events}) => ({
   actions: {
     async subscribe() {
       events.on('deviceEvent', event => {
-        console.warn(event)
+        const data = JSON.parse(event.data)
+        console.warn(data)
       })
     },
     async fetch({commit, dispatch}) {
       const {data} = await api.get('/admin/devices')
       commit('receiveData', data)
+      await dispatch('subscribe')
     },
     // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
     // 3) When the user wants to create a device, send author field as
@@ -22,25 +24,6 @@ export default ({api, events}) => ({
       const {devices: {publicKey}} = await api.post('/admin/devices', {name})
       await dispatch('fetch')
     },
-    async broadcastReceiver({commit}) {
-      //here i am wanting to listen on WS for UDP broadcast from cobox-hub
-      //want to print to screen what the thing is
-      try {
-        const {data} = await api.get('/devices')
-        console.warn(data)
-        commit('receive', data)
-      } catch(e) {
-        // this has been borrowed from network.js
-        // haven't implemented offline mutation as am not sure this is
-        // the right strategy
-        commit('offline')
-      }
-    },
-    // async join({dispatch}, deviceInviteKey) {
-    //   const [address, encryptionKey, name] = deviceInviteKey.split(':')
-    //   await api.post('/admin/devices', {name, encryptionKey, address})
-    //   await dispatch('fetch')
-    // },
     async connect({}, address) {
       const {data} = await api.post(`/admin/devices${address}/connections`, {address})
       console.warn(data)
