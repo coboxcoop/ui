@@ -18,9 +18,8 @@ export default ({api, events}) => ({
     // 3) When the user wants to create a device, send author field as
     // publicKey in parameters. You should still provide a device name
     // so your params look like { name, publicKey }.
-    async setup({dispatch}, {name}) {
-      const publicKey = 'd8bca301c3af50ca86edd2e69d05c086e646d2b191abde679b54bc93ee97201d'
-      await api.post('/admin/devices', {name, publicKey})
+    async setup({dispatch}, name) {
+      const {devices: {publicKey}} = await api.post('/admin/devices', {name})
       await dispatch('fetch')
     },
     async broadcastReceiver({commit}) {
