@@ -13,6 +13,7 @@ export default ({api, events}) => ({
       events.on('deviceEvent', event => {
         const data = JSON.parse(event.data)
         console.warn(data)
+        // commit('receiveDevice', devices)
       })
     },
     async fetch({commit, dispatch}) {
@@ -27,10 +28,6 @@ export default ({api, events}) => ({
     async setup({dispatch}, name) {
       const {devices: {publicKey}} = await api.post('/admin/devices', {name})
       await dispatch('fetch')
-    },
-    async connect({}, address) {
-      const {data} = await api.post(`/admin/devices${address}/connections`, {address})
-      console.warn(data)
     }
   },
   mutations: {
