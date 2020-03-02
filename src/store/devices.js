@@ -26,6 +26,7 @@ export default ({api, events}) => ({
       const {data} = await api.get('/admin/devices')
       commit('receiveData', data)
       await dispatch('subscribe')
+      await dispatch('peerAbout')
     },
     // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
     // 3) When the user wants to create a device, send author field as
