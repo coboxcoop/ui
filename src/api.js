@@ -17,9 +17,11 @@ export const events = new EventEmitter()
 Object.keys(socketEndpoints).forEach(name => {
   const endpoint = socketEndpoints[name]
   const ws = new WebSocket(endpoint)
+
   ws.onerror = err => console.error(name, err)
   ws.onopen = () => console.info(name, 'socket opened')
   ws.onclose = () => console.info(name, 'socket closed')
+
   ws.onmessage = event => {
     const payload = JSON.parse(event.data)
     events.emit(payload.type, payload)
