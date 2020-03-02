@@ -68,6 +68,9 @@ export default {
     },
     broadcast() {
       return this.$store.getters['devices/broadcast'](this.device.address)
+    },
+    hidden() {
+      return this.$store.getters['devices/hidden'](this.device.address)
     }
   },
   methods: {

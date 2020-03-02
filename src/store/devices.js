@@ -4,7 +4,8 @@ export default ({api, events}) => ({
     data: [],
     localDevices: {},
     connections: {},
-    broadcasts: {}
+    broadcasts: {},
+    hidden: {}
   },
   actions: {
     // FIXME
@@ -123,6 +124,12 @@ export default ({api, events}) => ({
         ...state.broadcasts,
         [address]: broadcast
       }
+    },
+    hidden(state, {address, hidden}) {
+      state.hidden = {
+        ...state.hidden,
+        [address]: hidden
+      }
     }
   },
   getters: {
@@ -142,6 +149,10 @@ export default ({api, events}) => ({
     broadcast(state) {
       return address => {
         return (address in state.broadcasts) && state.broadcasts[address]
+    },
+    hidden(state) {
+      return address => {
+        return (address in state.hidden) && state.hidden[address]
       }
     }
   }
