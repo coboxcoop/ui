@@ -3,7 +3,8 @@ export default ({api, events}) => ({
   state: {
     data: [],
     localDevices: {},
-    connections: {}
+    connections: {},
+    hidden: {}
   },
   actions: {
     // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
@@ -72,10 +73,16 @@ export default ({api, events}) => ({
     //using nested parameters 'commands' to tell the device to hide (stop broadcasting).
     //curl http://localhost:1234/api/admin/devices -X POST -H "Content-Type: application/json" 
     //-d '{"name": "cobox", "publicKey": "insert-device-public-key-here", "commands": [{ "action": "hide" }] }'
-    asynce hide({dispatch, state}, name) {
+    async hide({dispatch, state}, name) {
       const publicKey = Object.keys(state.localDevices)[0]
       const commands = [{"action": "hide"}]
-      const {data} = await api.post('/admin/devices', {name, publicKey, commands})
+      const {data} = await api.post('/admin/devices/cobox/commands/hide', {name, publicKey, commands})
+      console.warn(data)
+    },
+    async announce({dispatch, state}, name) {
+      const publicKey = Object.keys(state.localDevices)[0]
+      const commands = [{"action": "announce"}]
+      const {data} = await api.post('/admin/devices/cobox/commands/announce', {name, publicKey, commands})
       console.warn(data)
     },
     async acceptInvite({dispatch}, code) {
@@ -102,6 +109,12 @@ export default ({api, events}) => ({
         ...state.connections,
         [address]: connected
       }
+    },
+    hidden(state, {address, hidden}) {
+      state.hidden = {
+        ...state.hidden,
+        [address]: hidden
+      }
     }
   },
   getters: {
@@ -116,6 +129,11 @@ export default ({api, events}) => ({
     connected(state) {
       return address => {
         return (address in state.connections) && state.connections[address]
+      }
+    },
+    hidden(state) {
+      return address => {
+        return (address in state.hidden) && state.hidden[address]
       }
     }
   }
