@@ -35,7 +35,7 @@ export default ({api, events}) => ({
       await dispatch('fetch')
     },
     async createInvite({}, {address, publicKey}) {
-      const {data} = await api.post('/admin/devices/${address}/invites', {address, publicKey})
+      const {data} = await api.post(`/admin/devices/${address}/invites`, {address, publicKey})
       return data
     }
   },
