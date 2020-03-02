@@ -30,6 +30,10 @@ export default ({api, events}) => ({
       const {data} = await api.post('/admin/devices', {name, publicKey})
       console.warn(data)
     },
+    async acceptInvite({dispatch}, code) {
+      const {data} = await api.get('/admin/devices/invites/accept', {params: {code}})
+      await dispatch('fetch')
+    },
     async createInvite({}, {address, publicKey}) {
       const {data} = await api.post(`/admin/devices/${address}/invites`, {address, publicKey})
       return data
