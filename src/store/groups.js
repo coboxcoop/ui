@@ -34,15 +34,32 @@ export default ({api, events}) => ({
       const {data} = await api.post(`/groups/${address}/invites`, {address, publicKey})
       return data
     },
+    async joinAll({state, dispatch}) {
+      await Promise.all(state.data.map(({address, name}) => {
+        return dispatch('join', {address, name})
+      }))
+    },
     async join({commit}, {address, name}) {
+      // FIXME
+      // When joining the swarm for each group, an error is thrown if we have already joined.
+      // Since there is no way to fetch the joined status for group, we will ignore the error
+      // if it matches some known condition and assume we have already joined that group swarm
       try {
         await api.post(`/groups/${address}/connections`, {address, name})
         commit('connected', {address, connected: true})
       } catch(e) {
-        throw(e)
+        const msg = e.response.data && e.response.data.errors && e.response.data.errors[0].msg
+        if(msg && msg.match('open connection')) {
+          commit('connected', {address, connected: true})
+        } else {
+          throw(e)
+        }
       }
     },
     async leave({commit}, {address, name}) {
+      // FIXME
+      // As with groups/join -- we need a way to check if the server has already joined the swarm
+      // before joining or leaving
       try {
         await api.delete(`/groups/${address}/connections`, {address, name})
         commit('connected', {address, connected: false})

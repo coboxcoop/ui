@@ -29,8 +29,9 @@ export default {
   async mounted() {
     await this.$store.dispatch('init')
     if(this.hasName) {
-      this.$store.dispatch('groups/fetch')
-      this.$store.dispatch('devices/fetch')
+      await this.$store.dispatch('groups/fetch')
+      await this.$store.dispatch('devices/fetch')
+      await this.$store.dispatch('groups/joinAll')
     } else {
       this.$router.replace({name: 'home'})
     }
