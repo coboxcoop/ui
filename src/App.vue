@@ -32,6 +32,7 @@ export default {
       await this.$store.dispatch('groups/fetch')
       await this.$store.dispatch('devices/fetch')
       await this.$store.dispatch('groups/joinAll')
+      await this.$store.dispatch('devices/joinAll')
     } else {
       this.$router.replace({name: 'home'})
     }
