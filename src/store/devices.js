@@ -29,6 +29,10 @@ export default ({api, events}) => ({
       const publicKey = Object.keys(state.localDevices)[0]
       const {data} = await api.post('/admin/devices', {name, publicKey})
       console.warn(data)
+    },
+    async createInvite({}, {address, publicKey}) {
+      const {data} = await api.post(`/admin/devices/${address}/invites`, {address, publicKey})
+      return data
     }
   },
   mutations: {
@@ -45,6 +49,11 @@ export default ({api, events}) => ({
   getters: {
     count(state) {
       return state.data.length
+    },
+    single(state) {
+      return address => {
+        return state.data.find(d => d.address === address)
+      }
     }
   }
 })

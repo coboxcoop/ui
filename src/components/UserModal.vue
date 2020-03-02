@@ -11,6 +11,7 @@
   <NavList>
     <RouterLink :to="{name: 'backup'}">Backup keys</RouterLink>
     <RouterLink :to="{name: 'restore'}" class="disabled-feature">Restore</RouterLink>
+    <p>My Public Key:<CopyKey :value="$store.getters['profile/myPublicKey']" /></p>
   </NavList>
 
   <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
@@ -18,13 +19,15 @@
 </template>
 
 <script>
-import Dot from '@/components/Dot.vue'
+import Dot     from '@/components/Dot.vue'
 import NavList from '@/components/NavList.vue'
+import CopyKey from '@/components/CopyKey.vue'
 
 export default {
   components: {
     NavList,
-    Dot
+    Dot,
+    CopyKey
   },
   data: () => ({
     editName: false,
