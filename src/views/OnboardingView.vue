@@ -31,7 +31,7 @@ export default {
       try {
         await this.$store.dispatch('profile/updateName', this.name)
         this.name = ''
-        this.$router.replace({name: 'groups-init'})
+        this.$router.replace({name: 'home'})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
