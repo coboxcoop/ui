@@ -1,4 +1,4 @@
-export default api => ({
+export default ({api, events}) => ({
   namespaced: true,
   state: {
     offline: false,

@@ -1,6 +1,6 @@
 import uniq from 'lodash/uniq'
 
-export default api => ({
+export default ({api, events}) => ({
   namespaced: true,
   state: {
     groups: {

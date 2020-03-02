@@ -1,4 +1,4 @@
-export default {
+export default ({api, events}) => ({
   namespaced: true,
   state: {
     message: null
@@ -27,4 +27,4 @@ export default {
       state.message = null
     }
   }
-}
+})

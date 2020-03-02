@@ -15,13 +15,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    system: system(api),
+    system: system({api, events}),
     groups: groups({api, events}),
     profile: profile({api, events}),
-    network: network(api),
+    network: network({api, events}),
     devices: devices({api, events}),
-    backup: backup(api),
-    error
+    backup: backup({api, events}),
+    error: error({api, events})
   },
   state: {
     ready: false,
