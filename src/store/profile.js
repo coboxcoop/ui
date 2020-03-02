@@ -24,6 +24,9 @@ export default ({api, events}) => ({
     myName(state) {
       return state.data && state.data.name
     },
+    myPublicKey(state) {
+      return state.data && state.data.publicKey
+    },
     hasName(state) {
       return !!(state.data && state.data.name)
     },

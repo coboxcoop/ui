@@ -18,8 +18,7 @@
 
   <div v-if="inviteCode">
     <p>Please send the following invite code to the new collaborator.</p>
-    <pre>{{inviteCode}}</pre>
-    <RouterLink :to="{name: 'groups'}">Ok</RouterLink>
+    <CopyKey :value="inviteCode" />
   </div>
   <div v-else>
     <p>To invite someone to join this group, please provide their public key.</p>
@@ -47,13 +46,15 @@ import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
 import GroupIcon from '@/components/GroupIcon.vue'
 import Plus from '@/components/Plus.vue'
+import CopyKey from '@/components/CopyKey.vue'
 
 export default {
   components: {
     GroupIcon,
     Screen,
     NavList,
-    Plus
+    Plus,
+    CopyKey
   },
   data: () => ({
     publicKey: '',

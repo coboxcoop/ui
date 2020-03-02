@@ -2,7 +2,8 @@
 <Screen :back="{name: 'groups-init'}">
   <div class="page">
     <p>To join a group, send your public key to someone that can invite you.</p>
-    <pre>{{$store.getters['profile/me'].publicKey}}</pre><br />
+
+    <CopyKey :value="$store.getters['profile/myPublicKey']" />
 
     <p>What is the invite code of the group?</p>
     <form @submit.prevent="onSubmit">
@@ -22,10 +23,12 @@
 
 <script>
 import Screen from '@/components/Screen.vue'
+import CopyKey from '@/components/CopyKey.vue'
 
 export default {
   components: {
-    Screen
+    Screen,
+    CopyKey
   },
   data: () => ({
     inviteCode: ''
