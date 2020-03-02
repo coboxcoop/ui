@@ -1,7 +1,7 @@
 import {EventEmitter} from 'events'
 import axios from 'axios'
 
-const port = process.env.VUE_APP_API_PORT || 3000
+const port = process.env.VUE_APP_API_PORT
 
 export const api = axios.create({
   baseURL: `http://localhost:${port}/api`
