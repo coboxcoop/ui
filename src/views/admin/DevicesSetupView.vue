@@ -1,7 +1,6 @@
 <template>
   <Screen :back="{name: 'admin-devices-init'}">
   <div class="page">
-    <pre>{{$store.state.devices.localDevices}}</pre>
     <p>What would you like your device to be called?</p>
 
     <form @submit.prevent="onSubmit">

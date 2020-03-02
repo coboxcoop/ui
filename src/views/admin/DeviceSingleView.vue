@@ -5,7 +5,6 @@
       <div><GroupIcon :address="device.address" /> {{device.name}}</div>
     </div>
   </template>
-  <pre>{{device}}</pre>
   <div v-if="inviteCode">
     <p>Please send the following invite code to the new collaborator. This will make them an admin of this device.</p>
     <CopyKey :value="inviteCode" />
