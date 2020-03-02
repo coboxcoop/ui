@@ -5,6 +5,14 @@
       <div><GroupIcon :address="device.address" /> {{device.name}}</div>
     </div>
   </template>
+
+  <NavList>
+    <a v-if="connected" href="#" @click.prevent="leaveGroup">Disconnect</a>
+    <a v-else href="#" @click.prevent="joinGroup">Connect</a>
+  </NavList>
+
+  <br />
+
   <div v-if="inviteCode">
     <p>Please send the following invite code to the new collaborator. This will make them an admin of this device.</p>
     <CopyKey :value="inviteCode" />
@@ -52,7 +60,10 @@ export default {
   computed: {
     device() {
       return this.$store.getters['devices/single'](this.$route.params.address)
-    }
+    },
+    connected() {
+      return this.$store.getters['devices/connected'](this.device.address)
+    },
   },
   methods: {
     async onSubmitInvite() {
@@ -66,6 +77,20 @@ export default {
       }
 
       this.publicKey = ''
+    },
+    async joinGroup() {
+      try {
+        await this.$store.dispatch('devices/join', this.device)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+    },
+    async leaveGroup() {
+      try {
+        await this.$store.dispatch('devices/leave', this.device)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
     }
   }
 }

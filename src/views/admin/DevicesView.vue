@@ -31,9 +31,6 @@ export default {
     devices() {
       return this.$store.state.devices.data
     }
-    // localDevice() {
-    //   return this.$store.state.device.data
-    // }
   }
 }
 </script>
