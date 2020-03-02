@@ -6,8 +6,9 @@
       <Plus />
     </RouterLink>
   </template>
+  <pre>{{$store.state.devices.data}}</pre>
   <NavList v-for="device in devices" :key="device.address">
-    <RouterLink class="device" :to="{name: 'device', params: {address: device.address}}">
+    <RouterLink class="admin-device" :to="{name: 'admin-device', params: {address: device.address}}">
       <Dot color="magenta" :address="device.address" /> {{device.name}}
     </RouterLink>
   </NavList>
