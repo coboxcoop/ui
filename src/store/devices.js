@@ -2,7 +2,8 @@ export default ({api, events}) => ({
   namespaced: true,
   state: {
     data: [],
-    localDevices: {}
+    localDevices: {},
+    connections: {}
   },
   actions: {
     // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
@@ -27,6 +28,39 @@ export default ({api, events}) => ({
       commit('receiveData', data)
       await dispatch('subscribe')
       await dispatch('peerAbout')
+    },
+    async joinAll({state, dispatch}) {
+      await Promise.all(state.data.map(({address, name}) => {
+        return dispatch('join', {address, name})
+      }))
+    },
+    async join({commit}, {address, name}) {
+      // FIXME
+      // When joining the swarm for each group, an error is thrown if we have already joined.
+      // Since there is no way to fetch the joined status for group, we will ignore the error
+      // if it matches some known condition and assume we have already joined that group swarm
+      try {
+        await api.post(`/admin/devices/${address}/connections`, {address, name})
+        commit('connected', {address, connected: true})
+      } catch(e) {
+        const msg = e.response.data && e.response.data.errors && e.response.data.errors[0].msg
+        if(msg && msg.match('open connection')) {
+          commit('connected', {address, connected: true})
+        } else {
+          throw(e)
+        }
+      }
+    },
+    async leave({commit}, {address, name}) {
+      // FIXME
+      // As with groups/join -- we need a way to check if the server has already joined the swarm
+      // before joining or leaving
+      try {
+        await api.delete(`/admin/devices/${address}/connections`, {address, name})
+        commit('connected', {address, connected: false})
+      } catch(e) {
+        throw(e)
+      }
     },
     // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
     // 3) When the user wants to create a device, send author field as
@@ -55,6 +89,12 @@ export default ({api, events}) => ({
         ...state.localDevices,
         [device.author]: device
       }
+    },
+    connected(state, {address, connected}) {
+      state.connections = {
+        ...state.connections,
+        [address]: connected
+      }
     }
   },
   getters: {
@@ -64,6 +104,11 @@ export default ({api, events}) => ({
     single(state) {
       return address => {
         return state.data.find(d => d.address === address)
+      }
+    },
+    connected(state) {
+      return address => {
+        return (address in state.connections) && state.connections[address]
       }
     }
   }
