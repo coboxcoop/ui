@@ -49,6 +49,11 @@ form {
     border-bottom: 1px solid black;
     width: 100%;
     padding: 0.6rem 0;
+    &.has-ok-button {
+      padding-right: 1.5em;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
   button {
     position: absolute;

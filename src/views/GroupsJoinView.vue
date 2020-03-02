@@ -7,7 +7,7 @@
 
     <p>What is the invite code of the group?</p>
     <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="Invite code" v-model="inviteCode" />
+      <input type="text" placeholder="Invite code" v-model="inviteCode" class="has-ok-button" />
       <button type="submit">Ok</button>
     </form>
   </div>

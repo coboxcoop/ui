@@ -24,7 +24,7 @@
     <p>To invite someone to join this group, please provide their public key.</p>
 
     <form @submit.prevent="onSubmitInvite">
-      <input type="text" placeholder="Public key" v-model="publicKey" />
+      <input class="has-ok-button" type="text" placeholder="Public key" v-model="publicKey" />
       <button type="submit">Ok</button>
     </form>
   </div>
