@@ -30,6 +30,7 @@ export default {
     await this.$store.dispatch('init')
     if(this.hasName) {
       this.$store.dispatch('groups/fetch')
+      this.$store.dispatch('devices/fetch')
     } else {
       this.$router.replace({name: 'home'})
     }

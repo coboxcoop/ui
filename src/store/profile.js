@@ -1,4 +1,4 @@
-export default api => ({
+export default ({api}) => ({
   namespaced: true,
   state: {
     data: null

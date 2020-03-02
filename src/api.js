@@ -1,3 +1,4 @@
+import {EventEmitter} from 'events'
 import axios from 'axios'
 
 const port = process.env.API_PORT || 3000
@@ -7,7 +8,6 @@ export const api = axios.create({
 })
 
 const ws = new WebSocket(`ws://localhost:${port}/api`)
-const wsDev = new WebSocket(`ws://localhost:${port}/api/devices`)
 
 ws.onmessage = event => {
   const data = JSON.parse(event.data)
@@ -16,9 +16,17 @@ ws.onmessage = event => {
 ws.onopen = () => console.warn('ws opened')
 ws.onerror = err => console.warn('ws error', err)
 
+const wsDev = new WebSocket(`ws://localhost:${port}/api/devices`)
+
 wsDev.onmessage = event => {
-  const data = JSON.parse(event.data)
-  console.warn(data)
+  const payload = JSON.parse(event.data)
+  events.emit(payload.type, payload)
 }
 wsDev.onopen = () => console.warn('ws opened')
 wsDev.onerror = err => console.warn('ws error', err)
+
+export const events = new EventEmitter()
+
+ws.onmessage = event => {
+  events.emit('event', event)
+}

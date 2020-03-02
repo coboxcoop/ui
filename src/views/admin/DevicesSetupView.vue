@@ -1,10 +1,11 @@
 <template>
   <Screen :back="{name: 'admin-devices-init'}">
   <div class="page">
+    <pre>{{$store.state.devices.localDevices}}</pre>
     <p>What would you like your device to be called?</p>
 
     <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="Device name" v-model="deviceName" />
+      <input type="text" placeholder="Device name" v-model="name" />
       <button type="submit">Ok</button>
     </form>
   </div>
@@ -16,7 +17,7 @@ import Screen from '@/components/Screen.vue'
 
 export default {
   data: () => ({
-    deviceName: ''
+    name: ''
   }),
   components: {
     Screen
@@ -24,9 +25,9 @@ export default {
   methods: {
     async onSubmit() {
       try {
-        await this.$store.dispatch('devices/setup', this.deviceName)
-        this.deviceName = ''
-        this.$router.replace({name: 'devices'})
+        await this.$store.dispatch('devices/setup', this.name)
+        this.name = ''
+        this.$router.replace({name: 'admin-devices'})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }

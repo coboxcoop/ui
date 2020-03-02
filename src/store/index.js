@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import {api, ws} from '@/api'
+import {api, events} from '@/api'
 
 import error from '@/store/error'
 import groups from '@/store/groups'
 import profile from '@/store/profile'
 import network from '@/store/network'
-import devices from '@/store/admin/devices'
+import devices from '@/store/devices'
 import system from '@/store/system'
 
 Vue.use(Vuex)
@@ -15,10 +15,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
     system: system(api),
-    groups: groups(api),
-    profile: profile(api),
+    groups: groups({api, events}),
+    profile: profile({api, events}),
     network: network(api),
-    devices: devices(api),
+    devices: devices({api, events}),
     error
   },
   state: {

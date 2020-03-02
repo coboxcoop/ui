@@ -1,4 +1,4 @@
-export default api => ({
+export default ({api, events}) => ({
   namespaced: true,
   state: {
     data: [],
@@ -6,7 +6,12 @@ export default api => ({
     stat: {}
   },
   actions: {
-    async fetch({commit}) {
+    async subscribe() {
+      events.on('event', event => {
+        console.warn(event)
+      })
+    },
+    async fetch({commit, dispatch}) {
       const {data} = await api.get('/groups')
       commit('receiveData', data)
 
