@@ -1,6 +1,7 @@
 <template>
   <Screen :back="{name: 'admin-devices-init'}">
   <div class="page">
+    <pre>{{$store.state.devices.localDevices}}</pre>
     <p>What would you like your device to be called?</p>
 
     <form @submit.prevent="onSubmit">
@@ -24,7 +25,7 @@ export default {
   methods: {
     async onSubmit() {
       try {
-        await this.$store.dispatch('devices/setup', name)
+        await this.$store.dispatch('devices/setup', this.name)
         this.name = ''
         this.$router.replace({name: 'admin-devices'})
       } catch(e) {
