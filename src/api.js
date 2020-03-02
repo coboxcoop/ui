@@ -24,6 +24,9 @@ Object.keys(socketEndpoints).forEach(name => {
 
   ws.onmessage = event => {
     const payload = JSON.parse(event.data)
-    events.emit(payload.type, payload)
+    // FIXME: Some ambiguity in the payload response?
+    const type = payload.type || (payload.data ? payload.data.type : null)
+    console.info(name, type, payload)
+    events.emit(type, payload)
   }
 })
