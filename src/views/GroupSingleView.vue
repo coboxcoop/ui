@@ -101,8 +101,20 @@ export default {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async mountGroup() {},
-    async unmountGroup() {}
+    async mountGroup() {
+      try {
+        await this.$store.dispatch('groups/mount', this.group)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+    },
+    async unmountGroup() {
+      try {
+        await this.$store.dispatch('groups/unmount', this.group)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+    }
   }
 }
 </script>

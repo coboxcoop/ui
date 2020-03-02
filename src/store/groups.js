@@ -3,6 +3,7 @@ export default ({api, events}) => ({
   state: {
     data: [],
     connections: {},
+    mounts: {},
     stat: {}
   },
   actions: {
@@ -48,6 +49,22 @@ export default ({api, events}) => ({
       } catch(e) {
         throw(e)
       }
+    },
+    async mount({commit}, {address, name}) {
+      try {
+        await api.post(`/groups/${address}/mounts`, {address, name})
+        commit('mounted', {address, mounted: true})
+      } catch(e) {
+        throw(e)
+      }
+    },
+    async unmount({commit}, {address, name}) {
+      try {
+        await api.delete(`/groups/${address}/mounts`, {address, name})
+        commit('mounted', {address, mounted: false})
+      } catch(e) {
+        throw(e)
+      }
     }
   },
   mutations: {
@@ -64,6 +81,12 @@ export default ({api, events}) => ({
       state.connections = {
         ...state.connections,
         [address]: connected
+      }
+    },
+    mounted(state, {address, mounted}) {
+      state.mounts = {
+        ...state.mounts,
+        [address]: mounted
       }
     }
   },
@@ -88,8 +111,8 @@ export default ({api, events}) => ({
     },
     mounted(state) {
       return address => {
-        return false
+        return (address in state.mounts) && state.mounts[address]
       }
-    }
+    },
   }
 })
