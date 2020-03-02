@@ -7,26 +7,21 @@ export const api = axios.create({
   baseURL: `http://localhost:${port}/api`
 })
 
-const ws = new WebSocket(`ws://localhost:${port}/api`)
-
-ws.onmessage = event => {
-  const data = JSON.parse(event.data)
-  console.warn(data)
+const socketEndpoints = {
+  devices: `ws://localhost:${port}/api/devices`,
+  api: `ws://localhost:${port}/api`
 }
-ws.onopen = () => console.warn('ws opened')
-ws.onerror = err => console.warn('ws error', err)
-
-const wsDev = new WebSocket(`ws://localhost:${port}/api/devices`)
-
-wsDev.onmessage = event => {
-  const payload = JSON.parse(event.data)
-  events.emit(payload.type, payload)
-}
-wsDev.onopen = () => console.warn('ws opened')
-wsDev.onerror = err => console.warn('ws error', err)
 
 export const events = new EventEmitter()
 
-ws.onmessage = event => {
-  events.emit('event', event)
-}
+Object.keys(socketEndpoints).forEach(name => {
+  const endpoint = socketEndpoints[name]
+  const ws = new WebSocket(endpoint)
+  ws.onerror = err => console.error(name, err)
+  ws.onopen = () => console.info(name, 'socket opened')
+  ws.onclose = () => console.info(name, 'socket closed')
+  ws.onmessage = event => {
+    const payload = JSON.parse(event.data)
+    events.emit(payload.type, payload)
+  }
+})
