@@ -16,6 +16,12 @@ export default ({api, events}) => ({
         commit('receiveDevice', device)
       })
     },
+    async peerAbout({commit}) {
+      events.on('ADMIN_DEVICE', payload => {
+        const peer = payload.data
+        console.warn(peer)
+      })
+    },
     async fetch({commit, dispatch}) {
       const {data} = await api.get('/admin/devices')
       commit('receiveData', data)
