@@ -45,6 +45,11 @@ export default ({api, events}) => ({
   getters: {
     count(state) {
       return state.data.length
+    },
+    single(state) {
+      return address => {
+        return state.data.find(d => d.address === address)
+      }
     }
   }
 })
