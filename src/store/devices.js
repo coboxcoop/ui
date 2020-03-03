@@ -9,11 +9,6 @@ export default ({api, events}) => ({
     broadcasts: {}
   },
   actions: {
-    // FIXME
-    // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
-    // 2) Save the author, the type and the timestamp in your store.
-    // When its disconnected, make the device disappear, or delete it
-    // entirely from your store?
     async subscribe({commit}) {
       events.on('DEVICE_CONNECTED', payload => {
         const device = payload.data
@@ -63,20 +58,11 @@ export default ({api, events}) => ({
         throw(e)
       }
     },
-    // FIXME
-    // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
-    // 3) When the user wants to create a device, send author field as
-    // publicKey in parameters. You should still provide a device name
-    // so your params look like { name, publicKey }.
     async setup({dispatch, state}, name) {
       const publicKey = Object.keys(state.localDevices)[0]
       const {data} = await api.post('/admin/devices', {name, publicKey})
       console.warn(data)
     },
-    //# create the admin device using the public key you received under 'author' field, 
-    //using nested parameters 'commands' to tell the device to hide (stop broadcasting).
-    //curl http://localhost:1234/api/admin/devices -X POST -H "Content-Type: application/json" 
-    //-d '{"name": "cobox", "publicKey": "insert-device-public-key-here", "commands": [{ "action": "hide" }] }'
     async hide({commit, dispatch, state}, {name, address}) {
       const publicKey = Object.keys(state.localDevices)[0]
       const {data} = await api.post('/admin/devices/cobox/commands/hide', {
