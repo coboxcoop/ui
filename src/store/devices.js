@@ -30,17 +30,10 @@ export default ({api, events}) => ({
         return dispatch('join', {address, name})
       }))
     },
-    // var promises = []
-    // state.devices.map(({address,name}) => {
-    //    promises.push(dispatch('getPeers', address))
-    //    promises.push(dispatch('join', { address, name }))
-    // })
-   // await Promise.all(promises)
     async getAllPeers({state, dispatch}) {
       await Promise.all(state.devices.map(({address, name}) => {
         return dispatch('getPeers', address)
-      })
-      )
+      }))
     },
     async join({commit}, {address, name}) {
       // FIXME
@@ -110,6 +103,20 @@ export default ({api, events}) => ({
     async getPeers({commit, dispatch}, address) {
       const {data} = await api.get(`/admin/devices/${address}/peers`)
       commit('receivePeers', {address, peers: data})
+    },
+    // command/replicate - tell cobox-hub to start replicating, 
+    // can send as nested command 
+    // [{ 'action': 'replicate', 'name': 'magma', 
+    // 'address': '1820cf4b47f9ca4f638edca73a285f4848ed3b93fb250a95365a3af10afd5993' }]
+    async replicate({dispatch, state}, {name, address}){
+      const {data} = await api.post('/admin/devices/cobox/commands/replicate', {
+        name,
+        address,
+        commands: [{
+          action: 'replicate'
+        }]
+      })
+      console.warn(data)
     }
   },
   mutations: {

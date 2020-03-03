@@ -14,6 +14,15 @@
   </NavList>
 
   <br />
+  Replicate Group:
+  <p>Please get the replication key for the space which you would like to backup.</p>
+  <form @submit.prevent="onSubmitReplicate">
+    <input type="text" placeholder="Replication Key" v-model="address">
+    <input type="text" placeholder="Name" v-model="name">
+    <button type="submit">Ok</button>
+  </form>
+
+  <br />
 
   <div v-if="inviteCode">
     <p>Please send the following invite code to the new collaborator. This will make them an admin of this device.</p>
@@ -27,8 +36,7 @@
       <button type="submit">Ok</button>
     </form>
   </div>
-  <!-- FIXME -->
-  <!-- Tring to find peers registered as admins on the device -->
+  {{device.name}} Admins:
   <NavList v-for="peer in peers" :key="device.address">
     <div>
       <GroupIcon :address="peer.name" /> 
@@ -96,6 +104,18 @@ export default {
       }
 
       this.publicKey = ''
+    },
+    async onSubmitReplicate() {
+      const {address, name} = this
+
+      try {
+        const data = await this.$store.dispatch('devices/replicate', {address, name})
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+
+      this.address = ''
+      this.name = ''
     },
     async joinDevice() {
       try {
