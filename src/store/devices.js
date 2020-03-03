@@ -44,7 +44,9 @@ export default ({api, events}) => ({
           commit('connected', {address, connected: true})
         } else {
           throw(e)
-        } } },
+        }
+      }
+    },
     async leave({commit}, {address, name}) {
       // FIXME
       // As with groups/join -- we need a way to check if the server has already joined the swarm
