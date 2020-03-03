@@ -1,7 +1,7 @@
 export default ({api, events}) => ({
   namespaced: true,
   state: {
-    data: [],
+    devices: [],
     localDevices: {},
     connections: {},
     broadcasts: {},
@@ -23,7 +23,7 @@ export default ({api, events}) => ({
     },
     async fetch({commit, dispatch}) {
       const {data} = await api.get('/admin/devices')
-      commit('receiveData', data)
+      commit('receiveDevices', data)
     },
     async joinAll({state, dispatch}) {
       await Promise.all(state.data.map(({address, name}) => {
@@ -101,8 +101,9 @@ export default ({api, events}) => ({
     }
   },
   mutations: {
-    receiveData(state, data) {
-      state.data = data
+    receiveDevices(state, devices) {
+      state.devices = devices
+    },
     },
     receiveDevice(state, device) {
       state.localDevices = {
