@@ -68,6 +68,8 @@ export default ({api, events}) => ({
       const {data} = await api.post('/admin/devices', {name, publicKey})
       console.warn(data)
     },
+    // FIXME
+    // cobox is hardcoded in route and should be dynamic
     async hide({commit, dispatch, state}, {name, address}) {
       const publicKey = Object.keys(state.localDevices)[0]
       const {data} = await api.post('/admin/devices/cobox/commands/hide', {
@@ -80,6 +82,8 @@ export default ({api, events}) => ({
       commit('broadcast', {address, broadcast: false} )
       console.warn(data)
     },
+    // FIXME
+    // cobox is hardcoded in route and should be dynamic
     async announce({commit, dispatch, state}, {name, address}) {
       const publicKey = Object.keys(state.localDevices)[0]
       const {data} = await api.post('/admin/devices/cobox/commands/announce', {
@@ -104,7 +108,7 @@ export default ({api, events}) => ({
       const {data} = await api.get(`/admin/devices/${address}/peers`)
       commit('receivePeers', {address, peers: data})
     },
-    async replicate({dispatch, state}, { address, params }){
+    async replicate({dispatch, state}, {address, params}){
       const {data} = await api.post(`/admin/devices/${address}/commands/replicate`, params)
       console.warn(data)
      }

@@ -16,9 +16,16 @@
   <br />
   Replicate Group:
   <p>Please get the replication key for the space which you would like to backup.</p>
+  <!-- <form @submit.prevent="onSubmitReplicate"> -->
+  <!--   <input type="text" placeholder="Replication Key" v&#45;model="address"> -->
+  <!--   <input type="text" placeholder="Name" v&#45;model="name"> -->
+  <!--   <button type="submit">Ok</button> -->
+  <!-- FIXME -->
+  <!-- params stuff -->
   <form @submit.prevent="onSubmitReplicate">
-    <input type="text" placeholder="Replication Key" v-model="address">
-    <input type="text" placeholder="Name" v-model="name">
+    <input type="hidden" :address="device.address">
+    <input type="text" placeholder="Replication Key" v-model="params.address">
+    <input type="text" placeholder="Name" v-model="params.name">
     <button type="submit">Ok</button>
   </form>
 
@@ -105,11 +112,23 @@ export default {
 
       this.publicKey = ''
     },
+    // async onSubmitReplicate() {
+    //   const {address, name} = this
+    //
+    //   try {
+    //     const data = await this.$store.dispatch('devices/replicate', {address, params})
+    //   } catch(e) {
+    //     this.$store.dispatch('error/handle', e)
+    //   }
+    //
+    //   this.address = ''
+    //   this.name = ''
+    // },
     async onSubmitReplicate() {
-      const {address, name} = this
-
+      const {address, params} = this
+     // changed whats send to address, params
       try {
-        const data = await this.$store.dispatch('devices/replicate', {address, name})
+        const data = await this.$store.dispatch('devices/replicate', {address, params})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
