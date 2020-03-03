@@ -27,6 +27,7 @@ export default ({api, events}) => ({
     },
     async joinAll({state, dispatch}) {
       await Promise.all(state.devices.map(({address, name}) => {
+        dispatch('getPeers', address)
         return dispatch('join', {address, name})
       }))
     },

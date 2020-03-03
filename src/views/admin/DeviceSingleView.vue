@@ -29,12 +29,10 @@
   </div>
   <!-- FIXME -->
   <!-- Tring to find peers registered as admins on the device -->
-  <!-- <NavList v&#45;for="peer in peers" :key="device.address"> -->
-    <!-- <RouterLink class="peer" :to="{name: 'peer', params: {address: device.address}}"> -->
-      <div>
-        <GroupIcon :address="device.address" /> {{peer.name}}
-      </div>
-    </RouterLink>
+  <NavList v-for="peer in peers" :key="peer.address">
+    <div>
+      <GroupIcon :address="peer.address" /> {{peer.name}}
+    </div>
   </NavList>
 </Screen>
 </template>
