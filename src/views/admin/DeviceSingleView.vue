@@ -16,18 +16,19 @@
   <br />
   Replicate Group:
   <p>Please get the replication key for the space which you would like to backup.</p>
-  <!-- <form @submit.prevent="onSubmitReplicate"> -->
-  <!--   <input type="text" placeholder="Replication Key" v&#45;model="address"> -->
-  <!--   <input type="text" placeholder="Name" v&#45;model="name"> -->
-  <!--   <button type="submit">Ok</button> -->
-  <!-- FIXME -->
-  <!-- params stuff -->
   <form @submit.prevent="onSubmitReplicate">
-    <input type="hidden" :address="device.address">
-    <input type="text" placeholder="Replication Key" v-model="params.address">
-    <input type="text" placeholder="Name" v-model="params.name">
+    <input type="text" placeholder="Replication Key" v-model="address">
+    <input type="text" placeholder="Name" v-model="name">
     <button type="submit">Ok</button>
   </form>
+  <!-- FIXME -->
+  <!-- params stuff -->
+  <!-- <form @submit.prevent="onSubmitReplicate"> -->
+  <!--   <input type="hidden" :address="device.address"> -->
+  <!--   <input type="text" placeholder="Replication Key" v&#45;model="params.address"> -->
+  <!--   <input type="text" placeholder="Name" v&#45;model="params.name"> -->
+  <!--   <button type="submit">Ok</button> -->
+  <!-- </form> -->
 
   <br />
 
@@ -112,9 +113,26 @@ export default {
 
       this.publicKey = ''
     },
+    // FIXME
+    // this route is not currently working with params
+    // not sure how this relates to the form and grabbing data
+    async onSubmitReplicate() {
+      const {address, name} = this
+
+      try {
+        const data = await this.$store.dispatch('devices/replicate', {address, name})
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+
+      this.address = ''
+      this.name = ''
+    },
+    // FIXME
+    // this is an attempt to get the method working with params
     // async onSubmitReplicate() {
-    //   const {address, name} = this
-    //
+    //   const {address, params} = this
+    //  // changed whats send to address, params
     //   try {
     //     const data = await this.$store.dispatch('devices/replicate', {address, params})
     //   } catch(e) {
@@ -124,18 +142,6 @@ export default {
     //   this.address = ''
     //   this.name = ''
     // },
-    async onSubmitReplicate() {
-      const {address, params} = this
-     // changed whats send to address, params
-      try {
-        const data = await this.$store.dispatch('devices/replicate', {address, params})
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-
-      this.address = ''
-      this.name = ''
-    },
     async joinDevice() {
       try {
         await this.$store.dispatch('devices/join', this.device)
