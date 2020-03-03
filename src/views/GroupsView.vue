@@ -1,7 +1,7 @@
 <template>
 <Screen :back="{name: 'home'}">
   <template v-slot:header>
-    Groups
+    Groups <sup>{{$store.getters['groups/count']}}</sup>
     <RouterLink :to="{name: 'groups-init'}">
       <Plus />
     </RouterLink>

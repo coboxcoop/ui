@@ -4,7 +4,8 @@ export default ({api, events}) => ({
     data: [],
     connections: {},
     mounts: {},
-    stat: {}
+    stat: {},
+    peers: {}
   },
   actions: {
     async subscribe() {

@@ -14,8 +14,9 @@
 .value {
   padding-right: 3em;
   white-space: nowrap;
-  overflow-x: hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
 }
 .copy {
   font-size: var(--small);

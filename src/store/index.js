@@ -25,10 +25,14 @@ export default new Vuex.Store({
   },
   state: {
     ready: false,
+    showUserModal: false
   },
   mutations: {
     ready(state) {
       state.ready = true
+    },
+    showUserModal(state, show) {
+      state.showUserModal = show
     }
   },
   actions: {
@@ -40,6 +44,12 @@ export default new Vuex.Store({
       await dispatch('profile/fetch')
 
       commit('ready')
+    },
+    showUserModal({commit}) {
+      commit('showUserModal', true)
+    },
+    hideUserModal({commit}) {
+      commit('showUserModal', false)
     }
   }
 })

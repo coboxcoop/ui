@@ -1,8 +1,13 @@
 <template>
 <transition name="pop">
   <div class="bubble" v-if="$store.state.error.message">
-    <div class="icon">⚠</div>
-    <div class="message">{{$store.state.error.message}}</div>
+    <div class="text">
+      <div class="icon">⚠</div>
+      <div class="message">Error:</div>
+    </div>
+    <div class="text">
+      <div class="message">{{$store.state.error.message}}</div>
+    </div>
     <button @click.prevent="$store.dispatch('error/dismiss')">Ok</button>
   </div>
 </transition>
@@ -21,23 +26,28 @@
 }
 .bubble {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
+  bottom: 0; left: 0;
   color: orangered;
-  border: 1px solid orangered;
-  font-size: var(--small);
-  padding: 0.6rem;
-  margin: 1.5rem;
-  display: flex;
-  border-radius: 0.4rem;
+  border-top: 1px solid orangered;
+  padding: 1.6rem;
+  // border-radius: 0.4rem;
   background: white;
-  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  .text {
+    align-items: flex-start;
+    display: flex;
+  }
   .icon {
     margin-right: 0.6rem;
   }
   .message {
     flex: 1;
-    padding-right: 4rem;
     word-break: break-word;
+  }
+  button {
+    margin-left: auto;
+    margin-top: 1em;
   }
 }
 </style>

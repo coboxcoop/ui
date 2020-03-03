@@ -6,7 +6,9 @@
     <button type="submit">Ok</button>
   </form>
 
-  <div class="bottom">Backup account</div>
+  <div class="bottom">
+    <button @click.prevent>Restore identity</button>
+  </div>
 </div>
 </template>
 
@@ -15,6 +17,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  padding: 1.6rem;
 }
 .bottom {
   margin-top: auto;

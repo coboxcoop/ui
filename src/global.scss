@@ -18,21 +18,24 @@ html {
   --body: 2.8rem;
   --small: 1.8rem;
   --ease: cubic-bezier(0.19, 1, 0.22, 1);
+  --leading: 1.2;
 }
 body {
   font-size: var(--body);
   font-family: 'Neue Haas Grotesk', sans-serif;
   letter-spacing: 0.02em;
-  line-height: 1.2;
+  line-height: var(--leading);
   background: #eee;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 a:hover, button:hover {
-  color: rgba(0, 0, 0, 0.7)
+  opacity: 0.6;
 }
 button {
   cursor: pointer;
@@ -45,15 +48,21 @@ p {
 }
 form {
   position: relative;
-  input[type='text'] {
+  input[type='text'], textarea {
     border-bottom: 1px solid black;
     width: 100%;
     padding: 0.6rem 0;
+    outline: none;
+  }
+  input[type='text'] {
     &.has-ok-button {
       padding-right: 1.5em;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
+  }
+  textarea {
+    resize: none;
   }
   button {
     position: absolute;
@@ -66,6 +75,10 @@ pre {
   white-space: pre-wrap;
   word-break: break-all;
   font-size: 1.6rem;
+}
+
+small {
+  font-size: var(--small);
 }
 
 .disabled-feature {

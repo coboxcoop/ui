@@ -9,21 +9,32 @@
       </p>
     </div>
     <div v-else-if="ready" class="yield">
-      <RouterView v-if="hasName" />
+      <div v-if="hasName">
+        <transition name="route">
+          <router-view />
+        </transition>
+      </div>
       <OnboardingView v-else />
     </div>
+  </transition>
+  <transition name="modal">
+    <UserModal
+      v-if="$store.state.showUserModal"
+      @close="$store.dispatch('hideUserModal')" />
   </transition>
   <Errors />
 </div>
 </template>
 
 <script>
+import UserModal from '@/components/UserModal.vue'
 import OnboardingView from '@/views/OnboardingView.vue'
 import Errors from '@/components/Errors.vue'
 
 export default {
   components: {
     Errors,
+    UserModal,
     OnboardingView
   },
   async mounted() {
@@ -73,6 +84,7 @@ export default {
   max-width: 34rem;
   max-height: 52rem;
   border-radius: 4px;
+  overflow: hidden;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
 }
 .offline {
@@ -100,7 +112,22 @@ export default {
   flex-direction: column;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 1.6rem;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+}
+.route-enter-active, .route-leave-active {
+  transition: opacity 0.3s var(--ease);
+}
+.route-enter, .route-leave-to {
+  opacity: 0;
+}
+.modal-enter, .modal-leave-to {
+  opacity: 0;
+}
+.modal-enter-active, .modal-leave-active {
+  transition: opacity 0.3s var(--ease);
 }
 </style>
 

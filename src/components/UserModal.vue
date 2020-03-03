@@ -1,21 +1,29 @@
 <template>
+<transition name="pop">
 <div class="modal">
-  <a class="close" href="#" @click.prevent="$emit('close')">&times;</a>
-  <div class="profile">
-    <Dot :color="$store.getters['profile/myKeyColor']" />
-    <form class="name" @submit.prevent="onSubmit">
-      <input v-model="name" type="text" placeholder="Your name" ref="nameInput" @focus="editName = true" @blur="saveName" />
-    </form>
+  <div class="sheet">
+    <a class="close" href="#" @click.prevent="$emit('close')">&times;</a>
+    <div class="profile">
+      <Dot :color="$store.getters['profile/myKeyColor']" />
+      <form class="name" @submit.prevent="onSubmit">
+        <input v-model="name" type="text" placeholder="Your name" ref="nameInput" @focus="editName = true" @blur="saveName" />
+      </form>
+    </div>
+
+    <br />
+
+    <small>Your public key</small>
+    <CopyKey :value="$store.getters['profile/myPublicKey']" />
+
+    <NavList>
+      <RouterLink :to="{name: 'backup'}">Backup identity</RouterLink>
+      <RouterLink :to="{name: 'restore'}" class="disabled-feature">Restore</RouterLink>
+    </NavList>
+
+    <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
   </div>
-
-  <NavList>
-    <RouterLink :to="{name: 'backup'}">Backup keys</RouterLink>
-    <RouterLink :to="{name: 'restore'}" class="disabled-feature">Restore</RouterLink>
-    <p>My Public Key:<CopyKey :value="$store.getters['profile/myPublicKey']" /></p>
-  </NavList>
-
-  <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
 </div>
+</transition>
 </template>
 
 <script>
@@ -70,14 +78,23 @@ export default {
   position: absolute;
   top: 0; left: 0;
   bottom: 0; right: 0;
-  background: white;
+  background: rgba(0, 0, 0, 0.06);
   z-index: 5;
-  padding: 1.6rem;
-  padding-bottom: 1.2rem;
-  margin: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.sheet {
+  position: relative;
   border-radius: 4px;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  background: white;
   display: flex;
+  height: calc(100% - 3.2rem);
+  width: calc(100% - 3.2rem);
+  padding: 1.6rem;
+  padding-bottom: 1.4rem;
   flex-direction: column;
 }
 .close {
@@ -92,7 +109,7 @@ export default {
   }
 }
 .nav-list  {
-  margin-top: 3rem;
+  border-top: none;
 }
 .profile {
   display: flex;
@@ -119,5 +136,8 @@ export default {
 .footer {
   margin-top: auto;
   font-size: var(--small);
+}
+.copy-key {
+  margin-bottom: 0;
 }
 </style>

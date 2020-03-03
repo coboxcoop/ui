@@ -1,7 +1,7 @@
 <template>
 <Screen :back="{name: 'home'}">
   <template v-slot:header>
-    Devices
+    Devices <sup>{{$store.getters['devices/count']}}</sup>
     <RouterLink :to="{name: 'admin-devices-init'}">
       <Plus />
     </RouterLink>
