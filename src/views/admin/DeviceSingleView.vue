@@ -31,7 +31,8 @@
   <!-- Tring to find peers registered as admins on the device -->
   <NavList v-for="peer in peers" :key="device.address">
     <div>
-      <GroupIcon :address="peer.address" /> {{peer.name}}
+      <GroupIcon :address="peer.name" /> 
+      <pre>{{peer.data.content.name}}</pre>
     </div>
   </NavList>
 </Screen>
