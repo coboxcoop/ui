@@ -32,7 +32,7 @@
   <NavList v-for="peer in peers" :key="device.address">
     <div>
       <GroupIcon :address="peer.name" /> 
-      <pre>{{peer.data.content.name}}</pre>
+      <pre>{{peer.data.content.name}}: {{peer.data.author}}</pre>
     </div>
   </NavList>
 </Screen>
