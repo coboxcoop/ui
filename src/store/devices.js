@@ -5,7 +5,8 @@ export default ({api, events}) => ({
     localDevices: {},
     connections: {},
     broadcasts: {},
-    hidden: {}
+    hidden: {},
+    broadcasts: {}
   },
   actions: {
     // FIXME
@@ -152,7 +153,7 @@ export default ({api, events}) => ({
     },
     hidden(state) {
       return address => {
-        return (address in state.hidden) && state.hidden[address]
+        return (address in state.broadcasts) && state.broadcasts[address]
       }
     }
   }
