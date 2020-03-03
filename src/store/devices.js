@@ -108,8 +108,8 @@ export default ({api, events}) => ({
       const {data} = await api.get(`/admin/devices/${address}/peers`)
       commit('receivePeers', {address, peers: data})
     },
-    async replicate({dispatch, state}, {address, params}){
-      const {data} = await api.post(`/admin/devices/${address}/commands/replicate`, params)
+    async replicate({dispatch, state}, {address, name, device}){
+      const {data} = await api.post(`/admin/devices/${device}/commands/replicate`, {name, address})
       console.warn(data)
      }
   },
