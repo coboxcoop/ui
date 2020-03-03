@@ -33,8 +33,12 @@ export default new Vuex.Store({
   },
   actions: {
     async init({dispatch, commit}) {
+      dispatch('devices/subscribe')
+      dispatch('groups/subscribe')
+
       await dispatch('system/fetch')
       await dispatch('profile/fetch')
+
       commit('ready')
     }
   }

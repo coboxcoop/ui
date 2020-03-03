@@ -16,8 +16,7 @@ export default ({api, events}) => ({
         console.warn(device)
         commit('receiveDevice', device)
       })
-    },
-    async peerAbout({commit}) {
+
       events.on('ADMIN_DEVICE', payload => {
         const peer = payload.data
         console.warn(peer)
@@ -26,8 +25,6 @@ export default ({api, events}) => ({
     async fetch({commit, dispatch}) {
       const {data} = await api.get('/admin/devices')
       commit('receiveData', data)
-      await dispatch('subscribe')
-      await dispatch('peerAbout')
     },
     async joinAll({state, dispatch}) {
       await Promise.all(state.data.map(({address, name}) => {
