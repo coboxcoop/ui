@@ -29,7 +29,7 @@
   </div>
   <!-- FIXME -->
   <!-- Tring to find peers registered as admins on the device -->
-  <NavList v-for="peer in peers" :key="peer.address">
+  <NavList v-for="peer in peers" :key="device.address">
     <div>
       <GroupIcon :address="peer.address" /> {{peer.name}}
     </div>

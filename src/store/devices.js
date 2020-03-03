@@ -27,9 +27,20 @@ export default ({api, events}) => ({
     },
     async joinAll({state, dispatch}) {
       await Promise.all(state.devices.map(({address, name}) => {
-        dispatch('getPeers', address)
         return dispatch('join', {address, name})
       }))
+    },
+    // var promises = []
+    // state.devices.map(({address,name}) => {
+    //    promises.push(dispatch('getPeers', address))
+    //    promises.push(dispatch('join', { address, name }))
+    // })
+   // await Promise.all(promises)
+    async getAllPeers({state, dispatch}) {
+      await Promise.all(state.devices.map(({address, name}) => {
+        return dispatch('getPeers', address)
+      })
+      )
     },
     async join({commit}, {address, name}) {
       // FIXME
