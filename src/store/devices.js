@@ -26,7 +26,7 @@ export default ({api, events}) => ({
       commit('receiveDevices', data)
     },
     async joinAll({state, dispatch}) {
-      await Promise.all(state.data.map(({address, name}) => {
+      await Promise.all(state.devices.map(({address, name}) => {
         return dispatch('join', {address, name})
       }))
     },
@@ -137,11 +137,11 @@ export default ({api, events}) => ({
   },
   getters: {
     count(state) {
-      return state.data.length
+      return state.devices.length
     },
     single(state) {
       return address => {
-        return state.data.find(d => d.address === address)
+        return state.devices.find(d => d.address === address)
       }
     },
     connected(state) {
