@@ -4,9 +4,10 @@ export default ({api, events}) => ({
     data: [],
     localDevices: {},
     connections: {},
-    hidden: {}
+    broadcasts: {}
   },
   actions: {
+    // FIXME
     // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
     // 2) Save the author, the type and the timestamp in your store.
     // When its disconnected, make the device disappear, or delete it
@@ -17,7 +18,11 @@ export default ({api, events}) => ({
         console.warn(device)
         commit('receiveDevice', device)
       })
-
+    },
+    // FIXME
+    // here exploring grabbing state from events to figure out peers within a group
+    // this is a WIP and not used atm
+    async peerAbout({commit}) {
       events.on('ADMIN_DEVICE', payload => {
         const peer = payload.data
         console.log(peer)
@@ -60,6 +65,7 @@ export default ({api, events}) => ({
         throw(e)
       }
     },
+    // FIXME
     // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
     // 3) When the user wants to create a device, send author field as
     // publicKey in parameters. You should still provide a device name
@@ -73,16 +79,18 @@ export default ({api, events}) => ({
     //using nested parameters 'commands' to tell the device to hide (stop broadcasting).
     //curl http://localhost:1234/api/admin/devices -X POST -H "Content-Type: application/json" 
     //-d '{"name": "cobox", "publicKey": "insert-device-public-key-here", "commands": [{ "action": "hide" }] }'
-    async hide({dispatch, state}, name) {
+    async hide({commit, dispatch, state}, name) {
       const publicKey = Object.keys(state.localDevices)[0]
       const commands = [{"action": "hide"}]
       const {data} = await api.post('/admin/devices/cobox/commands/hide', {name, publicKey, commands})
+      commit('broadcast', {address, broadcast: false} )
       console.warn(data)
     },
-    async announce({dispatch, state}, name) {
+    async announce({commit, dispatch, state}, name) {
       const publicKey = Object.keys(state.localDevices)[0]
       const commands = [{"action": "announce"}]
       const {data} = await api.post('/admin/devices/cobox/commands/announce', {name, publicKey, commands})
+      commit('broadcast', {address, broadcast: true} )
       console.warn(data)
     },
     async acceptInvite({dispatch}, code) {
@@ -110,10 +118,10 @@ export default ({api, events}) => ({
         [address]: connected
       }
     },
-    hidden(state, {address, hidden}) {
-      state.hidden = {
-        ...state.hidden,
-        [address]: hidden
+    broadcast(state, {address, broadcast}) {
+      state.broadcasts = {
+        ...state.broadcasts,
+        [address]: broadcast
       }
     }
   },
@@ -131,9 +139,9 @@ export default ({api, events}) => ({
         return (address in state.connections) && state.connections[address]
       }
     },
-    hidden(state) {
+    broadcast(state) {
       return address => {
-        return (address in state.hidden) && state.hidden[address]
+        return (address in state.broadcasts) && state.broadcasts[address]
       }
     }
   }

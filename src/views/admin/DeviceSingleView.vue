@@ -7,10 +7,10 @@
   </template>
 
   <NavList>
-    <a v-if="connected" href="#" @click.prevent="leaveGroup">Disconnect</a>
-    <a v-else href="#" @click.prevent="joinGroup">Connect</a>
-    <a v-if="hidden" href="#" @click.prevent="hideGroup">Hide</a>
-    <a v-else href="#" @click.prevent="announceGroup">Announce</a>
+    <a v-if="connected" href="#" @click.prevent="leaveDevice">Disconnect</a>
+    <a v-else href="#" @click.prevent="joinDevice">Connect</a>
+    <a v-if="hidden" href="#" @click.prevent="hideDevice">Hide</a>
+    <a v-else href="#" @click.prevent="announceDevice">Announce</a>
   </NavList>
 
   <br />
@@ -66,8 +66,8 @@ export default {
     connected() {
       return this.$store.getters['devices/connected'](this.device.address)
     },
-    hidden() {
-      return this.$store.getters['devices/hidden'](this.device.address)
+    broadcast() {
+      return this.$store.getters['devices/broadcast'](this.device.address)
     }
   },
   methods: {
@@ -83,28 +83,28 @@ export default {
 
       this.publicKey = ''
     },
-    async joinGroup() {
+    async joinDevice() {
       try {
         await this.$store.dispatch('devices/join', this.device)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async leaveGroup() {
+    async leaveDevice() {
       try {
         await this.$store.dispatch('devices/leave', this.device)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async announceGroup() {
+    async announceDevice() {
       try {
         await this.$store.dispatch('devices/announce', this.device)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async hideGroup() {
+    async hideDevice() {
       try {
         await this.$store.dispatch('devices/hide', this.device)
       } catch(e) {
