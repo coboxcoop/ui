@@ -6,7 +6,7 @@ export default ({api, events}) => ({
     connections: {},
     broadcasts: {},
     hidden: {},
-    broadcasts: {}
+    peers: {}
   },
   actions: {
     async subscribe({commit}) {
@@ -97,13 +97,18 @@ export default ({api, events}) => ({
     },
     async getPeers({commit, dispatch}, address) {
       const {data} = await api.get(`/admin/devices/${address}/peers`)
-      commit('receiveData', data)
+      commit('receivePeers', {address, peers: data})
     }
   },
   mutations: {
     receiveDevices(state, devices) {
       state.devices = devices
     },
+    receivePeers(state, {address, peers}) {
+      state.peers = {
+        ...state.peers,
+        [address]: peers
+      }
     },
     receiveDevice(state, device) {
       state.localDevices = {
