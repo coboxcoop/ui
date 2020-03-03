@@ -9,7 +9,7 @@
   <NavList>
     <a v-if="connected" href="#" @click.prevent="leaveDevice">Disconnect</a>
     <a v-else href="#" @click.prevent="joinDevice">Connect</a>
-    <a v-if="hidden" href="#" @click.prevent="hideDevice">Hide</a>
+    <a v-if="broadcast" href="#" @click.prevent="hideDevice">Hide</a>
     <a v-else href="#" @click.prevent="announceDevice">Announce</a>
   </NavList>
 

@@ -20,11 +20,7 @@ export default ({api, events}) => ({
         console.warn(device)
         commit('receiveDevice', device)
       })
-    },
-    // FIXME
-    // here exploring grabbing state from events to figure out peers within a group
-    // this is a WIP and not used atm
-    async peerAbout({commit}) {
+
       events.on('ADMIN_DEVICE', payload => {
         const peer = payload.data
         console.log(peer)
@@ -81,17 +77,27 @@ export default ({api, events}) => ({
     //using nested parameters 'commands' to tell the device to hide (stop broadcasting).
     //curl http://localhost:1234/api/admin/devices -X POST -H "Content-Type: application/json" 
     //-d '{"name": "cobox", "publicKey": "insert-device-public-key-here", "commands": [{ "action": "hide" }] }'
-    async hide({commit, dispatch, state}, name) {
+    async hide({commit, dispatch, state}, {name, address}) {
       const publicKey = Object.keys(state.localDevices)[0]
-      const commands = [{"action": "hide"}]
-      const {data} = await api.post('/admin/devices/cobox/commands/hide', {name, publicKey, commands})
+      const {data} = await api.post('/admin/devices/cobox/commands/hide', {
+        name,
+        publicKey,
+        commands: [{
+          action: 'hide'
+        }]
+      })
       commit('broadcast', {address, broadcast: false} )
       console.warn(data)
     },
-    async announce({commit, dispatch, state}, name) {
+    async announce({commit, dispatch, state}, {name, address}) {
       const publicKey = Object.keys(state.localDevices)[0]
-      const commands = [{"action": "announce"}]
-      const {data} = await api.post('/admin/devices/cobox/commands/announce', {name, publicKey, commands})
+      const {data} = await api.post('/admin/devices/cobox/commands/announce', {
+        name,
+        publicKey,
+        commands: [{
+          action: 'announce'
+        }]
+      })
       commit('broadcast', {address, broadcast: true} )
       console.warn(data)
     },
