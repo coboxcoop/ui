@@ -3,6 +3,7 @@ import uniq from 'lodash/uniq'
 export default ({api, events}) => ({
   namespaced: true,
   state: {
+    peers: {},
     groups: {
       0: {
         members: [1, 2, 3, 4, 5, 6, 7]
@@ -17,8 +18,6 @@ export default ({api, events}) => ({
         members: [7, 16, 17, 18, 19, 20, 21, 22, 23]
       }
     }
-  },
-  actions: {
   },
   mutations: {
   },

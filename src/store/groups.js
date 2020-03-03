@@ -8,8 +8,8 @@ export default ({api, events}) => ({
   },
   actions: {
     async subscribe() {
-      events.on('event', event => {
-        console.warn(event)
+      events.on('peer/connection', event => {
+        console.warn('event sub', event)
       })
     },
     async fetch({commit, dispatch}) {
