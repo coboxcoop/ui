@@ -44,9 +44,7 @@ export default ({api, events}) => ({
           commit('connected', {address, connected: true})
         } else {
           throw(e)
-        }
-      }
-    },
+        } } },
     async leave({commit}, {address, name}) {
       // FIXME
       // As with groups/join -- we need a way to check if the server has already joined the swarm
@@ -94,6 +92,10 @@ export default ({api, events}) => ({
     async createInvite({}, {address, publicKey}) {
       const {data} = await api.post(`/admin/devices/${address}/invites`, {address, publicKey})
       return data
+    },
+    async getPeers({commit, dispatch}, address) {
+      const {data} = await api.get(`/admin/devices/${address}/peers`)
+      commit('receiveData', data)
     }
   },
   mutations: {
@@ -146,6 +148,11 @@ export default ({api, events}) => ({
     hidden(state) {
       return address => {
         return (address in state.broadcasts) && state.broadcasts[address]
+      }
+    },
+    peers(state) {
+      return address => {
+        return (address in state.data.peers) && state.data.peers[address]
       }
     }
   }

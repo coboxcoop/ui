@@ -27,6 +27,15 @@
       <button type="submit">Ok</button>
     </form>
   </div>
+  <!-- FIXME -->
+  <!-- Tring to find peers registered as admins on the device -->
+  <NavList v-for="peers in device" :key="device.address">
+    <RouterLink class="peer" :to="{name: 'peer', params: {address: device.address}}">
+      <div>
+        <GroupIcon :address="device.address" /> {{peer.name}}
+      </div>
+    </RouterLink>
+  </NavList>
 </Screen>
 </template>
 
@@ -71,6 +80,9 @@ export default {
     },
     hidden() {
       return this.$store.getters['devices/hidden'](this.device.address)
+    },
+    peers() {
+      return this.$store.getters['devices/peers'](this.device.address)
     }
   },
   methods: {
