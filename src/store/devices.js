@@ -160,7 +160,7 @@ export default ({api, events}) => ({
     },
     peers(state) {
       return address => {
-        return (address in state.data.peers) && state.data.peers[address]
+        return (address in state.peers) && state.peers[address]
       }
     }
   }
