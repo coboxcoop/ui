@@ -3,7 +3,7 @@
   <NavList>
     <div>
       <RouterLink :to="{name: 'groups'}">
-        Groups <sup>{{groupsCount}}</sup>
+        Spaces <sup>{{groupsCount}}</sup>
       </RouterLink>
       <RouterLink :to="{name: 'groups-init'}">
         <Plus />
