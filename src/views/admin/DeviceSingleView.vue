@@ -45,6 +45,13 @@
       <pre>{{peer.data.content.name}}: {{peer.data.author}}</pre>
     </div>
   </NavList>
+  {{device.name}} Blind Replicating:
+  <NavList v-for="replicate in replicates" :key="device.address">
+    <div>
+      <GroupIcon :address="replicate.address" />
+      <pre>{{replicate}}</pre>
+    </div>
+  </NavList>
 </Screen>
 </template>
 
@@ -92,6 +99,9 @@ export default {
     },
     peers() {
       return this.$store.getters['devices/peers'](this.device.address)
+    },
+    replicates() {
+      return this.$store.getters['devices/replicates'](this.device.address)
     }
   },
   methods: {

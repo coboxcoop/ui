@@ -6,7 +6,8 @@ export default ({api, events}) => ({
     connections: {},
     broadcasts: {},
     hidden: {},
-    peers: {}
+    peers: {},
+    replicates: {}
   },
   actions: {
     async subscribe({commit}) {
@@ -33,6 +34,11 @@ export default ({api, events}) => ({
     async getAllPeers({state, dispatch}) {
       await Promise.all(state.devices.map(({address, name}) => {
         return dispatch('getPeers', address)
+      }))
+    },
+    async getAllReplicates({state, dispatch}) {
+      await Promise.all(state.replicates.map(({address, name}) => {
+        return dispatch('getReplicates', address)
       }))
     },
     async join({commit}, {address, name}) {
@@ -111,8 +117,9 @@ export default ({api, events}) => ({
      // FIXME
      // GET /api/admin/devices/:id/commands/replicates
      // want to populate device admin view with groups which are being replicated in a list
-     async replicates({dispatch}) {
-  
+     async getReplicates({commit, dispatch}, address) {
+      const {data} = await api.get(`/admin/devices/${address}/commands/replicates`)
+      commit('receiveReplicates', {address, replicates: data})
      }
   },
   mutations: {
@@ -123,6 +130,12 @@ export default ({api, events}) => ({
       state.peers = {
         ...state.peers,
         [address]: peers
+      }
+    },
+    receiveReplicates(state, {address, replicates}) {
+      state.replicates = {
+        ...state.replicates,
+        [address]: replicates
       }
     },
     receiveDevice(state, device) {
@@ -176,6 +189,11 @@ export default ({api, events}) => ({
     peers(state) {
       return address => {
         return (address in state.peers) && state.peers[address]
+      }
+    },
+    replicates(state) {
+      return address => {
+        return (address in state.replicates) && state.replicates[address]
       }
     }
   }
