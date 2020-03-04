@@ -4,7 +4,8 @@ export default ({api, events}) => ({
     data: [],
     connections: {},
     mounts: {},
-    stat: {}
+    stat: {},
+    peers: {}
   },
   actions: {
     async subscribe() {
@@ -20,6 +21,15 @@ export default ({api, events}) => ({
         const {data} = await api.get(`/groups/${address}/drive/stat`)
         commit('receiveStat', {address, stat: data})
       })
+    },
+    async getAllPeers({state, dispatch}) {
+      await Promise.all(state.data.map(({address, name}) => {
+        return dispatch('getPeers', address)
+      }))
+    },
+    async getPeers({commit, dispatch}, address) {
+      const {data} = await api.get(`/groups/${address}/peers`)
+      commit('receivePeers', {address, peers: data})
     },
     async create({dispatch}, name) {
       const {data: {address}} = await api.post('/groups', {name})
@@ -94,6 +104,12 @@ export default ({api, events}) => ({
         [address]: stat
       }
     },
+    receivePeers(state, {address, peers}) {
+      state.peers = {
+        ...state.peers,
+        [address]: peers
+      }
+    },
     connected(state, {address, connected}) {
       state.connections = {
         ...state.connections,
@@ -131,5 +147,10 @@ export default ({api, events}) => ({
         return (address in state.mounts) && state.mounts[address]
       }
     },
+    peers(state) {
+      return address => {
+        return (address in state.peers) && state.peers[address]
+      }
+    }
   }
 })
