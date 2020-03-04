@@ -23,9 +23,10 @@ export default ({api, events}) => ({
       })
     },
     async create({dispatch}, name) {
-      const {data: {address}} = await api.post('/groups', {name})
+      const {data, data: {address}} = await api.post('/groups', {name})
       dispatch('join', {address, name})
       await dispatch('fetch')
+      return data
     },
     async acceptInvite({dispatch}, code) {
       const {data} = await api.get('/groups/invites/accept', {params: {code}})

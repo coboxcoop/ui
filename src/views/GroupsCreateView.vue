@@ -31,9 +31,10 @@ export default {
   methods: {
     async onSubmit() {
       try {
-        await this.$store.dispatch('groups/create', this.groupName)
+        const {address} = await this.$store.dispatch('groups/create', this.groupName)
         this.groupName = ''
-        this.$router.replace({name: 'groups'})
+        console.warn({group: address})
+        this.$router.push({name: 'group', params: {address}})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }

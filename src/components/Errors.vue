@@ -30,6 +30,7 @@
   color: orangered;
   border-top: 1px solid orangered;
   padding: 1.6rem;
+  width: 100%;
   // border-radius: 0.4rem;
   background: white;
   display: flex;

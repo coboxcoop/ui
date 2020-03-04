@@ -28,7 +28,7 @@
   background: white;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  transform: translateZ(0);
 }
 header {
   border-top: 1px solid black;
