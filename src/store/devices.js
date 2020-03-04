@@ -13,13 +13,11 @@ export default ({api, events}) => ({
     async subscribe({commit}) {
       events.on('DEVICE_CONNECTED', payload => {
         const device = payload.data
-        console.warn(device)
         commit('receiveDevice', device)
       })
 
       events.on('ADMIN_DEVICE', payload => {
         const peer = payload.data
-        console.log(peer)
       })
     },
     async fetch({commit, dispatch}) {
@@ -72,7 +70,6 @@ export default ({api, events}) => ({
     async setup({dispatch, state}, name) {
       const publicKey = Object.keys(state.localDevices)[0]
       const {data} = await api.post('/admin/devices', {name, publicKey})
-      console.warn(data)
     },
     async hide({commit, dispatch, state}, {name, address}) {
       const publicKey = Object.keys(state.localDevices)[0]
@@ -84,7 +81,6 @@ export default ({api, events}) => ({
         }]
       })
       commit('broadcast', {address, broadcast: false} )
-      console.warn(data)
     },
     async announce({commit, dispatch, state}, {name, address}) {
       const publicKey = Object.keys(state.localDevices)[0]
@@ -96,7 +92,6 @@ export default ({api, events}) => ({
         }]
       })
       commit('broadcast', {address, broadcast: true} )
-      console.warn(data)
     },
     async acceptInvite({dispatch}, code) {
       const {data} = await api.get('/admin/devices/invites/accept', {params: {code}})
@@ -112,15 +107,11 @@ export default ({api, events}) => ({
     },
     async replicate({dispatch, state}, {address, name, device}){
       const {data} = await api.post(`/admin/devices/${device}/commands/replicate`, {name, address})
-      console.warn(data)
-     },
-     // FIXME
-     // GET /api/admin/devices/:id/commands/replicates
-     // want to populate device admin view with groups which are being replicated in a list
-     async getReplicates({commit, dispatch}, address) {
+    },
+    async getReplicates({commit, dispatch}, address) {
       const {data} = await api.get(`/admin/devices/${address}/commands/replicates`)
       commit('receiveReplicates', {address, replicates: data})
-     }
+    }
   },
   mutations: {
     receiveDevices(state, devices) {
