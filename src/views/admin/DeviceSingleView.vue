@@ -53,6 +53,7 @@
         Local name: {{replicate.value.content.name}},
         Address: {{replicate.value.content.address}},
         Added by: {{replicate.value.author}}
+        <button type="submit" @submit.prevent="unreplicate">Unreplicate</button>
       </pre>
     </div>
   </NavList>
@@ -133,6 +134,17 @@ export default {
 
       this.address = ''
       this.name = ''
+    },
+    async unreplicate() {
+      //FIXME
+      // need to figure out how to populate with correct address and name
+      const device = this.device.address
+      const {address, name} = this
+      try {
+        await this.$store.dispatch('devices/unreplicate', this.device)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
     },
     async joinDevice() {
       try {
