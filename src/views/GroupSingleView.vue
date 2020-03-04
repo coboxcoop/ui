@@ -28,6 +28,13 @@
       <button type="submit">Ok</button>
     </form>
   </div>
+  {{group.name}} Peers:
+  <NavList v-for="peer in peers" :key="group.address">
+    <div>
+      <GroupIcon :address="peer.name" />
+      <pre>{{peer.data.content.name}}: {{peer.data.author}}</pre>
+    </div>
+  </NavList>
 </Screen>
 </template>
 
@@ -72,7 +79,10 @@ export default {
     },
     stat() {
       return this.$store.getters['groups/stat'](this.group.address)
-    }
+    },
+    peers() {
+      return this.$store.getters['groups/peers'](this.group.address)
+    },
   },
   methods: {
     async onSubmitInvite() {
