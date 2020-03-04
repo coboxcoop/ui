@@ -1,34 +1,41 @@
 export default ({api, events}) => ({
   namespaced: true,
   state: {
-    data: [],
+    devices: [],
     localDevices: {},
-    connections: {}
+    connections: {},
+    broadcasts: {},
+    peers: {},
+    replicates: {}
   },
   actions: {
-    // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
-    // 2) Save the author, the type and the timestamp in your store.
-    // When its disconnected, make the device disappear, or delete it
-    // entirely from your store?
     async subscribe({commit}) {
       events.on('DEVICE_CONNECTED', payload => {
         const device = payload.data
-        console.warn(device)
         commit('receiveDevice', device)
       })
 
       events.on('ADMIN_DEVICE', payload => {
         const peer = payload.data
-        console.warn(peer)
       })
     },
     async fetch({commit, dispatch}) {
       const {data} = await api.get('/admin/devices')
-      commit('receiveData', data)
+      commit('receiveDevices', data)
     },
     async joinAll({state, dispatch}) {
-      await Promise.all(state.data.map(({address, name}) => {
+      await Promise.all(state.devices.map(({address, name}) => {
         return dispatch('join', {address, name})
+      }))
+    },
+    async getAllPeers({state, dispatch}) {
+      await Promise.all(state.devices.map(({address, name}) => {
+        return dispatch('getPeers', address)
+      }))
+    },
+    async getAllReplicates({state, dispatch}) {
+      await Promise.all(state.devices.map(({address, name}) => {
+        return dispatch('getReplicates', address)
       }))
     },
     async join({commit}, {address, name}) {
@@ -59,14 +66,31 @@ export default ({api, events}) => ({
         throw(e)
       }
     },
-    // https://ledger-git.dyne.org/CoBox/cobox-server/issues/53
-    // 3) When the user wants to create a device, send author field as
-    // publicKey in parameters. You should still provide a device name
-    // so your params look like { name, publicKey }.
     async setup({dispatch, state}, name) {
       const publicKey = Object.keys(state.localDevices)[0]
       const {data} = await api.post('/admin/devices', {name, publicKey})
-      console.warn(data)
+    },
+    async hide({commit, dispatch, state}, {name, address}) {
+      const publicKey = Object.keys(state.localDevices)[0]
+      const {data} = await api.post(`/admin/devices/${address}/commands/hide`, {
+        name,
+        publicKey,
+        commands: [{
+          action: 'hide'
+        }]
+      })
+      commit('broadcast', {address, broadcast: false} )
+    },
+    async announce({commit, dispatch, state}, {name, address}) {
+      const publicKey = Object.keys(state.localDevices)[0]
+      const {data} = await api.post(`/admin/devices/${address}/commands/announce`, {
+        name,
+        publicKey,
+        commands: [{
+          action: 'announce'
+        }]
+      })
+      commit('broadcast', {address, broadcast: true} )
     },
     async acceptInvite({dispatch}, code) {
       const {data} = await api.get('/admin/devices/invites/accept', {params: {code}})
@@ -75,11 +99,37 @@ export default ({api, events}) => ({
     async createInvite({}, {address, publicKey}) {
       const {data} = await api.post(`/admin/devices/${address}/invites`, {address, publicKey})
       return data
+    },
+    async getPeers({commit, dispatch}, address) {
+      const {data} = await api.get(`/admin/devices/${address}/peers`)
+      commit('receivePeers', {address, peers: data})
+    },
+    async replicate({dispatch, state}, {address, name, device}){
+      const {data} = await api.post(`/admin/devices/${device}/commands/replicate`, {name, address})
+    },
+    async unreplicate({dispatch, state}, {address, name, device}){
+      const {data} = await api.post(`/admin/devices/${device}/commands/unreplicate`, {name, address})
+    },
+    async getReplicates({commit, dispatch}, address) {
+      const {data} = await api.get(`/admin/devices/${address}/commands/replicates`)
+      commit('receiveReplicates', {address, replicates: data})
     }
   },
   mutations: {
-    receiveData(state, data) {
-      state.data = data
+    receiveDevices(state, devices) {
+      state.devices = devices
+    },
+    receivePeers(state, {address, peers}) {
+      state.peers = {
+        ...state.peers,
+        [address]: peers
+      }
+    },
+    receiveReplicates(state, {address, replicates}) {
+      state.replicates = {
+        ...state.replicates,
+        [address]: replicates
+      }
     },
     receiveDevice(state, device) {
       state.localDevices = {
@@ -92,20 +142,41 @@ export default ({api, events}) => ({
         ...state.connections,
         [address]: connected
       }
+    },
+    broadcast(state, {address, broadcast}) {
+      state.broadcasts = {
+        ...state.broadcasts,
+        [address]: broadcast
+      }
     }
   },
   getters: {
     count(state) {
-      return state.data.length
+      return state.devices.length
     },
     single(state) {
       return address => {
-        return state.data.find(d => d.address === address)
+        return state.devices.find(d => d.address === address)
       }
     },
     connected(state) {
       return address => {
         return (address in state.connections) && state.connections[address]
+      }
+    },
+    broadcast(state) {
+      return address => {
+        return (address in state.broadcasts) && state.broadcasts[address]
+      }
+    },
+    peers(state) {
+      return address => {
+        return (address in state.peers) && state.peers[address]
+      }
+    },
+    replicates(state) {
+      return address => {
+        return (address in state.replicates) && state.replicates[address]
       }
     }
   }

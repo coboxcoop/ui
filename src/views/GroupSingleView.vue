@@ -3,6 +3,9 @@
   <template v-slot:header>
     <div class="header">
       <div><GroupIcon :address="group.address" /> {{group.name}}</div>
+      <!-- FIXME -->
+      <!-- make group address copyable -->
+      <CopyKey :value="groupAddress" />
       <div class="stat">{{stat.size | bytes}}</div>
     </div>
   </template>
@@ -21,13 +24,20 @@
     <CopyKey :value="inviteCode" />
   </div>
   <div v-else>
-    <p>To invite someone to join this group, please provide their public key.</p>
+    <p>To invite someone to join this Space, please provide their public key.</p>
 
     <form @submit.prevent="onSubmitInvite">
       <input class="has-ok-button" type="text" placeholder="Public key" v-model="publicKey" />
       <button type="submit">Ok</button>
     </form>
   </div>
+  {{group.name}} Peers:
+  <NavList v-for="peer in peers" :key="group.address">
+    <div>
+      <GroupIcon :address="peer.name" />
+      <pre>{{peer.data.content.name}}: {{peer.data.author}}</pre>
+    </div>
+  </NavList>
 </Screen>
 </template>
 
@@ -72,7 +82,10 @@ export default {
     },
     stat() {
       return this.$store.getters['groups/stat'](this.group.address)
-    }
+    },
+    peers() {
+      return this.$store.getters['groups/peers'](this.group.address)
+    },
   },
   methods: {
     async onSubmitInvite() {

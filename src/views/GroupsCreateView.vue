@@ -1,10 +1,10 @@
 <template>
 <Screen :back="{name: 'groups-init'}">
   <div class="page">
-    <p>What would you like your group to be called?</p>
+    <p>What would you like your Space to be called?</p>
 
     <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="Group name" v-model="groupName" />
+      <input type="text" placeholder="Space name" v-model="groupName" />
       <button type="submit">Ok</button>
     </form>
   </div>
