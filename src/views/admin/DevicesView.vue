@@ -8,7 +8,7 @@
   </template>
   <NavList v-for="device in devices" :key="device.address">
     <RouterLink class="admin-device" :to="{name: 'admin-device', params: {address: device.address}}">
-      <Dot color="magenta" :address="device.address" /> {{device.name}}
+    <Dot color="magenta" :address="device.address" /> {{device.name}} <sup>{{peerCount}}hello</sup>
     </RouterLink>
   </NavList>
 </Screen>
@@ -30,6 +30,9 @@ export default {
   computed: {
     devices() {
       return this.$store.state.devices.devices
+    },
+    peerCount() {
+      return this.$store.getters['devices/peerCount']
     }
   }
 }

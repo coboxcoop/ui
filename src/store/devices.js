@@ -178,6 +178,13 @@ export default ({api, events}) => ({
         return (address in state.peers) && state.peers[address]
       }
     },
+    peerCount(state) {
+      // FIXME 
+      // need to figure out what is being passed through here
+      return address => {
+        return address.peers.length
+      }
+    },
     replicates(state) {
       return address => {
         const entries = (address in state.replicates) && state.replicates[address]
