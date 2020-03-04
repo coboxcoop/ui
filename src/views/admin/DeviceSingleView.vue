@@ -53,7 +53,8 @@
         Local name: {{replicate.value.content.name}},
         Address: {{replicate.value.content.address}},
         Added by: {{replicate.value.author}}
-        <button type="submit" @submit.prevent="unreplicate">Unreplicate</button>
+        <!-- FIXME &#45; not sure have this button setup right -->
+        <button v-on:submit="onSubmitUnreplicate">Unreplicate</button>
       </pre>
     </div>
   </NavList>
@@ -135,13 +136,14 @@ export default {
       this.address = ''
       this.name = ''
     },
-    async unreplicate() {
+    async onSubmitUnreplicate() {
       //FIXME
       // need to figure out how to populate with correct address and name
       const device = this.device.address
-      const {address, name} = this
+      const address = this.replicate.value.content.adddress
+      const name = this.replicate.value.content.name
       try {
-        await this.$store.dispatch('devices/unreplicate', this.device)
+        await this.$store.dispatch('devices/unreplicate', {address, name, device})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
