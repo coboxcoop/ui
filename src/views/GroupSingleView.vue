@@ -3,6 +3,9 @@
   <template v-slot:header>
     <div class="header">
       <div><GroupIcon :address="group.address" /> {{group.name}}</div>
+      <!-- FIXME -->
+      <!-- make group address copyable -->
+      <CopyKey :value="groupAddress" />
       <div class="stat">{{stat.size | bytes}}</div>
     </div>
   </template>
