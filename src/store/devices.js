@@ -68,8 +68,6 @@ export default ({api, events}) => ({
       const {data} = await api.post('/admin/devices', {name, publicKey})
       console.warn(data)
     },
-    // FIXME
-    // cobox is hardcoded in route and should be dynamic
     async hide({commit, dispatch, state}, {name, address}) {
       const publicKey = Object.keys(state.localDevices)[0]
       const {data} = await api.post(`/admin/devices/${address}/commands/hide`, {
@@ -82,8 +80,6 @@ export default ({api, events}) => ({
       commit('broadcast', {address, broadcast: false} )
       console.warn(data)
     },
-    // FIXME
-    // cobox is hardcoded in route and should be dynamic
     async announce({commit, dispatch, state}, {name, address}) {
       const publicKey = Object.keys(state.localDevices)[0]
       const {data} = await api.post(`/admin/devices/${address}/commands/announce`, {
@@ -111,6 +107,12 @@ export default ({api, events}) => ({
     async replicate({dispatch, state}, {address, name, device}){
       const {data} = await api.post(`/admin/devices/${device}/commands/replicate`, {name, address})
       console.warn(data)
+     },
+     // FIXME
+     // GET /api/admin/devices/:id/commands/replicates
+     // want to populate device admin view with groups which are being replicated in a list
+     async replicates({dispatch}) {
+  
      }
   },
   mutations: {
