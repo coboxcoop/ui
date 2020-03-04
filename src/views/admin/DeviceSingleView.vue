@@ -16,10 +16,10 @@
   </NavList>
 
   <br />
-  Replicate Group:
-  <p>Please get the replication key for the space which you would like to backup.</p>
+  Replicate Space:
+  <p>Please get the address for the space which you would like to backup.</p>
   <form @submit.prevent="onSubmitReplicate">
-    <input type="text" placeholder="Replication Key" v-model="address">
+    <input type="text" placeholder="Space address" v-model="address">
     <input type="text" placeholder="Name" v-model="name">
     <button type="submit">Ok</button>
   </form>

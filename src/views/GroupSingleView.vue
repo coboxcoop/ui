@@ -21,7 +21,7 @@
     <CopyKey :value="inviteCode" />
   </div>
   <div v-else>
-    <p>To invite someone to join this group, please provide their public key.</p>
+    <p>To invite someone to join this Space, please provide their public key.</p>
 
     <form @submit.prevent="onSubmitInvite">
       <input class="has-ok-button" type="text" placeholder="Public key" v-model="publicKey" />

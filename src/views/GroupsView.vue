@@ -1,7 +1,7 @@
 <template>
 <Screen :back="{name: 'home'}">
   <template v-slot:header>
-    Groups
+    Spaces
     <RouterLink :to="{name: 'groups-init'}">
       <Plus />
     </RouterLink>
