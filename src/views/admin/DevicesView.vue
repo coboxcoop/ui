@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     devices() {
-      return this.$store.state.devices.data
+      return this.$store.state.devices.devices
     }
   }
 }

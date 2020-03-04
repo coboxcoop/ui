@@ -7,9 +7,22 @@
   </template>
 
   <NavList>
-    <a v-if="connected" href="#" @click.prevent="leaveGroup">Disconnect</a>
-    <a v-else href="#" @click.prevent="joinGroup">Connect</a>
+    <a v-if="connected" href="#" @click.prevent="leaveDevice">Disconnect</a>
+    <a v-else href="#" @click.prevent="joinDevice">Connect</a>
+    <!-- FIXME -->
+    <!-- at the moment not detecting broadcasts happening, need to check broadcast state and decide to show hide or announce -->
+    <a v-if="broadcast" href="#" @click.prevent="hideDevice">Hide</a>
+    <a v-else href="#" @click.prevent="announceDevice">Announce</a>
   </NavList>
+
+  <br />
+  Replicate Group:
+  <p>Please get the replication key for the space which you would like to backup.</p>
+  <form @submit.prevent="onSubmitReplicate">
+    <input type="text" placeholder="Replication Key" v-model="address">
+    <input type="text" placeholder="Name" v-model="name">
+    <button type="submit">Ok</button>
+  </form>
 
   <br />
 
@@ -25,6 +38,26 @@
       <button type="submit">Ok</button>
     </form>
   </div>
+  {{device.name}} Admins:
+  <NavList v-for="peer in peers" :key="device.address">
+    <div>
+      <GroupIcon :address="peer.name" /> 
+      <pre>{{peer.data.content.name}}: {{peer.data.author}}</pre>
+    </div>
+  </NavList>
+  {{device.name}} Blind Replicating:
+  <NavList v-for="replicate in replicates" :key="device.address">
+    <div>
+      <GroupIcon :address="replicate.address" />
+      <pre>
+        Local name: {{replicate.value.content.name}},
+        Address: {{replicate.value.content.address}},
+        Added by: {{replicate.value.author}}
+        <!-- FIXME &#45; not sure have this button setup right -->
+        <button v-on:submit="onSubmitUnreplicate">Unreplicate</button>
+      </pre>
+    </div>
+  </NavList>
 </Screen>
 </template>
 
@@ -64,6 +97,15 @@ export default {
     connected() {
       return this.$store.getters['devices/connected'](this.device.address)
     },
+    broadcast() {
+      return this.$store.getters['devices/broadcast'](this.device.address)
+    },
+    peers() {
+      return this.$store.getters['devices/peers'](this.device.address)
+    },
+    replicates() {
+      return this.$store.getters['devices/replicates'](this.device.address)
+    }
   },
   methods: {
     async onSubmitInvite() {
@@ -78,16 +120,55 @@ export default {
 
       this.publicKey = ''
     },
-    async joinGroup() {
+    async onSubmitReplicate() {
+      const {address, name} = this
+      const device = this.device.address
+
+      try {
+        const data = await this.$store.dispatch('devices/replicate', {address, name, device})
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+
+      this.address = ''
+      this.name = ''
+    },
+    async onSubmitUnreplicate() {
+      //FIXME
+      // need to figure out how to populate with correct address and name
+      const device = this.device.address
+      const address = this.replicate.value.content.adddress
+      const name = this.replicate.value.content.name
+      try {
+        await this.$store.dispatch('devices/unreplicate', {address, name, device})
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+    },
+    async joinDevice() {
       try {
         await this.$store.dispatch('devices/join', this.device)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async leaveGroup() {
+    async leaveDevice() {
       try {
         await this.$store.dispatch('devices/leave', this.device)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+    },
+    async announceDevice() {
+      try {
+        await this.$store.dispatch('devices/announce', this.device)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+    },
+    async hideDevice() {
+      try {
+        await this.$store.dispatch('devices/hide', this.device)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
