@@ -72,7 +72,7 @@ export default ({api, events}) => ({
     // cobox is hardcoded in route and should be dynamic
     async hide({commit, dispatch, state}, {name, address}) {
       const publicKey = Object.keys(state.localDevices)[0]
-      const {data} = await api.post('/admin/devices/cobox/commands/hide', {
+      const {data} = await api.post(`/admin/devices/${address}/commands/hide`, {
         name,
         publicKey,
         commands: [{
@@ -86,7 +86,7 @@ export default ({api, events}) => ({
     // cobox is hardcoded in route and should be dynamic
     async announce({commit, dispatch, state}, {name, address}) {
       const publicKey = Object.keys(state.localDevices)[0]
-      const {data} = await api.post('/admin/devices/cobox/commands/announce', {
+      const {data} = await api.post(`/admin/devices/${address}/commands/announce`, {
         name,
         publicKey,
         commands: [{
