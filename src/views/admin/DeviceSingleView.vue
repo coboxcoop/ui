@@ -49,7 +49,11 @@
   <NavList v-for="replicate in replicates" :key="device.address">
     <div>
       <GroupIcon :address="replicate.address" />
-      <pre>{{replicate}}</pre>
+      <pre>
+        Local name: {{replicate.value.content.name}},
+        Address: {{replicate.value.content.address}},
+        Added by: {{replicate.value.author}}
+      </pre>
     </div>
   </NavList>
 </Screen>

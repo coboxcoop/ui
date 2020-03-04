@@ -37,7 +37,7 @@ export default ({api, events}) => ({
       }))
     },
     async getAllReplicates({state, dispatch}) {
-      await Promise.all(state.replicates.map(({address, name}) => {
+      await Promise.all(state.devices.map(({address, name}) => {
         return dispatch('getReplicates', address)
       }))
     },
