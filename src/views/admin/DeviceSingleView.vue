@@ -100,9 +100,6 @@ export default {
     broadcast() {
       return this.$store.getters['devices/broadcast'](this.device.address)
     },
-    hidden() {
-      return this.$store.getters['devices/hidden'](this.device.address)
-    },
     peers() {
       return this.$store.getters['devices/peers'](this.device.address)
     },
