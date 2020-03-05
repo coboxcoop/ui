@@ -156,6 +156,11 @@ export default ({api, events}) => ({
       return address => {
         return (address in state.peers) && state.peers[address]
       }
+    },
+    peerCount(state, getters) {
+      return address => {
+        return getters['peers'](address).length
+      }
     }
   }
 })
