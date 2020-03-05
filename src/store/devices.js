@@ -192,6 +192,14 @@ export default ({api, events}) => ({
 
         return grouped
       }
+    },
+    replicateAuthor(state, getters) {
+      return (device, replicate) => {
+        const publicKey = replicate.value.author
+        const peers = getters['peers'](device)
+
+        return peers.find(peer => peer.data.author === publicKey)
+      }
     }
   }
 })
