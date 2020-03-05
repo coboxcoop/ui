@@ -39,22 +39,22 @@
     </form>
   </div>
   {{device.name}} Admins:
-  <NavList v-for="peer in peers" :key="device.address">
-    <div>
+  <NavList>
+    <div v-for="peer in peers" :key="peer.data.author">
       <GroupIcon :address="peer.name" /> 
       <pre>{{peer.data.content.name}}: {{peer.data.author}}</pre>
     </div>
   </NavList>
   {{device.name}} Blind Replicating:
-  <NavList v-for="replicate in replicates" :key="device.address">
-    <div>
+  <NavList>
+    <div v-for="replicate in replicates" :key="replicate.value.content.address">
       <GroupIcon :address="replicate.address" />
       <pre>
         Local name: {{replicate.value.content.name}},
         Address: {{replicate.value.content.address}},
         Added by: {{replicate.value.author}}
         <!-- FIXME &#45; not sure have this button setup right -->
-        <button v-on:submit="onSubmitUnreplicate">Unreplicate</button>
+        <button @click="() => onSubmitUnreplicate(replicate)">Unreplicate</button>
       </pre>
     </div>
   </NavList>
@@ -88,7 +88,9 @@ export default {
   },
   data: () => ({
     publicKey: '',
-    inviteCode: ''
+    inviteCode: '',
+    address: '',
+    name: ''
   }),
   computed: {
     device() {
@@ -133,17 +135,25 @@ export default {
       this.address = ''
       this.name = ''
     },
-    async onSubmitUnreplicate() {
+    async onSubmitUnreplicate(replicate) {
       //FIXME
       // need to figure out how to populate with correct address and name
+
       const device = this.device.address
-      const address = this.replicate.value.content.adddress
-      const name = this.replicate.value.content.name
-      try {
-        await this.$store.dispatch('devices/unreplicate', {address, name, device})
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
+      console.warn({replicate})
+      let address
+      let name
+
+      console.warn('need these:', {device, address, name})
+
+      // const device = this.device.address
+      // const address = this.replicate.value.content.adddress
+      // const name = this.replicate.value.content.name
+      // try {
+      //   await this.$store.dispatch('devices/unreplicate', {address, name, device})
+      // } catch(e) {
+      //   this.$store.dispatch('error/handle', e)
+      // }
     },
     async joinDevice() {
       try {
