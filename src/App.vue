@@ -31,6 +31,8 @@ import UserModal from '@/components/UserModal.vue'
 import OnboardingView from '@/views/OnboardingView.vue'
 import Errors from '@/components/Errors.vue'
 
+const TIMEOUT = 3000
+
 export default {
   components: {
     Errors,
@@ -40,14 +42,7 @@ export default {
   async mounted() {
     await this.$store.dispatch('init')
     if(this.hasName) {
-      await this.$store.dispatch('groups/fetch')
-      await this.$store.dispatch('groups/joinAll')
-      await this.$store.dispatch('groups/getAllPeers')
-      await this.$store.dispatch('groups/getAllStats')
-      await this.$store.dispatch('devices/fetch')
-      await this.$store.dispatch('devices/joinAll')
-      await this.$store.dispatch('devices/getAllPeers')
-      await this.$store.dispatch('devices/getAllReplicates')
+      this.fetchAllData()
     } else {
       this.$router.replace({name: 'home'})
     }
@@ -70,6 +65,18 @@ export default {
     }
   },
   methods: {
+    async fetchAllData() {
+      await this.$store.dispatch('groups/fetch')
+      await this.$store.dispatch('groups/joinAll')
+      await this.$store.dispatch('groups/getAllPeers')
+      await this.$store.dispatch('groups/getAllStats')
+      await this.$store.dispatch('devices/fetch')
+      await this.$store.dispatch('devices/joinAll')
+      await this.$store.dispatch('devices/getAllPeers')
+      await this.$store.dispatch('devices/getAllReplicates')
+
+      setTimeout(() => this.fetchAllData(), TIMEOUT)
+    },
     reload() {
       window.location.reload()
     }
