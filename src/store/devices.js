@@ -174,11 +174,9 @@ export default ({api, events}) => ({
         return (address in state.peers) && state.peers[address]
       }
     },
-    peerCount(state) {
-      // FIXME 
-      // need to figure out what is being passed through here
+    peerCount(state, getters) {
       return address => {
-        return address.peers.length
+        return  getters['peers'](address).length
       }
     },
     replicates(state) {
