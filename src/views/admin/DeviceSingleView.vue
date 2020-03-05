@@ -14,7 +14,7 @@
   <br />
   Replicate Space:
   <p>Please get the address for the space which you would like to backup.</p>
-  <form @submit.prevent="onSubmitReplicate">
+  <form @submit.prevent="onSubmitAddReplicate">
     <input type="text" placeholder="Space address" v-model="address">
     <input type="text" placeholder="Name" v-model="name">
     <button type="submit">Ok</button>
@@ -129,9 +129,9 @@ export default {
 
       this.publicKey = ''
     },
-    async onSubmitReplicate(replicate) {
+    async onSubmitAddReplicate() {
+      const {address, name} = this
       const device = this.device.address
-      const {address, name} = replicate.value.content
 
       try {
         const data = await this.$store.dispatch('devices/replicate', {address, name, device})
@@ -141,6 +141,16 @@ export default {
 
       this.address = ''
       this.name = ''
+    },
+    async onSubmitReplicate(replicate) {
+      const device = this.device.address
+      const {address, name} = replicate.value.content
+
+      try {
+        const data = await this.$store.dispatch('devices/replicate', {address, name, device})
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
     },
     async onSubmitUnreplicate(replicate) {
       const device = this.device.address
