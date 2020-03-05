@@ -38,14 +38,19 @@
       <button type="submit">Ok</button>
     </form>
   </div>
-  {{device.name}} Admins:
+
+  <br />
+
+  Admins:
   <NavList>
     <div v-for="peer in peers" :key="peer.data.author">
-      <GroupIcon :address="peer.name" /> 
-      <pre>{{peer.data.content.name}}: {{peer.data.author}}</pre>
+      <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
     </div>
   </NavList>
-  {{device.name}} Blind Replicating:
+
+  <br />
+
+  Blind Replicating:
   <NavList>
     <div v-for="replicate in replicates" :key="replicate.value.content.address">
       <Dot :color="replicate.value.type === 'command/unreplicate' ? 'orangered' : 'lightseagreen'" />
@@ -74,6 +79,7 @@ import GroupIcon from '@/components/GroupIcon.vue'
 import Plus      from '@/components/Plus.vue'
 import CopyKey   from '@/components/CopyKey.vue'
 import Dot       from '@/components/Dot.vue'
+import UserIcon  from '@/components/UserIcon.vue'
 
 export default {
   components: {
@@ -82,7 +88,8 @@ export default {
     NavList,
     Plus,
     CopyKey,
-    Dot
+    Dot,
+    UserIcon
   },
   data: () => ({
     publicKey: '',
