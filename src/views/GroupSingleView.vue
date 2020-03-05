@@ -3,9 +3,6 @@
   <template v-slot:header>
     <div class="header">
       <div><GroupIcon :address="group.address" /> {{group.name}}</div>
-      <!-- FIXME -->
-      <!-- make group address copyable -->
-      <CopyKey :value="groupAddress" />
       <div class="stat">{{stat.size | bytes}}</div>
     </div>
   </template>
@@ -18,6 +15,9 @@
   </NavList>
 
   <br />
+
+  <small>Group address</small>
+  <CopyKey :value="group.address" />
 
   <div v-if="inviteCode">
     <p>Please send the following invite code to the new collaborator.</p>
