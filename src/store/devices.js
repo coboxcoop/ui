@@ -71,6 +71,7 @@ export default ({api, events}) => ({
     async setup({dispatch, state}, name) {
       const publicKey = Object.keys(state.localDevices)[0]
       const {data, data: {address}} = await api.post('/admin/devices', {name, publicKey})
+      await dispatch('join', {name, address})
       await dispatch('hide', {name, address})
       await dispatch('fetch')
       return data
