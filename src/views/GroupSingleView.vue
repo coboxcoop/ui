@@ -16,7 +16,7 @@
 
   <br />
 
-  <small>Group address</small>
+  <small>Space address</small>
   <CopyKey :value="group.address" />
 
   <div>Peers</div>
