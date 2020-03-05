@@ -6,7 +6,7 @@
 
   <p>What is the invite code of the device?</p>
   <form @submit.prevent="onSubmit">
-    <input type="text" placeholder="Invite Code" v-model="inviteCode" />
+    <input class="has-ok-button" type="text" placeholder="Invite Code" v-model="inviteCode" />
     <button type="submit">Ok</button>
   </form>
 </Screen>

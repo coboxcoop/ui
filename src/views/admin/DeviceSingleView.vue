@@ -18,7 +18,7 @@
   <p>Please get the address for the space which you would like to backup.</p>
   <form @submit.prevent="onSubmitAddReplicate">
     <input type="text" placeholder="Space address" v-model="address">
-    <input type="text" placeholder="Name" v-model="name">
+    <input class="has-ok-button" type="text" placeholder="Name" v-model="name">
     <button type="submit">Ok</button>
   </form>
 
@@ -32,7 +32,7 @@
     <p>To invite someone as an admin for this device, please provide their public key.</p>
 
     <form @submit.prevent="onSubmitInvite">
-      <input type="text" placeholder="Public key" v-model="publicKey" />
+      <input class="has-ok-button" type="text" placeholder="Public key" v-model="publicKey" />
       <button type="submit">Ok</button>
     </form>
   </div>

@@ -4,7 +4,7 @@
     <p>What would you like your device to be called?</p>
 
     <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="Device name" v-model="name" />
+      <input class="has-ok-button" type="text" placeholder="Device name" v-model="name" />
       <button type="submit">Ok</button>
     </form>
   </div>

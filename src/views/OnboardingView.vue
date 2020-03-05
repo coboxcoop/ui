@@ -2,7 +2,7 @@
 <div class="container">
   <p>Welcome to CoBox. How do you want to be known to your peers?</p>
   <form @submit.prevent="onSubmitName">
-    <input v-model="name" type="text" placeholder="My name" />
+    <input v-model="name" class="has-ok-button" type="text" placeholder="My name" />
     <button type="submit">Ok</button>
   </form>
 

@@ -4,7 +4,7 @@
     <p>What would you like your Space to be called?</p>
 
     <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="Space name" v-model="groupName" />
+      <input type="text" placeholder="Space name" v-model="groupName" class="has-ok-button" />
       <button type="submit">Ok</button>
     </form>
   </div>
