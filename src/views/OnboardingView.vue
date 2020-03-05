@@ -36,7 +36,7 @@ export default {
         await this.$store.dispatch('profile/updateName', this.name)
         await this.$store.dispatch('groups/create', `${this.name}'s Space`)
         this.name = ''
-        if(this.$route.name !== 'home') this.$router.replace({name: 'home'})
+        if(this.$route.name !== 'home') window.location.href = '/'
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
