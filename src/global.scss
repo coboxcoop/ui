@@ -48,17 +48,17 @@ p {
 }
 form {
   position: relative;
+  input[type='text'], textarea, button {
+    outline: none;
+  }
   input[type='text'], textarea {
     border-bottom: 1px solid black;
     width: 100%;
     padding: 0.6rem 0;
-    outline: none;
   }
   input[type='text'] {
     &.has-ok-button {
-      padding-right: 1.5em;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      padding-right: 1em;
     }
   }
   textarea {
@@ -68,6 +68,12 @@ form {
     position: absolute;
     right: 0;
     padding: 0.6rem 0;
+    padding-left: 1.5em;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 1) 1.2em);
+    &:hover {
+      opacity: 1;
+      color: rgba(0, 0, 0, 0.6);
+    }
   }
 }
 pre {

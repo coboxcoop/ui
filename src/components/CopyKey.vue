@@ -10,13 +10,11 @@
 .copy-key {
   margin-bottom: 1em;
   cursor: pointer;
-}
-.value {
-  padding-right: 3em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
+  // &:not(:hover) {
+  //   button {
+  //     display: none;
+  //   }
+  // }
 }
 .copy {
   font-size: var(--small);
