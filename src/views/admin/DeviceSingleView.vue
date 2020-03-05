@@ -140,20 +140,13 @@ export default {
       // need to figure out how to populate with correct address and name
 
       const device = this.device.address
-      console.warn({replicate})
-      let address
-      let name
+      const {address, name} = replicate.value.content
 
-      console.warn('need these:', {device, address, name})
-
-      // const device = this.device.address
-      // const address = this.replicate.value.content.adddress
-      // const name = this.replicate.value.content.name
-      // try {
-      //   await this.$store.dispatch('devices/unreplicate', {address, name, device})
-      // } catch(e) {
-      //   this.$store.dispatch('error/handle', e)
-      // }
+      try {
+        await this.$store.dispatch('devices/unreplicate', {address, name, device})
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
     },
     async joinDevice() {
       try {
