@@ -12,7 +12,7 @@
 
     <br />
 
-    <small>Your public key</small>
+    <small>Public key</small>
     <CopyKey :value="$store.getters['profile/myPublicKey']" />
 
     <NavList>

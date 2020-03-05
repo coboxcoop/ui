@@ -12,6 +12,7 @@
   box-sizing: border-box;
   color: inherit;
   text-decoration: none;
+  letter-spacing: inherit;
 }
 html {
   font-size: 10px;
@@ -45,6 +46,10 @@ sup {
 }
 p {
   margin-bottom: 1em;
+}
+h2 {
+  font-size: var(--small);
+  margin-bottom: 0.6rem;
 }
 form {
   position: relative;

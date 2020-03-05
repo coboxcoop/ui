@@ -2,24 +2,29 @@
 <Screen :back="{name: 'groups'}" v-if="group">
   <template v-slot:header>
     <div class="header">
-      <div><GroupIcon :address="group.address" /> {{group.name}}</div>
+      <div>
+        <a href="#" @click.prevent="toggleConnect">
+          <GroupIcon :address="group.address" />
+        </a>
+        {{group.name}}
+      </div>
       <div class="stat">{{stat.size | bytes}}</div>
     </div>
   </template>
 
   <NavList>
-    <a v-if="connected" href="#" @click.prevent="leaveGroup">Disconnect</a>
-    <a v-else href="#" @click.prevent="joinGroup">Connect</a>
+    <!-- <a v-if="connected" href="#" @click.prevent="leaveGroup">Disconnect</a>
+    <a v-else href="#" @click.prevent="joinGroup">Connect</a> -->
     <a v-if="mounted" href="#" @click.prevent="unmountGroup">Unmount</a>
     <a v-else href="#" @click.prevent="mountGroup">Mount</a>
   </NavList>
 
   <br />
 
-  <small>Space address</small>
+  <small>Address</small>
   <CopyKey :value="group.address" />
 
-  <div>Peers</div>
+  <h2>{{$store.getters['groups/peerCount'](group.address)}} peer</h2>
 
   <NavList>
     <div v-for="peer in peers" :key="peer.publicKey">
@@ -104,6 +109,13 @@ export default {
       }
 
       this.publicKey = ''
+    },
+    async toggleConnect() {
+      if(this.connected) {
+        await this.leaveGroup()
+      } else {
+        await this.joinGroup()
+      }
     },
     async joinGroup() {
       try {

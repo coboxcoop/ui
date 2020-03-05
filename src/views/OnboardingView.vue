@@ -34,7 +34,7 @@ export default {
       try {
         this.name = this.name.trim()
         await this.$store.dispatch('profile/updateName', this.name)
-        await this.$store.dispatch('groups/create', `${this.name}'s Space`)
+        await this.$store.dispatch('groups/create', `${this.name}'s space`)
         this.name = ''
         if(this.$route.name !== 'home') this.$router.replace({name: 'home'})
         await this.$store.dispatch('fetchAllData')
