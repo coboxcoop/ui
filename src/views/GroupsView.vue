@@ -43,15 +43,15 @@ export default {
   methods: {
     stat(address) {
       return this.$store.getters['groups/stat'](address)
+    },
+    groupPeerCount(address) {
+      return this.$store.getters['groups/peerCount'](address)
     }
   },
   computed: {
     groups() {
       return this.$store.state.groups.data
     }
-  },
-  groupPeerCount(address) {
-    return this.$store.getters['groups/peerCount'](address)
   }
 }
 </script>
