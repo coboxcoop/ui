@@ -32,9 +32,11 @@ export default {
   methods: {
     async onSubmitName() {
       try {
+        this.name = this.name.trim()
         await this.$store.dispatch('profile/updateName', this.name)
+        await this.$store.dispatch('groups/create', `${this.name}'s Space`)
         this.name = ''
-        this.$router.replace({name: 'home'})
+        if(this.$route.name !== 'home') this.$router.replace({name: 'home'})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
