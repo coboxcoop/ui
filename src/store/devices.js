@@ -108,9 +108,11 @@ export default ({api, events}) => ({
     },
     async replicate({dispatch, state}, {address, name, device}){
       const {data} = await api.post(`/admin/devices/${device}/commands/replicate`, {name, address})
+      dispatch('getReplicates', device)
     },
     async unreplicate({dispatch, state}, {address, name, device}){
       const {data} = await api.post(`/admin/devices/${device}/commands/unreplicate`, {name, address})
+      dispatch('getReplicates', device)
     },
     async getReplicates({commit, dispatch}, address) {
       const {data} = await api.get(`/admin/devices/${address}/commands/replicates`)
