@@ -19,6 +19,16 @@
   <small>Group address</small>
   <CopyKey :value="group.address" />
 
+  <div>Members</div>
+
+  <NavList>
+    <div v-for="peer in peers" :key="peer.publicKey">
+      <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
+    </div>
+  </NavList>
+
+  <br />
+
   <div v-if="inviteCode">
     <p>Please send the following invite code to the new collaborator.</p>
     <CopyKey :value="inviteCode" />
@@ -31,13 +41,6 @@
       <button type="submit">Ok</button>
     </form>
   </div>
-  {{group.name}} Peers:
-  <NavList v-for="peer in peers" :key="group.address">
-    <div>
-      <GroupIcon :address="peer.name" />
-      <pre>{{peer.data.content.name}}: {{peer.data.author}}</pre>
-    </div>
-  </NavList>
 </Screen>
 </template>
 
@@ -55,12 +58,14 @@
 import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
 import GroupIcon from '@/components/GroupIcon.vue'
+import UserIcon from '@/components/UserIcon.vue'
 import Plus from '@/components/Plus.vue'
 import CopyKey from '@/components/CopyKey.vue'
 
 export default {
   components: {
     GroupIcon,
+    UserIcon,
     Screen,
     NavList,
     Plus,
