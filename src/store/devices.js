@@ -98,8 +98,11 @@ export default ({api, events}) => ({
       commit('broadcast', {address, broadcast: true} )
     },
     async acceptInvite({dispatch}, code) {
-      const {data} = await api.get('/admin/devices/invites/accept', {params: {code}})
+      const {data: {address, name}} = await api.get('/admin/devices/invites/accept', {params: {code}})
       await dispatch('fetch')
+      await dispatch('getPeers', address)
+      await dispatch('getReplicates', address)
+      await dispatch('join', {address, name})
     },
     async createInvite({}, {address, publicKey}) {
       const {data} = await api.post(`/admin/devices/${address}/invites`, {address, publicKey})
