@@ -22,9 +22,9 @@ export default ({api, events}) => ({
         return dispatch('getStat', {address})
       }))
     },
-    async getStat({dispatch}, {address}) {
+    async getStat({commit}, {address}) {
       const {data} = await api.get(`/groups/${address}/drive/stat`)
-      console.warn('STATTT', data)
+      commit('receiveStat', {address, stat: data})
     },
     async getAllPeers({state, dispatch}) {
       await Promise.all(state.data.map(({address, name}) => {
