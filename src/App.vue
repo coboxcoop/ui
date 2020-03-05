@@ -42,7 +42,6 @@ export default {
     if(this.hasName) {
       await this.$store.dispatch('groups/fetch')
       await this.$store.dispatch('groups/joinAll')
-      await this.$store.dispatch('groups/getAllPeers')
       await this.$store.dispatch('devices/fetch')
       await this.$store.dispatch('devices/joinAll')
       await this.$store.dispatch('devices/getAllPeers')
