@@ -24,7 +24,7 @@
   <small>Address</small>
   <CopyKey :value="group.address" />
 
-  <h2>{{$store.getters['groups/peerCount'](group.address)}} peer</h2>
+  <h2>{{peerCountString}}</h2>
 
   <NavList>
     <div v-for="peer in peers" :key="peer.publicKey">
@@ -81,6 +81,11 @@ export default {
     inviteCode: ''
   }),
   computed: {
+    peerCountString() {
+      const count = this.$store.getters['groups/peerCount'](this.group.address)
+
+      return `${count} peer${count != 1 ? 's' : ''}`
+    },
     group() {
       return this.$store.getters['groups/single'](this.$route.params.address)
     },
