@@ -22,11 +22,17 @@ export default ({api, events}) => ({
   mutations: {
   },
   getters: {
-    count(state) {
-      return uniq(
-        Object.values(state.groups).flatMap(g => g.members)
-          .concat(Object.keys(state.groups).map(gid => parseInt(gid)))
-      ).length
+    count(state, getters, rootState, rootGetters) {
+      console.warn(rootGetters)
+      const devices = rootGetters['devices/count']
+      const groups = rootGetters['groups/count']
+      const peers = rootGetters['groups/allPeerCount']
+
+      return devices + groups + peers
+      // return uniq(
+      //   Object.values(state.groups).flatMap(g => g.members)
+      //     .concat(Object.keys(state.groups).map(gid => parseInt(gid)))
+      // ).length
     }
   }
 })

@@ -161,6 +161,13 @@ export default ({api, events}) => ({
       return address => {
         return getters['peers'](address).length
       }
+    },
+    allPeerCount(state, getters) {
+      const counts = state.data.map(g => {
+        return getters['peerCount'](g.address)
+      })
+
+      return counts.reduce((sum, num) => num + sum, 0)
     }
   }
 })
