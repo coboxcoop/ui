@@ -19,7 +19,7 @@
   <small>Group address</small>
   <CopyKey :value="group.address" />
 
-  <div>Members</div>
+  <div>Peers</div>
 
   <NavList>
     <div v-for="peer in peers" :key="peer.publicKey">
