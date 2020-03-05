@@ -24,6 +24,8 @@ export default new Vuex.Store({
     error: error({api, events})
   },
   state: {
+    poll: true,
+    pollInterval: 3000,
     ready: false,
     showUserModal: false
   },
@@ -44,6 +46,18 @@ export default new Vuex.Store({
       await dispatch('profile/fetch')
 
       commit('ready')
+    },
+    async fetchAllData({dispatch, state}) {
+      await dispatch('groups/fetch')
+      await dispatch('groups/joinAll')
+      await dispatch('groups/getAllPeers')
+      await dispatch('groups/getAllStats')
+      await dispatch('devices/fetch')
+      await dispatch('devices/joinAll')
+      await dispatch('devices/getAllPeers')
+      await dispatch('devices/getAllReplicates')
+
+      if(this.state.poll) setTimeout(() => dispatch('fetchAllData'), state.pollInterval)
     },
     showUserModal({commit}) {
       commit('showUserModal', true)

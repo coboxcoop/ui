@@ -43,7 +43,7 @@ export default {
   async mounted() {
     await this.$store.dispatch('init')
     if(this.hasName) {
-      this.fetchAllData()
+      this.$store.dispatch('fetchAllData')
     } else {
       this.$router.replace({name: 'home'})
     }
@@ -66,18 +66,6 @@ export default {
     }
   },
   methods: {
-    async fetchAllData() {
-      await this.$store.dispatch('groups/fetch')
-      await this.$store.dispatch('groups/joinAll')
-      await this.$store.dispatch('groups/getAllPeers')
-      await this.$store.dispatch('groups/getAllStats')
-      await this.$store.dispatch('devices/fetch')
-      await this.$store.dispatch('devices/joinAll')
-      await this.$store.dispatch('devices/getAllPeers')
-      await this.$store.dispatch('devices/getAllReplicates')
-
-      if(polling) setTimeout(() => this.fetchAllData(), TIMEOUT)
-    },
     reload() {
       window.location.reload()
     }
