@@ -9,10 +9,6 @@
   <NavList>
     <a v-if="connected" href="#" @click.prevent="leaveDevice">Disconnect</a>
     <a v-else href="#" @click.prevent="joinDevice">Connect</a>
-    <!-- FIXME -->
-    <!-- at the moment not detecting broadcasts happening, need to check broadcast state and decide to show hide or announce -->
-    <a v-if="broadcast" href="#" @click.prevent="hideDevice">Hide</a>
-    <a v-else href="#" @click.prevent="announceDevice">Announce</a>
   </NavList>
 
   <br />
