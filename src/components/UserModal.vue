@@ -17,7 +17,7 @@
 
     <NavList>
       <RouterLink :to="{name: 'backup'}">Backup identity</RouterLink>
-      <RouterLink :to="{name: 'restore'}" class="disabled-feature">Restore</RouterLink>
+      <a href="#" class="disabled-feature">Restore</a>
     </NavList>
 
     <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
