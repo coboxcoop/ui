@@ -16,11 +16,15 @@ export default ({api, events}) => ({
     async fetch({commit, dispatch}) {
       const {data} = await api.get('/groups')
       commit('receiveData', data)
-
-      data.forEach(async ({address}) => {
-        const {data} = await api.get(`/groups/${address}/drive/stat`)
-        commit('receiveStat', {address, stat: data})
-      })
+    },
+    async getAllStats({state, dispatch}) {
+      await Promise.all(state.data.map(({address}) => {
+        return dispatch('getStat', {address})
+      }))
+    },
+    async getStat({dispatch}, {address}) {
+      const {data} = await api.get(`/groups/${address}/drive/stat`)
+      console.warn('STATTT', data)
     },
     async getAllPeers({state, dispatch}) {
       await Promise.all(state.data.map(({address, name}) => {
