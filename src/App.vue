@@ -31,9 +31,6 @@ import UserModal from '@/components/UserModal.vue'
 import OnboardingView from '@/views/OnboardingView.vue'
 import Errors from '@/components/Errors.vue'
 
-const TIMEOUT = 3000
-const polling = true
-
 export default {
   components: {
     Errors,
