@@ -48,14 +48,10 @@
   {{device.name}} Blind Replicating:
   <NavList>
     <div v-for="replicate in replicates" :key="replicate.value.content.address">
-      <GroupIcon :address="replicate.address" />
-      <pre>
-        Local name: {{replicate.value.content.name}},
-        Address: {{replicate.value.content.address}},
-        Added by: {{replicate.value.author}}
-        <!-- FIXME &#45; not sure have this button setup right -->
-        <button @click="() => onSubmitUnreplicate(replicate)">Unreplicate</button>
-      </pre>
+      <Dot :color="replicate.value.type === 'command/unreplicate' ? 'orangered' : 'lightseagreen'" />
+      {{replicate.value.content.name}}
+      <button v-if="replicate.value.type === 'command/replicate'" @click="() => onSubmitUnreplicate(replicate)">Unreplicate</button>
+      <button v-else @click="() => onSubmitReplicate(replicate)">Replicate</button>
     </div>
   </NavList>
 </Screen>
@@ -77,6 +73,7 @@ import NavList   from '@/components/NavList.vue'
 import GroupIcon from '@/components/GroupIcon.vue'
 import Plus      from '@/components/Plus.vue'
 import CopyKey   from '@/components/CopyKey.vue'
+import Dot       from '@/components/Dot.vue'
 
 export default {
   components: {
@@ -84,7 +81,8 @@ export default {
     Screen,
     NavList,
     Plus,
-    CopyKey
+    CopyKey,
+    Dot
   },
   data: () => ({
     publicKey: '',
@@ -122,9 +120,9 @@ export default {
 
       this.publicKey = ''
     },
-    async onSubmitReplicate() {
-      const {address, name} = this
+    async onSubmitReplicate(replicate) {
       const device = this.device.address
+      const {address, name} = replicate.value.content
 
       try {
         const data = await this.$store.dispatch('devices/replicate', {address, name, device})
@@ -136,9 +134,6 @@ export default {
       this.name = ''
     },
     async onSubmitUnreplicate(replicate) {
-      //FIXME
-      // need to figure out how to populate with correct address and name
-
       const device = this.device.address
       const {address, name} = replicate.value.content
 

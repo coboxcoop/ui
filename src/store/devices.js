@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export default ({api, events}) => ({
   namespaced: true,
   state: {
@@ -176,7 +178,17 @@ export default ({api, events}) => ({
     },
     replicates(state) {
       return address => {
-        return (address in state.replicates) && state.replicates[address]
+        const entries = (address in state.replicates) && state.replicates[address]
+
+        const replicates = entries
+
+        const grouped = _.map(_.values(
+          _.groupBy(replicates, r => {
+            return r.value.content.address
+          })
+        ), group => _.last(_.sortBy(group, 'timestamp')))
+
+        return grouped
       }
     }
   }
