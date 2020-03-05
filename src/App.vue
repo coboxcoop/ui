@@ -32,6 +32,7 @@ import OnboardingView from '@/views/OnboardingView.vue'
 import Errors from '@/components/Errors.vue'
 
 const TIMEOUT = 3000
+const polling = true
 
 export default {
   components: {
@@ -75,7 +76,7 @@ export default {
       await this.$store.dispatch('devices/getAllPeers')
       await this.$store.dispatch('devices/getAllReplicates')
 
-      setTimeout(() => this.fetchAllData(), TIMEOUT)
+      if(polling) setTimeout(() => this.fetchAllData(), TIMEOUT)
     },
     reload() {
       window.location.reload()
