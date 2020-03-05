@@ -2,7 +2,7 @@
 <Screen :back="{name: 'admin-devices'}" v-if="device">
   <template v-slot:header>
     <div class="header">
-      <div><GroupIcon :address="device.address" /> {{device.name}}</div>
+      <div><Dot :color="connected ? 'lightseagreen' : 'lightgray'" /> {{device.name}}</div>
     </div>
   </template>
 
