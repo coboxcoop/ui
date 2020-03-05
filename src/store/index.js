@@ -47,13 +47,15 @@ export default new Vuex.Store({
 
       commit('ready')
     },
+    async initData({dispatch}) {
+      await dispatch('groups/joinAll')
+      await dispatch('devices/joinAll')
+    },
     async fetchAllData({dispatch, state}) {
       await dispatch('groups/fetch')
-      await dispatch('groups/joinAll')
       await dispatch('groups/getAllPeers')
       await dispatch('groups/getAllStats')
       await dispatch('devices/fetch')
-      await dispatch('devices/joinAll')
       await dispatch('devices/getAllPeers')
       await dispatch('devices/getAllReplicates')
 

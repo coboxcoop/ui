@@ -43,7 +43,8 @@ export default {
   async mounted() {
     await this.$store.dispatch('init')
     if(this.hasName) {
-      this.$store.dispatch('fetchAllData')
+      await this.$store.dispatch('fetchAllData')
+      await this.$store.dispatch('initData')
     } else {
       this.$router.replace({name: 'home'})
     }

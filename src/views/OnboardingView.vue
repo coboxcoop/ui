@@ -37,7 +37,8 @@ export default {
         await this.$store.dispatch('groups/create', `${this.name}'s Space`)
         this.name = ''
         if(this.$route.name !== 'home') this.$router.replace({name: 'home'})
-        this.$store.dispatch('fetchAllData')
+        await this.$store.dispatch('fetchAllData')
+        await this.$store.dispatch('initData')
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
