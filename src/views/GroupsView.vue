@@ -9,7 +9,7 @@
   <NavList v-for="group in groups" :key="group.address">
     <RouterLink class="group" :to="{name: 'group', params: {address: group.address}}">
       <div>
-        <GroupIcon :address="group.address" /> {{group.name}}
+        <GroupIcon :address="group.address" /> {{group.name}} <sup>{{groupPeerCount(group.address)}}</sup>
       </div>
       <div class="stat" v-if="stat(group.address)">{{stat(group.address).size | bytes}}</div>
     </RouterLink>
@@ -48,7 +48,10 @@ export default {
   computed: {
     groups() {
       return this.$store.state.groups.data
-    },
+    }
+  },
+  groupPeerCount(address) {
+    return this.$store.getters['groups/peerCount'](address)
   }
 }
 </script>
