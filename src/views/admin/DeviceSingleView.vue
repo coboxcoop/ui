@@ -52,7 +52,7 @@
       <Dot :color="replicate.value.type === 'command/unreplicate' ? 'orangered' : 'lightseagreen'" />
       {{replicate.value.content.name}}
       <div v-if="author = replicateAuthor(replicate)">
-        <UserIcon :address="author.data.author" /> {{author.data.content.name}}
+        Added by <UserIcon :address="author.data.author" /> {{author.data.content.name}}
       </div>
       <button v-if="replicate.value.type === 'command/replicate'" @click="() => onSubmitUnreplicate(replicate)">Unreplicate</button>
       <button v-else @click="() => onSubmitReplicate(replicate)">Replicate</button>
