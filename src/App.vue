@@ -65,6 +65,7 @@ export default {
   watch: {
     $route() {
       this.$store.dispatch('error/dismiss')
+      this.$store.dispatch('hideUserModal')
     }
   },
   methods: {
