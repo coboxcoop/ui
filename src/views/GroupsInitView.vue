@@ -7,8 +7,6 @@
       <RouterLink :to="{name: 'groups-join'}">Join a Space</RouterLink>
       <RouterLink :to="{name: 'groups-create'}">Create a Space</RouterLink>
     </NavList>
-
-    <div class="bottom">or set up a new device</div>
   </div>
 </Screen>
 </template>
