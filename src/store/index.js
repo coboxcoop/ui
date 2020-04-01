@@ -1,96 +1,71 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import faker from 'faker'
+
+import {api, events} from '@/api'
+
+import error from '@/store/error'
+import groups from '@/store/groups'
+import profile from '@/store/profile'
+import network from '@/store/network'
+import devices from '@/store/devices'
+import system from '@/store/system'
+import backup from '@/store/backup'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+    system: system({api, events}),
+    groups: groups({api, events}),
+    profile: profile({api, events}),
+    network: network({api, events}),
+    devices: devices({api, events}),
+    backup: backup({api, events}),
+    error: error({api, events})
+  },
   state: {
-    me: null,
-    spaces: [],
-    devices: []
+    poll: true,
+    pollInterval: 3000,
+    ready: false,
+    showUserModal: false
   },
   mutations: {
-    addMyName(state, name) {
-      state.me = {name}
+    ready(state) {
+      state.ready = true
     },
-    addDevice(state, device) {
-      state.devices = [...state.devices, device]
-    },
-    addPeerToDevice(state, {id, peerKey}) {
-      let devices = [...state.devices]
-      devices = devices.map(device => {
-        if(device.id === id) {
-          device.members.push({
-            id: device.members.length,
-            name: faker.fake('{{name.firstName}}'),
-            peerKey
-          })
-        }
-        return device
-      })
-      state.devices = devices
-    },
-    addSpace(state, space) {
-      state.spaces = [...state.spaces, space]
-    },
-    addPeerToSpace(state, {id, peerKey}) {
-      let spaces = [...state.spaces]
-      spaces = spaces.map(space => {
-        if(space.id === id) {
-          space.members.push({
-            id: space.members.length,
-            name: faker.fake('{{name.firstName}}'),
-            peerKey
-          })
-        }
-        return space
-      })
-      state.spaces = spaces
-    },
-  },
-  getters: {
-  },
-  actions: {
-    addMyName({commit, dispatch}, name) {
-      commit('addMyName', name)
-      dispatch('createInitialSpace', name)
-    },
-    createInitialSpace({dispatch}, name) {
-      const spaceName = `${name}'s Space`
-      dispatch('createSpace', spaceName)
-    },
-    createSpace({commit, state}, name) {
-      const space  = {
-        id: state.spaces.length,
-        name,
-        members: []
-      }
-      commit('addSpace', space)
-    },
-    joinSpace({commit, state}, spaceKeyToJoin) {
-      const space  = {
-        id: state.spaces.length,
-        name: faker.fake('{{name.lastName}} SPACE'),
-        members: []
-      }
-      commit('addSpace', space)
-    },
-    addPeerToSpace({commit}, {id, peerKey}) {
-      commit('addPeerToSpace', {id, peerKey})
-    },
-    createDevice({commit, state}, name) {
-      const device  = {
-        id: state.devices.length,
-        name,
-        members: []
-      }
-      commit('addDevice', device)
-    },
-    addPeerToDevice({commit}, {id, peerKey}) {
-      commit('addPeerToDevice', {id, peerKey})
+    showUserModal(state, show) {
+      state.showUserModal = show
     }
   },
-  modules: {
+  actions: {
+    async init({dispatch, commit}) {
+      dispatch('devices/subscribe')
+      dispatch('groups/subscribe')
+
+      await dispatch('system/fetch')
+      await dispatch('profile/fetch')
+
+      commit('ready')
+    },
+    async initData({dispatch}) {
+      await dispatch('groups/joinAll')
+      await dispatch('devices/joinAll')
+    },
+    async fetchAllData({dispatch, state}) {
+      await dispatch('groups/fetch')
+      await dispatch('groups/getAllPeers')
+      await dispatch('groups/getAllStats')
+      await dispatch('devices/fetch')
+      await dispatch('devices/getAllPeers')
+      await dispatch('devices/getAllReplicates')
+
+      if(this.state.poll) setTimeout(() => dispatch('fetchAllData'), state.pollInterval)
+    },
+    showUserModal({commit}) {
+      commit('showUserModal', true)
+    },
+    hideUserModal({commit}) {
+      commit('showUserModal', false)
+    }
   }
 })
