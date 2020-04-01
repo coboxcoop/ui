@@ -19,9 +19,36 @@ yarn build
 ```
 yarn test:unit
 ```
+### Run two UIs ontop of two different servers (mimic two seperate users)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+To run two seperate instances alongside eachother so you can get groups/devices replicating locally you can run the following:
+
+```
+# these two commands mimic one user
+# from the [cobox-server](https://ledger-git.dyne.org/CoBox/cobox-server/src/branch/development) repo in one terminal run:
+yarn dev:server --port 1234 --mount ~/cobox/mount/one --storage ~/cobox/one
+
+# from the [cobox-ui](https://ledger-git.dyne.org/CoBox/cobox-ui/src/branch/develop) repo in another terminal run:
+API_PORT=1234 yarn serve
+
+# the first UI which is run will be launched at http://localhost:8080/ (check the logs)
+
+# these next two commands mimic another user
+# from the [cobox-server](https://ledger-git.dyne.org/CoBox/cobox-server/src/branch/development) repo in one terminal run:
+yarn dev:server --port 2345 --mount ~/cobox/mount/two --storage ~/cobox/two
+
+# from the [cobox-ui](https://ledger-git.dyne.org/CoBox/cobox-ui/src/branch/develop) repo in another terminal run:
+API_PORT=2345 yarn serve
+
+# the second UI which is run will be launched at http://localhost:8081/ (check the logs)
+```
+
+Lastly if you want to mimic what it would be like to have a Cobox physical device running on the local are network then you can run. When you have it running you should be able to run through the setup device workflow.
+
+```
+# this command from the [cobox-hub](https://ledger-git.dyne.org/CoBox/cobox-hub/src/branch/development) repo:
+yarn dev
+```
 
 ### Repo Process
 We're following the [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow). Please base off of `develop` when working on `feature/<feature_name>` branches. This should be a branch per feature.
@@ -39,27 +66,3 @@ git checkout master
 git merge develop
 git branch -d feature_branch
 ```
-
-### TODOs
-
-2020-01-15
-* [x] inputing name of new person within a space in SpaceSection
-  * [x] input box for that
-  * [x] closing the input person if not meant (hide the content)
-  * [x] hide the content and place new name if person has been added 
-
-2020-01-17
-* [ ] change plus to a cancel if it's open for peerKey (rabbit hole)
-* [ ] adding global styling
-* [ ] dan to replicate spaces functionality in 
-  * [x] devices and 
-  * [ ] network
-* [ ] what happens when we click a peers name (figma)
-* [ ] what is in network? (figma)
-* [ ] discuss colors vs avatars (like ssb, deterministic from parentKey)
-  * [ ] displaying connection status
-  * [ ] import/inherit color scheme of a peer or assign locally (can i override?)
-    * [ ] what about color clashes
-* [ ] refactor network, device and space duplication? (if comes up)
-* [ ] cobox-core API integration (may be session after next)
-* [ ] create branch for desired data shape using swagger for kieran to sync with
