@@ -57,12 +57,18 @@ export default {
     },
     hasName() {
       return this.$store.getters['profile/hasName']
+    },
+    dark() {
+      return this.$store.state.settings.dark
     }
   },
   watch: {
     $route() {
       this.$store.dispatch('error/dismiss')
       this.$store.dispatch('hideUserModal')
+    },
+    dark() {
+      this.setDark()
     }
   },
   methods: {
