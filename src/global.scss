@@ -20,6 +20,27 @@ html {
   --small: 1.8rem;
   --ease: cubic-bezier(0.19, 1, 0.22, 1);
   --leading: 1.2;
+
+  --bg: white;
+  --fg: black;
+  --hover: rgba(127, 127, 127, 1);
+  --modal-bg: rgba(0, 0, 0, 0.06);
+  --shadow: rgba(0, 0, 0, 0.15);
+
+  // These are needed for the linear gradient on some inputs
+  --fg-0: rgba(255, 255, 255, 0);
+  --fg-1: rgba(255, 255, 255, 1);
+
+  &.dark {
+    --bg: black;
+    --fg: white;
+    --hover: rgba(127, 127, 127, 1);
+    --modal-bg: rgba(255, 255, 255, 0.1);
+    --shadow: rgba(255, 255, 255, 0.5);
+
+    --fg-0: rgba(0, 0, 0, 0);
+    --fg-1: rgba(0, 0, 0, 1);
+  }
 }
 body {
   font-size: var(--body);
@@ -34,6 +55,7 @@ body {
   overflow: hidden;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  color: var(--fg);
 }
 a:hover, button:hover {
   opacity: 0.6;
@@ -57,7 +79,7 @@ form {
     outline: none;
   }
   input[type='text'], textarea {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--fg);
     width: 100%;
     padding: 0.6rem 0;
   }
@@ -74,10 +96,10 @@ form {
     right: 0;
     padding: 0.6rem 0;
     padding-left: 1.5em;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 1) 1.2em);
+    background: linear-gradient(to right, var(--fg-0) 0, var(--fg-1) 1.2em);
     &:hover {
       opacity: 1;
-      color: rgba(0, 0, 0, 0.6);
+      color: var(--hover);
     }
   }
 }

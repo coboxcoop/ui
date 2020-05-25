@@ -45,6 +45,8 @@ export default {
     } else {
       this.$router.replace({name: 'home'})
     }
+
+    this.setDark()
   },
   computed: {
     ready() {
@@ -66,6 +68,10 @@ export default {
   methods: {
     reload() {
       window.location.reload()
+    },
+    setDark() {
+      const act = this.$store.state.settings.dark ? 'add' : 'remove'
+      document.documentElement.classList[act]('dark')
     }
   }
 }
@@ -76,7 +82,7 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: white;
+  background: var(--bg);
   margin: auto;
   width: 100%;
   height: 100%;
@@ -85,7 +91,7 @@ export default {
   max-height: 52rem;
   border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 1rem var(--shadow);
 }
 .offline {
   text-align: center;
