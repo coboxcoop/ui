@@ -21,7 +21,7 @@ yarn test:unit
 ```
 ### Run two UIs ontop of two different servers (mimic two seperate users)
 
-To run two seperate instances alongside eachother so you can get groups/devices replicating locally you can run the following:
+To run two seperate instances alongside eachother so you can get spaces/devices replicating locally you can run the following:
 
 ```
 # these two commands mimic one user

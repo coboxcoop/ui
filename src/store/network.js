@@ -4,7 +4,7 @@ export default ({api, events}) => ({
   namespaced: true,
   state: {
     peers: {},
-    groups: {
+    spaces: {
       0: {
         members: [1, 2, 3, 4, 5, 6, 7]
       },
@@ -25,13 +25,13 @@ export default ({api, events}) => ({
     count(state, getters, rootState, rootGetters) {
       console.warn(rootGetters)
       const devices = rootGetters['devices/count']
-      const groups = rootGetters['groups/count']
-      const peers = rootGetters['groups/allPeerCount']
+      const spaces = rootGetters['spaces/count']
+      const peers = rootGetters['spaces/allPeerCount']
 
-      return devices + groups + peers
+      return devices + spaces + peers
       // return uniq(
-      //   Object.values(state.groups).flatMap(g => g.members)
-      //     .concat(Object.keys(state.groups).map(gid => parseInt(gid)))
+      //   Object.values(state.spaces).flatMap(g => g.members)
+      //     .concat(Object.keys(state.spaces).map(gid => parseInt(gid)))
       // ).length
     }
   }

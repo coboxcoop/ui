@@ -68,7 +68,7 @@
   display: flex;
   justify-content: space-between;
 }
-.group-icon {
+.space-icon {
   margin-right: 0.3rem;
 }
 </style>
@@ -76,7 +76,7 @@
 <script>
 import Screen    from '@/components/Screen.vue'
 import NavList   from '@/components/NavList.vue'
-import GroupIcon from '@/components/GroupIcon.vue'
+import SpaceIcon from '@/components/SpaceIcon.vue'
 import Plus      from '@/components/Plus.vue'
 import CopyKey   from '@/components/CopyKey.vue'
 import Dot       from '@/components/Dot.vue'
@@ -84,7 +84,7 @@ import UserIcon  from '@/components/UserIcon.vue'
 
 export default {
   components: {
-    GroupIcon,
+    SpaceIcon,
     Screen,
     NavList,
     Plus,

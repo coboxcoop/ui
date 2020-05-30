@@ -1,5 +1,5 @@
 <template>
-<Dot class="group-icon" :color="color" />
+<Dot class="space-icon" :color="color" />
 </template>
 
 <script>
@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     connected() {
-      return this.$store.getters['groups/connected'](this.address)
+      return this.$store.getters['spaces/connected'](this.address)
     },
     color() {
       if(this.connected) return 'lightseagreen'

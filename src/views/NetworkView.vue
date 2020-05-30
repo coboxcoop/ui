@@ -53,12 +53,12 @@ export default {
       return this.$store.state.network
     },
     nodes() {
-      const groups = Object.keys(this.network.groups).map(k => parseInt(k))
+      const spaces = Object.keys(this.network.spaces).map(k => parseInt(k))
 
       return uniq(
-        Object.values(this.network.groups)
+        Object.values(this.network.spaces)
           .flatMap(g => g.members)
-          .concat(groups)
+          .concat(spaces)
       ).map(n => {
         const key = fakeKey()
         const color = this.$store.getters['profile/keyColor'](key)
@@ -71,9 +71,9 @@ export default {
     links() {
       const {network} = this
 
-      return Object.keys(network.groups).map(n => parseInt(n))
+      return Object.keys(network.spaces).map(n => parseInt(n))
         .flatMap(gid => {
-          const {members} = network.groups[gid]
+          const {members} = network.spaces[gid]
 
           return members.map(mid => {
             return {source: mid, target: gid}
