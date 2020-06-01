@@ -2,10 +2,10 @@
 <Screen>
   <NavList>
     <div>
-      <RouterLink :to="{name: 'groups'}">
-        Spaces <sup>{{groupsCount}}</sup>
+      <RouterLink :to="{name: 'spaces'}">
+        Spaces <sup>{{spacesCount}}</sup>
       </RouterLink>
-      <RouterLink :to="{name: 'groups-init'}">
+      <RouterLink :to="{name: 'spaces-init'}">
         <Plus />
       </RouterLink>
     </div>
@@ -38,8 +38,8 @@ export default {
     Plus
   },
   computed: {
-    groupsCount() {
-      return this.$store.getters['groups/count']
+    spacesCount() {
+      return this.$store.getters['spaces/count']
     },
     networkCount() {
       return this.$store.getters['network/count']

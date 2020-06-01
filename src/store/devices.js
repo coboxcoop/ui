@@ -42,9 +42,9 @@ export default ({api, events}) => ({
     },
     async join({commit}, {address, name}) {
       // FIXME
-      // When joining the swarm for each group, an error is thrown if we have already joined.
-      // Since there is no way to fetch the joined status for group, we will ignore the error
-      // if it matches some known condition and assume we have already joined that group swarm
+      // When joining the swarm for each space, an error is thrown if we have already joined.
+      // Since there is no way to fetch the joined status for space, we will ignore the error
+      // if it matches some known condition and assume we have already joined that space swarm
       try {
         await api.post(`/admin/devices/${address}/connections`, {address, name})
         commit('connected', {address, connected: true})
@@ -59,7 +59,7 @@ export default ({api, events}) => ({
     },
     async leave({commit}, {address, name}) {
       // FIXME
-      // As with groups/join -- we need a way to check if the server has already joined the swarm
+      // As with spaces/join -- we need a way to check if the server has already joined the swarm
       // before joining or leaving
       try {
         await api.delete(`/admin/devices/${address}/connections`, {address, name})
@@ -200,7 +200,7 @@ export default ({api, events}) => ({
           _.groupBy(replicates, r => {
             return r.value.content.address
           })
-        ), group => _.last(_.sortBy(group, 'timestamp')))
+        ), space => _.last(_.sortBy(space, 'timestamp')))
 
         return grouped
       }

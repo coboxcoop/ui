@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'groups-init'}">
+<Screen :back="{name: 'spaces-init'}">
   <div class="page">
     <p>To join a Space, send your public key to someone that can invite you.</p>
 
@@ -36,9 +36,9 @@ export default {
   methods: {
     async onSubmit() {
       try {
-        await this.$store.dispatch('groups/acceptInvite', this.inviteCode)
+        await this.$store.dispatch('spaces/acceptInvite', this.inviteCode)
         this.inviteCode = ''
-        this.$router.replace({name: 'groups'})
+        this.$router.replace({name: 'spaces'})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }

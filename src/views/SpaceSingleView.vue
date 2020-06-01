@@ -1,28 +1,28 @@
 <template>
-<Screen :back="{name: 'groups'}" v-if="group">
+<Screen :back="{name: 'spaces'}" v-if="space">
   <template v-slot:header>
     <div class="header">
       <div>
         <a href="#" @click.prevent="toggleConnect">
-          <GroupIcon :address="group.address" />
+          <SpaceIcon :address="space.address" />
         </a>
-        {{group.name}}
+        {{space.name}}
       </div>
       <div class="stat">{{stat.size | bytes}}</div>
     </div>
   </template>
 
   <NavList>
-    <!-- <a v-if="connected" href="#" @click.prevent="leaveGroup">Disconnect</a>
-    <a v-else href="#" @click.prevent="joinGroup">Connect</a> -->
-    <a v-if="mounted" href="#" @click.prevent="unmountGroup">Unmount</a>
-    <a v-else href="#" @click.prevent="mountGroup">Mount</a>
+    <!-- <a v-if="connected" href="#" @click.prevent="leaveSpace">Disconnect</a>
+    <a v-else href="#" @click.prevent="joinSpace">Connect</a> -->
+    <a v-if="mounted" href="#" @click.prevent="unmountSpace">Unmount</a>
+    <a v-else href="#" @click.prevent="mountSpace">Mount</a>
   </NavList>
 
   <br />
 
   <small>Address</small>
-  <CopyKey :value="group.address" />
+  <CopyKey :value="space.address" />
 
   <h2>{{peerCountString}}</h2>
 
@@ -54,7 +54,7 @@
   display: flex;
   justify-content: space-between;
 }
-.group-icon {
+.space-icon {
   margin-right: 0.3rem;
 }
 </style>
@@ -62,14 +62,14 @@
 <script>
 import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
-import GroupIcon from '@/components/GroupIcon.vue'
+import SpaceIcon from '@/components/SpaceIcon.vue'
 import UserIcon from '@/components/UserIcon.vue'
 import Plus from '@/components/Plus.vue'
 import CopyKey from '@/components/CopyKey.vue'
 
 export default {
   components: {
-    GroupIcon,
+    SpaceIcon,
     UserIcon,
     Screen,
     NavList,
@@ -82,32 +82,32 @@ export default {
   }),
   computed: {
     peerCountString() {
-      const count = this.$store.getters['groups/peerCount'](this.group.address)
+      const count = this.$store.getters['spaces/peerCount'](this.space.address)
 
       return `${count} peer${count != 1 ? 's' : ''}`
     },
-    group() {
-      return this.$store.getters['groups/single'](this.$route.params.address)
+    space() {
+      return this.$store.getters['spaces/single'](this.$route.params.address)
     },
     connected() {
-      return this.$store.getters['groups/connected'](this.group.address)
+      return this.$store.getters['spaces/connected'](this.space.address)
     },
     mounted() {
-      return this.$store.getters['groups/mounted'](this.group.address)
+      return this.$store.getters['spaces/mounted'](this.space.address)
     },
     stat() {
-      return this.$store.getters['groups/stat'](this.group.address)
+      return this.$store.getters['spaces/stat'](this.space.address)
     },
     peers() {
-      return this.$store.getters['groups/peers'](this.group.address)
+      return this.$store.getters['spaces/peers'](this.space.address)
     },
   },
   methods: {
     async onSubmitInvite() {
-      const {group: {address}, publicKey} = this
+      const {space: {address}, publicKey} = this
 
       try {
-        const data = await this.$store.dispatch('groups/createInvite', {address, publicKey})
+        const data = await this.$store.dispatch('spaces/createInvite', {address, publicKey})
         this.inviteCode = data.content.code
       } catch(e) {
         this.$store.dispatch('error/handle', e)
@@ -117,35 +117,35 @@ export default {
     },
     async toggleConnect() {
       if(this.connected) {
-        await this.leaveGroup()
+        await this.leaveSpace()
       } else {
-        await this.joinGroup()
+        await this.joinSpace()
       }
     },
-    async joinGroup() {
+    async joinSpace() {
       try {
-        await this.$store.dispatch('groups/join', this.group)
+        await this.$store.dispatch('spaces/join', this.space)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async leaveGroup() {
+    async leaveSpace() {
       try {
-        await this.$store.dispatch('groups/leave', this.group)
+        await this.$store.dispatch('spaces/leave', this.space)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async mountGroup() {
+    async mountSpace() {
       try {
-        await this.$store.dispatch('groups/mount', this.group)
+        await this.$store.dispatch('spaces/mount', this.space)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async unmountGroup() {
+    async unmountSpace() {
       try {
-        await this.$store.dispatch('groups/unmount', this.group)
+        await this.$store.dispatch('spaces/unmount', this.space)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }

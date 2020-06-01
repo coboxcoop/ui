@@ -14,7 +14,7 @@ export default ({api, events}) => ({
       })
     },
     async fetch({commit, dispatch}) {
-      const {data} = await api.get('/groups')
+      const {data} = await api.get('/spaces')
       commit('receiveData', data)
     },
     async getAllStats({state, dispatch}) {
@@ -23,7 +23,7 @@ export default ({api, events}) => ({
       }))
     },
     async getStat({commit}, {address}) {
-      const {data} = await api.get(`/groups/${address}/drive/stat`)
+      const {data} = await api.get(`/spaces/${address}/drive/stat`)
       commit('receiveStat', {address, stat: data})
     },
     async getAllPeers({state, dispatch}) {
@@ -32,21 +32,21 @@ export default ({api, events}) => ({
       }))
     },
     async getPeers({commit, dispatch}, address) {
-      const {data} = await api.get(`/groups/${address}/peers`)
+      const {data} = await api.get(`/spaces/${address}/peers`)
       commit('receivePeers', {address, peers: data})
     },
     async create({dispatch}, name) {
-      const {data, data: {address}} = await api.post('/groups', {name})
+      const {data, data: {address}} = await api.post('/spaces', {name})
       dispatch('join', {address, name})
       await dispatch('fetch')
       return data
     },
     async acceptInvite({dispatch}, code) {
-      const {data} = await api.get('/groups/invites/accept', {params: {code}})
+      const {data} = await api.get('/spaces/invites/accept', {params: {code}})
       await dispatch('fetch')
     },
     async createInvite({}, {address, publicKey}) {
-      const {data} = await api.post(`/groups/${address}/invites`, {address, publicKey})
+      const {data} = await api.post(`/spaces/${address}/invites`, {address, publicKey})
       return data
     },
     async joinAll({state, dispatch}) {
@@ -56,11 +56,11 @@ export default ({api, events}) => ({
     },
     async join({commit}, {address, name}) {
       // FIXME
-      // When joining the swarm for each group, an error is thrown if we have already joined.
-      // Since there is no way to fetch the joined status for group, we will ignore the error
-      // if it matches some known condition and assume we have already joined that group swarm
+      // When joining the swarm for each space, an error is thrown if we have already joined.
+      // Since there is no way to fetch the joined status for space, we will ignore the error
+      // if it matches some known condition and assume we have already joined that space swarm
       try {
-        await api.post(`/groups/${address}/connections`, {address, name})
+        await api.post(`/spaces/${address}/connections`, {address, name})
         commit('connected', {address, connected: true})
       } catch(e) {
         const msg = e.response.data && e.response.data.errors && e.response.data.errors[0].msg
@@ -73,10 +73,10 @@ export default ({api, events}) => ({
     },
     async leave({commit}, {address, name}) {
       // FIXME
-      // As with groups/join -- we need a way to check if the server has already joined the swarm
+      // As with spaces/join -- we need a way to check if the server has already joined the swarm
       // before joining or leaving
       try {
-        await api.delete(`/groups/${address}/connections`, {address, name})
+        await api.delete(`/spaces/${address}/connections`, {address, name})
         commit('connected', {address, connected: false})
       } catch(e) {
         throw(e)
@@ -84,7 +84,7 @@ export default ({api, events}) => ({
     },
     async mount({commit}, {address, name}) {
       try {
-        await api.post(`/groups/${address}/mounts`, {address, name})
+        await api.post(`/spaces/${address}/mounts`, {address, name})
         commit('mounted', {address, mounted: true})
       } catch(e) {
         throw(e)
@@ -92,7 +92,7 @@ export default ({api, events}) => ({
     },
     async unmount({commit}, {address, name}) {
       try {
-        await api.delete(`/groups/${address}/mounts`, {address, name})
+        await api.delete(`/spaces/${address}/mounts`, {address, name})
         commit('mounted', {address, mounted: false})
       } catch(e) {
         throw(e)

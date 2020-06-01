@@ -4,8 +4,8 @@
     <p>Hi {{$store.getters['profile/myName']}}, what would you like to do?</p>
 
     <NavList>
-      <RouterLink :to="{name: 'groups-join'}">Join a Space</RouterLink>
-      <RouterLink :to="{name: 'groups-create'}">Create a Space</RouterLink>
+      <RouterLink :to="{name: 'spaces-join'}">Join a Space</RouterLink>
+      <RouterLink :to="{name: 'spaces-create'}">Create a Space</RouterLink>
     </NavList>
   </div>
 </Screen>

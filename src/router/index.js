@@ -3,11 +3,11 @@ import VueRouter from 'vue-router'
 
 import HomeView         from '@/views/HomeView.vue'
 import NetworkView      from '@/views/NetworkView.vue'
-import GroupsView       from '@/views/GroupsView.vue'
-import GroupsInitView   from '@/views/GroupsInitView.vue'
-import GroupsJoinView   from '@/views/GroupsJoinView.vue'
-import GroupsCreateView from '@/views/GroupsCreateView.vue'
-import GroupSingleView  from '@/views/GroupSingleView.vue'
+import SpacesView       from '@/views/SpacesView.vue'
+import SpacesInitView   from '@/views/SpacesInitView.vue'
+import SpacesJoinView   from '@/views/SpacesJoinView.vue'
+import SpacesCreateView from '@/views/SpacesCreateView.vue'
+import SpaceSingleView  from '@/views/SpaceSingleView.vue'
 import DevicesView      from '@/views/admin/DevicesView.vue'
 import DevicesInitView  from '@/views/admin/DevicesInitView.vue'
 import DevicesJoinView  from '@/views/admin/DevicesJoinView.vue'
@@ -20,11 +20,11 @@ Vue.use(VueRouter)
 const routes = [
   {path: '/',                           name: 'home',                component: HomeView},
   {path: '/network',                    name: 'network',             component: NetworkView},
-  {path: '/groups',                     name: 'groups',              component: GroupsView},
-  {path: '/groups/init',                name: 'groups-init',         component: GroupsInitView},
-  {path: '/groups/join',                name: 'groups-join',         component: GroupsJoinView},
-  {path: '/groups/create',              name: 'groups-create',       component: GroupsCreateView},
-  {path: '/groups/:address',            name: 'group',               component: GroupSingleView},
+  {path: '/spaces',                     name: 'spaces',              component: SpacesView},
+  {path: '/spaces/init',                name: 'spaces-init',         component: SpacesInitView},
+  {path: '/spaces/join',                name: 'spaces-join',         component: SpacesJoinView},
+  {path: '/spaces/create',              name: 'spaces-create',       component: SpacesCreateView},
+  {path: '/spaces/:address',            name: 'space',               component: SpaceSingleView},
   {path: '/admin/devices',              name: 'admin-devices',       component: DevicesView},
   {path: '/admin/devices/init',         name: 'admin-devices-init',  component: DevicesInitView},
   {path: '/admin/devices/join',         name: 'admin-devices-join',  component: DevicesJoinView},
