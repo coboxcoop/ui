@@ -2,6 +2,8 @@
   "name": "cobox-ui",
   "version": "0.1.0",
   "private": true,
+  "license": "AGPL-3.0-or-later",
+  "author": "magma-collective",
   "scripts": {
     "dev": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
@@ -39,5 +41,14 @@
   ],
   "jest": {
     "preset": "@vue/cli-plugin-unit-jest"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/coboxcoop/cobox-ui.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/coboxcoop/cobox-ui/issues"
+  },
+  "homepage": "https://cobox.cloud"
+
 }
