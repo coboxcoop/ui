@@ -1,6 +1,6 @@
 {
-  "name": "cobox-ui",
-  "version": "0.1.0",
+  "name": "@coboxcoop/ui",
+  "version": "1.0.0-beta1",
   "private": true,
   "license": "AGPL-3.0-or-later",
   "author": "magma-collective",
@@ -44,11 +44,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/coboxcoop/cobox-ui.git"
+    "url": "git+https://gitlab.com/coboxcoop/ui.git"
   },
   "bugs": {
-    "url": "https://gitlab.com/coboxcoop/cobox-ui/issues"
+    "url": "https://gitlab.com/coboxcoop/ui/issues"
   },
   "homepage": "https://cobox.cloud"
-
 }
