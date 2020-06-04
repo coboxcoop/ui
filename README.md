@@ -25,19 +25,19 @@ To run two seperate instances alongside eachother so you can get spaces/devices 
 
 ```
 # these two commands mimic one user
-# from the [cobox-server](https://ledger-git.dyne.org/CoBox/cobox-server/src/branch/development) repo in one terminal run:
+# from the [cobox-server](https://gitlab.com/coboxcoop/cobox-server/src/branch/development) repo in one terminal run:
 yarn dev:server --port 1234 --mount ~/cobox/mount/one --storage ~/cobox/one
 
-# from the [cobox-ui](https://ledger-git.dyne.org/CoBox/cobox-ui/src/branch/develop) repo in another terminal run:
+# from the [cobox-ui](https://gitlab.com/coboxcoop/cobox-ui/src/branch/develop) repo in another terminal run:
 API_PORT=1234 yarn serve
 
 # the first UI which is run will be launched at http://localhost:8080/ (check the logs)
 
 # these next two commands mimic another user
-# from the [cobox-server](https://ledger-git.dyne.org/CoBox/cobox-server/src/branch/development) repo in one terminal run:
+# from the [cobox-server](https://gitlab.com/coboxcoop/cobox-server/src/branch/development) repo in one terminal run:
 yarn dev:server --port 2345 --mount ~/cobox/mount/two --storage ~/cobox/two
 
-# from the [cobox-ui](https://ledger-git.dyne.org/CoBox/cobox-ui/src/branch/develop) repo in another terminal run:
+# from the [cobox-ui](https://gitlab.com/coboxcoop/cobox-ui/src/branch/develop) repo in another terminal run:
 API_PORT=2345 yarn serve
 
 # the second UI which is run will be launched at http://localhost:8081/ (check the logs)
@@ -46,7 +46,7 @@ API_PORT=2345 yarn serve
 Lastly if you want to mimic what it would be like to have a Cobox physical device running on the local are network then you can run. When you have it running you should be able to run through the setup device workflow.
 
 ```
-# this command from the [cobox-hub](https://ledger-git.dyne.org/CoBox/cobox-hub/src/branch/development) repo:
+# this command from the [cobox-hub](https://gitlab.com/coboxcoop/cobox-hub/src/branch/development) repo:
 yarn dev
 ```
 
