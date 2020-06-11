@@ -24,11 +24,11 @@ export default ({api, events}) => ({
   getters: {
     count(state, getters, rootState, rootGetters) {
       console.warn(rootGetters)
-      const devices = rootGetters['devices/count']
+      const seeders = rootGetters['seeders/count']
       const spaces = rootGetters['spaces/count']
       const peers = rootGetters['spaces/allPeerCount']
 
-      return devices + spaces + peers
+      return seeders + spaces + peers
       // return uniq(
       //   Object.values(state.spaces).flatMap(g => g.members)
       //     .concat(Object.keys(state.spaces).map(gid => parseInt(gid)))

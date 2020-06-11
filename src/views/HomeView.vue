@@ -10,10 +10,10 @@
       </RouterLink>
     </div>
     <div>
-      <RouterLink :to="{name: 'admin-devices'}">
-        Devices <sup>{{devicesCount}}</sup>
+      <RouterLink :to="{name: 'admin-seeders'}">
+        Seeders <sup>{{seedersCount}}</sup>
       </RouterLink>
-      <RouterLink :to="{name: 'admin-devices-init'}">
+      <RouterLink :to="{name: 'admin-seeders-init'}">
         <Plus />
       </RouterLink>
     </div>
@@ -44,8 +44,8 @@ export default {
     networkCount() {
       return this.$store.getters['network/count']
     },
-    devicesCount() {
-      return this.$store.getters['devices/count']
+    seedersCount() {
+      return this.$store.getters['seeders/count']
     }
   }
 }

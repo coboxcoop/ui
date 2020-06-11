@@ -3,8 +3,8 @@ import _ from 'lodash'
 export default ({api, events}) => ({
   namespaced: true,
   state: {
-    devices: [],
-    localDevices: {},
+    seeders: [],
+    localSeeders: {},
     connections: {},
     broadcasts: {},
     peers: {},
@@ -12,31 +12,31 @@ export default ({api, events}) => ({
   },
   actions: {
     async subscribe({commit}) {
-      events.on('DEVICE_CONNECTED', payload => {
-        const device = payload.data
-        commit('receiveDevice', device)
+      events.on('SEEDER_CONNECTED', payload => {
+        const seeder = payload.data
+        commit('receiveSeeder', seeder)
       })
 
-      events.on('ADMIN_DEVICE', payload => {
+      events.on('ADMIN_SEEDER', payload => {
         const peer = payload.data
       })
     },
     async fetch({commit, dispatch}) {
-      const {data} = await api.get('/admin/devices')
-      commit('receiveDevices', data)
+      const {data} = await api.get('/admin/seeders')
+      commit('receiveSeeders', data)
     },
     async joinAll({state, dispatch}) {
-      await Promise.all(state.devices.map(({address, name}) => {
+      await Promise.all(state.seeders.map(({address, name}) => {
         return dispatch('join', {address, name})
       }))
     },
     async getAllPeers({state, dispatch}) {
-      await Promise.all(state.devices.map(({address, name}) => {
+      await Promise.all(state.seeders.map(({address, name}) => {
         return dispatch('getPeers', address)
       }))
     },
     async getAllReplicates({state, dispatch}) {
-      await Promise.all(state.devices.map(({address, name}) => {
+      await Promise.all(state.seeders.map(({address, name}) => {
         return dispatch('getReplicates', address)
       }))
     },
@@ -46,7 +46,7 @@ export default ({api, events}) => ({
       // Since there is no way to fetch the joined status for space, we will ignore the error
       // if it matches some known condition and assume we have already joined that space swarm
       try {
-        await api.post(`/admin/devices/${address}/connections`, {address, name})
+        await api.post(`/admin/seeders/${address}/connections`, {address, name})
         commit('connected', {address, connected: true})
       } catch(e) {
         const msg = e.response.data && e.response.data.errors && e.response.data.errors[0].msg
@@ -62,23 +62,23 @@ export default ({api, events}) => ({
       // As with spaces/join -- we need a way to check if the server has already joined the swarm
       // before joining or leaving
       try {
-        await api.delete(`/admin/devices/${address}/connections`, {address, name})
+        await api.delete(`/admin/seeders/${address}/connections`, {address, name})
         commit('connected', {address, connected: false})
       } catch(e) {
         throw(e)
       }
     },
     async setup({dispatch, state}, name) {
-      const publicKey = Object.keys(state.localDevices)[0]
-      const {data, data: {address}} = await api.post('/admin/devices', {name, publicKey})
+      const publicKey = Object.keys(state.localSeeders)[0]
+      const {data, data: {address}} = await api.post('/admin/seeders', {name, publicKey})
       await dispatch('join', {name, address})
       await dispatch('hide', {name, address})
       await dispatch('fetch')
       return data
     },
     async hide({commit, dispatch, state}, {name, address}) {
-      const publicKey = Object.keys(state.localDevices)[0]
-      const {data} = await api.post(`/admin/devices/${address}/commands/hide`, {
+      const publicKey = Object.keys(state.localSeeders)[0]
+      const {data} = await api.post(`/admin/seeders/${address}/commands/hide`, {
         name,
         publicKey,
         commands: [{
@@ -88,8 +88,8 @@ export default ({api, events}) => ({
       commit('broadcast', {address, broadcast: false} )
     },
     async announce({commit, dispatch, state}, {name, address}) {
-      const publicKey = Object.keys(state.localDevices)[0]
-      const {data} = await api.post(`/admin/devices/${address}/commands/announce`, {
+      const publicKey = Object.keys(state.localSeeders)[0]
+      const {data} = await api.post(`/admin/seeders/${address}/commands/announce`, {
         name,
         publicKey,
         commands: [{
@@ -99,36 +99,36 @@ export default ({api, events}) => ({
       commit('broadcast', {address, broadcast: true} )
     },
     async acceptInvite({dispatch}, code) {
-      const {data: {address, name}} = await api.get('/admin/devices/invites/accept', {params: {code}})
+      const {data: {address, name}} = await api.get('/admin/seeders/invites/accept', {params: {code}})
       await dispatch('fetch')
       await dispatch('getPeers', address)
       await dispatch('getReplicates', address)
       await dispatch('join', {address, name})
     },
     async createInvite({}, {address, publicKey}) {
-      const {data} = await api.post(`/admin/devices/${address}/invites`, {address, publicKey})
+      const {data} = await api.post(`/admin/seeders/${address}/invites`, {address, publicKey})
       return data
     },
     async getPeers({commit, dispatch}, address) {
-      const {data} = await api.get(`/admin/devices/${address}/peers`)
+      const {data} = await api.get(`/admin/seeders/${address}/peers`)
       commit('receivePeers', {address, peers: data})
     },
-    async replicate({dispatch, state}, {address, name, device}){
-      const {data} = await api.post(`/admin/devices/${device}/commands/replicate`, {name, address})
-      dispatch('getReplicates', device)
+    async replicate({dispatch, state}, {address, name, seeder}){
+      const {data} = await api.post(`/admin/seeders/${seeder}/commands/replicate`, {name, address})
+      dispatch('getReplicates', seeder)
     },
-    async unreplicate({dispatch, state}, {address, name, device}){
-      const {data} = await api.post(`/admin/devices/${device}/commands/unreplicate`, {name, address})
-      dispatch('getReplicates', device)
+    async unreplicate({dispatch, state}, {address, name, seeder}){
+      const {data} = await api.post(`/admin/seeders/${seeder}/commands/unreplicate`, {name, address})
+      dispatch('getReplicates', seeder)
     },
     async getReplicates({commit, dispatch}, address) {
-      const {data} = await api.get(`/admin/devices/${address}/commands/replicates`)
+      const {data} = await api.get(`/admin/seeders/${address}/commands/replicates`)
       commit('receiveReplicates', {address, replicates: data})
     }
   },
   mutations: {
-    receiveDevices(state, devices) {
-      state.devices = devices
+    receiveSeeders(state, seeders) {
+      state.seeders = seeders
     },
     receivePeers(state, {address, peers}) {
       state.peers = {
@@ -142,10 +142,10 @@ export default ({api, events}) => ({
         [address]: replicates
       }
     },
-    receiveDevice(state, device) {
-      state.localDevices = {
-        ...state.localDevices,
-        [device.author]: device
+    receiveSeeder(state, seeder) {
+      state.localSeeders = {
+        ...state.localSeeders,
+        [seeder.author]: seeder
       }
     },
     connected(state, {address, connected}) {
@@ -163,11 +163,11 @@ export default ({api, events}) => ({
   },
   getters: {
     count(state) {
-      return state.devices.length
+      return state.seeders.length
     },
     single(state) {
       return address => {
-        return state.devices.find(d => d.address === address)
+        return state.seeders.find(d => d.address === address)
       }
     },
     connected(state) {
@@ -206,9 +206,9 @@ export default ({api, events}) => ({
       }
     },
     replicateAuthor(state, getters) {
-      return (device, replicate) => {
+      return (seeder, replicate) => {
         const publicKey = replicate.value.author
-        const peers = getters['peers'](device)
+        const peers = getters['peers'](seeder)
 
         return peers.find(peer => peer.data.author === publicKey)
       }

@@ -8,11 +8,11 @@ import SpacesInitView   from '@/views/SpacesInitView.vue'
 import SpacesJoinView   from '@/views/SpacesJoinView.vue'
 import SpacesCreateView from '@/views/SpacesCreateView.vue'
 import SpaceSingleView  from '@/views/SpaceSingleView.vue'
-import DevicesView      from '@/views/admin/DevicesView.vue'
-import DevicesInitView  from '@/views/admin/DevicesInitView.vue'
-import DevicesJoinView  from '@/views/admin/DevicesJoinView.vue'
-import DevicesSetupView from '@/views/admin/DevicesSetupView.vue'
-import DeviceSingleView from '@/views/admin/DeviceSingleView.vue'
+import SeedersView      from '@/views/admin/SeedersView.vue'
+import SeedersInitView  from '@/views/admin/SeedersInitView.vue'
+import SeedersJoinView  from '@/views/admin/SeedersJoinView.vue'
+import SeedersSetupView from '@/views/admin/SeedersSetupView.vue'
+import SeederSingleView from '@/views/admin/SeederSingleView.vue'
 import BackupView       from '@/views/BackupView.vue'
 
 Vue.use(VueRouter)
@@ -25,11 +25,11 @@ const routes = [
   {path: '/spaces/join',                name: 'spaces-join',         component: SpacesJoinView},
   {path: '/spaces/create',              name: 'spaces-create',       component: SpacesCreateView},
   {path: '/spaces/:address',            name: 'space',               component: SpaceSingleView},
-  {path: '/admin/devices',              name: 'admin-devices',       component: DevicesView},
-  {path: '/admin/devices/init',         name: 'admin-devices-init',  component: DevicesInitView},
-  {path: '/admin/devices/join',         name: 'admin-devices-join',  component: DevicesJoinView},
-  {path: '/admin/devices/setup',        name: 'admin-devices-setup', component: DevicesSetupView},
-  {path: '/admin/devices/:address',     name: 'admin-device',        component: DeviceSingleView},
+  {path: '/admin/seeders',              name: 'admin-seeders',       component: SeedersView},
+  {path: '/admin/seeders/init',         name: 'admin-seeders-init',  component: SeedersInitView},
+  {path: '/admin/seeders/join',         name: 'admin-seeders-join',  component: SeedersJoinView},
+  {path: '/admin/seeders/setup',        name: 'admin-seeders-setup', component: SeedersSetupView},
+  {path: '/admin/seeders/:address',     name: 'admin-seeder',        component: SeederSingleView},
   {path: '/backup',                     name: 'backup',              component: BackupView}
 ]
 

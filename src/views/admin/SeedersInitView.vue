@@ -4,8 +4,8 @@
     <p>Hi {{$store.getters['profile/myName']}}, what would you like to do?</p>
 
     <nav>
-      <RouterLink :to="{name: 'admin-devices-join'}">Join a device</RouterLink>
-      <RouterLink :to="{name: 'admin-devices-setup'}">Setup a device</RouterLink>
+      <RouterLink :to="{name: 'admin-seeders-join'}">Join a seeder</RouterLink>
+      <RouterLink :to="{name: 'admin-seeders-setup'}">Setup a seeder</RouterLink>
     </nav>
 
   </div>

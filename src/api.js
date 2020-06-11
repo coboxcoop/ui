@@ -8,7 +8,7 @@ export const api = axios.create({
 })
 
 const socketEndpoints = {
-  devices: `ws://localhost:${port}/api/devices`,
+  seeders: `ws://localhost:${port}/api/seeders`,
   api: `ws://localhost:${port}/api`
 }
 

@@ -1,16 +1,16 @@
 <template>
-<Screen :back="{name: 'admin-devices'}" v-if="device">
+<Screen :back="{name: 'admin-seeders'}" v-if="seeder">
   <template v-slot:header>
     <div class="header">
-      <div><Dot :color="connected ? 'lightseagreen' : 'lightgray'" /> {{device.name}}</div>
+      <div><Dot :color="connected ? 'lightseagreen' : 'lightgray'" /> {{seeder.name}}</div>
     </div>
   </template>
 
   <NavList>
-    <a v-if="connected" href="#" @click.prevent="leaveDevice">Disconnect</a>
-    <a v-else href="#" @click.prevent="joinDevice">Connect</a>
-    <a href="#" v-if="broadcast" @click.prevent="hideDevice">Hide</a>
-    <a href="#" v-else @click.prevent="announceDevice">Announce</a>
+    <a v-if="connected" href="#" @click.prevent="leaveSeeder">Disconnect</a>
+    <a v-else href="#" @click.prevent="joinSeeder">Connect</a>
+    <a href="#" v-if="broadcast" @click.prevent="hideSeeder">Hide</a>
+    <a href="#" v-else @click.prevent="announceSeeder">Announce</a>
   </NavList>
 
   <br />
@@ -25,11 +25,11 @@
   <br />
 
   <div v-if="inviteCode">
-    <p>Please send the following invite code to the new collaborator. This will make them an admin of this device.</p>
+    <p>Please send the following invite code to the new collaborator. This will make them an admin of this seeder.</p>
     <CopyKey :value="inviteCode" />
   </div>
   <div v-else>
-    <p>To invite someone as an admin for this device, please provide their public key.</p>
+    <p>To invite someone as an admin for this seeder, please provide their public key.</p>
 
     <form @submit.prevent="onSubmitInvite">
       <input class="has-ok-button" type="text" placeholder="Public key" v-model="publicKey" />
@@ -99,31 +99,31 @@ export default {
     name: ''
   }),
   computed: {
-    device() {
-      return this.$store.getters['devices/single'](this.$route.params.address)
+    seeder() {
+      return this.$store.getters['seeders/single'](this.$route.params.address)
     },
     connected() {
-      return this.$store.getters['devices/connected'](this.device.address)
+      return this.$store.getters['seeders/connected'](this.seeder.address)
     },
     broadcast() {
-      return this.$store.getters['devices/broadcast'](this.device.address)
+      return this.$store.getters['seeders/broadcast'](this.seeder.address)
     },
     peers() {
-      return this.$store.getters['devices/peers'](this.device.address)
+      return this.$store.getters['seeders/peers'](this.seeder.address)
     },
     replicates() {
-      return this.$store.getters['devices/replicates'](this.device.address)
+      return this.$store.getters['seeders/replicates'](this.seeder.address)
     }
   },
   methods: {
     replicateAuthor(replicate) {
-      return this.$store.getters['devices/replicateAuthor'](this.device.address, replicate)
+      return this.$store.getters['seeders/replicateAuthor'](this.seeder.address, replicate)
     },
     async onSubmitInvite() {
-      const {device: {address}, publicKey} = this
+      const {seeder: {address}, publicKey} = this
 
       try {
-        const data = await this.$store.dispatch('devices/createInvite', {address, publicKey})
+        const data = await this.$store.dispatch('seeders/createInvite', {address, publicKey})
         this.inviteCode = data.content.code
       } catch(e) {
         this.$store.dispatch('error/handle', e)
@@ -133,10 +133,10 @@ export default {
     },
     async onSubmitAddReplicate() {
       const {address, name} = this
-      const device = this.device.address
+      const seeder = this.seeder.address
 
       try {
-        const data = await this.$store.dispatch('devices/replicate', {address, name, device})
+        const data = await this.$store.dispatch('seeders/replicate', {address, name, seeder})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
@@ -145,49 +145,49 @@ export default {
       this.name = ''
     },
     async onSubmitReplicate(replicate) {
-      const device = this.device.address
+      const seeder = this.seeder.address
       const {address, name} = replicate.value.content
 
       try {
-        const data = await this.$store.dispatch('devices/replicate', {address, name, device})
+        const data = await this.$store.dispatch('seeders/replicate', {address, name, seeder})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
     async onSubmitUnreplicate(replicate) {
-      const device = this.device.address
+      const seeder = this.seeder.address
       const {address, name} = replicate.value.content
 
       try {
-        await this.$store.dispatch('devices/unreplicate', {address, name, device})
+        await this.$store.dispatch('seeders/unreplicate', {address, name, seeder})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async joinDevice() {
+    async joinSeeder() {
       try {
-        await this.$store.dispatch('devices/join', this.device)
+        await this.$store.dispatch('seeders/join', this.seeder)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async leaveDevice() {
+    async leaveSeeder() {
       try {
-        await this.$store.dispatch('devices/leave', this.device)
+        await this.$store.dispatch('seeders/leave', this.seeder)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async announceDevice() {
+    async announceSeeder() {
       try {
-        await this.$store.dispatch('devices/announce', this.device)
+        await this.$store.dispatch('seeders/announce', this.seeder)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async hideDevice() {
+    async hideSeeder() {
       try {
-        await this.$store.dispatch('devices/hide', this.device)
+        await this.$store.dispatch('seeders/hide', this.seeder)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }

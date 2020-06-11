@@ -21,7 +21,7 @@ yarn test:unit
 ```
 ### Run two UIs ontop of two different servers (mimic two seperate users)
 
-To run two seperate instances alongside eachother so you can get spaces/devices replicating locally you can run the following:
+To run two seperate instances alongside eachother so you can get spaces/seeders replicating locally you can run the following:
 
 ```
 # these two commands mimic one user
@@ -43,7 +43,7 @@ API_PORT=2345 yarn serve
 # the second UI which is run will be launched at http://localhost:8081/ (check the logs)
 ```
 
-Lastly if you want to mimic what it would be like to have a Cobox physical device running on the local are network then you can run. When you have it running you should be able to run through the setup device workflow.
+Lastly if you want to mimic what it would be like to have a Cobox physical seeder running on the local are network then you can run. When you have it running you should be able to run through the setup seeder workflow.
 
 ```
 # this command from the [cobox-hub](https://gitlab.com/coboxcoop/cobox-hub/src/branch/development) repo:
