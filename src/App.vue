@@ -1,13 +1,7 @@
 <template>
 <div id="app"> 
   <transition name="fade">
-    <div v-if="offline" class="offline">
-      <img src="@/assets/images/icons/CoBox-icon.png" />
-      <p>
-        Could not connect<br />to CoBox API server.<br />
-        <a @click.prevent="reload" href="#">Reload</a>
-      </p>
-    </div>
+    <OfflineView v-if="offline" />
     <div v-else-if="ready" class="yield">
       <div v-if="hasName">
         <transition name="route">
@@ -29,13 +23,15 @@
 <script>
 import UserModal from '@/components/UserModal.vue'
 import OnboardingView from '@/views/OnboardingView.vue'
+import OfflineView from '@/views/OfflineView.vue'
 import Errors from '@/components/Errors.vue'
 
 export default {
   components: {
     Errors,
     UserModal,
-    OnboardingView
+    OnboardingView,
+    OfflineView
   },
   async mounted() {
     await this.$store.dispatch('init')
@@ -98,19 +94,6 @@ export default {
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 0 1rem var(--shadow);
-}
-.offline {
-  text-align: center;
-  margin: auto;
-  font-size: 70%;
-  img {
-    width: auto;
-    height: 3em;
-    margin-bottom: 1em;
-  }
-  a {
-    text-decoration: underline;
-  }
 }
 .fade-enter-active, .fade-leave-active {
   transition: opacity 1s var(--ease);
