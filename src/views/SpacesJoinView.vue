@@ -16,7 +16,7 @@
 
 <style scoped lang="scss">
 .page {
-  border-top: 1px solid black;
+  border-top: 1px solid var(--fg);
   padding-top: 0.6rem;
 }
 </style>

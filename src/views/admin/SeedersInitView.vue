@@ -16,7 +16,7 @@
 nav a {
   display: block;
   padding: 0.6rem 0;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--fg);
 }
 .content {
   flex: 1;

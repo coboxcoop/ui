@@ -1,5 +1,5 @@
 <template>
-<Dot color="#f2f2f2" class="plus" :class="{minus}">
+<Dot color="var(--fg)" class="plus" :class="{minus}">
   <span v-if="minus">&ndash;</span>
   <span v-else>+</span>
 </Dot>
@@ -26,6 +26,7 @@ span {
   text-align: center;
   vertical-align: middle;
   font-size: 75%;
+  color: var(--bg);
 }
 .minus span {
   top: 40%;

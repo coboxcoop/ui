@@ -17,7 +17,7 @@ export default {
   border-radius: 50%;
   width: 0.75em;
   height: 0.75em;
-  background: black;
+  background: var(--fg);
   display: inline-block;
   position: relative;
 }

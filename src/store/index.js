@@ -10,11 +10,13 @@ import network from '@/store/network'
 import seeders from '@/store/seeders'
 import system from '@/store/system'
 import backup from '@/store/backup'
+import settings from '@/store/settings'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
+    settings: settings({api, events}),
     system: system({api, events}),
     spaces: spaces({api, events}),
     profile: profile({api, events}),

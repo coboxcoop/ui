@@ -25,13 +25,13 @@
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background: white;
+  background: var(--bg);
   display: flex;
   flex-direction: column;
   transform: translateZ(0);
 }
 header {
-  border-top: 1px solid black;
+  border-top: 1px solid var(--fg);
   padding: 0.6rem 0;
   position: relative;
 }
@@ -40,7 +40,7 @@ header {
   top: 0; left: 0;
   z-index: 2;
   width: 100%;
-  background: white;
+  background: var(--bg);
   padding: 1.6rem;
   padding-bottom: 0;
 }

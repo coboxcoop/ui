@@ -1,13 +1,7 @@
 <template>
 <div id="app"> 
   <transition name="fade">
-    <div v-if="offline" class="offline">
-      <img src="@/assets/images/icons/CoBox-icon.png" />
-      <p>
-        Could not connect<br />to CoBox API server.<br />
-        <a @click.prevent="reload" href="#">Reload</a>
-      </p>
-    </div>
+    <OfflineView v-if="offline" />
     <div v-else-if="ready" class="yield">
       <div v-if="hasName">
         <transition name="route">
@@ -29,13 +23,15 @@
 <script>
 import UserModal from '@/components/UserModal.vue'
 import OnboardingView from '@/views/OnboardingView.vue'
+import OfflineView from '@/views/OfflineView.vue'
 import Errors from '@/components/Errors.vue'
 
 export default {
   components: {
     Errors,
     UserModal,
-    OnboardingView
+    OnboardingView,
+    OfflineView
   },
   async mounted() {
     await this.$store.dispatch('init')
@@ -45,6 +41,8 @@ export default {
     } else {
       this.$router.replace({name: 'home'})
     }
+
+    this.setDark()
   },
   computed: {
     ready() {
@@ -55,17 +53,27 @@ export default {
     },
     hasName() {
       return this.$store.getters['profile/hasName']
+    },
+    dark() {
+      return this.$store.state.settings.dark
     }
   },
   watch: {
     $route() {
       this.$store.dispatch('error/dismiss')
       this.$store.dispatch('hideUserModal')
+    },
+    dark() {
+      this.setDark()
     }
   },
   methods: {
     reload() {
       window.location.reload()
+    },
+    setDark() {
+      const act = this.$store.state.settings.dark ? 'add' : 'remove'
+      document.documentElement.classList[act]('dark')
     }
   }
 }
@@ -76,7 +84,7 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: white;
+  background: var(--bg);
   margin: auto;
   width: 100%;
   height: 100%;
@@ -85,20 +93,7 @@ export default {
   max-height: 52rem;
   border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
-}
-.offline {
-  text-align: center;
-  margin: auto;
-  font-size: 70%;
-  img {
-    width: auto;
-    height: 3em;
-    margin-bottom: 1em;
-  }
-  a {
-    text-decoration: underline;
-  }
+  box-shadow: 0 0 1rem var(--shadow);
 }
 .fade-enter-active, .fade-leave-active {
   transition: opacity 1s var(--ease);

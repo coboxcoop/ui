@@ -32,7 +32,7 @@
   padding: 1.6rem;
   width: 100%;
   // border-radius: 0.4rem;
-  background: white;
+  background: var(--bg);
   display: flex;
   flex-direction: column;
   .text {

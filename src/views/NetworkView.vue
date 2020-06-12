@@ -111,7 +111,7 @@ export default {
       .join('line')
 
     const node = svg.append('g')
-        .attr('stroke', '#fff')
+        .attr('stroke', 'var(--bg)')
         .attr('stroke-width', 4)
       .selectAll('circle')
       .data(nodes)

@@ -18,6 +18,12 @@
     <NavList>
       <RouterLink :to="{name: 'backup'}">Backup identity</RouterLink>
       <a href="#" class="disabled-feature">Restore</a>
+      <div class="switch">
+        <label>Dark UI</label>
+        <button @click="toggleDark">
+          {{$store.state.settings.dark ? 'On' : 'Off'}}
+        </button>
+      </div>
     </NavList>
 
     <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
@@ -68,6 +74,9 @@ export default {
       this.editName = false
       await this.$store.dispatch('profile/updateName', this.name)
       this.resetName()
+    },
+    toggleDark() {
+      this.$store.dispatch('settings/toggleDark')
     }
   }
 }
@@ -78,7 +87,7 @@ export default {
   position: absolute;
   top: 0; left: 0;
   bottom: 0; right: 0;
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--modal-bg);
   z-index: 5;
   display: flex;
   flex-direction: column;
@@ -88,8 +97,8 @@ export default {
 .sheet {
   position: relative;
   border-radius: 4px;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
-  background: white;
+  box-shadow: 0 0 1rem var(--shadow);
+  background: var(--bg);
   display: flex;
   height: calc(100% - 3.2rem);
   width: calc(100% - 3.2rem);
@@ -139,5 +148,11 @@ export default {
 }
 .copy-key {
   margin-bottom: 0;
+}
+.switch {
+  display: flex;
+  label {
+    flex: 1;
+  }
 }
 </style>

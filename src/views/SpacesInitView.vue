@@ -16,7 +16,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid black;
+  border-top: 1px solid var(--fg);
   padding-top: 0.6rem;
 }
 .bottom {
