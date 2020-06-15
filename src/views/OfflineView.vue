@@ -6,6 +6,7 @@
     <br />
     <a @click.prevent="reload" href="#">Try again</a><br />
     <a @click.prevent="reportError">Report error</a>
+    {{$store.state.system}}
   </p>
 </div>
 </template>
