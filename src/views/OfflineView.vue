@@ -6,7 +6,6 @@
     <br />
     <a @click.prevent="reload" href="#">Try again</a><br />
     <a @click.prevent="reportError">Report error</a>
-    {{$store.state.system}}
   </p>
 </div>
 </template>
@@ -18,7 +17,7 @@ export default {
       window.location.reload()
     },
     reportError() {
-      this.$store.dispatch('help/submitErrorReport')
+      this.$store.dispatch('bugs/submit')
     }
   }
 }

@@ -11,7 +11,7 @@ import seeders from '@/store/seeders'
 import system from '@/store/system'
 import backup from '@/store/backup'
 import settings from '@/store/settings'
-import help from '@/store/help'
+import bugs from '@/store/bugs'
 
 Vue.use(Vuex)
 
@@ -25,7 +25,7 @@ export default new Vuex.Store({
     seeders: seeders({api, events}),
     backup: backup({api, events}),
     error: error({api, events}),
-    help: help({api, events})
+    bugs: bugs({api, events})
   },
   state: {
     poll: true,

@@ -2,8 +2,8 @@ export default ({api, events}) => ({
   namespaced: true,
   state: {},
   actions: {
-    submitErrorReport() {
-      window.open(process.env.VUE_APP_HELP_URL)
+    submit() {
+      window.open(process.env.VUE_APP_BUGS_URL)
     }
   },
   mutations: {}
