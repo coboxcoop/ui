@@ -5,7 +5,7 @@
     Could not connect<br />to CoBox API server.<br />
     <br />
     <a @click.prevent="reload" href="#">Try again</a><br />
-    <a @click.prevent="reportError">Report error</a>
+    <a @click.prevent="reportError" href="#">Report error</a>
   </p>
 </div>
 </template>
