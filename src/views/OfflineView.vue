@@ -3,10 +3,25 @@
   <img src="@/assets/images/icons/CoBox-icon.png" />
   <p>
     Could not connect<br />to CoBox API server.<br />
-    <a @click.prevent="reload" href="#">Reload</a>
+    <br />
+    <a @click.prevent="reload" href="#">Try again</a><br />
+    <a @click.prevent="reportError">Report error</a>
   </p>
 </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    reload() {
+      window.location.reload()
+    },
+    reportError() {
+      this.$store.dispatch('help/submitErrorReport')
+    }
+  }
+}
+</script>
 
 <style scoped lang="scss">
 .offline {
