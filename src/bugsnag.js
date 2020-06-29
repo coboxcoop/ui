@@ -10,5 +10,4 @@ if(process.env.VUE_APP_BUGSNAG_API_KEY) {
 
   Bugsnag.getPlugin('vue')
     .installVueErrorHandler(Vue)
-  }
 }
