@@ -6,9 +6,12 @@
         <TriangleIcon class="triangle" />
       </RouterLink>
 
-      <a class="user" @click.prevent="$store.dispatch('showUserModal')">
+      <!-- <a class="user" @click.prevent="$store.dispatch('showUserModal')"> -->
+      <!--   <Dot :color="$store.getters['profile/myKeyColor']" /> {{$store.getters['profile/myName']}} -->
+      <!-- </a> -->
+      <RouterLink :to="{name: 'profile'}">
         <Dot :color="$store.getters['profile/myKeyColor']" /> {{$store.getters['profile/myName']}}
-      </a>
+      </RouterLink>
     </div>
 
     <div class="disk">0%</div>

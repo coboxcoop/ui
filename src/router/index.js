@@ -14,6 +14,7 @@ import SeedersJoinView  from '@/views/admin/SeedersJoinView.vue'
 import SeedersSetupView from '@/views/admin/SeedersSetupView.vue'
 import SeederSingleView from '@/views/admin/SeederSingleView.vue'
 import BackupView       from '@/views/BackupView.vue'
+import ProfileView      from '@/views/ProfileView.vue'
 
 Vue.use(VueRouter)
 
@@ -30,7 +31,8 @@ const routes = [
   {path: '/admin/seeders/join',         name: 'admin-seeders-join',  component: SeedersJoinView},
   {path: '/admin/seeders/setup',        name: 'admin-seeders-setup', component: SeedersSetupView},
   {path: '/admin/seeders/:address',     name: 'admin-seeder',        component: SeederSingleView},
-  {path: '/backup',                     name: 'backup',              component: BackupView}
+  {path: '/backup',                     name: 'backup',              component: BackupView},
+  {path: '/profile',                    name: 'profile',             component: ProfileView}
 ]
 
 export default new VueRouter({
