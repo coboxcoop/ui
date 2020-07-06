@@ -11,17 +11,11 @@
       <OnboardingView v-else />
     </div>
   </transition>
-  <transition name="modal">
-    <UserModal
-      v-if="$store.state.showUserModal"
-      @close="$store.dispatch('hideUserModal')" />
-  </transition>
   <Errors />
 </div>
 </template>
 
 <script>
-import UserModal from '@/components/UserModal.vue'
 import OnboardingView from '@/views/OnboardingView.vue'
 import OfflineView from '@/views/OfflineView.vue'
 import Errors from '@/components/Errors.vue'
@@ -29,7 +23,6 @@ import Errors from '@/components/Errors.vue'
 export default {
   components: {
     Errors,
-    UserModal,
     OnboardingView,
     OfflineView
   },
@@ -62,7 +55,6 @@ export default {
   watch: {
     $route() {
       this.$store.dispatch('error/dismiss')
-      this.$store.dispatch('hideUserModal')
     },
     dark() {
       this.setDark()

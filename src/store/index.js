@@ -28,15 +28,11 @@ export default new Vuex.Store({
   state: {
     poll: true,
     pollInterval: 3000,
-    ready: false,
-    showUserModal: false
+    ready: false
   },
   mutations: {
     ready(state) {
       state.ready = true
-    },
-    showUserModal(state, show) {
-      state.showUserModal = show
     }
   },
   actions: {
@@ -62,12 +58,6 @@ export default new Vuex.Store({
       await dispatch('seeders/getAllReplicates')
 
       if(this.state.poll) setTimeout(() => dispatch('fetchAllData'), state.pollInterval)
-    },
-    showUserModal({commit}) {
-      commit('showUserModal', true)
-    },
-    hideUserModal({commit}) {
-      commit('showUserModal', false)
     }
   }
 })

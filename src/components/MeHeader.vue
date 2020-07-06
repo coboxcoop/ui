@@ -5,10 +5,6 @@
       <RouterLink v-if="back" :to="back" class="back">
         <TriangleIcon class="triangle" />
       </RouterLink>
-
-      <!-- <a class="user" @click.prevent="$store.dispatch('showUserModal')"> -->
-      <!--   <Dot :color="$store.getters['profile/myKeyColor']" /> {{$store.getters['profile/myName']}} -->
-      <!-- </a> -->
       <RouterLink :to="{name: 'profile'}">
         <Dot :color="$store.getters['profile/myKeyColor']" /> {{$store.getters['profile/myName']}}
       </RouterLink>
