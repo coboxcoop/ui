@@ -4,23 +4,12 @@ export default ({api, events}) => ({
   namespaced: true,
   state: {
     seeders: [],
-    localSeeders: {},
     connections: {},
     broadcasts: {},
     peers: {},
     replicates: {}
   },
   actions: {
-    async subscribe({commit}) {
-      events.on('SEEDER_CONNECTED', payload => {
-        const seeder = payload.data
-        commit('receiveSeeder', seeder)
-      })
-
-      events.on('ADMIN_SEEDER', payload => {
-        const peer = payload.data
-      })
-    },
     async fetch({commit, dispatch}) {
       const {data} = await api.get('/admin/seeders')
       commit('receiveSeeders', data)
@@ -68,36 +57,6 @@ export default ({api, events}) => ({
         throw(e)
       }
     },
-    async setup({dispatch, state}, name) {
-      const publicKey = Object.keys(state.localSeeders)[0]
-      const {data, data: {address}} = await api.post('/admin/seeders', {name, publicKey})
-      await dispatch('join', {name, address})
-      await dispatch('hide', {name, address})
-      await dispatch('fetch')
-      return data
-    },
-    async hide({commit, dispatch, state}, {name, address}) {
-      const publicKey = Object.keys(state.localSeeders)[0]
-      const {data} = await api.post(`/admin/seeders/${address}/commands/hide`, {
-        name,
-        publicKey,
-        commands: [{
-          action: 'hide'
-        }]
-      })
-      commit('broadcast', {address, broadcast: false} )
-    },
-    async announce({commit, dispatch, state}, {name, address}) {
-      const publicKey = Object.keys(state.localSeeders)[0]
-      const {data} = await api.post(`/admin/seeders/${address}/commands/announce`, {
-        name,
-        publicKey,
-        commands: [{
-          action: 'announce'
-        }]
-      })
-      commit('broadcast', {address, broadcast: true} )
-    },
     async acceptInvite({dispatch}, code) {
       const {data: {address, name}} = await api.get('/admin/seeders/invites/accept', {params: {code}})
       await dispatch('fetch')
@@ -140,12 +99,6 @@ export default ({api, events}) => ({
       state.replicates = {
         ...state.replicates,
         [address]: replicates
-      }
-    },
-    receiveSeeder(state, seeder) {
-      state.localSeeders = {
-        ...state.localSeeders,
-        [seeder.author]: seeder
       }
     },
     connected(state, {address, connected}) {

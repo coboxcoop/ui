@@ -8,7 +8,6 @@ export const api = axios.create({
 })
 
 const socketEndpoints = {
-  seeders: `ws://localhost:${port}/api/seeders`,
   api: `ws://localhost:${port}/api`
 }
 
