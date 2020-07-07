@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'home'}">
+<Screen :back="{name: 'spaces'}">
   <template v-slot:header>
     Spaces <sup>{{$store.getters['spaces/count']}}</sup>
     <RouterLink :to="{name: 'spaces-init'}">

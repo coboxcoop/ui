@@ -35,7 +35,7 @@ export default {
       await this.$store.dispatch('fetchAllData')
       await this.$store.dispatch('initData')
     } else {
-      this.$router.replace({name: 'home'})
+      this.$router.replace({name: 'spaces'})
     }
   },
   computed: {

@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'home'}">
+<Screen :back="{name: 'spaces'}">
   <div class="content">
     <p>Hi {{$store.getters['profile/myName']}}, what would you like to do?</p>
 

@@ -24,7 +24,7 @@ export default new Vuex.Store({
     error: error({api, events})
   },
   state: {
-    poll: false,
+    poll: true,
     pollInterval: 3000,
     ready: false
   },
