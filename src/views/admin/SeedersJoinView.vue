@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'admin-seeders-init'}">
+<Screen :back="{name: 'admin-seeders'}">
   <p>To join a seeder, send your public key to someone that can add you as an admin.</p>
 
   <CopyKey :value="$store.getters['profile/myPublicKey']" />

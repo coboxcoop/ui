@@ -2,7 +2,7 @@
 <Screen :back="{name: 'home'}">
   <template v-slot:header>
     Seeders <sup>{{$store.getters['seeders/count']}}</sup>
-    <RouterLink :to="{name: 'admin-seeders-init'}">
+    <RouterLink :to="{name: 'admin-seeders-join'}">
       <Plus />
     </RouterLink>
   </template>
