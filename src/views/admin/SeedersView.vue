@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'home'}">
+<Screen :back="{name: 'spaces'}">
   <template v-slot:header>
     Seeders <sup>{{$store.getters['seeders/count']}}</sup>
     <RouterLink :to="{name: 'admin-seeders-join'}">

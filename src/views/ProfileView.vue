@@ -2,7 +2,7 @@
 <transition name="pop">
 <div class="modal">
   <div class="sheet">
-    <RouterLink :to="{name: 'home'}">
+    <RouterLink :to="{name: 'spaces'}">
       <a class="close" href="#">&times;</a>
     </RouterLink>
     <div class="profile">

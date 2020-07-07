@@ -36,7 +36,7 @@ export default {
         await this.$store.dispatch('profile/updateName', this.name)
         await this.$store.dispatch('spaces/create', `${this.name}'s space`)
         this.name = ''
-        if(this.$route.name !== 'home') this.$router.replace({name: 'home'})
+        if(this.$route.name !== 'spaces') this.$router.replace({name: 'spaces'})
         await this.$store.dispatch('fetchAllData')
         await this.$store.dispatch('initData')
       } catch(e) {
