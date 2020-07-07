@@ -14,6 +14,12 @@
       <div class="stat" v-if="stat(space.address)">{{stat(space.address).size | bytes}}</div>
     </RouterLink>
   </NavList>
+
+  <footer>
+    <RouterLink :to="{name: 'settings'}">
+      <img src="@/assets/images/icons/settings.svg" /> Settings
+    </RouterLink>
+  </footer>
 </Screen>
 </template>
 
@@ -24,6 +30,20 @@
 .space {
   display: flex;
   justify-content: space-between;
+}
+html.dark footer img {
+  filter: invert(1);
+}
+footer {
+  margin-top: auto;
+  line-height: 1;
+  font-size: var(--small);
+  img {
+    display: inline-block;
+    width: auto;
+    height: 0.85em;
+    margin-bottom: -0.07em;
+  }
 }
 </style>
 
