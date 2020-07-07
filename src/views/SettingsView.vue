@@ -11,6 +11,9 @@
         {{$store.state.settings.dark ? 'On' : 'Off'}}
       </button>
     </div>
+    <RouterLink :to="{name: 'admin-seeders'}">
+      Seeders
+    </RouterLink>
   </NavList>
 </Screen>
 </template>
