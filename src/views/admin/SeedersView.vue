@@ -6,8 +6,8 @@
       <Plus />
     </RouterLink>
   </template>
-  <NavList v-for="seeder in seeders" :key="seeder.address">
-    <RouterLink class="admin-seeder" :to="{name: 'admin-seeder', params: {address: seeder.address}}">
+  <NavList >
+    <RouterLink v-for="seeder in seeders" :key="seeder.address" class="admin-seeder" :to="{name: 'admin-seeder', params: {address: seeder.address}}">
     <Dot color="magenta" :address="seeder.address" /> {{seeder.name}} <sup>{{seederPeerCount(seeder.address)}}</sup>
     </RouterLink>
   </NavList>
