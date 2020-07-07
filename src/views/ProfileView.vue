@@ -20,7 +20,6 @@
       <a href="#" class="disabled-feature">Restore</a>
     </NavList>
 
-    <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
   </div>
 </div>
 </transition>
@@ -43,14 +42,6 @@ export default {
   }),
   mounted() {
     this.resetName()
-  },
-  computed: {
-    uiVersion() {
-      return process.env.VUE_APP_VERSION
-    },
-    info() {
-      return this.$store.state.system.info
-    }
   },
   methods: {
     closeProfile() {

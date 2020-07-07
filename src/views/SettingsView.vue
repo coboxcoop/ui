@@ -11,7 +11,10 @@
         {{$store.state.settings.dark ? 'On' : 'Off'}}
       </button>
     </div>
+    <RouterLink :to="{name: 'backup'}">Backup identity</RouterLink>
+    <a href="#" class="disabled-feature">Restore</a>
   </NavList>
+  <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
 </Screen>
 </template>
 
@@ -21,6 +24,10 @@
   label {
     flex: 1;
   }
+}
+.footer {
+  margin-top: auto;
+  font-size: var(--small);
 }
 </style>
 
@@ -34,6 +41,14 @@ export default {
     Screen,
     NavList,
     Plus
+  },
+  computed: {
+    uiVersion() {
+      return process.env.VUE_APP_VERSION
+    },
+    info() {
+      return this.$store.state.system.info
+    }
   },
   methods: {
     toggleDark() {

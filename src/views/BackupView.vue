@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'spaces'}">
+<Screen :back="{name: 'settings'}">
   <div class="page">
     <p>Click the button below to export your keys to downloadable PDF file</p>
 
