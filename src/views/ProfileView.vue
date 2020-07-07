@@ -2,9 +2,7 @@
 <transition name="pop">
 <div class="modal">
   <div class="sheet">
-    <RouterLink :to="{name: 'spaces'}">
-      <a class="close" href="#">&times;</a>
-    </RouterLink>
+    <a class="close" href="#" @click="closeProfile">&times;</a>
     <div class="profile">
       <Dot :color="$store.getters['profile/myKeyColor']" />
       <form class="name" @submit.prevent="onSubmit">
@@ -55,6 +53,9 @@ export default {
     }
   },
   methods: {
+    closeProfile() {
+      this.$router.back()
+    },
     resetName() {
       this.name = this.$store.getters['profile/myName']
     },
