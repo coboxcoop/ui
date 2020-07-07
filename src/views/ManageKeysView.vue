@@ -1,21 +1,13 @@
 <template>
-<Screen :back="{name: 'home'}">
+<Screen :back="{name: 'settings'}">
   <template v-slot:header>
-    Settings
+    Manage Keys
   </template>
 
   <NavList>
-    <div class="switch">
-      <label>Dark UI</label>
-      <button @click="toggleDark">
-        {{$store.state.settings.dark ? 'On' : 'Off'}}
-      </button>
-    </div>
+    <RouterLink :to="{name: 'backup'}">Backup identity</RouterLink>
+    <a href="#" class="disabled-feature">Restore</a>
   </NavList>
-  <RouterLink :to="{name: 'manage-keys'}">
-    Manage Keys
-  </RouterLink>
-  <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
 </Screen>
 </template>
 

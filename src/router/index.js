@@ -13,6 +13,7 @@ import BackupView       from '@/views/BackupView.vue'
 import ProfileView      from '@/views/ProfileView.vue'
 import SettingsView     from '@/views/SettingsView.vue'
 import HomeView         from '@/views/HomeView.vue'
+import ManageKeysView   from '@/views/ManageKeysView.vue'
 
 Vue.use(VueRouter)
 
@@ -26,9 +27,10 @@ const routes = [
   {path: '/admin/seeders',          name: 'admin-seeders',       component: SeedersView},
   {path: '/admin/seeders/join',     name: 'admin-seeders-join',  component: SeedersJoinView},
   {path: '/admin/seeders/:address', name: 'admin-seeder',        component: SeederSingleView},
-  {path: '/backup',                 name: 'backup',              component: BackupView},
+  {path: '/keys/backup',            name: 'backup',              component: BackupView},
   {path: '/profile',                name: 'profile',             component: ProfileView},
-  {path: '/settings',               name: 'settings',            component: SettingsView}
+  {path: '/settings',               name: 'settings',            component: SettingsView},
+  {path: '/keys',                   name: 'manage-keys',         component: ManageKeysView}
 ]
 
 export default new VueRouter({
