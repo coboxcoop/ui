@@ -3,7 +3,7 @@
   <NavList>
     <div>
       <RouterLink :to="{name: 'spaces'}">
-        Spaces <sup>{{spacesCount}}</sup>
+        Spaces
       </RouterLink>
       <RouterLink :to="{name: 'spaces-init'}">
         <Plus />
@@ -11,7 +11,7 @@
     </div>
     <div>
       <RouterLink :to="{name: 'admin-seeders'}">
-        Seeders <sup>{{seedersCount}}</sup>
+        Seeders
       </RouterLink>
       <RouterLink :to="{name: 'admin-seeders-join'}">
         <Plus />
@@ -31,14 +31,6 @@ export default {
     Screen,
     NavList,
     Plus
-  },
-  computed: {
-    spacesCount() {
-      return this.$store.getters['spaces/count']
-    },
-    seedersCount() {
-      return this.$store.getters['seeders/count']
-    }
   }
 }
 </script>

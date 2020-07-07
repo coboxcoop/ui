@@ -1,7 +1,7 @@
 <template>
 <Screen>
   <template v-slot:header>
-    Spaces <sup>{{$store.getters['spaces/count']}}</sup>
+    Spaces
     <RouterLink :to="{name: 'spaces-init'}">
       <Plus />
     </RouterLink>
@@ -9,7 +9,7 @@
   <NavList v-for="space in spaces" :key="space.address">
     <RouterLink class="space" :to="{name: 'space', params: {address: space.address}}">
       <div>
-        <SpaceIcon :address="space.address" /> {{space.name}} <sup>{{spacePeerCount(space.address)}}</sup>
+        <SpaceIcon :address="space.address" /> {{space.name}}
       </div>
       <div class="stat" v-if="stat(space.address)">{{stat(space.address).size | bytes}}</div>
     </RouterLink>
@@ -63,9 +63,6 @@ export default {
   methods: {
     stat(address) {
       return this.$store.getters['spaces/stat'](address)
-    },
-    spacePeerCount(address) {
-      return this.$store.getters['spaces/peerCount'](address)
     }
   },
   computed: {
