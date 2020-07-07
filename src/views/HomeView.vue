@@ -17,11 +17,6 @@
         <Plus />
       </RouterLink>
     </div>
-    <div>
-      <RouterLink :to="{name: 'network'}">
-        Network <sup>{{networkCount}}</sup>
-      </RouterLink>
-    </div>
   </NavList>
 </Screen>
 </template>
@@ -40,9 +35,6 @@ export default {
   computed: {
     spacesCount() {
       return this.$store.getters['spaces/count']
-    },
-    networkCount() {
-      return this.$store.getters['network/count']
     },
     seedersCount() {
       return this.$store.getters['seeders/count']

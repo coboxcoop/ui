@@ -6,7 +6,6 @@ import {api, events} from '@/api'
 import error from '@/store/error'
 import spaces from '@/store/spaces'
 import profile from '@/store/profile'
-import network from '@/store/network'
 import seeders from '@/store/seeders'
 import system from '@/store/system'
 import backup from '@/store/backup'
@@ -20,7 +19,6 @@ export default new Vuex.Store({
     system: system({api, events}),
     spaces: spaces({api, events}),
     profile: profile({api, events}),
-    network: network({api, events}),
     seeders: seeders({api, events}),
     backup: backup({api, events}),
     error: error({api, events})
