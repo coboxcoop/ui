@@ -13,11 +13,12 @@
   </template>
 
   <NavList>
-    <!-- <a v-if="connected" href="#" @click.prevent="leaveSpace">Disconnect</a>
-    <a v-else href="#" @click.prevent="joinSpace">Connect</a> -->
-    <a v-if="mounted" href="#" @click.prevent="unmountSpace">Unmount</a>
-    <a v-else href="#" @click.prevent="mountSpace">Mount</a>
+    <a v-if="connected" href="#" @click.prevent="leaveSpace">Disconnect</a>
+    <a v-else href="#" @click.prevent="joinSpace">Connect</a>
+    <!-- <a v&#45;if="mounted" href="#" @click.prevent="unmountSpace">Unmount</a> -->
+    <!-- <a v&#45;else href="#" @click.prevent="mountSpace">Mount</a> -->
   </NavList>
+  <small>Mounted at: {{info.mount}}</small>
 
   <br />
 
@@ -101,6 +102,9 @@ export default {
     peers() {
       return this.$store.getters['spaces/peers'](this.space.address)
     },
+    info() {
+      return this.$store.state.system.info
+    }
   },
   methods: {
     async onSubmitInvite() {
