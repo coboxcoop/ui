@@ -12,11 +12,13 @@ import SeederSingleView from '@/views/admin/SeederSingleView.vue'
 import BackupView       from '@/views/BackupView.vue'
 import ProfileView      from '@/views/ProfileView.vue'
 import SettingsView     from '@/views/SettingsView.vue'
+import HomeView         from '@/views/HomeView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {path: '/',                       name: 'spaces',              component: SpacesView},
+  {path: '/',                       name: 'home',                component: HomeView},
+  {path: '/spaces',                 name: 'spaces',              component: SpacesView},
   {path: '/spaces/init',            name: 'spaces-init',         component: SpacesInitView},
   {path: '/spaces/join',            name: 'spaces-join',         component: SpacesJoinView},
   {path: '/spaces/create',          name: 'spaces-create',       component: SpacesCreateView},

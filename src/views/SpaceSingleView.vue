@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'spaces'}" v-if="space">
+<Screen :back="{name: 'home'}" v-if="space">
   <template v-slot:header>
     <div class="header">
       <div>

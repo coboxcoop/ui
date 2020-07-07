@@ -18,8 +18,38 @@
       </RouterLink>
     </div>
   </NavList>
+
+  <footer>
+    <RouterLink :to="{name: 'settings'}">
+      <img src="@/assets/images/icons/settings.svg" /> Settings
+    </RouterLink>
+  </footer>
 </Screen>
 </template>
+
+<style scoped lang="scss">
+.space-icon {
+  margin-right: 0.3rem;
+}
+.space {
+  display: flex;
+  justify-content: space-between;
+}
+html.dark footer img {
+  filter: invert(1);
+}
+footer {
+  margin-top: auto;
+  line-height: 1;
+  font-size: var(--small);
+  img {
+    display: inline-block;
+    width: auto;
+    height: 0.85em;
+    margin-bottom: -0.07em;
+  }
+}
+</style>
 
 <script>
 import Screen from '@/components/Screen.vue'

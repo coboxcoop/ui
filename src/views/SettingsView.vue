@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'spaces'}">
+<Screen :back="{name: 'home'}">
   <template v-slot:header>
     Settings
   </template>
@@ -11,9 +11,6 @@
         {{$store.state.settings.dark ? 'On' : 'Off'}}
       </button>
     </div>
-    <RouterLink :to="{name: 'admin-seeders'}">
-      Seeders
-    </RouterLink>
   </NavList>
 </Screen>
 </template>

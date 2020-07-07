@@ -1,7 +1,7 @@
 <template>
-<Screen :back="{name: 'settings'}">
+<Screen :back="{name: 'home'}">
   <template v-slot:header>
-    Seeders <sup>{{$store.getters['seeders/count']}}</sup>
+    Seeders
     <RouterLink :to="{name: 'admin-seeders-join'}">
       <Plus />
     </RouterLink>
@@ -30,11 +30,6 @@ export default {
   computed: {
     seeders() {
       return this.$store.state.seeders.seeders
-    }
-  },
-  methods: {
-    seederPeerCount(address) {
-      return this.$store.getters['seeders/peerCount'](address)
     }
   }
 }
