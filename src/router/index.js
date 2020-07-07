@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import HomeView         from '@/views/HomeView.vue'
-import NetworkView      from '@/views/NetworkView.vue'
 import SpacesView       from '@/views/SpacesView.vue'
 import SpacesInitView   from '@/views/SpacesInitView.vue'
 import SpacesJoinView   from '@/views/SpacesJoinView.vue'
@@ -20,7 +19,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {path: '/',                           name: 'home',                component: HomeView},
-  {path: '/network',                    name: 'network',             component: NetworkView},
   {path: '/spaces',                     name: 'spaces',              component: SpacesView},
   {path: '/spaces/init',                name: 'spaces-init',         component: SpacesInitView},
   {path: '/spaces/join',                name: 'spaces-join',         component: SpacesJoinView},
