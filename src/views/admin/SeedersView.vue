@@ -8,7 +8,7 @@
   </template>
   <NavList >
     <RouterLink v-for="seeder in seeders" :key="seeder.address" class="admin-seeder" :to="{name: 'admin-seeder', params: {address: seeder.address}}">
-    <Dot color="magenta" :address="seeder.address" /> {{seeder.name}} <sup>{{seederPeerCount(seeder.address)}}</sup>
+    <Dot color="magenta" :address="seeder.address" /> {{seeder.name}}
     </RouterLink>
   </NavList>
 </Screen>

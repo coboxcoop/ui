@@ -10,7 +10,6 @@
       </RouterLink>
     </div>
 
-    <div class="disk">0%</div>
   </div>
 </div>
 </template>
@@ -41,9 +40,6 @@
 .user {
   cursor: pointer;
   display: block;
-}
-.disk {
-  color: lightgray;
 }
 .dot {
   margin-right: 0.3rem;
