@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import HomeView         from '@/views/HomeView.vue'
 import SpacesView       from '@/views/SpacesView.vue'
 import SpacesInitView   from '@/views/SpacesInitView.vue'
 import SpacesJoinView   from '@/views/SpacesJoinView.vue'
@@ -16,17 +15,16 @@ import ProfileView      from '@/views/ProfileView.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {path: '/',                           name: 'home',                component: HomeView},
-  {path: '/spaces',                     name: 'spaces',              component: SpacesView},
-  {path: '/spaces/init',                name: 'spaces-init',         component: SpacesInitView},
-  {path: '/spaces/join',                name: 'spaces-join',         component: SpacesJoinView},
-  {path: '/spaces/create',              name: 'spaces-create',       component: SpacesCreateView},
-  {path: '/spaces/:address',            name: 'space',               component: SpaceSingleView},
-  {path: '/admin/seeders',              name: 'admin-seeders',       component: SeedersView},
-  {path: '/admin/seeders/join',         name: 'admin-seeders-join',  component: SeedersJoinView},
-  {path: '/admin/seeders/:address',     name: 'admin-seeder',        component: SeederSingleView},
-  {path: '/backup',                     name: 'backup',              component: BackupView},
-  {path: '/profile',                    name: 'profile',             component: ProfileView}
+  {path: '/',                       name: 'spaces',              component: SpacesView},
+  {path: '/spaces/init',            name: 'spaces-init',         component: SpacesInitView},
+  {path: '/spaces/join',            name: 'spaces-join',         component: SpacesJoinView},
+  {path: '/spaces/create',          name: 'spaces-create',       component: SpacesCreateView},
+  {path: '/spaces/:address',        name: 'space',               component: SpaceSingleView},
+  {path: '/admin/seeders',          name: 'admin-seeders',       component: SeedersView},
+  {path: '/admin/seeders/join',     name: 'admin-seeders-join',  component: SeedersJoinView},
+  {path: '/admin/seeders/:address', name: 'admin-seeder',        component: SeederSingleView},
+  {path: '/backup',                 name: 'backup',              component: BackupView},
+  {path: '/profile',                name: 'profile',             component: ProfileView}
 ]
 
 export default new VueRouter({
