@@ -12,12 +12,12 @@
     </div>
   </template>
 
-  <!-- <NavList> -->
-    <!-- <a v-if="connected" href="#" @click.prevent="leaveSpace">Disconnect</a>
-    <a v-else href="#" @click.prevent="joinSpace">Connect</a> -->
+  <NavList>
+    <a v-if="connected" href="#" @click.prevent="leaveSpace">Disconnect</a>
+    <a v-else href="#" @click.prevent="joinSpace">Connect</a>
     <!-- <a v&#45;if="mounted" href="#" @click.prevent="unmountSpace">Unmount</a> -->
     <!-- <a v&#45;else href="#" @click.prevent="mountSpace">Mount</a> -->
-  <!-- </NavList> -->
+  </NavList>
   <small>Mounted at: {{info.mount}}</small>
 
   <br />
