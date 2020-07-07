@@ -6,13 +6,6 @@
     </div>
   </template>
 
-  <NavList>
-    <a v-if="connected" href="#" @click.prevent="leaveSeeder">Disconnect</a>
-    <a v-else href="#" @click.prevent="joinSeeder">Connect</a>
-    <a href="#" v-if="broadcast" @click.prevent="hideSeeder">Hide</a>
-    <a href="#" v-else @click.prevent="announceSeeder">Announce</a>
-  </NavList>
-
   <br />
   Replicate Space:
   <p>Please get the address for the space which you would like to backup.</p>
