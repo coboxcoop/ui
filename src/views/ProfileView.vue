@@ -2,7 +2,9 @@
 <transition name="pop">
 <div class="modal">
   <div class="sheet">
-    <a class="close" href="#" @click.prevent="$emit('close')">&times;</a>
+    <RouterLink :to="{name: 'home'}">
+      <a class="close" href="#">&times;</a>
+    </RouterLink>
     <div class="profile">
       <Dot :color="$store.getters['profile/myKeyColor']" />
       <form class="name" @submit.prevent="onSubmit">
