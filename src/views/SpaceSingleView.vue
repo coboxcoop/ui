@@ -3,21 +3,12 @@
   <template v-slot:header>
     <div class="header">
       <div>
-        <a href="#" @click.prevent="toggleConnect">
-          <SpaceIcon :address="space.address" />
-        </a>
-        {{space.name}}
+        <SpaceIcon :address="space.address" /> {{space.name}}
       </div>
       <div class="stat">{{stat.size | bytes}}</div>
     </div>
   </template>
 
-  <NavList>
-    <a v-if="connected" href="#" @click.prevent="leaveSpace">Disconnect</a>
-    <a v-else href="#" @click.prevent="joinSpace">Connect</a>
-    <!-- <a v&#45;if="mounted" href="#" @click.prevent="unmountSpace">Unmount</a> -->
-    <!-- <a v&#45;else href="#" @click.prevent="mountSpace">Mount</a> -->
-  </NavList>
   <small>Mounted at: {{info.mount}}</small>
 
   <br />
@@ -47,6 +38,12 @@
       <button type="submit">Ok</button>
     </form>
   </div>
+  <NavList>
+    <a v-if="connected" href="#" @click.prevent="leaveSpace">Unsync</a>
+    <a v-else href="#" @click.prevent="joinSpace">Sync</a>
+    <!-- <a v&#45;if="mounted" href="#" @click.prevent="unmountSpace">Unmount</a> -->
+    <!-- <a v&#45;else href="#" @click.prevent="mountSpace">Mount</a> -->
+  </NavList>
 </Screen>
 </template>
 

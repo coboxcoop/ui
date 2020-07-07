@@ -15,11 +15,6 @@
     <small>Public key</small>
     <CopyKey :value="$store.getters['profile/myPublicKey']" />
 
-    <NavList>
-      <RouterLink :to="{name: 'backup'}">Backup identity</RouterLink>
-      <a href="#" class="disabled-feature">Restore</a>
-    </NavList>
-
   </div>
 </div>
 </transition>
