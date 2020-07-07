@@ -13,7 +13,7 @@
       <RouterLink :to="{name: 'admin-seeders'}">
         Seeders <sup>{{seedersCount}}</sup>
       </RouterLink>
-      <RouterLink :to="{name: 'admin-seeders-init'}">
+      <RouterLink :to="{name: 'admin-seeders-join'}">
         <Plus />
       </RouterLink>
     </div>
