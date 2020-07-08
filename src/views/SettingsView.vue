@@ -12,7 +12,7 @@
       </button>
     </div>
   </NavList>
-  <RouterLink :to="{name: 'manage-keys'}">
+  <RouterLink :to="{name: 'settings-manage-keys'}">
     Manage Keys
   </RouterLink>
   <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>

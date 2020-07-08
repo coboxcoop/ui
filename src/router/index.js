@@ -18,19 +18,19 @@ import ManageKeysView   from '@/views/ManageKeysView.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {path: '/',                       name: 'home',                component: HomeView},
-  {path: '/spaces',                 name: 'spaces',              component: SpacesView},
-  {path: '/spaces/init',            name: 'spaces-init',         component: SpacesInitView},
-  {path: '/spaces/join',            name: 'spaces-join',         component: SpacesJoinView},
-  {path: '/spaces/create',          name: 'spaces-create',       component: SpacesCreateView},
-  {path: '/spaces/:address',        name: 'space',               component: SpaceSingleView},
-  {path: '/admin/seeders',          name: 'admin-seeders',       component: SeedersView},
-  {path: '/admin/seeders/join',     name: 'admin-seeders-join',  component: SeedersJoinView},
-  {path: '/admin/seeders/:address', name: 'admin-seeder',        component: SeederSingleView},
-  {path: '/keys/backup',            name: 'backup',              component: BackupView},
-  {path: '/profile',                name: 'profile',             component: ProfileView},
-  {path: '/settings',               name: 'settings',            component: SettingsView},
-  {path: '/keys',                   name: 'manage-keys',         component: ManageKeysView}
+  {path: '/',                       name: 'home',                   component: HomeView},
+  {path: '/spaces',                 name: 'spaces',                 component: SpacesView},
+  {path: '/spaces/init',            name: 'spaces-init',            component: SpacesInitView},
+  {path: '/spaces/join',            name: 'spaces-join',            component: SpacesJoinView},
+  {path: '/spaces/create',          name: 'spaces-create',          component: SpacesCreateView},
+  {path: '/spaces/:address',        name: 'space',                  component: SpaceSingleView},
+  {path: '/admin/seeders',          name: 'admin-seeders',          component: SeedersView},
+  {path: '/admin/seeders/join',     name: 'admin-seeders-join',     component: SeedersJoinView},
+  {path: '/admin/seeders/:address', name: 'admin-seeder',           component: SeederSingleView},
+  {path: '/keys/backup',            name: 'backup',                 component: BackupView},
+  {path: '/profile',                name: 'profile',                component: ProfileView},
+  {path: '/settings',               name: 'settings',               component: SettingsView},
+  {path: '/settings/keys',          name: 'settings-manage-keys',   component: ManageKeysView}
 ]
 
 export default new VueRouter({

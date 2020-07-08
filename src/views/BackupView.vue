@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'manage-keys'}">
+<Screen :back="{name: 'settings-manage-keys'}">
   <div class="page">
     <p>Click the button below to export your keys to downloadable PDF file</p>
 
