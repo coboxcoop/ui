@@ -65,7 +65,6 @@ export default {
       window.location.reload()
     },
     setDark() {
-      console.warn('set dar', this.$store.state.settings.dark)
       const act = this.$store.state.settings.dark ? 'add' : 'remove'
       document.documentElement.classList[act]('dark')
     }

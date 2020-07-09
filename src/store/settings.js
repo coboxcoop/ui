@@ -6,7 +6,7 @@ const defaultSettings = {
   email: ''
 }
 
-const retrieveState = () => {
+export const retrieveState = () => {
   let storedSettings
   try {
     storedSettings = JSON.parse(window.localStorage.getItem(LOCALSTORAGE_KEY))
@@ -28,8 +28,11 @@ export default ({api, events}) => ({
     toggleDark({state, dispatch}) {
       dispatch('update', {dark: !state.dark})
     },
-    toggleBetaTester({state, dispatch}) {
-      dispatch('update', {betaTester: !state.betaTester})
+    async toggleBetaTester({state, dispatch}) {
+      await dispatch('update', {betaTester: !state.betaTester})
+      // initialise a page reload to enable/disable bugsnag
+      if(process.env.VUE_APP_BUGSNAG_API_KEY) window.location.reload()
+
     },
     persist({state}) {
       try {
