@@ -11,13 +11,13 @@
         {{$store.state.settings.dark ? 'On' : 'Off'}}
       </button>
     </div>
+    <RouterLink :to="{name: 'settings-admin-seeders'}">
+      Admin/Seeders
+    </RouterLink>
+    <RouterLink :to="{name: 'settings-manage-keys'}">
+      Manage Keys
+    </RouterLink>
   </NavList>
-  <RouterLink :to="{name: 'settings-admin-seeders'}">
-    Admin/Seeders
-  </RouterLink>
-  <RouterLink :to="{name: 'settings-manage-keys'}">
-    Manage Keys
-  </RouterLink>
   <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
 </Screen>
 </template>
