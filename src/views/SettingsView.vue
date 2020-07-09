@@ -4,9 +4,6 @@
     Settings
   </template>
 
-  <RouterLink :to="{name: 'settings-admin-seeders'}">
-    Admin
-  </RouterLink>
   <NavList>
     <div class="switch">
       <label>Dark UI</label>
@@ -15,6 +12,9 @@
       </button>
     </div>
   </NavList>
+  <RouterLink :to="{name: 'settings-admin-seeders'}">
+    Admin/Seeders
+  </RouterLink>
   <RouterLink :to="{name: 'settings-manage-keys'}">
     Manage Keys
   </RouterLink>
