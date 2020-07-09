@@ -9,7 +9,8 @@ const settings = retrieveState()
 if(settings.betaTester && process.env.VUE_APP_BUGSNAG_API_KEY) {
   Bugsnag.start({
     apiKey: process.env.VUE_APP_BUGSNAG_API_KEY,
-    plugins: [new BugsnagPluginVue()]
+    plugins: [new BugsnagPluginVue()],
+    appVersion: process.env.VUE_APP_VERSION
   })
 
   Bugsnag.getPlugin('vue')
