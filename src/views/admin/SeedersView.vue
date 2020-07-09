@@ -1,13 +1,13 @@
 <template>
-<Screen :back="{name: 'home'}">
+<Screen :back="{name: 'settings'}">
   <template v-slot:header>
     Seeders
-    <RouterLink :to="{name: 'admin-seeders-join'}">
+    <RouterLink :to="{name: 'settings-admin-seeders-join'}">
       <Plus />
     </RouterLink>
   </template>
   <NavList >
-    <RouterLink v-for="seeder in seeders" :key="seeder.address" class="admin-seeder" :to="{name: 'admin-seeder', params: {address: seeder.address}}">
+    <RouterLink v-for="seeder in seeders" :key="seeder.address" class="settings-admin-seeder" :to="{name: 'admin-seeder', params: {address: seeder.address}}">
     <Dot color="magenta" :address="seeder.address" /> {{seeder.name}}
     </RouterLink>
   </NavList>

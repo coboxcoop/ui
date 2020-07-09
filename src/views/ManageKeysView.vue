@@ -5,7 +5,7 @@
   </template>
 
   <NavList>
-    <RouterLink :to="{name: 'backup'}">Backup identity</RouterLink>
+    <RouterLink :to="{name: 'settings-keys-backup'}">Backup identity</RouterLink>
     <a href="#" class="disabled-feature">Restore</a>
   </NavList>
 </Screen>

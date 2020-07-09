@@ -1,9 +1,12 @@
 <template>
-<Screen :back="{name: 'home'}">
+<Screen :back="{name: 'spaces'}">
   <template v-slot:header>
     Settings
   </template>
 
+  <RouterLink :to="{name: 'settings-admin-seeders'}">
+    Admin
+  </RouterLink>
   <NavList>
     <div class="switch">
       <label>Dark UI</label>

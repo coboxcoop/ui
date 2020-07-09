@@ -1,5 +1,5 @@
 <template>
-  <Screen :back="{name: 'home'}">
+  <Screen>
   <template v-slot:header>
     Spaces
     <RouterLink :to="{name: 'spaces-init'}">

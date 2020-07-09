@@ -9,14 +9,6 @@
         <Plus />
       </RouterLink>
     </div>
-    <div>
-      <RouterLink :to="{name: 'admin-seeders'}">
-        Seeders
-      </RouterLink>
-      <RouterLink :to="{name: 'admin-seeders-join'}">
-        <Plus />
-      </RouterLink>
-    </div>
   </NavList>
 
   <footer>
