@@ -1,7 +1,9 @@
 const LOCALSTORAGE_KEY = 'cobox_settings'
 
 const defaultSettings = {
-  dark: true
+  dark: true,
+  betaTester: true,
+  email: ''
 }
 
 const retrieveState = () => {
@@ -15,7 +17,6 @@ const retrieveState = () => {
   return {...defaultSettings, ...storedSettings}
 }
 
-
 export default ({api, events}) => ({
   namespaced: true,
   state: retrieveState(),
@@ -26,6 +27,9 @@ export default ({api, events}) => ({
     },
     toggleDark({state, dispatch}) {
       dispatch('update', {dark: !state.dark})
+    },
+    toggleBetaTester({state, dispatch}) {
+      dispatch('update', {betaTester: !state.betaTester})
     },
     persist({state}) {
       try {

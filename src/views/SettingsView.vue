@@ -11,6 +11,13 @@
         {{$store.state.settings.dark ? 'On' : 'Off'}}
       </button>
     </div>
+    <div class="switch">
+      <label>Beta tester</label>
+      <button @click="toggleBetaTester">
+        {{$store.state.settings.betaTester ? 'On' : 'Off'}}
+      </button>
+    </div>
+    <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
     <RouterLink :to="{name: 'settings-admin-seeders'}">
       Admin/Seeders
     </RouterLink>
@@ -52,11 +59,22 @@ export default {
     },
     info() {
       return this.$store.state.system.info
+    },
+    email: {
+      get() {
+        return this.$store.state.settings.email
+      },
+      set(value) {
+        this.$store.dispatch('settings/update', {email: value})
+      }
     }
   },
   methods: {
     toggleDark() {
       this.$store.dispatch('settings/toggleDark')
+    },
+    toggleBetaTester() {
+      this.$store.dispatch('settings/toggleBetaTester')
     }
   }
 }
