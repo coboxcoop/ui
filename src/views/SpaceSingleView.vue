@@ -9,9 +9,10 @@
     </div>
   </template>
 
-  <small>Mounted at: {{info.mount}}</small>
+  <div style="height: 1.2rem" />
 
-  <br />
+  <small>Mount point</small>
+  <CopyKey :value="info.mount" />
 
   <small>Address</small>
   <CopyKey :value="space.address" />
