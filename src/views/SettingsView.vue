@@ -1,5 +1,9 @@
 <template>
 <Screen :back="{name: 'spaces'}">
+  <Modal :show="showBetaInfo" @close="showBetaInfo = false">
+    <p>We write some details about beta testing here...</p>
+  </Modal>
+
   <template v-slot:header>
     Settings
   </template>
@@ -12,7 +16,7 @@
       </button>
     </div>
     <div class="switch">
-      <label>Beta tester</label>
+      <label>Beta tester <img @click="showBetaInfo = true" src="@/assets/images/icons/info.svg" /></label>
       <button @click="toggleBetaTester">
         {{$store.state.settings.betaTester ? 'On' : 'Off'}}
       </button>
@@ -34,6 +38,13 @@
   display: flex;
   label {
     flex: 1;
+    img {
+      margin-bottom: -0.1em;
+      cursor: pointer;
+      html.dark & {
+        filter: invert(1);
+      }
+    }
   }
 }
 .footer {
@@ -46,13 +57,18 @@
 import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
 import Plus from '@/components/Plus.vue'
+import Modal from '@/components/Modal.vue'
 
 export default {
   components: {
     Screen,
     NavList,
-    Plus
+    Plus,
+    Modal
   },
+  data: () => ({
+    showBetaInfo: false
+  }),
   computed: {
     uiVersion() {
       return process.env.VUE_APP_VERSION
