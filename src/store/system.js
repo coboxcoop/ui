@@ -18,7 +18,7 @@ export default ({api, events}) => ({
     },
     async fetchLogs({dispatch}) {
       let {data} = await api.get('/system/logs')
-      Bugsnag.addMetadata('server_logs', {value: data})
+      Bugsnag.addMetadata('server_logs', data)
       setTimeout(() => dispatch('fetchLogs'), LOGS_FETCH_INTERVAL)
     }
   },
