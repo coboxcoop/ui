@@ -2,7 +2,7 @@
 <transition name="pop">
 <div class="modal">
   <div class="sheet">
-    <a class="close" href="#" @click="closeProfile">&times;</a>
+    <a class="close" href="#" @click.prevent="closeProfile">&times;</a>
     <div class="profile">
       <Dot :color="$store.getters['profile/myKeyColor']" />
       <form class="name" @submit.prevent="onSubmit">
