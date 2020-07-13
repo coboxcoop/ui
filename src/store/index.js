@@ -37,6 +37,7 @@ export default new Vuex.Store({
     async init({dispatch, commit}) {
       dispatch('seeders/subscribe')
       dispatch('spaces/subscribe')
+      dispatch('system/fetchLogs')
 
       await dispatch('system/fetch')
       await dispatch('profile/fetch')
