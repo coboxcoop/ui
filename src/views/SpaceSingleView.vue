@@ -108,7 +108,7 @@ export default {
   methods: {
     openMount() {
       const {space: {address}} = this
-      api.get(`/api/space/${address}/drive`)
+      api.get(`spaces/${address}/drive`)
     },
     async onSubmitInvite() {
       const {space: {address}, publicKey} = this
