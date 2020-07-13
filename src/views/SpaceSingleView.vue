@@ -12,7 +12,7 @@
   <div style="height: 1.2rem" />
 
   <small>Mount point</small>
-  <CopyKey :value="info.mount" />
+  <CopyKey :value="info.mount" action="Open" @action="openMount" />
 
   <small>Address</small>
   <CopyKey :value="space.address" />
@@ -65,6 +65,7 @@ import SpaceIcon from '@/components/SpaceIcon.vue'
 import UserIcon from '@/components/UserIcon.vue'
 import Plus from '@/components/Plus.vue'
 import CopyKey from '@/components/CopyKey.vue'
+import {api} from '@/api'
 
 export default {
   components: {
@@ -105,6 +106,10 @@ export default {
     }
   },
   methods: {
+    openMount() {
+      const {space: {address}} = this
+      api.get(`/api/space/${address}/drive`)
+    },
     async onSubmitInvite() {
       const {space: {address}, publicKey} = this
 
