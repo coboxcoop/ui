@@ -54,7 +54,7 @@ export default ({api, events}) => ({
         return dispatch('join', {address, name})
       }))
     },
-    async join({commit}, {address, name}) {
+    async join({dispatch, commit}, {address, name}) {
       // FIXME
       // When joining the swarm for each space, an error is thrown if we have already joined.
       // Since there is no way to fetch the joined status for space, we will ignore the error
@@ -62,6 +62,7 @@ export default ({api, events}) => ({
       try {
         await api.post(`/spaces/${address}/connections`, {address, name})
         commit('connected', {address, connected: true})
+        await dispatch('mount', {address, name})
       } catch(e) {
         const msg = e.response.data && e.response.data.errors && e.response.data.errors[0].msg
         if(msg && msg.match('open connection')) {
@@ -71,13 +72,14 @@ export default ({api, events}) => ({
         }
       }
     },
-    async leave({commit}, {address, name}) {
+    async leave({commit, dispatch}, {address, name}) {
       // FIXME
       // As with spaces/join -- we need a way to check if the server has already joined the swarm
       // before joining or leaving
       try {
         await api.delete(`/spaces/${address}/connections`, {address, name})
         commit('connected', {address, connected: false})
+        await dispatch('unmount', {address, name})
       } catch(e) {
         throw(e)
       }
