@@ -7,6 +7,7 @@ import {retrieveState} from '@/store/settings'
 const settings = retrieveState()
 
 if(settings.betaTester && process.env.VUE_APP_BUGSNAG_API_KEY) {
+  console.log('starting bugsnag')
   Bugsnag.start({
     apiKey: process.env.VUE_APP_BUGSNAG_API_KEY,
     plugins: [new BugsnagPluginVue()],
@@ -19,3 +20,5 @@ if(settings.betaTester && process.env.VUE_APP_BUGSNAG_API_KEY) {
   Bugsnag.getPlugin('vue')
     .installVueErrorHandler(Vue)
 }
+
+export default Bugsnag
