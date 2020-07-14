@@ -7,6 +7,7 @@
       <Dot :color="$store.getters['profile/myKeyColor']" />
       <form class="name" @submit.prevent="onSubmit">
         <input v-model="name" type="text" placeholder="Your name" ref="nameInput" @focus="editName = true" @blur="saveName" />
+        <div class="blind"><img src="@/assets/images/icons/edit.svg" /> {{name}} <img src="@/assets/images/icons/edit.svg" /></div>
       </form>
     </div>
 
@@ -112,10 +113,33 @@ export default {
   }
   .name {
     margin-top: 0.6rem;
+    position: relative;
+    &:hover .blind img:last-of-type {
+      visibility: visible;
+    }
+    .blind {
+      color: transparent;
+      pointer-events: none;
+      position: absolute;
+      top: 0; left: 0; width: 100%;
+      pointer-events: none;
+      img {
+        position: relative;
+        top: 0.3rem;
+        visibility: hidden;
+        html.dark & {
+          filter: invert(1);
+        }
+      }
+    }
     input {
       text-align: center;
       width: 100%;
       border: none;
+      padding: 0;
+      &:focus + .blind, &:active + .blind {
+        opacity: 0;
+      }
     }
   }
   .name-edit {
