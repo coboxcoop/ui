@@ -8,6 +8,16 @@
 </div>
 </template>
 
+<script>
+export default {
+  methods: {
+    reload() {
+      window.location.reload()
+    }
+  }
+}
+</script>
+
 <style scoped lang="scss">
 .offline {
   text-align: center;
