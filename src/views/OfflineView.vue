@@ -29,7 +29,7 @@ export default {
     margin-bottom: 1em;
     html.dark & {
       filter: invert(1);
-    }
+    } 
   }
   a {
     text-decoration: underline;
