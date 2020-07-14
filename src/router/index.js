@@ -12,7 +12,6 @@ import SeederSingleView from '@/views/admin/SeederSingleView.vue'
 import BackupView       from '@/views/BackupView.vue'
 import ProfileView      from '@/views/ProfileView.vue'
 import SettingsView     from '@/views/SettingsView.vue'
-import HomeView         from '@/views/HomeView.vue'
 import ManageKeysView   from '@/views/ManageKeysView.vue'
 
 Vue.use(VueRouter)
