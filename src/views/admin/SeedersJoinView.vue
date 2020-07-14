@@ -29,7 +29,7 @@ export default {
       try {
         await this.$store.dispatch('seeders/acceptInvite', this.inviteCode)
         this.inviteCode = ''
-        this.$router.replace({name: 'admin-seeders'})
+        this.$router.replace({name: 'settings-admin-seeders'})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
