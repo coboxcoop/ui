@@ -38,7 +38,7 @@ export default {
       try {
         await this.$store.dispatch('spaces/acceptInvite', this.inviteCode)
         this.inviteCode = ''
-        this.$router.replace({name: 'home'})
+        this.$router.replace({name: 'spaces'})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
