@@ -1,5 +1,5 @@
 <template>
-  <Screen v-shortkey="{up: ['arrowup'], down: ['arrowdown']}" @shortkey="navigateSpaces">
+  <Screen v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <template v-slot:header>
     Spaces
     <RouterLink :to="{name: 'spaces-init'}">
@@ -66,14 +66,6 @@ export default {
     },
     navigate(to) {
       this.$router.push(to)
-    },
-    navigateSpaces(event) {
-      switch (event.srcKey) {
-        case 'up':
-          break
-        case 'down':
-          break
-      }
     }
   },
   computed: {
