@@ -7,7 +7,7 @@
     </RouterLink>
   </template>
   <NavList v-for="space in spaces" :key="space.address">
-  <RouterLink class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'alt', 'o']" @shortkey.native="openSpace({name: 'space', params: {address: space.address}})">
+  <RouterLink class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'alt', 'o']" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
       <div>
         <SpaceIcon :address="space.address" /> {{space.name}}
       </div>
@@ -16,7 +16,7 @@
   </NavList>
 
   <footer>
-    <RouterLink :to="{name: 'settings'}">
+    <RouterLink :to="{name: 'settings'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'settings'})">
       <img src="@/assets/images/icons/settings.svg" /> Settings
     </RouterLink>
   </footer>
@@ -64,8 +64,8 @@ export default {
     stat(address) {
       return this.$store.getters['spaces/stat'](address)
     },
-    openSpace(address) {
-      this.$router.push(address)
+    navigate(to) {
+      this.$router.push(to)
     },
     navigateSpaces(event) {
       switch (event.srcKey) {
