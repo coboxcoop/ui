@@ -64,8 +64,8 @@ export default {
     stat(address) {
       return this.$store.getters['spaces/stat'](address)
     },
-    openSpace(to) {
-      this.$router.push(to)
+    openSpace(address) {
+      this.$router.push(address)
     },
     navigateSpaces(event) {
       switch (event.srcKey) {
