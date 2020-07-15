@@ -2,10 +2,10 @@
 <div>
   <div class="header">
     <div class="left">
-      <RouterLink v-if="back" :to="back" class="back">
+      <RouterLink v-if="back" :to="back" class="back" v-shortkey="['ctrl', 'arrowleft']" @shortkey.native="navigate(back)">
         <TriangleIcon class="triangle" />
       </RouterLink>
-      <RouterLink :to="{name: 'profile'}">
+      <RouterLink :to="{name: 'profile'}" >
         <Dot :color="$store.getters['profile/myKeyColor']" /> {{$store.getters['profile/myName']}}
       </RouterLink>
     </div>
@@ -57,6 +57,11 @@ export default {
   },
   props: {
     back: Object
+  },
+  methods: {
+    navigate(to) {
+      this.$router.push(to)
+    }
   }
 }
 </script>
