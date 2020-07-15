@@ -1,5 +1,5 @@
 <template>
-  <Screen>
+  <Screen v-shortkey="{up: ['arrowup'], down: ['arrowdown']}" @shortkey="navigateSpaces">
   <template v-slot:header>
     Spaces
     <RouterLink :to="{name: 'spaces-init'}">
@@ -7,7 +7,7 @@
     </RouterLink>
   </template>
   <NavList v-for="space in spaces" :key="space.address">
-    <RouterLink class="space" :to="{name: 'space', params: {address: space.address}}">
+    <RouterLink class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'alt', 'o']" @shortkey="openSpace()">
       <div>
         <SpaceIcon :address="space.address" /> {{space.name}}
       </div>
@@ -63,6 +63,17 @@ export default {
   methods: {
     stat(address) {
       return this.$store.getters['spaces/stat'](address)
+    },
+    openSpace() {
+      this.$router.push("{name: 'space', params: {address: space.address}}")
+    },
+    navigateSpaces(event) {
+      switch (event.srcKey) {
+        case 'up':
+          break
+        case 'down':
+          break
+      }
     }
   },
   computed: {
