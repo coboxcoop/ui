@@ -1,13 +1,13 @@
 <template>
   <Screen>
   <template v-slot:header>
-    <div v-shortkey="{profile: ['ctrl', 'p'], home: ['ctrl', 'h'], forward: ['ctrl', 'arrowright']}" @shortkey="shortKeyAction">Spaces</div>
+    Spaces
     <RouterLink :to="{name: 'spaces-init'}" v-shortkey="['ctrl', 'space']" @shortkey.native="navigate({name: 'spaces-init'})">
       <Plus />
     </RouterLink>
   </template>
-  <NavList v-for="space in spaces" :key="space.address">
-  <RouterLink class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
+  <NavList>
+  <RouterLink v-for="space in spaces" :key="space.address" class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
       <div>
         <SpaceIcon :address="space.address" /> {{space.name}}
       </div>
@@ -63,21 +63,6 @@ export default {
   methods: {
     stat(address) {
       return this.$store.getters['spaces/stat'](address)
-    },
-    shortKeyAction(event) {
-      switch (event.srcKey) {
-        case 'profile':
-          this.$router.push("/profile")
-          break;
-        case 'home':
-          this.$router.push("/")
-          break;
-        case 'forward':
-          this.$router.go(1)
-          break;
-        default:
-          this.$router.push("/")
-      }
     },
     navigate(to) {
       this.$router.push(to)
