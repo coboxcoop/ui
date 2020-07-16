@@ -1,5 +1,5 @@
 <template>
-<div v-shortkey="{profile: ['ctrl', 'p'], home: ['ctrl', 'h']}" @shortkey="shortKeyAction">
+<div v-shortkey="{profile: ['ctrl', 'p'], home: ['ctrl', 'h'], forward: ['ctrl', 'arrowright']}" @shortkey="shortKeyAction">
   <div class="header">
     <div class="left">
       <RouterLink v-if="back" :to="back" class="back" v-shortkey="['ctrl', 'arrowleft']" @shortkey.native="navigate(back)">
@@ -66,6 +66,9 @@ export default {
           break;
         case 'home':
           this.$router.push("/")
+          break;
+        case 'forward':
+          this.$router.go(1)
           break;
         default:
           this.$router.push("/")
