@@ -3,7 +3,7 @@
   <div class="page">
     <p>Click the button below to export your keys to downloadable PDF file</p>
 
-    <a href="#" @click.prevent="onSubmit">Download paper keys</a>
+    <a href="#" @click.prevent="onSubmit" v-shortkey.once="['d']" @shortkey="onSubmit">Download paper keys</a>
   </div>
 </Screen>
 </template>

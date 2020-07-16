@@ -5,7 +5,7 @@
   </template>
 
   <NavList>
-    <RouterLink :to="{name: 'settings-keys-backup'}">Backup identity</RouterLink>
+  <RouterLink :to="{name: 'settings-keys-backup'}" v-shortkey="['b']" @shortkey.native="navigate({name: 'settings-keys-backup'})" >Backup identity</RouterLink>
     <a href="#" class="disabled-feature">Restore</a>
   </NavList>
 </Screen>
@@ -46,6 +46,9 @@ export default {
   methods: {
     toggleDark() {
       this.$store.dispatch('settings/toggleDark')
+    },
+    navigate(to) {
+      this.$router.push(to)
     }
   }
 }

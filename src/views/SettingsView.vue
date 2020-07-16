@@ -22,10 +22,10 @@
       </button>
     </div>
     <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
-    <RouterLink :to="{name: 'settings-admin-seeders'}">
+    <RouterLink :to="{name: 'settings-admin-seeders'}" v-shortkey="['s']" @shortkey.native="navigate({name: 'settings-admin-seeders'})">
       Admin/Seeders
     </RouterLink>
-    <RouterLink :to="{name: 'settings-manage-keys'}">
+    <RouterLink :to="{name: 'settings-manage-keys'}" v-shortkey="['k']" @shortkey.native="navigate({name: 'settings-manage-keys'})">
       Manage Keys
     </RouterLink>
   </NavList>
@@ -91,6 +91,9 @@ export default {
     },
     toggleBetaTester() {
       this.$store.dispatch('settings/toggleBetaTester')
+    },
+    navigate(to) {
+      this.$router.push(to)
     }
   }
 }
