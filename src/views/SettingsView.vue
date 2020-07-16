@@ -3,6 +3,9 @@
   <Modal :show="showBetaInfo" @close="showBetaInfo = false">
     <p>We write some details about beta testing here...</p>
   </Modal>
+  <Modal :show="showShortKeyInfo" @close="showShortKeyInfo = false">
+  <a href="https://gitlab.com/coboxcoop/ui/-/merge_requests/9" target="_blank">Shortcuts</a>
+  </Modal>
 
   <template v-slot:header>
     Settings
@@ -16,7 +19,7 @@
       </button>
     </div>
     <div class="switch">
-      <label>Keyboard Shortcuts</label>
+      <label>Keyboard Shortcuts <img @click="showShortKeyInfo = true" src="@/assets/images/icons/info.svg" /></label>
       <button @click="toggleShortkey">
         {{$store.state.settings.shortkey ? 'On' : 'Off'}}
       </button>
@@ -73,7 +76,8 @@ export default {
     Modal
   },
   data: () => ({
-    showBetaInfo: false
+    showBetaInfo: false,
+    showShortKeyInfo: false
   }),
   computed: {
     uiVersion() {
