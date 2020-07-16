@@ -116,6 +116,13 @@ export default {
 
       this.publicKey = ''
     },
+    async toggleConnect() {
+      if(this.connected) {
+        await this.leaveSpace()
+      } else {
+        await this.joinSpace()
+      }
+    },
     async joinSpace() {
       try {
         await this.$store.dispatch('spaces/join', this.space)

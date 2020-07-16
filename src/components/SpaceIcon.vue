@@ -13,6 +13,9 @@ export default {
     Dot
   },
   computed: {
+    connected() {
+      return this.$store.getters['spaces/connected'](this.address)
+    },
     color() {
       if(this.connected) return 'lightseagreen'
       return 'lightgray'
