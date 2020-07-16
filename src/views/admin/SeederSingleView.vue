@@ -1,5 +1,5 @@
 <template>
-  <Screen :back="{name: 'settings-admin-seeders'}" v-if="seeder" v-shortkey="{profile: ['ctrl', 'p'], home: ['ctrl', 'h']}" @shortkey="shortKeyAction">
+  <Screen :back="{name: 'settings-admin-seeders'}" v-if="seeder">
   <template v-slot:header>
     <div class="header">
       <div><Dot :color="connected ? 'lightseagreen' : 'lightgray'" /> {{seeder.name}}</div>
@@ -41,7 +41,7 @@
 
   <br />
 
-  Seeding Encrypted Backups:
+  Encrypted backups you are seeding:
   <NavList>
     <div v-for="replicate in replicates" :key="replicate.value.content.address">
       <Dot :color="replicate.value.type === 'command/unreplicate' ? 'orangered' : 'lightseagreen'" />
@@ -106,18 +106,6 @@ export default {
     }
   },
   methods: {
-    shortKeyAction(event) {
-      switch (event.srcKey) {
-        case 'profile':
-          this.$router.push("/profile")
-          break;
-        case 'home':
-          this.$router.push("/")
-          break;
-        default:
-          this.$router.push("/")
-      }
-    },
     replicateAuthor(replicate) {
       return this.$store.getters['seeders/replicateAuthor'](this.seeder.address, replicate)
     },
