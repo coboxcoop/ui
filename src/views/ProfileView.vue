@@ -2,7 +2,7 @@
 <transition name="pop">
 <div class="modal">
   <div class="sheet">
-    <a class="close" v-shortkey="{esc: ['esc'], back: ['ctrl', 'arrowleft'], p: ['ctrl', 'p']}" @shortkey="shortKeyCloseProfile" href="#" @click.prevent="closeProfile">&times;</a>
+    <a class="close" v-shortkey="{home: ['ctrl', 'h'], esc: ['esc'], back: ['ctrl', 'arrowleft'], p: ['ctrl', 'p']}" @shortkey="shortKeyAction" href="#" @click.prevent="closeProfile">&times;</a>
     <div class="profile">
       <Dot :color="$store.getters['profile/myKeyColor']" />
       <form class="name" @submit.prevent="onSubmit">
@@ -40,8 +40,11 @@ export default {
     this.resetName()
   },
   methods: {
-    shortKeyCloseProfile(event) {
+    shortKeyAction(event) {
       switch (event.srcKey) {
+        case 'home':
+          this.$router.push("/")
+          break;
         case 'esc':
           this.closeProfile()
           break;
