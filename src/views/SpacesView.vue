@@ -7,7 +7,7 @@
     </RouterLink>
   </template>
   <NavList v-for="space in spaces" :key="space.address">
-  <RouterLink class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['f' + (space +1)]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
+  <RouterLink class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
       <div>
         <SpaceIcon :address="space.address" /> {{space.name}}
       </div>
