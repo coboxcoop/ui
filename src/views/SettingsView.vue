@@ -16,6 +16,12 @@
       </button>
     </div>
     <div class="switch">
+      <label>Keyboard Shortcuts</label>
+      <button @click="toggleShortkey">
+        {{$store.state.settings.shortkey ? 'On' : 'Off'}}
+      </button>
+    </div>
+    <div class="switch">
       <label>Beta tester <img @click="showBetaInfo = true" src="@/assets/images/icons/info.svg" /></label>
       <button @click="toggleBetaTester">
         {{$store.state.settings.betaTester ? 'On' : 'Off'}}
@@ -88,6 +94,9 @@ export default {
   methods: {
     toggleDark() {
       this.$store.dispatch('settings/toggleDark')
+    },
+    toggleShortkey() {
+      this.$store.dispatch('settings/toggleShortkey')
     },
     toggleBetaTester() {
       this.$store.dispatch('settings/toggleBetaTester')

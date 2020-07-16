@@ -30,6 +30,7 @@ export default {
     await this.$store.dispatch('init')
 
     this.setDark()
+    this.setShortkey()
 
     if(this.hasName) {
       await this.$store.dispatch('fetchAllData')
@@ -50,6 +51,9 @@ export default {
     },
     dark() {
       return this.$store.state.settings.dark
+    },
+    shortkey() {
+      return this.$store.state.settings.shortkey
     }
   },
   watch: {
@@ -58,6 +62,9 @@ export default {
     },
     dark() {
       this.setDark()
+    },
+    shortkey() {
+      this.setShortkey()
     }
   },
   methods: {
@@ -67,6 +74,9 @@ export default {
     setDark() {
       const act = this.$store.state.settings.dark ? 'add' : 'remove'
       document.documentElement.classList[act]('dark')
+    },
+    setShortkey() {
+      //App wide switch toggle of all shortkeys
     }
   }
 }
