@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'spaces-init'}">
+<Screen :back="{name: 'spaces-init'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div class="page">
     <p>To join a Space, send your public key to someone that can invite you.</p>
 
@@ -34,6 +34,9 @@ export default {
     inviteCode: ''
   }),
   methods: {
+    navigate(to) {
+      this.$router.push(to)
+    },
     async onSubmit() {
       try {
         await this.$store.dispatch('spaces/acceptInvite', this.inviteCode)

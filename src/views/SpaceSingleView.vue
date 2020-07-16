@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'spaces'}" v-if="space">
+<Screen :back="{name: 'spaces'}" v-if="space" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <template v-slot:header>
     <div class="header">
       <div>
@@ -101,6 +101,9 @@ export default {
     }
   },
   methods: {
+    navigate(to) {
+      this.$router.push(to)
+    },
     async onSubmitInvite() {
       const {space: {address}, publicKey} = this
 

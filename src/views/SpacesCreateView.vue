@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'spaces-init'}">
+<Screen :back="{name: 'spaces-init'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div class="page">
     <p>What would you like your Space to be called?</p>
 
@@ -29,6 +29,9 @@ export default {
     Screen
   },
   methods: {
+    navigate(to) {
+      this.$router.push(to)
+    },
     async onSubmit() {
       try {
         const {address} = await this.$store.dispatch('spaces/create', this.spaceName)
