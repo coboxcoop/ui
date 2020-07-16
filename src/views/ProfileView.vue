@@ -146,10 +146,6 @@ export default {
     font-size: var(--small);
   }
 }
-.footer {
-  margin-top: auto;
-  font-size: var(--small);
-}
 .copy-key {
   margin-bottom: 0;
 }

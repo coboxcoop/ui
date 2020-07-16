@@ -131,6 +131,9 @@ export default ({api, events}) => ({
     }
   },
   getters: {
+    index(state) {
+      return state.data.length
+    },
     count(state) {
       return state.data.length
     },

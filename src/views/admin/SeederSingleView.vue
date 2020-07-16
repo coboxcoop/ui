@@ -41,7 +41,7 @@
 
   <br />
 
-  Blind Replicating:
+  Seeding Encrypted Backups:
   <NavList>
     <div v-for="replicate in replicates" :key="replicate.value.content.address">
       <Dot :color="replicate.value.type === 'command/unreplicate' ? 'orangered' : 'lightseagreen'" />
@@ -97,9 +97,6 @@ export default {
     },
     connected() {
       return this.$store.getters['seeders/connected'](this.seeder.address)
-    },
-    broadcast() {
-      return this.$store.getters['seeders/broadcast'](this.seeder.address)
     },
     peers() {
       return this.$store.getters['seeders/peers'](this.seeder.address)
@@ -167,20 +164,6 @@ export default {
     async leaveSeeder() {
       try {
         await this.$store.dispatch('seeders/leave', this.seeder)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
-    async announceSeeder() {
-      try {
-        await this.$store.dispatch('seeders/announce', this.seeder)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
-    async hideSeeder() {
-      try {
-        await this.$store.dispatch('seeders/hide', this.seeder)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }

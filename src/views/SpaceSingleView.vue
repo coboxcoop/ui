@@ -42,8 +42,6 @@
   <NavList>
     <a v-if="connected" href="#" @click.prevent="leaveSpace">Unsync</a>
     <a v-else href="#" @click.prevent="joinSpace">Sync</a>
-    <!-- <a v&#45;if="mounted" href="#" @click.prevent="unmountSpace">Unmount</a> -->
-    <!-- <a v&#45;else href="#" @click.prevent="mountSpace">Mount</a> -->
   </NavList>
 </Screen>
 </template>
@@ -92,9 +90,6 @@ export default {
     connected() {
       return this.$store.getters['spaces/connected'](this.space.address)
     },
-    mounted() {
-      return this.$store.getters['spaces/mounted'](this.space.address)
-    },
     stat() {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
@@ -106,10 +101,6 @@ export default {
     }
   },
   methods: {
-    openMount() {
-      const {space: {address}} = this
-      api.get(`spaces/${address}/drive`)
-    },
     async onSubmitInvite() {
       const {space: {address}, publicKey} = this
 
@@ -121,13 +112,6 @@ export default {
       }
 
       this.publicKey = ''
-    },
-    async toggleConnect() {
-      if(this.connected) {
-        await this.leaveSpace()
-      } else {
-        await this.joinSpace()
-      }
     },
     async joinSpace() {
       try {
@@ -143,20 +127,6 @@ export default {
         this.$store.dispatch('error/handle', e)
       }
     },
-    async mountSpace() {
-      try {
-        await this.$store.dispatch('spaces/mount', this.space)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
-    async unmountSpace() {
-      try {
-        await this.$store.dispatch('spaces/unmount', this.space)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    }
   }
 }
 </script>

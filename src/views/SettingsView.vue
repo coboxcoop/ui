@@ -23,7 +23,7 @@
     </div>
     <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
     <RouterLink :to="{name: 'settings-admin-seeders'}" v-shortkey="['s']" @shortkey.native="navigate({name: 'settings-admin-seeders'})">
-      Admin/Seeders
+      Operate Seeders
     </RouterLink>
     <RouterLink :to="{name: 'settings-manage-keys'}" v-shortkey="['k']" @shortkey.native="navigate({name: 'settings-manage-keys'})">
       Manage Keys

@@ -1,8 +1,8 @@
 import Vue from 'vue'
+import VueShortkey from 'vue-shortkey'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import VueShortkey from 'vue-shortkey'
 import './filters'
 import './bugsnag'
 
