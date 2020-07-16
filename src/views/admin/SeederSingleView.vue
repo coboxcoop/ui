@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'settings-admin-seeders'}" v-if="seeder">
+<Screen :back="{name: 'settings-admin-seeders'}" v-if="seeder" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <template v-slot:header>
     <div class="header">
       <div><Dot :color="connected ? 'lightseagreen' : 'lightgray'" /> {{seeder.name}}</div>
@@ -106,6 +106,9 @@ export default {
     }
   },
   methods: {
+    navigate(to) {
+      this.$router.push(to)
+    },
     replicateAuthor(replicate) {
       return this.$store.getters['seeders/replicateAuthor'](this.seeder.address, replicate)
     },

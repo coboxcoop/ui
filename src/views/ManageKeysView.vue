@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'settings'}">
+<Screen :back="{name: 'settings'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <template v-slot:header>
     Manage Keys
   </template>

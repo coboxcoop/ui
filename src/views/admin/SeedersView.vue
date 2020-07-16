@@ -1,8 +1,8 @@
 <template>
-<Screen :back="{name: 'settings'}">
+<Screen :back="{name: 'settings'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <template v-slot:header>
     Seeders
-    <RouterLink :to="{name: 'settings-admin-seeders-join'}">
+    <RouterLink :to="{name: 'settings-admin-seeders-join'}" v-shortkey="['ctrl', 'space']" @shortkey.native="navigate({name: 'settings-admin-seeders-join'})">
       <Plus />
     </RouterLink>
   </template>
@@ -26,6 +26,11 @@ export default {
     Screen,
     NavList,
     Plus
+  },
+  methods: {
+    navigate(to) {
+      this.$router.push(to)
+    }
   },
   computed: {
     seeders() {

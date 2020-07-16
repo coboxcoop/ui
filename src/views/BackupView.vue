@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'settings-manage-keys'}">
+<Screen :back="{name: 'settings-manage-keys'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div class="page">
     <p>Click the button below to export your keys to downloadable PDF file</p>
 
@@ -32,6 +32,9 @@ export default {
       a.href = data
       a.download = 'key-backup.pdf'
       a.click()
+    },
+    navigate(to) {
+      this.$router.push(to)
     }
   }
 }
