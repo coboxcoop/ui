@@ -1,7 +1,7 @@
 <template>
-  <Screen v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+  <Screen>
   <template v-slot:header>
-    Spaces
+    <div v-shortkey="{profile: ['ctrl', 'p'], home: ['ctrl', 'h'], forward: ['ctrl', 'arrowright']}" @shortkey="shortKeyAction">Spaces</div>
     <RouterLink :to="{name: 'spaces-init'}" v-shortkey="['ctrl', 'space']" @shortkey.native="navigate({name: 'spaces-init'})">
       <Plus />
     </RouterLink>
@@ -63,6 +63,21 @@ export default {
   methods: {
     stat(address) {
       return this.$store.getters['spaces/stat'](address)
+    },
+    shortKeyAction(event) {
+      switch (event.srcKey) {
+        case 'profile':
+          this.$router.push("/profile")
+          break;
+        case 'home':
+          this.$router.push("/")
+          break;
+        case 'forward':
+          this.$router.go(1)
+          break;
+        default:
+          this.$router.push("/")
+      }
     },
     navigate(to) {
       this.$router.push(to)
