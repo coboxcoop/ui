@@ -137,6 +137,10 @@ export default {
         this.$store.dispatch('error/handle', e)
       }
     },
+    openMount() {
+      const {space: {address}} = this
+      api.get(`spaces/${address}/drive`)
+    }
   }
 }
 </script>
