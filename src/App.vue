@@ -76,7 +76,8 @@ export default {
       document.documentElement.classList[act]('dark')
     },
     setShortkey() {
-      //App wide switch toggle of all shortkeys
+      const act = this.$store.state.settings.shortkey ? 'add' :'remove'
+      document.documentElement.classList[act]('shortkey')
     }
   }
 }

@@ -60,22 +60,26 @@ export default {
   },
   methods: {
     shortKeyAction(event) {
-      switch (event.srcKey) {
-        case 'profile':
-          this.$router.push("/profile")
-          break;
-        case 'home':
-          this.$router.push("/")
-          break;
-        case 'forward':
-          this.$router.go(1)
-          break;
-        default:
-          this.$router.push("/")
+      if (this.$store.state.settings.shortkey) {
+        switch (event.srcKey) {
+          case 'profile':
+            this.$router.push("/profile")
+            break;
+          case 'home':
+            this.$router.push("/")
+            break;
+          case 'forward':
+            this.$router.go(1)
+            break;
+          default:
+            this.$router.push("/")
+        }
       }
     },
     navigate(to) {
-      this.$router.push(to)
+      if (this.$store.state.settings.shortkey) {
+        this.$router.push(to)
+      }
     }
   }
 }

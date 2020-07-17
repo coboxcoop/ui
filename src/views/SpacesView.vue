@@ -65,7 +65,9 @@ export default {
       return this.$store.getters['spaces/stat'](address)
     },
     navigate(to) {
-      this.$router.push(to)
+      if (this.$store.state.settings.shortkey) {
+        this.$router.push(to)
+      }
     }
   },
   computed: {

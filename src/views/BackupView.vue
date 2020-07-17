@@ -34,7 +34,9 @@ export default {
       a.click()
     },
     navigate(to) {
-      this.$router.push(to)
+      if (this.$store.state.settings.shortkey) {
+        this.$router.push(to)
+      }
     }
   }
 }
