@@ -14,7 +14,7 @@
   <small>Mount point</small>
   <CopyKey :value="info.mount" action="Open" @action="openMount" />
 
-  <small>Address</small>
+  <small>Space address</small>
   <CopyKey :value="space.address" />
 
   <h2>{{peerCountString}}</h2>
@@ -32,7 +32,7 @@
     <CopyKey :value="inviteCode" />
   </div>
   <div v-else>
-    <p>To invite someone to join this Space, please provide their public key.</p>
+    <p>To invite someone to join this space, please provide their public key to create their bespoke invite code.</p>
 
     <form @submit.prevent="onSubmitInvite">
       <input class="has-ok-button" type="text" placeholder="Public key" v-model="publicKey" />

@@ -1,7 +1,7 @@
 <template>
 <Screen :back="{name: 'spaces'}">
   <Modal :show="showBetaInfo" @close="showBetaInfo = false">
-    <p>We write some details about beta testing here...</p>
+  <p>By signing up as a beta tester for sprout release you are agreeing to submit redacted logs to a third-party cloud error monitoring & reporting tool CoBox uses called <a href="https://www.bugsnag.com/" target="_blank">bugsnag</a>. To learn more you can visit our <a href="https://gitlab.com/coboxcoop/readme/-/wikis/Testing" target="_blank">wiki. Providing an email is optional, but very helpful.</a></p>
   </Modal>
   <Modal :show="showShortKeyInfo" @close="showShortKeyInfo = false">
   <a href="https://gitlab.com/coboxcoop/ui/-/merge_requests/9" target="_blank">Shortcuts</a>
