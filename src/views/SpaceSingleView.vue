@@ -40,8 +40,12 @@
     </form>
   </div>
   <NavList>
-    <a v-if="connected" href="#" @click.prevent="leaveSpace">Unsync</a>
-    <a v-else href="#" @click.prevent="joinSpace">Sync</a>
+    <div class="switch">
+      <label>Sync</label>
+      <button @click="toggleSync">
+        {{connected ? 'On' : 'Off'}}
+      </button>
+    </div>
   </NavList>
 </Screen>
 </template>
@@ -53,6 +57,10 @@
 }
 .space-icon {
   margin-right: 0.3rem;
+}
+.switch {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
 
@@ -137,6 +145,13 @@ export default {
         this.$store.dispatch('error/handle', e)
       }
     },
+    toggleSync() {
+      if(this.connected) {
+        this.leaveSpace()
+      } else {
+        this.joinSpace()
+      }
+    }
   }
 }
 </script>
