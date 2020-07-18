@@ -31,6 +31,7 @@ export default {
 
     this.setDark()
     this.setShortkey()
+    this.setErrorMessages()
 
     if(this.hasName) {
       await this.$store.dispatch('fetchAllData')
@@ -54,6 +55,9 @@ export default {
     },
     shortkey() {
       return this.$store.state.settings.shortkey
+    },
+    errorMessages() {
+      return this.$store.state.settings.errorMessages
     }
   },
   watch: {
@@ -65,6 +69,9 @@ export default {
     },
     shortkey() {
       this.setShortkey()
+    },
+    errorMessages() {
+      this.setErrorMessages()
     }
   },
   methods: {
@@ -78,6 +85,10 @@ export default {
     setShortkey() {
       const act = this.$store.state.settings.shortkey ? 'add' :'remove'
       document.documentElement.classList[act]('shortkey')
+    },
+    setErrorMessages() {
+      const act = this.$store.state.settings.errorMessages ? 'add' :'remove'
+      document.documentElement.classList[act]('errorMessages')
     }
   }
 }

@@ -4,16 +4,20 @@ export default ({api, events}) => ({
     message: null
   },
   actions: {
-    handle({commit}, e) {
-      if(e.response && e.response.data) {
-        if('errors' in e.response.data) {
-          const message = e.response.data.errors.map(error => {
-            return error.msg
-          }).join(', ')
-          return commit('receiveMessage', message)
+    handle({commit, getters}, e) {
+    //FIXME: this.$store is not defined
+      if(this.$store.getters['settings/errorMessages']) {
+        if(e.response && e.response.data) {
+          if('errors' in e.response.data) {
+            const message = e.response.data.errors.map(error => {
+              return error.msg
+            }).join(', ')
+            return commit('receiveMessage', message)
+          }
         }
+        //FIXME: this might be within the wrong {} since attempting to implement errorMessages logic
+        commit('receiveMessage', e.message)
       }
-      commit('receiveMessage', e.message)
     },
     dismiss({commit}) {
       commit('dismiss')

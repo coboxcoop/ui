@@ -4,7 +4,8 @@ const defaultSettings = {
   dark: true,
   betaTester: true,
   email: '',
-  shortkey: true
+  shortkey: true,
+  errorMessages: true
 }
 
 export const retrieveState = () => {
@@ -32,6 +33,9 @@ export default ({api, events}) => ({
     toggleShortkey({state, dispatch}) {
       dispatch('update', {shortkey: !state.shortkey})
     },
+    toggleErrorMessages({state, dispatch}) {
+      dispatch('update', {errorMessages: !state.errorMessages})
+    },
     async toggleBetaTester({state, dispatch}) {
       await dispatch('update', {betaTester: !state.betaTester})
       // initialise a page reload to enable/disable bugsnag
@@ -49,6 +53,11 @@ export default ({api, events}) => ({
       Object.keys(update).forEach(key => {
         state[key] = update[key]
       })
+    }
+  },
+  getters: {
+    errorMessages(state) {
+      return state.errorMessages
     }
   }
 })

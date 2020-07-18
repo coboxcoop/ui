@@ -30,6 +30,12 @@
         {{$store.state.settings.betaTester ? 'On' : 'Off'}}
       </button>
     </div>
+    <div class="switch">
+      <label>Error Messages</label>
+      <button @click="toggleErrorMessages">
+        {{$store.state.settings.errorMessages ? 'On' : 'Off'}}
+      </button>
+    </div>
     <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
     <RouterLink :to="{name: 'settings-admin-seeders'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'settings-admin-seeders'})">
       Operate Seeders
@@ -101,6 +107,9 @@ export default {
     },
     toggleShortkey() {
       this.$store.dispatch('settings/toggleShortkey')
+    },
+    toggleErrorMessages() {
+      this.$store.dispatch('settings/toggleErrorMessages')
     },
     toggleBetaTester() {
       this.$store.dispatch('settings/toggleBetaTester')

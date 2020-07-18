@@ -33,5 +33,3 @@ export default ({api, events}) => ({
     }
   }
 })
-
-    
