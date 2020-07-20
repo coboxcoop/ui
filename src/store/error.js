@@ -6,7 +6,7 @@ export default ({api, events}) => ({
   actions: {
     handle({commit, getters}, e) {
     //FIXME: this.$store is not defined
-      if(this.$store.getters['settings/errorMessages']) {
+      if(getters['settings/errorMessages']) {
         if(e.response && e.response.data) {
           if('errors' in e.response.data) {
             const message = e.response.data.errors.map(error => {
