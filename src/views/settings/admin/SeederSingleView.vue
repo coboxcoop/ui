@@ -1,5 +1,5 @@
 <template>
-  <Screen :back="{name: 'settings-admin-seeders'}" v-if="seeder">
+  <Screen :back="{name: 'seeders'}" v-if="seeder">
   <template v-slot:header>
     <div class="header">
       <div><Dot :color="connected ? 'lightseagreen' : 'lightgray'" /> {{seeder.name}}</div>

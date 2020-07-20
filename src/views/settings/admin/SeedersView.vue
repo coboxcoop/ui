@@ -2,12 +2,12 @@
 <Screen :back="{name: 'settings'}">
   <template v-slot:header>
     Seeders
-    <RouterLink :to="{name: 'settings-admin-seeders-join'}" v-shortkey="['ctrl', 'space']" @shortkey.native="navigate({name: 'settings-admin-seeders-join'})">
+    <RouterLink :to="{name: 'seeders-join'}" v-shortkey="['ctrl', 'space']" @shortkey.native="navigate({name: 'seeders-join'})">
       <Plus />
     </RouterLink>
   </template>
   <NavList>
-    <RouterLink v-for="seeder in seeders" :key="seeder.address" class="settings-admin-seeder" :to="{name: 'settings-admin-seeder', params: {address: seeder.address}}">
+    <RouterLink v-for="seeder in seeders" :key="seeder.address" class="seeder" :to="{name: 'seeder', params: {address: seeder.address}}">
     <Dot color="magenta" :address="seeder.address" /> {{seeder.name}}
     </RouterLink>
   </NavList>

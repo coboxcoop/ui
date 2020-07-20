@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'settings-admin-seeders'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+<Screen :back="{name: 'seeders'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <p>To join a seeder, send your public key to someone that can add you as an admin.</p>
 
   <CopyKey :value="$store.getters['profile/myPublicKey']" />
@@ -34,7 +34,7 @@ export default {
       try {
         await this.$store.dispatch('seeders/acceptInvite', this.inviteCode)
         this.inviteCode = ''
-        this.$router.replace({name: 'settings-admin-seeders'})
+        this.$router.replace({name: 'seeders'})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }

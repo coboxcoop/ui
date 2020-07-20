@@ -1,18 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import SpacesView       from '@/views/SpacesView.vue'
-import SpacesInitView   from '@/views/SpacesInitView.vue'
-import SpacesJoinView   from '@/views/SpacesJoinView.vue'
-import SpacesCreateView from '@/views/SpacesCreateView.vue'
-import SpaceSingleView  from '@/views/SpaceSingleView.vue'
-import SeedersView      from '@/views/admin/SeedersView.vue'
-import SeedersJoinView  from '@/views/admin/SeedersJoinView.vue'
-import SeederSingleView from '@/views/admin/SeederSingleView.vue'
-import BackupView       from '@/views/BackupView.vue'
 import ProfileView      from '@/views/ProfileView.vue'
-import SettingsView     from '@/views/SettingsView.vue'
-import ManageKeysView   from '@/views/ManageKeysView.vue'
+import SpacesView       from '@/views/spaces/SpacesView.vue'
+import SpacesInitView   from '@/views/spaces/SpacesInitView.vue'
+import SpacesJoinView   from '@/views/spaces/SpacesJoinView.vue'
+import SpacesCreateView from '@/views/spaces/SpacesCreateView.vue'
+import SpaceSingleView  from '@/views/spaces/SpaceSingleView.vue'
+import SeedersView      from '@/views/settings/admin/SeedersView.vue'
+import SeedersJoinView  from '@/views/settings/admin/SeedersJoinView.vue'
+import SeederSingleView from '@/views/settings/admin/SeederSingleView.vue'
+import BackupView       from '@/views/settings/BackupView.vue'
+import SettingsView     from '@/views/settings/SettingsView.vue'
+import ManageKeysView   from '@/views/settings/ManageKeysView.vue'
+import AppearanceView   from '@/views/settings/AppearanceView.vue'
+import AdvancedView     from '@/views/settings/AdvancedView.vue'
+import OptionsView      from '@/views/settings/OptionsView.vue'
 
 Vue.use(VueRouter)
 
@@ -24,11 +27,14 @@ const routes = [
   {path: '/spaces/:address',                 name: 'space',                           component: SpaceSingleView},
   {path: '/profile',                         name: 'profile',                         component: ProfileView},
   {path: '/settings',                        name: 'settings',                        component: SettingsView},
-  {path: '/settings/keys',                   name: 'settings-manage-keys',            component: ManageKeysView},
-  {path: '/settings/keys/backup',            name: 'settings-keys-backup',            component: BackupView},
-  {path: '/settings/admin/seeders',          name: 'settings-admin-seeders',          component: SeedersView},
-  {path: '/settings/admin/seeders/join',     name: 'settings-admin-seeders-join',     component: SeedersJoinView},
-  {path: '/settings/admin/seeders/:address', name: 'settings-admin-seeder',           component: SeederSingleView}
+  {path: '/settings/appearance',             name: 'appearance',                      component: AppearanceView},
+  {path: '/settings/advanced',               name: 'advanced',                        component: AdvancedView},
+  {path: '/settings/options',                name: 'options',                         component: OptionsView},
+  {path: '/settings/keys',                   name: 'manage-keys',                     component: ManageKeysView},
+  {path: '/settings/keys/backup',            name: 'keys-backup',                     component: BackupView},
+  {path: '/settings/admin/seeders',          name: 'seeders',                         component: SeedersView},
+  {path: '/settings/admin/seeders/join',     name: 'seeders-join',                    component: SeedersJoinView},
+  {path: '/settings/admin/seeders/:address', name: 'seeder',                          component: SeederSingleView}
 ]
 
 export default new VueRouter({
