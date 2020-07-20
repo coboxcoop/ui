@@ -1,6 +1,8 @@
 <template>
 <div class="toggle-switch" :class="{on: !!value}" @click="$emit('input', !value)">
-  <i class="pill" />
+  <div class="pill-outer">
+    <i class="pill" />
+  </div>
   <div class="bg" />
 </div>
 </template>
@@ -21,16 +23,27 @@
     width: 100%;
     height: 100%;
   }
-  &.on .pill {
+  &.on .pill-outer {
     transform: translateX(100%);
   }
+  &:not(.on) .pill {
+    opacity: 0.3;
+  }
   .pill {
-    width: 1em;
-    height: 1em;
-    display: block;
+    &-outer {
+      width: 1em;
+      height: 1em;
+      display: block;
+      transition: transform 0.3s var(--ease);
+      position: relative;
+    }
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     background: var(--fg);
     border-radius: 50%;
-    transition: transform 0.3s var(--ease);
+    transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+    transform: scale(0.8);
   }
 }
 </style>
