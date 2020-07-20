@@ -1,5 +1,9 @@
 <template>
 <Screen :back="{name: 'settings'}">
+  <Modal :show="showShortKeyInfo" @close="showShortKeyInfo = false">
+  <a href="https://gitlab.com/coboxcoop/ui/-/merge_requests/9" target="_blank">Shortcuts</a>
+  </Modal>
+
   <template v-slot:header>
     Options
   </template>
@@ -34,12 +38,14 @@
 import Screen       from '@/components/Screen.vue'
 import NavList      from '@/components/NavList.vue'
 import ToggleSwitch from '@/components/ToggleSwitch.vue'
+import Modal        from '@/components/Modal.vue'
 
 export default {
   components: {
     Screen,
     NavList,
-    ToggleSwitch
+    ToggleSwitch,
+    Modal
   },
   data: () => ({
     showShortKeyInfo: false
