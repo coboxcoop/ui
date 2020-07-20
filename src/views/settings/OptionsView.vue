@@ -1,7 +1,7 @@
 <template>
 <Screen :back="{name: 'settings'}">
   <Modal :show="showShortKeyInfo" @close="showShortKeyInfo = false">
-  <a href="https://gitlab.com/coboxcoop/ui/-/merge_requests/9" target="_blank">Shortcuts</a>
+    <a href="https://gitlab.com/coboxcoop/ui/-/merge_requests/9" target="_blank">Shortcuts</a>
   </Modal>
 
   <template v-slot:header>
