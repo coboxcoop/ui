@@ -4,8 +4,8 @@ export default ({api, events}) => ({
     message: null
   },
   actions: {
-    handle({commit, getters}, e) {
-      if(getters['settings/errorMessages']) {
+    handle({commit, rootGetters}, e) {
+      if(rootGetters['settings/errorMessages']) {
         if(e.response && e.response.data) {
           if('errors' in e.response.data) {
             const message = e.response.data.errors.map(error => {
