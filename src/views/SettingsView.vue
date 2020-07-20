@@ -14,21 +14,16 @@
   <NavList>
     <div class="switch">
       <label>Dark UI</label>
-      <button @click="toggleDark">
-        {{$store.state.settings.dark ? 'On' : 'Off'}}
-      </button>
+      <ToggleSwitch @input="toggleDark" :value="$store.state.settings.dark" />
     </div>
     <div class="switch">
-      <label>Keyboard Shortcuts <img @click="showShortKeyInfo = true" src="@/assets/images/icons/info.svg" /></label>
-      <button @click="toggleShortkey">
-        {{$store.state.settings.shortkey ? 'On' : 'Off'}}
-      </button>
+      <label>Shortcuts <img @click="showShortKeyInfo = true" src="@/assets/images/icons/info.svg" /></label>
+
+      <ToggleSwitch @input="toggleShortkey" :value="$store.state.settings.shortkey" />
     </div>
     <div class="switch">
       <label>Beta tester <img @click="showBetaInfo = true" src="@/assets/images/icons/info.svg" /></label>
-      <button @click="toggleBetaTester">
-        {{$store.state.settings.betaTester ? 'On' : 'Off'}}
-      </button>
+      <ToggleSwitch @input="toggleBetaTester" :value="$store.state.settings.betaTester" />
     </div>
     <div class="switch">
       <label>Error Messages</label>
@@ -51,6 +46,7 @@
 <style scoped lang="scss">
 .switch {
   display: flex;
+  align-items: center;
   label {
     flex: 1;
     img {
@@ -73,13 +69,15 @@ import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
 import Plus from '@/components/Plus.vue'
 import Modal from '@/components/Modal.vue'
+import ToggleSwitch from '@/components/ToggleSwitch.vue'
 
 export default {
   components: {
     Screen,
     NavList,
     Plus,
-    Modal
+    Modal,
+    ToggleSwitch
   },
   data: () => ({
     showBetaInfo: false,

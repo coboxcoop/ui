@@ -42,9 +42,7 @@
   <NavList>
     <div class="switch">
       <label>Sync</label>
-      <button @click="toggleSync">
-        {{connected ? 'On' : 'Off'}}
-      </button>
+      <ToggleSwitch :value="connected" @input="toggleSync" />
     </div>
   </NavList>
 </Screen>
@@ -61,6 +59,7 @@
 .switch {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 </style>
 
@@ -71,6 +70,7 @@ import SpaceIcon from '@/components/SpaceIcon.vue'
 import UserIcon from '@/components/UserIcon.vue'
 import Plus from '@/components/Plus.vue'
 import CopyKey from '@/components/CopyKey.vue'
+import ToggleSwitch from '@/components/ToggleSwitch.vue'
 import {api} from '@/api'
 
 export default {
@@ -80,7 +80,8 @@ export default {
     Screen,
     NavList,
     Plus,
-    CopyKey
+    CopyKey,
+    ToggleSwitch
   },
   data: () => ({
     publicKey: '',
