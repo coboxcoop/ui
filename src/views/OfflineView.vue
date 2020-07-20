@@ -5,6 +5,11 @@
     Could not connect<br />to CoBox API server.<br />
     <a @click.prevent="reload" href="#">Reload</a>
   </p>
+  <p>
+    If the server won't reload<br />please zip this folder<br />
+    `~/.cobox/v1/logs/`<br /> and send to <br />
+    bugs@cobox.cloud<br />
+  </p>
 </div>
 </template>
 
