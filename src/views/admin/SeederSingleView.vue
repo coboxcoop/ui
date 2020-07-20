@@ -41,7 +41,7 @@
 
   <br />
 
-  Encrypted spaces you're seeding:
+  Encrypted backups you're seeding:
   <NavList>
     <div v-for="replicate in replicates" :key="replicate.value.content.address">
       <Dot :color="replicate.value.type === 'command/unreplicate' ? 'orangered' : 'lightseagreen'" />
