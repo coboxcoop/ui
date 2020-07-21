@@ -15,9 +15,7 @@
     <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
     <div class="switch">
       <label>Error Messages</label>
-      <button @click="toggleErrorMessages">
-        {{$store.state.settings.errorMessages ? 'On' : 'Off'}}
-      </button>
+      <ToggleSwitch @input="toggleErrorMessages" :value="$store.state.settings.errorMessages" />
     </div>
   </NavList>
 </Screen>
