@@ -16,8 +16,15 @@
     <small>Public key</small>
     <CopyKey :value="$store.getters['profile/myPublicKey']" />
 
-    <footer class="switcher">
-      Switch profile
+    <transition name="slide-up">
+      <ProfileSwitcher v-if="showSwitcher" />
+    </transition>
+
+    <footer class="switcher" v-if="$store.state.profile.alternates.length">
+      <a href="#" @click.stop="showSwitcher = !showSwitcher">
+        <span v-if="showSwitcher">Close</span>
+        <span v-else>Switch profile</span>
+      </a>
     </footer>
   </div>
 </div>
@@ -25,19 +32,22 @@
 </template>
 
 <script>
-import Dot     from '@/components/Dot.vue'
-import NavList from '@/components/NavList.vue'
-import CopyKey from '@/components/CopyKey.vue'
+import Dot             from '@/components/Dot.vue'
+import NavList         from '@/components/NavList.vue'
+import CopyKey         from '@/components/CopyKey.vue'
+import ProfileSwitcher from '@/components/ProfileSwitcher.vue'
 
 export default {
   components: {
     NavList,
     Dot,
-    CopyKey
+    CopyKey,
+    ProfileSwitcher
   },
   data: () => ({
     editName: false,
-    name: ''
+    name: '',
+    showSwitcher: false
   }),
   mounted() {
     this.resetName()
@@ -107,6 +117,7 @@ export default {
   padding: 1.6rem;
   padding-bottom: 1.4rem;
   flex-direction: column;
+  overflow: hidden;
 }
 .close {
   position: absolute;
@@ -170,7 +181,7 @@ export default {
 .copy-key {
   margin-bottom: 0;
 }
-.switcher {
+footer {
   position: absolute;
   bottom: 0; left: 0;
   padding: 1.6rem;

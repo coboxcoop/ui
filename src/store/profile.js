@@ -1,7 +1,14 @@
 export default ({api, events}) => ({
   namespaced: true,
   state: {
-    data: null
+    data: null,
+    alternates: [{
+      name: 'Alice',
+      publicKey: '3c772091c75b77230b20d265367007a456f349aca255836fdb22879826e4270b'
+    }, {
+      name: 'Bob',
+      publicKey: 'f349a91c75b77230b20ca255836f22879826e4270b3c7720dbd2653670078456'
+    }]
   },
   actions: {
     async fetch({commit}) {
