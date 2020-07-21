@@ -8,7 +8,7 @@
       <p> This interface has been built on the lands of the Boon Wurrung and Wurundjeri peoples of the Eastern Kulin Nations, whose lands have been under ongoing illegal occupation by the settler state known as Australia since 1788.</p>
       <p> Their sovereignty was never ceeded and resistance has been fertile and ongoing.</p>
       <p> We pay our respects to their leaders and elders, past and present.<p>
-      <p>1% of funds used to build this interface have been passed to <a href="https://paytherent.net.au/" target="_blank">Pay The Rent</a> and <a href="https://www.indigitek.org.au" target="_blank">Indigitek</a>.</p>
+      <p>1% of funds used to build this interface will be passed to <a href="https://paytherent.net.au/" target="_blank">Pay The Rent</a> and <a href="https://www.indigitek.org.au" target="_blank">Indigitek</a> on an ongoing basis.</p>
       <p> Whose land are you on? Do you know? Do you acknowledge their right to it? If you live on colonised - stolen - land it is important you realise this.</p>
     </div>
 </Screen>
