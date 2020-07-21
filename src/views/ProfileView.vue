@@ -16,6 +16,9 @@
     <small>Public key</small>
     <CopyKey :value="$store.getters['profile/myPublicKey']" />
 
+    <footer class="switcher">
+      Switch profile
+    </footer>
   </div>
 </div>
 </transition>
@@ -166,5 +169,12 @@ export default {
 }
 .copy-key {
   margin-bottom: 0;
+}
+.switcher {
+  position: absolute;
+  bottom: 0; left: 0;
+  padding: 1.6rem;
+  padding-bottom: 1.4rem;
+  font-size: var(--small);
 }
 </style>

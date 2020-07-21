@@ -25,11 +25,11 @@
       <label>Beta tester <img @click="showBetaInfo = true" src="@/assets/images/icons/info.svg" /></label>
       <ToggleSwitch @input="toggleBetaTester" :value="$store.state.settings.betaTester" />
     </div>
+    <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
     <div class="switch">
       <label>Error Messages</label>
       <ToggleSwitch @input="toggleErrorMessages" :value="$store.state.settings.errorMessages" />
     </div>
-    <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
     <RouterLink :to="{name: 'settings-admin-seeders'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'settings-admin-seeders'})">
       Operate Seeders
     </RouterLink>

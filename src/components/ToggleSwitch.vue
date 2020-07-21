@@ -1,6 +1,8 @@
 <template>
 <div class="toggle-switch" :class="{on: !!value}" @click="$emit('input', !value)">
   <div class="pill-outer">
+    <img src="@/assets/images/icons/tick.svg" v-if="value" />
+    <img src="@/assets/images/icons/cross.svg" v-else />
     <i class="pill" />
   </div>
   <div class="bg" />
@@ -36,6 +38,16 @@
       display: block;
       transition: transform 0.3s var(--ease);
       position: relative;
+      img {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        display: block;
+        z-index: 2;
+        html:not(.dark) & {
+          filter: invert(1);
+        }
+      }
     }
     position: absolute;
     top: 0; left: 0;
