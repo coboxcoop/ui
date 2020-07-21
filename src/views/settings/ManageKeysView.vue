@@ -5,8 +5,8 @@
   </template>
 
   <NavList>
-  <RouterLink :to="{name: 'keys-backup'}" v-shortkey="['ctrl', 'b']" @shortkey.native="navigate({name: 'keys-backup'})" >Backup identity</RouterLink>
-    <a href="#" class="disabled-feature">Restore</a>
+    <RouterLink :to="{name: 'keys-backup'}" v-shortkey="['ctrl', 'b']" @shortkey.native="navigate({name: 'keys-backup'})" >Backup identity</RouterLink>
+    <RouterLink :to="{name: 'keys-restore'}">Restore</RouterLink>
   </NavList>
 </Screen>
 </template>
