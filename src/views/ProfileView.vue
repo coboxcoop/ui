@@ -21,9 +21,9 @@
     </transition>
 
     <footer class="switcher" v-if="$store.state.profile.alternates.length">
-      <a href="#" @click.stop="showSwitcher = !showSwitcher">
+      <a href="#" @click.stop="showSwitcher = !showSwitcher" v-shortkey="['ctrl', 's']" @shortkey="showSwitcher = !showSwitcher">
         <span v-if="showSwitcher">Close</span>
-        <span v-else>Switch profile</span>
+        <span v-else >Switch profile</span>
       </a>
     </footer>
   </div>
