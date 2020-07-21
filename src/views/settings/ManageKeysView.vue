@@ -6,7 +6,7 @@
 
   <NavList>
     <RouterLink :to="{name: 'keys-backup'}" v-shortkey="['ctrl', 'b']" @shortkey.native="navigate({name: 'keys-backup'})" >Backup identity</RouterLink>
-    <RouterLink :to="{name: 'keys-restore'}">Restore</RouterLink>
+    <RouterLink :to="{name: 'keys-restore'}">Restore identity</RouterLink>
   </NavList>
 </Screen>
 </template>

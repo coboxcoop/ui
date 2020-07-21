@@ -3,7 +3,7 @@
   <div class="page">
     <p>Restore identity</p>
 
-    <p>Use the button below to select a cobox backup file to restore from.</p>
+    <p>Use the button below to select a CoBox backup file to restore from.</p>
 
     <div class="file-wrap">
       <a href="#">Select file</a>
