@@ -37,17 +37,13 @@
 </style>
 
 <script>
-import Screen       from '@/components/Screen.vue'
-import NavList      from '@/components/NavList.vue'
-import Plus         from '@/components/Plus.vue'
-import ToggleSwitch from '@/components/ToggleSwitch.vue'
+import Screen   from '@/components/Screen.vue'
+import NavList  from '@/components/NavList.vue'
 
 export default {
   components: {
     Screen,
-    NavList,
-    Plus,
-    ToggleSwitch
+    NavList
   },
   computed: {
     uiVersion() {
