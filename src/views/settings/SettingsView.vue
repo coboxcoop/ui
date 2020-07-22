@@ -6,9 +6,6 @@
   </template>
 
   <NavList>
-    <RouterLink :to="{name: 'acknowledgment'}" v-shortkey="['ctrl', 'alt', 'k']" @shortkey.native="navigate({name: 'acknowledgment'})">
-      Acknowledgment
-    </RouterLink>
     <RouterLink :to="{name: 'advanced'}" v-shortkey="['ctrl', 'alt', 'a']" @shortkey.native="navigate({name: 'advanced'})">
       Advanced
     </RouterLink>

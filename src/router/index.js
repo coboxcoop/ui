@@ -17,8 +17,6 @@ import ManageKeysView                   from '@/views/settings/ManageKeysView.vu
 import AppearanceView                   from '@/views/settings/AppearanceView.vue'
 import AdvancedView                     from '@/views/settings/AdvancedView.vue'
 import OptionsView                      from '@/views/settings/OptionsView.vue'
-import AcknowledgmentView               from '@/views/settings/AcknowledgmentView.vue'
-import AcknowledgmentOfCountryView      from '@/views/settings/AcknowledgmentOfCountryView.vue'
 
 Vue.use(VueRouter)
 
@@ -31,8 +29,6 @@ const routes = [
   {path: '/profile',                         name: 'profile',                         component: ProfileView},
   {path: '/settings',                        name: 'settings',                        component: SettingsView},
   {path: '/settings/appearance',             name: 'appearance',                      component: AppearanceView},
-  {path: '/settings/acknowledgment',         name: 'acknowledgment',                  component: AcknowledgmentView},
-  {path: '/settings/acknowledgment/country', name: 'acknowledgment-of-country',       component: AcknowledgmentOfCountryView},
   {path: '/settings/advanced',               name: 'advanced',                        component: AdvancedView},
   {path: '/settings/options',                name: 'options',                         component: OptionsView},
   {path: '/settings/keys',                   name: 'manage-keys',                     component: ManageKeysView},
