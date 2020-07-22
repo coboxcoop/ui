@@ -7,7 +7,7 @@
 
     <div class="file-wrap">
       <a href="#">Select file</a>
-      <input type="file" />
+      <input type="file" name="export" />
     </div>
   </div>
 </Screen>

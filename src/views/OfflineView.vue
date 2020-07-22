@@ -7,7 +7,7 @@
   </p>
   <p>
     If the server won't reload<br />please zip this folder<br />
-    `~/.cobox/v1/logs/`<br /> and send to <br />
+    `~/.cobox/1/logs/`<br /> and send to <br />
     bugs@cobox.cloud<br />
   </p>
 </div>
