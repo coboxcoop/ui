@@ -4,7 +4,8 @@
     <p>Click the button below to export your nickname, keys, spaces, and seeders.
       Keep this in a safe place as it includes your secret keys!</p>
 
-    <a :href="exportUrl" :download="exportFilename" v-shortkey.once="['ctrl', 'd']" @shortkey="downloadExport" ref="download">Download secrets</a>
+    <a :href="exportUrl" :download="exportFilename" v-shortkey.once="['ctrl',
+      'd']" ref="download">Download secrets</a>
   </div>
 </Screen>
 </template>
@@ -28,10 +29,10 @@ export default {
     Screen
   },
   computed: {
-    exportUrl() {
+    exportUrl: function () {
       return baseURL+'/export'
     },
-    exportFilename() {
+    exportFilename: function () {
       return 'backup.cobox'
     }
   },
