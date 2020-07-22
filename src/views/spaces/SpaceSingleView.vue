@@ -44,6 +44,11 @@
       <label>Sync</label>
       <ToggleSwitch :value="connected" @input="toggleSync" />
     </div>
+    <form @submit.prvent="onSubmitDelete">
+      <div class="delete">
+        <button type="submit">DELETE</button>
+      </div>
+    </form>
   </NavList>
 </Screen>
 </template>
@@ -58,6 +63,11 @@
 }
 .switch {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.delete {
+  display: felx;
   justify-content: space-between;
   align-items: center;
 }
@@ -121,6 +131,17 @@ export default {
       try {
         const data = await this.$store.dispatch('spaces/createInvite', {address, publicKey})
         this.inviteCode = data.content.code
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+
+      this.publicKey = ''
+    },
+    async onSubmitDelete() {
+      const {space: {address}} = this
+
+      try {
+        const data = await this.$store.dispatch('spaces/delete', {address})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
