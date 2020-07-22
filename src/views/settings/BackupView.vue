@@ -4,7 +4,7 @@
     <p>Click the button below to export your nickname, keys, spaces, and seeders.
       Keep this in a safe place as it includes your secret keys!</p>
 
-    <a href="#" @click.prevent="onSubmit" v-shortkey.once="['ctrl', 'd']" @shortkey="onSubmit">Download secrets</a>
+    <a :href="exportUrl" :download="exportFilename" v-shortkey.once="['ctrl', 'd']" @shortkey="downloadExport" ref="download">Download secrets</a>
   </div>
 </Screen>
 </template>
@@ -18,6 +18,7 @@
 
 <script>
 import Screen from '@/components/Screen.vue'
+import {baseURL} from '@/api'
 
 export default {
   data: () => ({
@@ -26,18 +27,17 @@ export default {
   components: {
     Screen
   },
-  methods: {
-    async onSubmit() {
-      const {data} = await this.$store.dispatch('backup/export')
-      const a = document.createElement('a')
-      a.href = data
-      a.download = 'backup.cobox'
-      a.click()
+  computed: {
+    exportUrl() {
+      return baseURL+'/export'
     },
-    navigate(to) {
-      if (this.$store.state.settings.shortkey) {
-        this.$router.push(to)
-      }
+    exportFilename() {
+      return 'backup.cobox.json.gz'
+    }
+  },
+  methods: {
+    downloadExport() {
+      this.$refs.download.click()
     }
   }
 }

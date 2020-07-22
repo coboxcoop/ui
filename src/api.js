@@ -3,13 +3,13 @@ import axios from 'axios'
 
 const port = process.env.VUE_APP_API_PORT
 
-export const api = axios.create({
-  baseURL: `http://localhost:${port}/api`
-})
-
 const socketEndpoints = {
   api: `ws://localhost:${port}/api`
 }
+
+export const baseURL = `http://localhost:${port}/api`
+
+export const api = axios.create({baseURL})
 
 export const events = new EventEmitter()
 

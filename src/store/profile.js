@@ -2,29 +2,34 @@ export default ({api, events}) => ({
   namespaced: true,
   state: {
     data: null,
-    alternates: [{
-      name: 'Alice',
-      publicKey: '3c772091c75b77230b20d265367007a456f349aca255836fdb22879826e4270b'
-    }, {
-      name: 'Bob',
-      publicKey: 'f349a91c75b77230b20ca255836f22879826e4270b3c7720dbd2653670078456'
-    }]
+    alternates: []
   },
   actions: {
     async fetch({commit}) {
-      const {data} = await api.get('/profile')
-      commit('receiveData', data)
+      let res
+      res = await api.get('/profile')
+      commit('receiveData', res.data)
+
+      res = await api.get('/session')
+      commit('receiveAlternates', res.data)
     },
     async updateName({commit}, name) {
       let n = name.trim()
       if(!n) n = 'Anonymous'
       const {data} = await api.patch('/profile', {name: n})
       commit('receiveData', data)
+    },
+    async switch({commit}, id) {
+      const res = await api.put(`/session/${id}`)
+      window.location.reload()
     }
   },
   mutations: {
     receiveData(state, data) {
       state.data = data
+    },
+    receiveAlternates(state, data) {
+      state.alternates = data
     }
   },
   getters: {
@@ -57,6 +62,9 @@ export default ({api, events}) => ({
     },
     me(state) {
       return state.data
+    },
+    alternates(state, getters) {
+      return state.alternates.filter(({publicKey}) => publicKey !== getters.myPublicKey)
     }
   }
 })

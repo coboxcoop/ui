@@ -6,8 +6,8 @@
     <p>Use the button below to select a CoBox backup file to restore from.</p>
 
     <div class="file-wrap">
-      <a href="#" @click.prevent="onSubmit">Select file</a>
-      <input type="file" name="export" />
+      <a href="#">Select file</a>
+      <input type="file" @change="onSelectFile" />
     </div>
   </div>
 </Screen>
@@ -42,13 +42,11 @@ export default {
     Screen
   },
   methods: {
-    async onSubmit() {
-      //FIXME: this is based on the backup logic
-      const {data} = await this.$store.dispatch('backup/import')
-      const a = document.createElement('a')
-      a.href = data
-      a.download = 'INPUT'
-      a.click()
+    onSelectFile(event) {
+      if(event.target.files.length) {
+        const file = event.target.files[0]
+        this.$store.dispatch('backup/import', file)
+      }
     }
   }
 }

@@ -21,7 +21,7 @@
     </transition>
 
     <footer class="switcher" v-if="$store.state.profile.alternates.length">
-      <a href="#" @click.stop="showSwitcher = !showSwitcher" v-shortkey="['ctrl', 's']" @shortkey="showSwitcher = !showSwitcher">
+      <a href="#" @click.prevent="showSwitcher = !showSwitcher" v-shortkey="['ctrl', 's']" @shortkey="showSwitcher = !showSwitcher">
         <span v-if="showSwitcher">Close</span>
         <span v-else >Switch profile</span>
       </a>
@@ -187,5 +187,6 @@ footer {
   padding: 1.6rem;
   padding-bottom: 1.4rem;
   font-size: var(--small);
+  z-index: 3;
 }
 </style>

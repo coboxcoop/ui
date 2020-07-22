@@ -1,6 +1,6 @@
 <template>
 <div class="profile-switcher">
-  <div v-for="alt in alternates" :key="alt.publicKey" class="alt" @click="selectProfile(alt.publicKey)">
+  <div v-for="alt in alternates" :key="alt.publicKey" class="alt" @click="selectProfile(alt.id)">
     <div class="avatar" :style="{color: keyColor(alt.publicKey)}" />
     {{alt.name}}
   </div>
@@ -14,6 +14,8 @@
   width: 100%;
   padding: 1.2rem 1.6rem 4.4rem;
   box-shadow: 0 0 1rem var(--shadow);
+  z-index: 1;
+  background: var(--bg);
 }
 .alt {
   display: flex;
@@ -37,15 +39,15 @@
 export default {
   computed: {
     alternates() {
-      return this.$store.state.profile.alternates
+      return this.$store.getters['profile/alternates']
     }
   },
   methods: {
     keyColor(key) {
       return this.$store.getters['profile/keyColor'](key)
     },
-    selectProfile(key) {
-      this.$store.dispatch('profile/switchProfile', key)
+    selectProfile(id) {
+      this.$store.dispatch('profile/switch', id)
     }
   }
 }

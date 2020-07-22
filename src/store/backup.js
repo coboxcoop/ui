@@ -5,9 +5,16 @@ export default ({api, events}) => ({
       const {data} = await api.get('/export')
       return data
     },
-    async import({commit}, dir) {
-      const {data} = await api.post('/import')
-      return data
+    async import({}, file) {
+      const data = new FormData()
+      data.append('export', file)
+      await api.post('/import', data, {
+        headers: {
+          'Content-type': 'multipart/form-data'
+        }
+      })
+
+      window.location = '/'
     }
   }
 })
