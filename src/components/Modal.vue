@@ -2,7 +2,7 @@
 <transition name="pop">
 <div class="modal" v-if="show">
   <div class="sheet">
-    <a class="close" href="#" @click.prevent="$emit('close')">&times;</a>
+    <a class="close" href="#" @click.prevent="$emit('close')" v-shortkey="['esc']" @shortkey="navigate($emit('close'))">&times;</a>
 
     <slot />
   </div>
@@ -51,6 +51,13 @@
 export default {
   props: {
     show: Boolean
+  },
+  methods: {
+    navigate(to) {
+      if (this.$store.state.settings.shortkey) {
+        this.$router.push(to)
+      }
+    }
   }
 }
 </script>
