@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     async onSubmit() {
-      const {data} = await this.$store.dispatch('/export')
+      const {data} = await this.$store.dispatch('backup/export')
       const a = document.createElement('a')
       a.href = data
       a.download = 'backup.cobox'
