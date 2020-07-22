@@ -37,7 +37,7 @@ const routes = [
   {path: '/settings/options',                name: 'options',                         component: OptionsView},
   {path: '/settings/keys',                   name: 'manage-keys',                     component: ManageKeysView},
   {path: '/settings/keys/export',            name: 'secrets-export',                  component: ExportView},
-  {path: '/settings/keys/import',            name: 'secrets-import',                 component: ImportView},
+  {path: '/settings/keys/import',            name: 'secrets-import',                  component: ImportView},
   {path: '/settings/admin/seeders',          name: 'seeders',                         component: SeedersView},
   {path: '/settings/admin/seeders/join',     name: 'seeders-join',                    component: SeedersJoinView},
   {path: '/settings/admin/seeders/:address', name: 'seeder',                          component: SeederSingleView}

@@ -8,7 +8,7 @@
     <div class="text">
       <div class="message">{{$store.state.error.message}}</div>
     </div>
-    <button @click.prevent="$store.dispatch('error/dismiss')">Ok</button>
+    <button @click.prevent="$store.dispatch('error/dismiss')" v-shortkey="['esc']" @shortkey="navigate($store.dispatch('error/dismiss'))">Ok</button>
   </div>
 </transition>
 </template>
@@ -52,3 +52,15 @@
   }
 }
 </style>
+
+<script>
+export default {
+  methods: {
+    navigate(to) {
+      if (this.$store.state.settings.shortkey) {
+        this.$router.push(to)
+      }
+    }
+  }
+}
+</script>
