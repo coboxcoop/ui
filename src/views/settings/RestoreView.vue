@@ -40,6 +40,16 @@ import Screen from '@/components/Screen.vue'
 export default {
   components: {
     Screen
+  },
+  methods: {
+    async onSubmit() {
+      //FIXME: this is based on the backup logic
+      const {data} = await this.$store.dispatch('backup/import')
+      const a = document.createElement('a')
+      a.href = data
+      a.download = 'INPUT'
+      a.click()
+    }
   }
 }
 </script>

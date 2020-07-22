@@ -4,6 +4,10 @@ export default ({api, events}) => ({
     async export({commit}, dir) {
       const {data} = await api.put('/export')
       return data
+    },
+    async import({commit}, dir) {
+      const {data} = await api.put('/import')
+      return data
     }
   }
 })
