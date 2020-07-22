@@ -10,7 +10,7 @@
 
   <NavList>
     <div class="switch">
-      <label>Shortcuts <img @click="showShortKeyInfo = true" src="@/assets/images/icons/info.svg" /></label>
+      <label>Shortcuts <img @click="showShortKeyInfo = true" v-shortkey="['ctrl', 'i']" @shortkey="navigate(showShortKeyInfo = true)" src="@/assets/images/icons/info.svg" /></label>
       <ToggleSwitch @input="toggleShortkey" :value="$store.state.settings.shortkey" />
     </div>
   </NavList>
@@ -53,6 +53,11 @@ export default {
   methods: {
     toggleShortkey() {
       this.$store.dispatch('settings/toggleShortkey')
+    },
+    navigate(to) {
+      if (this.$store.state.settings.shortkey) {
+        this.$router.push(to)
+      }
     }
   }
 }

@@ -9,7 +9,7 @@
 
   <NavList>
     <div class="switch">
-      <label>Beta tester <img @click="showBetaInfo = true" src="@/assets/images/icons/info.svg" /></label>
+      <label>Beta tester <img @click="showBetaInfo = true" v-shortkey="['ctrl', 'i']" @shortkey="navigate(showBetaInfo = true)" src="@/assets/images/icons/info.svg" /></label>
       <ToggleSwitch @input="toggleBetaTester" :value="$store.state.settings.betaTester" />
     </div>
     <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
