@@ -6,7 +6,7 @@
     <p>Use the button below to select a CoBox backup file to restore from.</p>
 
     <div class="file-wrap">
-      <a href="#">Select file</a>
+      <a href="#" @click.prevent="onSubmit">Select file</a>
       <input type="file" name="export" />
     </div>
   </div>
