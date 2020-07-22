@@ -10,8 +10,8 @@ import SpaceSingleView                  from '@/views/spaces/SpaceSingleView.vue
 import SeedersView                      from '@/views/settings/admin/SeedersView.vue'
 import SeedersJoinView                  from '@/views/settings/admin/SeedersJoinView.vue'
 import SeederSingleView                 from '@/views/settings/admin/SeederSingleView.vue'
-import BackupView                       from '@/views/settings/BackupView.vue'
-import RestoreView                      from '@/views/settings/RestoreView.vue'
+import ExportView                       from '@/views/settings/ExportView.vue'
+import ImportView                       from '@/views/settings/ImportView.vue'
 import SettingsView                     from '@/views/settings/SettingsView.vue'
 import ManageKeysView                   from '@/views/settings/ManageKeysView.vue'
 import AppearanceView                   from '@/views/settings/AppearanceView.vue'
@@ -36,8 +36,8 @@ const routes = [
   {path: '/settings/advanced',               name: 'advanced',                        component: AdvancedView},
   {path: '/settings/options',                name: 'options',                         component: OptionsView},
   {path: '/settings/keys',                   name: 'manage-keys',                     component: ManageKeysView},
-  {path: '/settings/keys/backup',            name: 'keys-backup',                     component: BackupView},
-  {path: '/settings/keys/restore',           name: 'keys-restore',                    component: RestoreView},
+  {path: '/settings/keys/export',            name: 'secrets-export',                  component: ExportView},
+  {path: '/settings/keys/import',            name: 'secrets-import',                 component: ImportView},
   {path: '/settings/admin/seeders',          name: 'seeders',                         component: SeedersView},
   {path: '/settings/admin/seeders/join',     name: 'seeders-join',                    component: SeedersJoinView},
   {path: '/settings/admin/seeders/:address', name: 'seeder',                          component: SeederSingleView}

@@ -32,7 +32,7 @@ export default {
       return baseURL+'/export'
     },
     exportFilename() {
-      return 'backup.cobox.json.gz'
+      return 'backup.cobox'
     }
   },
   methods: {
