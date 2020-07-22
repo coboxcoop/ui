@@ -5,8 +5,8 @@
   </template>
 
   <NavList>
-    <RouterLink :to="{name: 'keys-backup'}" v-shortkey="['ctrl', 'b']" @shortkey.native="navigate({name: 'keys-backup'})" >Backup identity</RouterLink>
-    <RouterLink :to="{name: 'keys-restore'}" v-shortkey="['ctrl', 'r']" @shortkey.native="navigate({name: 'keys-restore'})" >Restore identity</RouterLink>
+    <RouterLink :to="{name: 'keys-backup'}" v-shortkey="['ctrl', 'b']" @shortkey.native="navigate({name: 'keys-backup'})" >Export secrets....</RouterLink>
+    <RouterLink :to="{name: 'keys-restore'}" v-shortkey="['ctrl', 'r']" @shortkey.native="navigate({name: 'keys-restore'})" >Import secrets...</RouterLink>
   </NavList>
 </Screen>
 </template>

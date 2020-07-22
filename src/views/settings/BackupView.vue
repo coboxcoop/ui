@@ -1,9 +1,10 @@
 <template>
 <Screen :back="{name: 'manage-keys'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div class="page">
-    <p>Click the button below to export your keys to downloadable PDF file</p>
+    <p>Click the button below to export your nickname, keys, spaces, and seeders.
+      Keep this in a safe place as it includes your secret keys!</p>
 
-    <a href="#" @click.prevent="onSubmit" v-shortkey.once="['ctrl', 'd']" @shortkey="onSubmit">Download paper keys</a>
+    <a href="#" @click.prevent="onSubmit" v-shortkey.once="['ctrl', 'd']" @shortkey="onSubmit">Download secrets</a>
   </div>
 </Screen>
 </template>
@@ -27,10 +28,10 @@ export default {
   },
   methods: {
     async onSubmit() {
-      const {data} = await this.$store.dispatch('backup/exportKeys')
+      const {data} = await this.$store.dispatch('/export')
       const a = document.createElement('a')
       a.href = data
-      a.download = 'key-backup.pdf'
+      a.download = 'backup.cobox'
       a.click()
     },
     navigate(to) {
