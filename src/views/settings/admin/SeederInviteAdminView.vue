@@ -1,5 +1,5 @@
 <template>
-  <Screen :back="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+  <Screen :back="{name: 'seeder', params: {address: seeder.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div v-if="inviteCode">
     <p>Please send the following invite code to the new collaborator. This will make them an admin of this seeder.</p>
     <CopyKey :value="inviteCode" />
@@ -34,6 +34,11 @@ export default {
   data: () => ({
     inviteCode: ''
   }),
+  computed: {
+    seeder() {
+      return this.$store.getters['seeders/single'](this.$route.params.address)
+    }
+  },
   methods: {
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
