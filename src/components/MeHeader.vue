@@ -26,6 +26,14 @@
   height: 3.6rem;
   .logo {
     display: flex;
+    .cloud {
+      height: 0.8em;
+      width: auto;
+      margin-top: 0.3rem;
+      html.dark & {
+        filter: invert(1);
+      }
+    }
     h1 {
       margin-left: 0.8rem;
       margin-top: -0.25rem;
@@ -37,14 +45,6 @@
       html.dark & {
         filter: invert(1);
       }
-    }
-  }
-  .cloud {
-    height: 0.8em;
-    width: auto;
-    margin-top: 0.2rem;
-    html.dark & {
-      filter: invert(1);
     }
   }
   .left {
