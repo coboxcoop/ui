@@ -39,12 +39,6 @@
       <button type="submit">Ok</button>
     </form>
   </div>
-  <NavList>
-    <div class="switch">
-      <label>Sync</label>
-      <ToggleSwitch :value="connected" @input="toggleSync" />
-    </div>
-  </NavList>
 </Screen>
 </template>
 
@@ -56,11 +50,6 @@
 .space-icon {
   margin-right: 0.3rem;
 }
-.switch {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 </style>
 
 <script>
@@ -70,7 +59,6 @@ import SpaceIcon from '@/components/SpaceIcon.vue'
 import UserIcon from '@/components/UserIcon.vue'
 import Plus from '@/components/Plus.vue'
 import CopyKey from '@/components/CopyKey.vue'
-import ToggleSwitch from '@/components/ToggleSwitch.vue'
 import {api} from '@/api'
 
 export default {
@@ -80,8 +68,7 @@ export default {
     Screen,
     NavList,
     Plus,
-    CopyKey,
-    ToggleSwitch
+    CopyKey
   },
   data: () => ({
     publicKey: '',
@@ -95,9 +82,6 @@ export default {
     },
     space() {
       return this.$store.getters['spaces/single'](this.$route.params.address)
-    },
-    connected() {
-      return this.$store.getters['spaces/connected'](this.space.address)
     },
     stat() {
       return this.$store.getters['spaces/stat'](this.space.address)
@@ -127,30 +111,9 @@ export default {
 
       this.publicKey = ''
     },
-    async joinSpace() {
-      try {
-        await this.$store.dispatch('spaces/join', this.space)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
-    async leaveSpace() {
-      try {
-        await this.$store.dispatch('spaces/leave', this.space)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
     openMount() {
       const {space: {address}} = this
       api.get(`spaces/${address}/drive`)
-    },
-    toggleSync() {
-      if(this.connected) {
-        this.leaveSpace()
-      } else {
-        this.joinSpace()
-      }
     }
   }
 }
