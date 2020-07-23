@@ -7,6 +7,7 @@ import SpacesInitView                   from '@/views/spaces/SpacesInitView.vue'
 import SpacesJoinView                   from '@/views/spaces/SpacesJoinView.vue'
 import SpacesCreateView                 from '@/views/spaces/SpacesCreateView.vue'
 import SpaceSingleView                  from '@/views/spaces/SpaceSingleView.vue'
+import SpaceInviteCollaboratorView      from '@/views/spaces/SpaceInviteCollaboratorView.vue'
 import SeedersView                      from '@/views/settings/admin/SeedersView.vue'
 import SeedersJoinView                  from '@/views/settings/admin/SeedersJoinView.vue'
 import SeederSingleView                 from '@/views/settings/admin/SeederSingleView.vue'
@@ -26,6 +27,7 @@ const routes = [
   {path: '/spaces/join',                     name: 'spaces-join',                     component: SpacesJoinView},
   {path: '/spaces/create',                   name: 'spaces-create',                   component: SpacesCreateView},
   {path: '/spaces/:address',                 name: 'space',                           component: SpaceSingleView},
+  {path: '/spaces/:address/invite',          name: 'space-invite',                    component: SpaceInviteCollaboratorView},
   {path: '/profile',                         name: 'profile',                         component: ProfileView},
   {path: '/settings',                        name: 'settings',                        component: SettingsView},
   {path: '/settings/appearance',             name: 'appearance',                      component: AppearanceView},

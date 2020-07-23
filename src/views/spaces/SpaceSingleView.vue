@@ -17,6 +17,8 @@
   <small>Space address</small>
   <CopyKey :value="space.address" />
 
+  <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite collaborator</RouterLink>
+
   <h2>{{peerCountString}}</h2>
 
   <NavList>
@@ -27,18 +29,6 @@
 
   <br />
 
-  <div v-if="inviteCode">
-    <p>Please send the following invite code to the new collaborator.</p>
-    <CopyKey :value="inviteCode" />
-  </div>
-  <div v-else>
-    <p>To invite someone to join this space, please provide their public key to create their bespoke invite code.</p>
-
-    <form @submit.prevent="onSubmitInvite">
-      <input class="has-ok-button" type="text" placeholder="Public key" v-model="publicKey" />
-      <button type="submit">Ok</button>
-    </form>
-  </div>
 </Screen>
 </template>
 
