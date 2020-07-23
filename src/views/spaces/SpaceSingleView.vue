@@ -9,15 +9,12 @@
     </div>
   </template>
 
-  <div style="height: 1.2rem" />
-
-  <small>Mount point</small>
-  <CopyKey :value="info.mount" action="Open" @action="openMount" />
-
   <NavList>
+    <a href="#" @click.prevent="openMount">Open folder</a>
     <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Folder health</RouterLink>
-    <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite collaborator</RouterLink>
   </NavList>
+  
+  <div style="height: 1.6rem" />
 
   <h2>{{peerCountString}}</h2>
 
@@ -25,6 +22,7 @@
     <div v-for="peer in peers" :key="peer.publicKey">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
     </div>
+    <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite collaborator</RouterLink>
   </NavList>
 
   <br />
