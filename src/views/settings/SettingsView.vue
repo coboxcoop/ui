@@ -16,7 +16,7 @@
       Manage Keys
     </RouterLink>
     <RouterLink :to="{name: 'seeders'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'seeders'})">
-      Operate Seeders
+      Seeders
     </RouterLink>
     <RouterLink :to="{name: 'options'}" v-shortkey="['ctrl', 'o']" @shortkey.native="navigate({name: 'options'})">
       Options
