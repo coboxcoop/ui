@@ -12,6 +12,7 @@
   <NavList>
     <a href="#" @click.prevent="openMount">Open folder</a>
     <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Folder health</RouterLink>
+    <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}">Delete</RouterLink>
   </NavList>
   
   <div style="height: 1.6rem" />

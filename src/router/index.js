@@ -8,6 +8,7 @@ import SpacesCreateView                 from '@/views/spaces/SpacesCreateView.vu
 import SpaceSingleView                  from '@/views/spaces/SpaceSingleView.vue'
 import SpaceInviteCollaboratorView      from '@/views/spaces/SpaceInviteCollaboratorView.vue'
 import SpaceHealthView                  from '@/views/spaces/SpaceHealthView.vue'
+import SpaceDeleteView                  from '@/views/spaces/SpaceDeleteView.vue'
 import SeedersView                      from '@/views/settings/admin/SeedersView.vue'
 import SeedersJoinView                  from '@/views/settings/admin/SeedersJoinView.vue'
 import SeederSingleView                 from '@/views/settings/admin/SeederSingleView.vue'
@@ -31,6 +32,7 @@ const routes = [
   {path: '/folders/:address',                           name: 'space',                           component: SpaceSingleView},
   {path: '/folders/:address/invite',                    name: 'space-invite',                    component: SpaceInviteCollaboratorView},
   {path: '/folders/:address/health',                    name: 'space-health',                    component: SpaceHealthView},
+  {path: '/folders/:address/delete',                    name: 'space-delete',                    component: SpaceDeleteView},
   {path: '/settings',                                   name: 'settings',                        component: SettingsView},
   {path: '/settings/profile',                           name: 'profile',                         component: ProfileView},
   {path: '/settings/appearance',                        name: 'appearance',                      component: AppearanceView},
@@ -42,7 +44,7 @@ const routes = [
   {path: '/settings/admin/seeders',                     name: 'seeders',                         component: SeedersView},
   {path: '/settings/admin/seeders/join',                name: 'seeders-join',                    component: SeedersJoinView},
   {path: '/settings/admin/seeders/:address',            name: 'seeder',                          component: SeederSingleView},
-  {path: '/settings/admin/seeders/:address/invite',     name: 'seeder-invite',                          component: SeederInviteAdminView}
+  {path: '/settings/admin/seeders/:address/invite',     name: 'seeder-invite',                   component: SeederInviteAdminView}
 ]
 
 export default new VueRouter({

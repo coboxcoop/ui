@@ -23,6 +23,7 @@ html {
 
   --bg: white;
   --fg: black;
+  --danger: #e3342f;
   --hover: rgba(127, 127, 127, 1);
   --modal-bg: rgba(0, 0, 0, 0.06);
   --shadow: rgba(0, 0, 0, 0.15);
@@ -119,6 +120,16 @@ small {
   pointer-events: none;
 }
 
+.big-button {
+  background: var(--fg);
+  color: var(--bg);
+  text-align: center;
+  border-radius: 0.4rem;
+  padding: 0.6rem;
+  &.danger {
+    background: var(--danger);
+  }
+}
 
 .modal .content a {
   border-bottom: 1px solid;

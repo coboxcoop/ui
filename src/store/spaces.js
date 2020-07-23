@@ -41,6 +41,11 @@ export default ({api, events}) => ({
       await dispatch('fetch')
       return data
     },
+    async delete({}, {address}) {
+      const {data} = await api.delete(`/spaces/${address}`)
+      await dispatch('fetch')
+      return data
+    },
     async acceptInvite({dispatch}, code) {
       const {data} = await api.get('/spaces/invites/accept', {params: {code}})
       await dispatch('fetch')
