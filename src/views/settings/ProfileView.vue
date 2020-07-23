@@ -13,7 +13,7 @@
 
     <br />
 
-    <small>Public key</small>
+    <small>My cobox address:</small>
     <CopyKey :value="$store.getters['profile/myPublicKey']" />
 
     <transition name="slide-up">

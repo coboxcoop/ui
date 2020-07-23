@@ -1,7 +1,7 @@
 <template>
   <Screen>
   <template v-slot:header>
-    Spaces
+    Folders
     <RouterLink :to="{name: 'spaces-init'}" v-shortkey="['ctrl', 'space']" @shortkey.native="navigate({name: 'spaces-init'})">
       <Plus />
     </RouterLink>
@@ -9,17 +9,11 @@
   <NavList>
   <RouterLink v-for="space in spaces" :key="space.address" class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
       <div>
-        <SpaceIcon :address="space.address" /> {{space.name}}
+        {{space.name}}
       </div>
       <div class="stat" v-if="stat(space.address)">{{stat(space.address).size | bytes}}</div>
     </RouterLink>
   </NavList>
-
-  <footer>
-    <RouterLink :to="{name: 'settings'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'settings'})">
-      <img src="@/assets/images/icons/settings.svg" /> Settings
-    </RouterLink>
-  </footer>
 </Screen>
 </template>
 
@@ -50,12 +44,10 @@ footer {
 <script>
 import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
-import SpaceIcon from '@/components/SpaceIcon.vue'
 import Plus from '@/components/Plus.vue'
 
 export default {
   components: {
-    SpaceIcon,
     Screen,
     NavList,
     Plus

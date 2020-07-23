@@ -4,8 +4,8 @@
     <p>Hi {{$store.getters['profile/myName']}}, what would you like to do?</p>
 
     <NavList>
-    <RouterLink :to="{name: 'spaces-join'}" v-shortkey="['ctrl', 'j']" @shortkey.native="navigate({name: 'spaces-join'})">Join a Space</RouterLink>
-    <RouterLink :to="{name: 'spaces-create'}" v-shortkey="['ctrl', 'c']" @shortkey.native="navigate({name: 'spaces-create'})">Create a Space</RouterLink>
+    <RouterLink :to="{name: 'spaces-join'}" v-shortkey="['ctrl', 'j']" @shortkey.native="navigate({name: 'spaces-join'})">Join a folder</RouterLink>
+    <RouterLink :to="{name: 'spaces-create'}" v-shortkey="['ctrl', 'c']" @shortkey.native="navigate({name: 'spaces-create'})">Create a folder</RouterLink>
     </NavList>
   </div>
 </Screen>

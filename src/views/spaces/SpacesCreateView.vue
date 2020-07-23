@@ -1,10 +1,10 @@
 <template>
 <Screen :back="{name: 'spaces-init'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div class="page">
-    <p>What would you like your Space to be called?</p>
+    <p>What would you like your folder to be called?</p>
 
     <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="Space name" v-model="spaceName" class="has-ok-button" />
+      <input type="text" placeholder="Folder name" v-model="spaceName" class="has-ok-button" />
       <button type="submit">Ok</button>
     </form>
   </div>

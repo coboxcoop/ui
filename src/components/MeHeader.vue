@@ -5,11 +5,15 @@
       <RouterLink v-if="back" :to="back" class="back" v-shortkey="['ctrl', 'arrowleft']" @shortkey.native="navigate(back)">
         <TriangleIcon class="triangle" />
       </RouterLink>
-      <RouterLink :to="{name: 'profile'}" >
-        <Dot :color="$store.getters['profile/myKeyColor']" /> {{$store.getters['profile/myName']}}
+      <RouterLink to="/" class="logo">
+        <img src="@/assets/images/icons/CoBox-icon.png" class="cloud" />
+        <h1>CoBox</h1>
       </RouterLink>
     </div>
 
+    <RouterLink :to="{name: 'settings'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'settings'})" class="settings">
+      <img src="@/assets/images/icons/settings.svg" />
+    </RouterLink>
   </div>
 </div>
 </template>
@@ -19,6 +23,30 @@
   display: flex;
   justify-content: space-between;
   padding-bottom: 0.6rem;
+  height: 3.6rem;
+  .logo {
+    display: flex;
+    .cloud {
+      height: 0.8em;
+      width: auto;
+      margin-top: 0.3rem;
+      html.dark & {
+        filter: invert(1);
+      }
+    }
+    h1 {
+      margin-left: 0.8rem;
+      margin-top: -0.25rem;
+    }
+  }
+  .settings {
+    margin-left: auto;
+    img {
+      html.dark & {
+        filter: invert(1);
+      }
+    }
+  }
   .left {
     display: flex;
   }
@@ -47,12 +75,10 @@
 </style>
 
 <script>
-import Dot from '@/components/Dot.vue'
 import TriangleIcon from '@/components/TriangleIcon.vue'
 
 export default {
   components: {
-    Dot,
     TriangleIcon
   },
   props: {
@@ -63,7 +89,7 @@ export default {
       if (this.$store.state.settings.shortkey) {
         switch (event.srcKey) {
           case 'profile':
-            this.$router.push("/profile")
+            this.$router.push("/settings/profile")
             break;
           case 'home':
             this.$router.push("/")

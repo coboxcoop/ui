@@ -118,3 +118,11 @@ small {
   text-decoration: line-through;
   pointer-events: none;
 }
+
+
+.modal .content a {
+  border-bottom: 1px solid;
+  &:hover {
+    border-bottom-color: transparent;
+  }
+}

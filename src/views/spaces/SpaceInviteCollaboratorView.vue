@@ -1,16 +1,18 @@
 <template>
-<Screen :back="{name: 'spaces-init'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+<Screen :back="{name: 'space', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div class="page">
-    <p>To join a folder, send your cobox address to someone that can invite you.</p>
+    <div v-if="inviteCode">
+      <p>Please send the following invite code to the new collaborator.</p>
+      <CopyKey :value="inviteCode" />
+    </div>
+    <div v-else>
+      <p>To invite a collaborator provide their cobox address to make them a secure invite code.</p>
 
-    <small>Your cobox address:</small>
-    <CopyKey :value="$store.getters['profile/myPublicKey']" />
-
-    <p>What is the invite code of the folder?</p>
-    <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="Invite code" v-model="inviteCode" class="has-ok-button" />
-      <button type="submit">Ok</button>
-    </form>
+      <form @submit.prevent="onSubmitInvite">
+        <input class="has-ok-button" type="text" placeholder="collaborator cobox address" v-model="publicKey" />
+        <button type="submit">Ok</button>
+      </form>
+    </div>
   </div>
 </Screen>
 </template>
@@ -48,6 +50,11 @@ export default {
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
+    }
+  },
+  computed: {
+    space() {
+      return this.$store.getters['spaces/single'](this.$route.params.address)
     }
   }
 }

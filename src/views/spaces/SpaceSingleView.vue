@@ -3,19 +3,18 @@
   <template v-slot:header>
     <div class="header">
       <div>
-        <SpaceIcon :address="space.address" /> {{space.name}}
+        {{space.name}}
       </div>
       <div class="stat">{{stat.size | bytes}}</div>
     </div>
   </template>
 
-  <div style="height: 1.2rem" />
-
-  <small>Mount point</small>
-  <CopyKey :value="info.mount" action="Open" @action="openMount" />
-
-  <small>Space address</small>
-  <CopyKey :value="space.address" />
+  <NavList>
+    <a href="#" @click.prevent="openMount">Open folder</a>
+    <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Folder health</RouterLink>
+  </NavList>
+  
+  <div style="height: 1.6rem" />
 
   <h2>{{peerCountString}}</h2>
 
@@ -23,28 +22,11 @@
     <div v-for="peer in peers" :key="peer.publicKey">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
     </div>
+    <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite collaborator</RouterLink>
   </NavList>
 
   <br />
 
-  <div v-if="inviteCode">
-    <p>Please send the following invite code to the new collaborator.</p>
-    <CopyKey :value="inviteCode" />
-  </div>
-  <div v-else>
-    <p>To invite someone to join this space, please provide their public key to create their bespoke invite code.</p>
-
-    <form @submit.prevent="onSubmitInvite">
-      <input class="has-ok-button" type="text" placeholder="Public key" v-model="publicKey" />
-      <button type="submit">Ok</button>
-    </form>
-  </div>
-  <NavList>
-    <div class="switch">
-      <label>Sync</label>
-      <ToggleSwitch :value="connected" @input="toggleSync" />
-    </div>
-  </NavList>
 </Screen>
 </template>
 
@@ -56,32 +38,21 @@
 .space-icon {
   margin-right: 0.3rem;
 }
-.switch {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 </style>
 
 <script>
 import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
-import SpaceIcon from '@/components/SpaceIcon.vue'
 import UserIcon from '@/components/UserIcon.vue'
-import Plus from '@/components/Plus.vue'
 import CopyKey from '@/components/CopyKey.vue'
-import ToggleSwitch from '@/components/ToggleSwitch.vue'
 import {api} from '@/api'
 
 export default {
   components: {
-    SpaceIcon,
     UserIcon,
     Screen,
     NavList,
-    Plus,
-    CopyKey,
-    ToggleSwitch
+    CopyKey
   },
   data: () => ({
     publicKey: '',
@@ -91,13 +62,10 @@ export default {
     peerCountString() {
       const count = this.$store.getters['spaces/peerCount'](this.space.address)
 
-      return `${count} peer${count != 1 ? 's' : ''}`
+      return `${count} collaborator${count != 1 ? 's' : ''}`
     },
     space() {
       return this.$store.getters['spaces/single'](this.$route.params.address)
-    },
-    connected() {
-      return this.$store.getters['spaces/connected'](this.space.address)
     },
     stat() {
       return this.$store.getters['spaces/stat'](this.space.address)
@@ -127,30 +95,9 @@ export default {
 
       this.publicKey = ''
     },
-    async joinSpace() {
-      try {
-        await this.$store.dispatch('spaces/join', this.space)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
-    async leaveSpace() {
-      try {
-        await this.$store.dispatch('spaces/leave', this.space)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
     openMount() {
       const {space: {address}} = this
       api.get(`spaces/${address}/drive`)
-    },
-    toggleSync() {
-      if(this.connected) {
-        this.leaveSpace()
-      } else {
-        this.joinSpace()
-      }
     }
   }
 }

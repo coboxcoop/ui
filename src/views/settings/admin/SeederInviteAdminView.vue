@@ -1,14 +1,14 @@
 <template>
-<Screen :back="{name: 'spaces-init'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
-  <div class="page">
-    <p>To join a folder, send your cobox address to someone that can invite you.</p>
+  <Screen :back="{name: 'seeder', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+  <div v-if="inviteCode">
+    <p>Please send the following invite code to the new collaborator. This will make them an admin of this seeder.</p>
+    <CopyKey :value="inviteCode" />
+  </div>
+  <div v-else>
+    <p>To invite someone as an admin for this seeder, please provide their cobox address.</p>
 
-    <small>Your cobox address:</small>
-    <CopyKey :value="$store.getters['profile/myPublicKey']" />
-
-    <p>What is the invite code of the folder?</p>
-    <form @submit.prevent="onSubmit">
-      <input type="text" placeholder="Invite code" v-model="inviteCode" class="has-ok-button" />
+    <form @submit.prevent="onSubmitInvite">
+      <input class="has-ok-button" type="text" placeholder="collaborator's cobox address" v-model="publicKey" />
       <button type="submit">Ok</button>
     </form>
   </div>
@@ -34,6 +34,11 @@ export default {
   data: () => ({
     inviteCode: ''
   }),
+  computed: {
+    seeder() {
+      return this.$store.getters['seeders/single'](this.$route.params.address)
+    }
+  },
   methods: {
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
@@ -48,6 +53,11 @@ export default {
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
+    }
+  },
+  computed: {
+    space() {
+      return this.$store.state.spaces.data
     }
   }
 }

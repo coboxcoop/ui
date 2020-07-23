@@ -2,37 +2,24 @@
   <Screen :back="{name: 'seeders'}" v-if="seeder">
   <template v-slot:header>
     <div class="header">
-      <div><Dot :color="connected ? 'lightseagreen' : 'lightgray'" /> {{seeder.name}}</div>
+      {{seeder.name}}
     </div>
   </template>
 
   <br />
-  Replicate Space:
-  <p>Please get the address for the space which you would like to backup.</p>
+  Seed folder:
+  <p>Please get the address for the folder which you would like to seed.</p>
   <form @submit.prevent="onSubmitAddReplicate">
-    <input type="text" placeholder="Space address" v-model="address">
+    <input type="text" placeholder="Folder address" v-model="address">
     <input class="has-ok-button" type="text" placeholder="Name" v-model="name">
     <button type="submit">Ok</button>
   </form>
 
   <br />
 
-  <div v-if="inviteCode">
-    <p>Please send the following invite code to the new collaborator. This will make them an admin of this seeder.</p>
-    <CopyKey :value="inviteCode" />
-  </div>
-  <div v-else>
-    <p>To invite someone as an admin for this seeder, please provide their public key.</p>
+  <RouterLink :to="{name: 'seeder-invite'}" v-shortkey="['ctrl', 'a']" @shortkey.native="navigate({name: 'seeder-invite'})">Add admin</RouterLink>
 
-    <form @submit.prevent="onSubmitInvite">
-      <input class="has-ok-button" type="text" placeholder="Public key" v-model="publicKey" />
-      <button type="submit">Ok</button>
-    </form>
-  </div>
-
-  <br />
-
-  Admins:
+  Seeder admins:
   <NavList>
     <div v-for="peer in peers" :key="peer.data.author">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
@@ -41,16 +28,13 @@
 
   <br />
 
-  Encrypted backups you're seeding:
+  Encrypted folders you're seeding:
   <NavList>
     <div v-for="replicate in replicates" :key="replicate.value.content.address">
-      <Dot :color="replicate.value.type === 'command/unreplicate' ? 'orangered' : 'lightseagreen'" />
       {{replicate.value.content.name}}
       <div v-if="author = replicateAuthor(replicate)">
-        Added by <UserIcon :address="author.data.author" /> {{author.data.content.name}}
+        Added by {{author.data.content.name}}
       </div>
-      <button v-if="replicate.value.type === 'command/replicate'" @click="() => onSubmitUnreplicate(replicate)">Unreplicate</button>
-      <button v-else @click="() => onSubmitReplicate(replicate)">Replicate</button>
     </div>
   </NavList>
 </Screen>
@@ -71,7 +55,6 @@ import Screen    from '@/components/Screen.vue'
 import NavList   from '@/components/NavList.vue'
 import SpaceIcon from '@/components/SpaceIcon.vue'
 import Plus      from '@/components/Plus.vue'
-import CopyKey   from '@/components/CopyKey.vue'
 import Dot       from '@/components/Dot.vue'
 import UserIcon  from '@/components/UserIcon.vue'
 
@@ -81,7 +64,6 @@ export default {
     Screen,
     NavList,
     Plus,
-    CopyKey,
     Dot,
     UserIcon
   },
@@ -106,6 +88,11 @@ export default {
     }
   },
   methods: {
+    navigate(to) {
+      if (this.$store.state.settings.shortkey) {
+        this.$router.push(to)
+      }
+    },
     replicateAuthor(replicate) {
       return this.$store.getters['seeders/replicateAuthor'](this.seeder.address, replicate)
     },
@@ -133,40 +120,6 @@ export default {
 
       this.address = ''
       this.name = ''
-    },
-    async onSubmitReplicate(replicate) {
-      const seeder = this.seeder.address
-      const {address, name} = replicate.value.content
-
-      try {
-        const data = await this.$store.dispatch('seeders/replicate', {address, name, seeder})
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
-    async onSubmitUnreplicate(replicate) {
-      const seeder = this.seeder.address
-      const {address, name} = replicate.value.content
-
-      try {
-        await this.$store.dispatch('seeders/unreplicate', {address, name, seeder})
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
-    async joinSeeder() {
-      try {
-        await this.$store.dispatch('seeders/join', this.seeder)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
-    async leaveSeeder() {
-      try {
-        await this.$store.dispatch('seeders/leave', this.seeder)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
     }
   }
 }

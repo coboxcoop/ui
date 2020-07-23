@@ -21,6 +21,9 @@
     <RouterLink :to="{name: 'options'}" v-shortkey="['ctrl', 'o']" @shortkey.native="navigate({name: 'options'})">
       Options
     </RouterLink>
+    <RouterLink :to="{name: 'profile'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+      Profile
+    </RouterLink>
   </NavList>
   <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
 </Screen>
