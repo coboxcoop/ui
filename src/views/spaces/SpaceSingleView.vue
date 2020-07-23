@@ -14,10 +14,10 @@
   <small>Mount point</small>
   <CopyKey :value="info.mount" action="Open" @action="openMount" />
 
-  <small>Folder address</small>
-  <CopyKey :value="space.address" />
-
-  <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite collaborator</RouterLink>
+  <NavList>
+    <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Folder health</RouterLink>
+    <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite collaborator</RouterLink>
+  </NavList>
 
   <h2>{{peerCountString}}</h2>
 
