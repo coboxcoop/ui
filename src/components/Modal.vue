@@ -4,7 +4,9 @@
   <div class="sheet">
     <a class="close" href="#" @click.prevent="$emit('close')" v-shortkey="['esc']" @shortkey="navigate($emit('close'))">&times;</a>
 
-    <slot />
+    <div class="content">
+      <slot />
+    </div>
   </div>
 </div>
 </transition>
