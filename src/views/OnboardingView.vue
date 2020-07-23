@@ -10,11 +10,14 @@
     <input v-model="name" class="has-ok-button" type="text" placeholder="My name" />
     <button type="submit">Ok</button>
   </form>
-  <small>This can be changed anytime.</small>
+  <small style="margin-top: 0.6rem;">This can be changed at any time</small>
 
-  <div style="height: 1.2rem" />
+  <div style="height: 2.4rem" />
 
-  <small>Warning: this is alpha software released for the purpose of testing. Please opt-in to help submit error logs. This can be switched off in Settings > Advanced</small>
+  <small>Note: this is alpha software released for the purpose of testing. Please opt-in to help submit error logs. This can be configured in Settings > Advanced.</small>
+
+  <div style="height: 2.4rem" />
+
   <div class="switch">
     <label>Beta tester <img @click="showBetaInfo = true" v-shortkey="['ctrl', 'i']" @shortkey="navigate(showBetaInfo = true)" src="@/assets/images/icons/info.svg" /></label>
     <ToggleSwitch @input="toggleBetaTester" :value="$store.state.settings.betaTester" />
