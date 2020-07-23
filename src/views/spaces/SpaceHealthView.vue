@@ -15,7 +15,7 @@
   <CopyKey :value="space.address" />
   <small>When you close your laptop, your CoBox app will stop syncronizing data.
   To make sure your data is always available, it needs more seeders. Provide this
-  cobox folder address to a seeder admin so they can seeder your folder.</small>
+  CoBox folder address to a seeder admin so they can seed your folder.</small>
 
 
   <br />

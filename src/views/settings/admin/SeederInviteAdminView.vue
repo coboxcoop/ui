@@ -5,10 +5,10 @@
     <CopyKey :value="inviteCode" />
   </div>
   <div v-else>
-    <p>To invite someone as an admin for this seeder, please provide their cobox address.</p>
+    <p>To invite someone as an admin for this seeder, please provide their CoBox address.</p>
 
     <form @submit.prevent="onSubmitInvite">
-      <input class="has-ok-button" type="text" placeholder="collaborator's cobox address" v-model="publicKey" />
+      <input class="has-ok-button" type="text" placeholder="Collaborator CoBox address" v-model="publicKey" />
       <button type="submit">Ok</button>
     </form>
   </div>
