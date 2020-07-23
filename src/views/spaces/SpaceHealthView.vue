@@ -1,5 +1,5 @@
 <template>
-<Screen :back="{name: 'spaces'}" v-if="space" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+<Screen :back="{name: 'space', params: {address: space.address}}" v-if="space" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <template v-slot:header>
     <div class="header">
       <div>
