@@ -44,11 +44,6 @@
       <label>Sync</label>
       <ToggleSwitch :value="connected" @input="toggleSync" />
     </div>
-    <form @submit.prvent="onSubmitDelete">
-      <div class="delete">
-        <button type="submit">DELETE</button>
-      </div>
-    </form>
     <div v-if="deleteChecked">
       <p> collaborator-list: may still have copies of the data on their machines</p>
       <p> seeder-list: may still have encrypted copies of this data</p>
@@ -57,12 +52,12 @@
         <div class="delete">
           <button type="submit">DELETE</button>
         </div>
-      </form>
+    </form>
     </div>
     <div v-else>
       <form @submit.prevent="onSubmitDeleteCheck">
         <label>DELETE folder</label>
-        <input class="has-ok-button" type="text" placeholder="Name of folder" v-model="space.name" />
+        <input class="has-ok-button" type="text" placeholder="Name of folder" v-model="confirmFolder"/>
         <button type="submit">Ok</button>
       </form>
     </div>
@@ -156,7 +151,9 @@ export default {
       this.publicKey = ''
     },
     async onSubmitDeleteCheck() {
-      const deleteChecked = true
+      if(this.confirmFolder.trim() === this.space.name) {
+        const deleteChecked = true
+      }
     },
     async onSubmitDelete() {
       const {space: {address}} = this
