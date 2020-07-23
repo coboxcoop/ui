@@ -14,7 +14,7 @@
 
   <div style="height: 2.4rem" />
 
-  <small>Note: this is alpha software released for the purpose of testing. Please opt-in to help submit error logs. This can be configured in Settings > Advanced.</small>
+  <small>This is alpha software released for the purpose of testing. Please opt-in to help submit error logs.</small>
 
   <div style="height: 2.4rem" />
 
