@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     space() {
-      return this.$store.state.spaces.data
+      return this.$store.getters['spaces/single'](this.$route.params.address)
     }
   }
 }
