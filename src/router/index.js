@@ -24,11 +24,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {path: '/',                                           name: 'spaces',                          component: SpacesView},
-  {path: '/spaces/init',                                name: 'spaces-init',                     component: SpacesInitView},
-  {path: '/spaces/join',                                name: 'spaces-join',                     component: SpacesJoinView},
-  {path: '/spaces/create',                              name: 'spaces-create',                   component: SpacesCreateView},
-  {path: '/spaces/:address',                            name: 'space',                           component: SpaceSingleView},
-  {path: '/spaces/:address/invite',                     name: 'space-invite',                    component: SpaceInviteCollaboratorView},
+  {path: '/folders/init',                                name: 'spaces-init',                     component: SpacesInitView},
+  {path: '/folders/join',                                name: 'spaces-join',                     component: SpacesJoinView},
+  {path: '/folders/create',                              name: 'spaces-create',                   component: SpacesCreateView},
+  {path: '/folders/:address',                            name: 'space',                           component: SpaceSingleView},
+  {path: '/folders/:address/invite',                     name: 'space-invite',                    component: SpaceInviteCollaboratorView},
   {path: '/settings',                                   name: 'settings',                        component: SettingsView},
   {path: '/settings/profile',                           name: 'profile',                         component: ProfileView},
   {path: '/settings/appearance',                        name: 'appearance',                      component: AppearanceView},
