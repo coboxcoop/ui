@@ -1,11 +1,23 @@
 <template>
 <div class="container">
+
+  <Modal :show="showBetaInfo" @close="showBetaInfo = false">
+    <p>By signing up as a beta tester for sprout release you are agreeing to submit redacted logs to a third-party cloud error monitoring & reporting tool CoBox uses called <a href="https://www.bugsnag.com/" target="_blank">bugsnag</a>. To learn more you can visit our <a href="https://gitlab.com/coboxcoop/readme/-/wikis/Testing" target="_blank">wiki.</a> Providing an email is optional, but very helpful.</p>
+  </Modal>
+
   <p>Welcome to CoBox. How do you want to be known to your peers?</p>
   <form @submit.prevent="onSubmitName">
     <input v-model="name" class="has-ok-button" type="text" placeholder="My name" />
     <button type="submit">Ok</button>
   </form>
-  <small>You can change it anytime via your profile</small>
+  <small>This can be changed anytime in Settings > Profile</small>
+  
+  <small>Warning: this is alpha software released for the purpose of testing. Please opt-in to help submit error logs. This can be switched off in Settings > Advanced</small>
+  <div class="switch">
+    <label>Beta tester <img @click="showBetaInfo = true" v-shortkey="['ctrl', 'i']" @shortkey="navigate(showBetaInfo = true)" src="@/assets/images/icons/info.svg" /></label>
+    <ToggleSwitch @input="toggleBetaTester" :value="$store.state.settings.betaTester" />
+  </div>
+  <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
 
   <div class="bottom">
     <button @click.prevent>Import identity</button>
@@ -20,14 +32,36 @@
   flex: 1;
   padding: 1.6rem;
 }
+.switch {
+  display: flex;
+  align-items: center;
+  label {
+    flex: 1;
+    img {
+      margin-bottom: -0.1em;
+      cursor: pointer;
+      html.dark & {
+        filter: invert(1);
+      }
+    }
+  }
+}
 .bottom {
   margin-top: auto;
 }
 </style>
 
 <script>
+import ToggleSwitch from '@/components/ToggleSwitch.vue'
+import Modal        from '@/components/Modal.vue'
+
 export default {
+  components: {
+    ToggleSwitch,
+    Modal
+  },
   data: () => ({
+    showBetaInfo: false,
     name: ''
   }),
   methods: {
@@ -42,6 +76,14 @@ export default {
         await this.$store.dispatch('initData')
       } catch(e) {
         this.$store.dispatch('error/handle', e)
+      }
+    },
+    toggleBetaTester() {
+      this.$store.dispatch('settings/toggleBetaTester')
+    },
+    navigate(to) {
+      if (this.$store.state.settings.shortkey) {
+        this.$router.push(to)
       }
     }
   }
