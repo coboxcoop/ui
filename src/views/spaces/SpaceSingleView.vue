@@ -78,7 +78,7 @@ export default {
     peerCountString() {
       const count = this.$store.getters['spaces/peerCount'](this.space.address)
 
-      return `${count} peer${count != 1 ? 's' : ''}`
+      return `${count} collaborator${count != 1 ? 's' : ''}`
     },
     space() {
       return this.$store.getters['spaces/single'](this.$route.params.address)
