@@ -1,5 +1,5 @@
 <template>
-  <Screen :back="{name: 'seeder', params: {address: seeder.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+  <Screen :back="{name: 'seeder', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div v-if="inviteCode">
     <p>Please send the following invite code to the new collaborator. This will make them an admin of this seeder.</p>
     <CopyKey :value="inviteCode" />
