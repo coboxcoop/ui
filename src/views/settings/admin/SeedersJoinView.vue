@@ -1,6 +1,6 @@
 <template>
 <Screen :back="{name: 'seeders'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
-  <p>To join a seeder, send your public key to someone that can add you as an admin.</p>
+  <p>To join a seeder, send your cobox address to someone that can add you as an admin.</p>
 
   <CopyKey :value="$store.getters['profile/myPublicKey']" />
 

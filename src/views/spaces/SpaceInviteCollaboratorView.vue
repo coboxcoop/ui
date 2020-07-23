@@ -8,7 +8,7 @@
     <p>To invite a collaborator provide their cobox address to make them a secure invite code.</p>
 
     <form @submit.prevent="onSubmitInvite">
-      <input class="has-ok-button" type="text" placeholder="Public key" v-model="publicKey" />
+      <input class="has-ok-button" type="text" placeholder="collaborator cobox address" v-model="publicKey" />
       <button type="submit">Ok</button>
     </form>
   </div>

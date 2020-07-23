@@ -7,10 +7,10 @@
   </template>
 
   <br />
-  Replicate Space:
-  <p>Please get the address for the space which you would like to backup.</p>
+  Replicate folder:
+  <p>Please get the address for the folder which you would like to backup.</p>
   <form @submit.prevent="onSubmitAddReplicate">
-    <input type="text" placeholder="Space address" v-model="address">
+    <input type="text" placeholder="Folder address" v-model="address">
     <input class="has-ok-button" type="text" placeholder="Name" v-model="name">
     <button type="submit">Ok</button>
   </form>
@@ -22,10 +22,10 @@
     <CopyKey :value="inviteCode" />
   </div>
   <div v-else>
-    <p>To invite someone as an admin for this seeder, please provide their public key.</p>
+    <p>To invite someone as an admin for this seeder, please provide their cobox address.</p>
 
     <form @submit.prevent="onSubmitInvite">
-      <input class="has-ok-button" type="text" placeholder="Public key" v-model="publicKey" />
+      <input class="has-ok-button" type="text" placeholder="collaborator's cobox address" v-model="publicKey" />
       <button type="submit">Ok</button>
     </form>
   </div>

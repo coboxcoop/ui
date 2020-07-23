@@ -1,7 +1,7 @@
 <template>
   <Screen>
   <template v-slot:header>
-    Spaces
+    Folders
     <RouterLink :to="{name: 'spaces-init'}" v-shortkey="['ctrl', 'space']" @shortkey.native="navigate({name: 'spaces-init'})">
       <Plus />
     </RouterLink>
