@@ -14,12 +14,6 @@
       <div class="stat" v-if="stat(space.address)">{{stat(space.address).size | bytes}}</div>
     </RouterLink>
   </NavList>
-
-  <footer>
-    <RouterLink :to="{name: 'settings'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'settings'})">
-      <img src="@/assets/images/icons/settings.svg" /> Settings
-    </RouterLink>
-  </footer>
 </Screen>
 </template>
 
