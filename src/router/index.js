@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import ProfileView                      from '@/views/ProfileView.vue'
 import SpacesView                       from '@/views/spaces/SpacesView.vue'
 import SpacesInitView                   from '@/views/spaces/SpacesInitView.vue'
 import SpacesJoinView                   from '@/views/spaces/SpacesJoinView.vue'
@@ -18,6 +17,7 @@ import ManageKeysView                   from '@/views/settings/ManageKeysView.vu
 import AppearanceView                   from '@/views/settings/AppearanceView.vue'
 import AdvancedView                     from '@/views/settings/AdvancedView.vue'
 import OptionsView                      from '@/views/settings/OptionsView.vue'
+import ProfileView                      from '@/views/settings/ProfileView.vue'
 
 Vue.use(VueRouter)
 
@@ -28,8 +28,8 @@ const routes = [
   {path: '/spaces/create',                   name: 'spaces-create',                   component: SpacesCreateView},
   {path: '/spaces/:address',                 name: 'space',                           component: SpaceSingleView},
   {path: '/spaces/:address/invite',          name: 'space-invite',                    component: SpaceInviteCollaboratorView},
-  {path: '/profile',                         name: 'profile',                         component: ProfileView},
   {path: '/settings',                        name: 'settings',                        component: SettingsView},
+  {path: '/settings/profile',                name: 'profile',                         component: ProfileView},
   {path: '/settings/appearance',             name: 'appearance',                      component: AppearanceView},
   {path: '/settings/advanced',               name: 'advanced',                        component: AdvancedView},
   {path: '/settings/options',                name: 'options',                         component: OptionsView},

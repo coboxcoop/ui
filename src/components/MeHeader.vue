@@ -5,9 +5,6 @@
       <RouterLink v-if="back" :to="back" class="back" v-shortkey="['ctrl', 'arrowleft']" @shortkey.native="navigate(back)">
         <TriangleIcon class="triangle" />
       </RouterLink>
-      <RouterLink :to="{name: 'profile'}" >
-        <Dot :color="$store.getters['profile/myKeyColor']" /> {{$store.getters['profile/myName']}}
-      </RouterLink>
     </div>
 
   </div>
@@ -47,12 +44,10 @@
 </style>
 
 <script>
-import Dot from '@/components/Dot.vue'
 import TriangleIcon from '@/components/TriangleIcon.vue'
 
 export default {
   components: {
-    Dot,
     TriangleIcon
   },
   props: {
@@ -63,7 +58,7 @@ export default {
       if (this.$store.state.settings.shortkey) {
         switch (event.srcKey) {
           case 'profile':
-            this.$router.push("/profile")
+            this.$router.push("/settings/profile")
             break;
           case 'home':
             this.$router.push("/")
