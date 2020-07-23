@@ -5,9 +5,10 @@
     <input v-model="name" class="has-ok-button" type="text" placeholder="My name" />
     <button type="submit">Ok</button>
   </form>
+  <small>You can change it anytime via your profile</small>
 
   <div class="bottom">
-    <button @click.prevent>Restore identity</button>
+    <button @click.prevent>Import identity</button>
   </div>
 </div>
 </template>
