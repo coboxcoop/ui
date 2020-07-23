@@ -10,8 +10,8 @@
     <input v-model="name" class="has-ok-button" type="text" placeholder="My name" />
     <button type="submit">Ok</button>
   </form>
-  <small>This can be changed anytime in Settings > Profile</small>
-  
+  <small>This can be changed anytime.</small>
+
   <small>Warning: this is alpha software released for the purpose of testing. Please opt-in to help submit error logs. This can be switched off in Settings > Advanced</small>
   <div class="switch">
     <label>Beta tester <img @click="showBetaInfo = true" v-shortkey="['ctrl', 'i']" @shortkey="navigate(showBetaInfo = true)" src="@/assets/images/icons/info.svg" /></label>
