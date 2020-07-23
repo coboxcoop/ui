@@ -42,7 +42,7 @@ export default ({api, events}) => ({
       return data
     },
     async delete({}, {address}) {
-      const {data} = await api.delete(`/spaces/${address}`, {address})
+      const {data} = await api.delete(`/spaces/${address}`)
       await dispatch('fetch')
       return data
     },

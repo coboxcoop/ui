@@ -49,6 +49,23 @@
         <button type="submit">DELETE</button>
       </div>
     </form>
+    <div v-if="deleteChecked">
+      <p> collaborator-list: may still have copies of the data on their machines</p>
+      <p> seeder-list: may still have encrypted copies of this data</p>
+      <p> this action will only remove all data from this machine, are you sure, type name of space to confirm</p>
+      <form @submit.prvent="onSubmitDelete">
+        <div class="delete">
+          <button type="submit">DELETE</button>
+        </div>
+      </form>
+    </div>
+    <div v-else>
+      <form @submit.prevent="onSubmitDeleteCheck">
+        <label>DELETE folder</label>
+        <input class="has-ok-button" type="text" placeholder="Name of folder" v-model="space.name" />
+        <button type="submit">Ok</button>
+      </form>
+    </div>
   </NavList>
 </Screen>
 </template>
@@ -95,7 +112,8 @@ export default {
   },
   data: () => ({
     publicKey: '',
-    inviteCode: ''
+    inviteCode: '',
+    deleteChecked: false
   }),
   computed: {
     peerCountString() {
@@ -137,6 +155,9 @@ export default {
 
       this.publicKey = ''
     },
+    async onSubmitDeleteCheck() {
+      const deleteChecked = true
+    },
     async onSubmitDelete() {
       const {space: {address}} = this
 
@@ -145,8 +166,6 @@ export default {
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
-
-      this.publicKey = ''
     },
     async joinSpace() {
       try {
