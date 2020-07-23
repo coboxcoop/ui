@@ -34,13 +34,26 @@ export default {
     CopyKey
   },
   data: () => ({
-    inviteCode: ''
+    inviteCode: '',
+    publicKey: ''
   }),
   methods: {
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
         this.$router.push(to)
       }
+    },
+    async onSubmitInvite() {
+      const {space: {address}, publicKey} = this
+
+      try {
+        const data = await this.$store.dispatch('spaces/createInvite', {address, publicKey})
+        this.inviteCode = data.content.code
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+
+      this.publicKey = ''
     },
     async onSubmit() {
       try {
