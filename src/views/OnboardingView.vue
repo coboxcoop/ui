@@ -12,6 +12,8 @@
   </form>
   <small>This can be changed anytime.</small>
 
+  <div style="height: 1.2rem" />
+
   <small>Warning: this is alpha software released for the purpose of testing. Please opt-in to help submit error logs. This can be switched off in Settings > Advanced</small>
   <div class="switch">
     <label>Beta tester <img @click="showBetaInfo = true" v-shortkey="['ctrl', 'i']" @shortkey="navigate(showBetaInfo = true)" src="@/assets/images/icons/info.svg" /></label>
