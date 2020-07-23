@@ -1,16 +1,18 @@
 <template>
-  <Screen :back="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
-  <div v-if="inviteCode">
-    <p>Please send the following invite code to the new collaborator.</p>
-    <CopyKey :value="inviteCode" />
-  </div>
-  <div v-else>
-    <p>To invite a collaborator provide their cobox address to make them a secure invite code.</p>
+<Screen :back="{name: 'space', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+  <div class="page">
+    <div v-if="inviteCode">
+      <p>Please send the following invite code to the new collaborator.</p>
+      <CopyKey :value="inviteCode" />
+    </div>
+    <div v-else>
+      <p>To invite a collaborator provide their cobox address to make them a secure invite code.</p>
 
-    <form @submit.prevent="onSubmitInvite">
-      <input class="has-ok-button" type="text" placeholder="collaborator cobox address" v-model="publicKey" />
-      <button type="submit">Ok</button>
-    </form>
+      <form @submit.prevent="onSubmitInvite">
+        <input class="has-ok-button" type="text" placeholder="collaborator cobox address" v-model="publicKey" />
+        <button type="submit">Ok</button>
+      </form>
+    </div>
   </div>
 </Screen>
 </template>
