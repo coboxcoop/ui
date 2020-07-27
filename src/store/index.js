@@ -35,7 +35,6 @@ export default new Vuex.Store({
   },
   actions: {
     async init({dispatch, commit}) {
-      dispatch('seeders/subscribe')
       dispatch('spaces/subscribe')
       dispatch('system/fetchLogs')
 
