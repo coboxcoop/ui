@@ -7,7 +7,7 @@
   <NavList>
     <div class="switch">
       <label>Dark UI</label>
-      <ToggleSwitch @input="toggleDark" :value="$store.state.settings.dark"/>
+      <ToggleSwitch @input="toggleDark" :value="$store.state.settings.dark" v-shortkey="['ctrl', 'd']" @shortkey.native="toggleDark" />
     </div>
   </NavList>
 </Screen>

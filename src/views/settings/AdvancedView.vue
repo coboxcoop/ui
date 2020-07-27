@@ -10,12 +10,12 @@
   <NavList>
     <div class="switch">
       <label>Beta tester <img @click="showBetaInfo = true" v-shortkey="['ctrl', 'i']" @shortkey="navigate(showBetaInfo = true)" src="@/assets/images/icons/info.svg" /></label>
-      <ToggleSwitch @input="toggleBetaTester" :value="$store.state.settings.betaTester" />
+      <ToggleSwitch @input="toggleBetaTester" :value="$store.state.settings.betaTester" v-shortkey="['ctrl', 'b']" @shortkey.native="toggleBetaTester"/>
     </div>
     <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
     <div class="switch">
       <label>Error Messages</label>
-      <ToggleSwitch @input="toggleErrorMessages" :value="$store.state.settings.errorMessages" />
+      <ToggleSwitch @input="toggleErrorMessages" :value="$store.state.settings.errorMessages" v-shortkey="['ctrl', 'e']" @shortkey.native="toggleErrorMessages"/>
     </div>
   </NavList>
 </Screen>

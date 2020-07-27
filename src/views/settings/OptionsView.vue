@@ -11,7 +11,7 @@
   <NavList>
     <div class="switch">
       <label>Shortcuts <img @click="showShortKeyInfo = true" v-shortkey="['ctrl', 'i']" @shortkey="navigate(showShortKeyInfo = true)" src="@/assets/images/icons/info.svg" /></label>
-      <ToggleSwitch @input="toggleShortkey" :value="$store.state.settings.shortkey" />
+      <ToggleSwitch @input="toggleShortkey" :value="$store.state.settings.shortkey" v-shortkey="['ctrl', 's']" @shortkey.native="toggleShortkey"/>
     </div>
   </NavList>
 </Screen>
