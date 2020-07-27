@@ -36,6 +36,11 @@
   padding-bottom: 1.4rem;
   flex-direction: column;
 }
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 .close {
   position: absolute;
   top: 0; right: 0;

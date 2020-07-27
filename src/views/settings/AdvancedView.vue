@@ -13,6 +13,10 @@
       <ToggleSwitch @input="toggleBetaTester" :value="$store.state.settings.betaTester" v-shortkey="['ctrl', 'b']" @shortkey.native="toggleBetaTester"/>
     </div>
     <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
+    <div class="switch" v-if="$store.state.settings.betaTester">
+      <label>Bug report icon</label>
+      <ToggleSwitch @input="toggleBugReportIcon" :value="$store.state.settings.bugReportIcon" />
+    </div>
     <div class="switch">
       <label>Error Messages</label>
       <ToggleSwitch @input="toggleErrorMessages" :value="$store.state.settings.errorMessages" v-shortkey="['ctrl', 'e']" @shortkey.native="toggleErrorMessages"/>
@@ -70,6 +74,9 @@ export default {
     },
     toggleBetaTester() {
       this.$store.dispatch('settings/toggleBetaTester')
+    },
+    toggleBugReportIcon() {
+      this.$store.dispatch('settings/toggleBugReportIcon')
     },
     navigate(to) {
       if (this.$store.state.settings.shortkey) {

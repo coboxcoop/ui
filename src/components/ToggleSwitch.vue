@@ -1,5 +1,5 @@
 <template>
-<div class="toggle-switch" :class="{on: !!value}" @click="$emit('input', !value)">
+<div class="toggle-switch" :class="{on: !!value, disabled}" @click="$emit('input', !value)">
   <div class="pill-outer">
     <img src="@/assets/images/icons/tick.svg" v-if="value" />
     <img src="@/assets/images/icons/cross.svg" v-else />
@@ -17,6 +17,10 @@
   overflow: hidden;
   border-radius: 1em;
   cursor: pointer;
+  &.disabled {
+    opacity: 0.2;
+    pointer-events: none;
+  }
   .bg {
     position: absolute;
     background: var(--fg);
@@ -65,7 +69,8 @@
 <script>
 export default {
   props: {
-    value: true
+    value: true,
+    disabled: Boolean
   }
 }
 </script>

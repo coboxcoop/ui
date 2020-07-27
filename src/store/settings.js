@@ -5,7 +5,8 @@ const defaultSettings = {
   betaTester: true,
   email: '',
   shortkey: true,
-  errorMessages: true
+  errorMessages: true,
+  bugReportIcon: true
 }
 
 export const retrieveState = () => {
@@ -35,6 +36,9 @@ export default ({api, events}) => ({
     },
     toggleErrorMessages({state, dispatch}) {
       dispatch('update', {errorMessages: !state.errorMessages})
+    },
+    toggleBugReportIcon({state, dispatch}) {
+      dispatch('update', {bugReportIcon: !state.bugReportIcon})
     },
     async toggleBetaTester({state, dispatch}) {
       await dispatch('update', {betaTester: !state.betaTester})
