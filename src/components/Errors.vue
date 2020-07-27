@@ -35,6 +35,7 @@
   background: var(--bg);
   display: flex;
   flex-direction: column;
+  z-index: 3;
   .text {
     align-items: flex-start;
     display: flex;
