@@ -48,7 +48,6 @@
         transform: translate(-50%, -50%);
         display: block;
         z-index: 2;
-        opacity: 0.75;
         html:not(.dark) & {
           opacity: 1;
           filter: invert(1);

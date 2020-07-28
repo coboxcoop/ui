@@ -27,7 +27,7 @@
 .sheet {
   position: relative;
   border-radius: 4px;
-  box-shadow: 0 0 1rem var(--shadow);
+  box-shadow: 0 0.3rem 1rem var(--shadow);
   background: var(--bg);
   display: flex;
   height: calc(100% - 3.2rem);

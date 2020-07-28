@@ -2,11 +2,7 @@
 <transition name="pop">
   <div class="bubble" v-if="$store.state.error.message">
     <div class="text">
-      <div class="icon">⚠</div>
-      <div class="message">Error:</div>
-    </div>
-    <div class="text">
-      <div class="message">{{$store.state.error.message}}</div>
+      <div class="message">{{$store.state.error.message || 'Unknown error'}}</div>
     </div>
     <button @click.prevent="$store.dispatch('error/dismiss')" v-shortkey="['esc']" @shortkey="navigate($store.dispatch('error/dismiss'))">Ok</button>
   </div>
@@ -27,12 +23,11 @@
 .bubble {
   position: absolute;
   bottom: 0; left: 0;
-  color: orangered;
-  border-top: 1px solid orangered;
+  color: var(--fg);
   padding: 1.6rem;
   width: 100%;
   // border-radius: 0.4rem;
-  background: var(--bg);
+  background: var(--danger);
   display: flex;
   flex-direction: column;
   z-index: 3;

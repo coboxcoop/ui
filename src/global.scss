@@ -59,7 +59,7 @@ body {
   color: var(--fg);
 }
 a:hover, button:hover {
-  opacity: 0.6;
+  opacity: 0.6!important;
 }
 button {
   cursor: pointer;
@@ -89,6 +89,9 @@ form {
       padding-right: 1em;
     }
   }
+  .has-ok-button + button:hover {
+    opacity: 1!important;
+  }
   textarea {
     resize: none;
   }
@@ -99,7 +102,7 @@ form {
     padding-left: 1.5em;
     background: linear-gradient(to right, var(--fg-0) 0, var(--fg-1) 1.2em);
     &:hover {
-      opacity: 1;
+      opacity: 1!important;
       color: var(--hover);
     }
   }
