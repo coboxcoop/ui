@@ -25,7 +25,7 @@
   <input type="email" placeholder="Email address" v-model="email" v-if="$store.state.settings.betaTester" />
 
   <div class="bottom">
-    <button @click.prevent>Import identity</button>
+    <button @click.prevent class="disabled-feature">Import identity</button>
   </div>
 </div>
 </template>

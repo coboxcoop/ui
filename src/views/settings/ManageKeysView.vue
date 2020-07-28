@@ -6,7 +6,7 @@
 
   <NavList>
     <RouterLink :to="{name: 'secrets-export'}" v-shortkey="['ctrl', 'e']" @shortkey.native="navigate({name: 'secrets-export'})" >Export secrets...</RouterLink>
-    <RouterLink :to="{name: 'secrets-import'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'secrets-import'})" >Import secrets...</RouterLink>
+    <RouterLink :to="{name: 'secrets-import'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'secrets-import'})" class="disabled-feature">Import secrets...</RouterLink>
   </NavList>
 </Screen>
 </template>
