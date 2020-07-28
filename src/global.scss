@@ -70,6 +70,9 @@ sup {
 p {
   margin-bottom: 1em;
 }
+p a {
+  text-decoration: underline;
+}
 h2 {
   font-size: var(--small);
   margin-bottom: 0.6rem;
