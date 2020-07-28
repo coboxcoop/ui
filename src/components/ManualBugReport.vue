@@ -6,9 +6,9 @@
     </div>
     <div class="inner" v-else>
       <p>Found an issue?</p>
-      <form @submit.prevent="submitted = true">
+      <form @submit.prevent="submitReport">
         <input type="email" placeholder="Email address" v-model="email" required />
-        <textarea rows="7" placeholder="Enter description" />
+        <textarea rows="7" placeholder="Enter description" v-model="description"/>
         <button class="big-button" type="submit">Submit bug</button>
       </form>
     </div>
@@ -28,12 +28,19 @@ export default {
   },
   data: () => ({
     show: false,
-    submitted: false
+    submitted: false,
+    description: ''
   }),
   methods: {
     close() {
       this.show = false
       this.submitted = false
+      this.description = ''
+    },
+    submitReport() {
+      this.submitted = true
+      this.$store.dispatch('system/reportBug', this.description)
+      this.description = ''
     }
   },
   computed: {

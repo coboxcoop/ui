@@ -6,6 +6,7 @@ export default ({api, events}) => ({
   state: {
     offline: false,
     info: null,
+    logs: null
   },
   actions: {
     async fetch({commit}) {
@@ -16,17 +17,28 @@ export default ({api, events}) => ({
         commit('offline')
       }
     },
-    async fetchLogs({dispatch}) {
+    async fetchLogs({dispatch, commit}) {
       if(bugsnagEnabled) {
         let {data} = await api.get('/system/logs')
-        Bugsnag.addMetadata('server_logs', data)
+        commit('receiveLogs', data)
+        Bugsnag.addMetadata('server_logs', {value: data})
         setTimeout(() => dispatch('fetchLogs'), LOGS_FETCH_INTERVAL)
       }
+    },
+    reportBug({state, rootState}, description) {
+      Bugsnag.notify(new Error('Bug report'), event => {
+        event.addMetadata('email', {value: rootState.settings.email})
+        event.addMetadata('server_logs', {value: state.logs})
+        event.addMetadata('description', {value: description})
+      })
     }
   },
   mutations: {
     receive(state, data) {
       state.info = data
+    },
+    receiveLogs(state, data) {
+      state.logs = data
     },
     offline(state) {
       state.offline = true
