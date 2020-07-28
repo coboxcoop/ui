@@ -17,7 +17,6 @@ import ExportView                       from '@/views/settings/ExportView.vue'
 import ImportView                       from '@/views/settings/ImportView.vue'
 import SettingsView                     from '@/views/settings/SettingsView.vue'
 import ManageKeysView                   from '@/views/settings/ManageKeysView.vue'
-import AppearanceView                   from '@/views/settings/AppearanceView.vue'
 import AdvancedView                     from '@/views/settings/AdvancedView.vue'
 import AccessibilityView                from '@/views/settings/AccessibilityView.vue'
 import ProfileView                      from '@/views/settings/ProfileView.vue'
@@ -35,7 +34,6 @@ const routes = [
   {path: '/folders/:address/delete',                    name: 'space-delete',                    component: SpaceDeleteView},
   {path: '/settings',                                   name: 'settings',                        component: SettingsView},
   {path: '/settings/profile',                           name: 'profile',                         component: ProfileView},
-  {path: '/settings/appearance',                        name: 'appearance',                      component: AppearanceView},
   {path: '/settings/advanced',                          name: 'advanced',                        component: AdvancedView},
   {path: '/settings/accessibility',                     name: 'accessibility',                   component: AccessibilityView},
   {path: '/settings/keys',                              name: 'manage-keys',                     component: ManageKeysView},

@@ -9,11 +9,8 @@
     <RouterLink :to="{name: 'accessibility'}" v-shortkey="['ctrl', 'a']" @shortkey.native="navigate({name: 'accessibility'})">
       Accessibility
     </RouterLink>
-    <RouterLink :to="{name: 'advanced'}" v-shortkey="['ctrl', 'alt', 'a']" @shortkey.native="navigate({name: 'advanced'})">
+    <RouterLink :to="{name: 'advanced'}" v-shortkey="['ctrl', 'shift', 'a']" @shortkey.native="navigate({name: 'advanced'})">
       Advanced
-    </RouterLink>
-    <RouterLink :to="{name: 'appearance'}" v-shortkey="['ctrl', 'shift', 'a']" @shortkey.native="navigate({name: 'appearance'})">
-      Appearance
     </RouterLink>
     <RouterLink :to="{name: 'manage-keys'}" v-shortkey="['ctrl', 'k']" @shortkey.native="navigate({name: 'manage-keys'})">
       Manage Keys

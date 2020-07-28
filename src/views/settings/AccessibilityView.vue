@@ -5,7 +5,7 @@
   </Modal>
 
   <template v-slot:header>
-    Options
+    Accessibility
   </template>
 
   <NavList>
@@ -13,6 +13,10 @@
     <div class="switch">
       <label>Shortcuts <img @click="showShortKeyInfo = true" v-shortkey="['ctrl', 'i']" @shortkey="navigate(showShortKeyInfo = true)" src="@/assets/images/icons/info.svg" /></label>
       <ToggleSwitch @input="toggleShortkey" :value="$store.state.settings.shortkey" v-shortkey="['ctrl', 's']" @shortkey.native="toggleShortkey"/>
+    </div>
+    <div class="switch">
+      <label>Dark Theme</label>
+      <ToggleSwitch @input="toggleDark" :value="$store.state.settings.dark" v-shortkey="['ctrl', 'd']" @shortkey.native="toggleDark" />
     </div>
   </NavList>
 </Screen>
@@ -52,6 +56,9 @@ export default {
     showShortKeyInfo: false
   }),
   methods: {
+    toggleDark() {
+      this.$store.dispatch('settings/toggleDark')
+    },
     toggleShortkey() {
       this.$store.dispatch('settings/toggleShortkey')
     },
