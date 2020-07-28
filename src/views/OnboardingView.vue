@@ -5,7 +5,12 @@
     <p>By signing up as a beta tester for sprout release you are agreeing to submit redacted logs to a third-party cloud error monitoring & reporting tool CoBox uses called <a href="https://www.bugsnag.com/" target="_blank">bugsnag</a>. To learn more you can visit our <a href="https://gitlab.com/coboxcoop/readme/-/wikis/Testing" target="_blank">wiki.</a> Providing an email is optional, but very helpful.</p>
   </Modal>
 
-  <p>Welcome to CoBox.</p>
+  <div class="header">
+    <div class="left">
+        <img src="@/assets/images/icons/CoBox-icon.png" class="cloud" />
+        <p>Welcome to CoBox.</p>
+      </RouterLink>
+    </div>
   <p>How do you want to be known to your friends?</p>
   <form @submit.prevent="onSubmitName">
     <input v-model="name" class="has-ok-button" type="text" placeholder="My name" />
@@ -27,11 +32,33 @@
 
   <div class="bottom">
     <button @click.prevent class="disabled-feature">Import identity</button>
+    </div>
   </div>
 </div>
 </template>
 
 <style scoped lang="scss">
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.6rem;
+  height: 3.6rem;
+  .logo {
+    display: flex;
+    .cloud {
+      height: 0.8em;
+      width: auto;
+      margin-top: 0.3rem;
+      html.dark & {
+        filter: invert(1);
+      }
+    }
+    p {
+      margin-left: 0.8rem;
+      margin-top: -0.25rem;
+    }
+  }
+}
 .container {
   display: flex;
   flex-direction: column;
