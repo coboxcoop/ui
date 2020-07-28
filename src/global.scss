@@ -72,6 +72,9 @@ p {
 }
 p a {
   text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
 }
 h2 {
   font-size: var(--small);
