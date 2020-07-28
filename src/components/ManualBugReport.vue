@@ -2,7 +2,7 @@
 <div>
   <Modal :show="show" @close="close">
     <div class="inner" v-if="submitted">
-      <p>Thank you for submitting a bug report for CoBox. Further text here.</p>
+      <p>Thank you for submitting a bug report for CoBox.</p>
     </div>
     <div class="inner" v-else>
       <p>Found an issue?</p>
