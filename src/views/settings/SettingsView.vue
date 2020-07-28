@@ -6,10 +6,13 @@
   </template>
 
   <NavList>
+    <RouterLink :to="{name: 'accessibility'}" v-shortkey="['ctrl', 'a']" @shortkey.native="navigate({name: 'accessibility'})">
+      Accessibility
+    </RouterLink>
     <RouterLink :to="{name: 'advanced'}" v-shortkey="['ctrl', 'alt', 'a']" @shortkey.native="navigate({name: 'advanced'})">
       Advanced
     </RouterLink>
-    <RouterLink :to="{name: 'appearance'}" v-shortkey="['ctrl', 'a']" @shortkey.native="navigate({name: 'appearance'})">
+    <RouterLink :to="{name: 'appearance'}" v-shortkey="['ctrl', 'shift', 'a']" @shortkey.native="navigate({name: 'appearance'})">
       Appearance
     </RouterLink>
     <RouterLink :to="{name: 'manage-keys'}" v-shortkey="['ctrl', 'k']" @shortkey.native="navigate({name: 'manage-keys'})">
@@ -17,9 +20,6 @@
     </RouterLink>
     <RouterLink :to="{name: 'seeders'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'seeders'})">
       Seeders
-    </RouterLink>
-    <RouterLink :to="{name: 'options'}" v-shortkey="['ctrl', 'o']" @shortkey.native="navigate({name: 'options'})">
-      Options
     </RouterLink>
     <RouterLink :to="{name: 'profile'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
       Profile

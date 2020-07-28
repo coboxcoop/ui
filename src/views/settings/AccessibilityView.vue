@@ -9,6 +9,7 @@
   </template>
 
   <NavList>
+  <small>CoBox App UI is currently between A and AA standard. To find out more please visit the <a href="https://gitlab.com/coboxcoop/readme/-/wikis/Accessibility" target="_blank">accessibility section</a> of the wiki.</small>
     <div class="switch">
       <label>Shortcuts <img @click="showShortKeyInfo = true" v-shortkey="['ctrl', 'i']" @shortkey="navigate(showShortKeyInfo = true)" src="@/assets/images/icons/info.svg" /></label>
       <ToggleSwitch @input="toggleShortkey" :value="$store.state.settings.shortkey" v-shortkey="['ctrl', 's']" @shortkey.native="toggleShortkey"/>
