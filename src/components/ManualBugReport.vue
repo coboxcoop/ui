@@ -7,7 +7,7 @@
     <div class="inner" v-else>
       <p>Found an issue?</p>
       <form @submit.prevent="submitted = true">
-        <input type="email" placeholder="Email address" v-model="email" />
+        <input type="email" placeholder="Email address" v-model="email" required />
         <textarea rows="7" placeholder="Enter description" />
         <button class="big-button" type="submit">Submit bug</button>
       </form>
