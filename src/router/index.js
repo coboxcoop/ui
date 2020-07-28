@@ -6,7 +6,7 @@ import SpacesInitView                   from '@/views/spaces/SpacesInitView.vue'
 import SpacesJoinView                   from '@/views/spaces/SpacesJoinView.vue'
 import SpacesCreateView                 from '@/views/spaces/SpacesCreateView.vue'
 import SpaceSingleView                  from '@/views/spaces/SpaceSingleView.vue'
-import SpaceInviteCollaboratorView      from '@/views/spaces/SpaceInviteCollaboratorView.vue'
+import SpaceInviteFriendView            from '@/views/spaces/SpaceInviteFriendView.vue'
 import SpaceHealthView                  from '@/views/spaces/SpaceHealthView.vue'
 import SpaceDeleteView                  from '@/views/spaces/SpaceDeleteView.vue'
 import SeedersView                      from '@/views/settings/admin/SeedersView.vue'
@@ -29,7 +29,7 @@ const routes = [
   {path: '/folders/join',                               name: 'spaces-join',                     component: SpacesJoinView},
   {path: '/folders/create',                             name: 'spaces-create',                   component: SpacesCreateView},
   {path: '/folders/:address',                           name: 'space',                           component: SpaceSingleView},
-  {path: '/folders/:address/invite',                    name: 'space-invite',                    component: SpaceInviteCollaboratorView},
+  {path: '/folders/:address/invite',                    name: 'space-invite',                    component: SpaceInviteFriendView},
   {path: '/folders/:address/health',                    name: 'space-health',                    component: SpaceHealthView},
   {path: '/folders/:address/delete',                    name: 'space-delete',                    component: SpaceDeleteView},
   {path: '/settings',                                   name: 'settings',                        component: SettingsView},
