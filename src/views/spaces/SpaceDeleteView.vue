@@ -84,7 +84,7 @@ export default {
   methods: {
     async deleteSpace() {
       try {
-        const data = await this.$store.dispatch('spaces/delete', {address})
+        const data = await this.$store.dispatch('spaces/delete', {address: this.space.address})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
