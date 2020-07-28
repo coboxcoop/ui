@@ -2,14 +2,14 @@
 <Screen :back="{name: 'space', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div class="page">
     <div v-if="inviteCode">
-      <p>Please send the following invite code to the new collaborator.</p>
+      <p>Please send the following invite code to your friend.</p>
       <CopyKey :value="inviteCode" />
     </div>
     <div v-else>
-      <p>To invite a collaborator provide their CoBox address to make them a secure invite code.</p>
+      <p>To invite a friend provide their CoBox key to make them a secure invite code.</p>
 
       <form @submit.prevent="onSubmitInvite">
-        <input class="has-ok-button" type="text" placeholder="Collaborator CoBox address" v-model="publicKey" />
+        <input class="has-ok-button" type="text" placeholder="Friends CoBox Key" v-model="publicKey" />
         <button type="submit">Ok</button>
       </form>
     </div>

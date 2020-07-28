@@ -8,7 +8,7 @@
 
   <br />
   Seed folder:
-  <p>Please get the address for the folder which you would like to seed.</p>
+  <p>Please get the CoBox address for the folder which you would like to seed.</p>
   <form @submit.prevent="onSubmitAddReplicate">
     <input type="text" placeholder="Folder address" v-model="address">
     <input class="has-ok-button" type="text" placeholder="Name" v-model="name">

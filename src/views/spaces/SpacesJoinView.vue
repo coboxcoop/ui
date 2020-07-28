@@ -1,9 +1,9 @@
 <template>
 <Screen :back="{name: 'spaces-init'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div class="page">
-    <p>To join a folder, send your CoBox address to someone that can invite you.</p>
+    <p>To join a folder, send your CoBox key to a friend that can invite you.</p>
 
-    <small>Your CoBox address:</small>
+    <small>Your CoBox key:</small>
     <CopyKey :value="$store.getters['profile/myPublicKey']" />
 
     <p>What is the invite code of the folder?</p>

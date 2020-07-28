@@ -13,7 +13,7 @@
 
     <small>
       <p>This action will remove the folder data from this machine.</p>
-      <p>However collaborators may still have copies of the data, and seeders may still retain encrypted copies.</p>
+      <p>Friends may still have copies of the data, and seeders may still retain encrypted copies.</p>
       <p>To continue, enter the folder name below to confirm.</p>
     </small>
 
@@ -22,7 +22,8 @@
       <input type="text" placeholder="Confirm name" v-model="nameConfirm" />
     </form>
 
-    <a class="big-button danger" href="#" @click.prevent="deleteSpace" v-if="nameConfirm == space.name">Delete folder</a>
+    <small v-if="nameConfirm == space.name">This action cannot be reversed.</small>
+    <a class="big-button danger" href="#" @click.prevent="deleteSpace" v-if="nameConfirm == space.name">Delete folder?</a>
   </Screen>
 </template>
 

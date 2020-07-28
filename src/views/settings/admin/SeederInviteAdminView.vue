@@ -1,14 +1,14 @@
 <template>
   <Screen :back="{name: 'seeder', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div v-if="inviteCode">
-    <p>Please send the following invite code to the new collaborator. This will make them an admin of this seeder.</p>
+    <p>Please send the following invite code to your friend. This will make them an admin of this seeder.</p>
     <CopyKey :value="inviteCode" />
   </div>
   <div v-else>
-    <p>To invite someone as an admin for this seeder, please provide their CoBox address.</p>
+    <p>To invite your friend to be an admin of this seeder, please provide their CoBox key.</p>
 
     <form @submit.prevent="onSubmitInvite">
-      <input class="has-ok-button" type="text" placeholder="Collaborator CoBox address" v-model="publicKey" />
+      <input class="has-ok-button" type="text" placeholder="Friends CoBox address" v-model="publicKey" />
       <button type="submit">Ok</button>
     </form>
   </div>

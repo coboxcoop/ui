@@ -5,7 +5,7 @@
     <p>By signing up as a beta tester for sprout release you are agreeing to submit redacted logs to a third-party cloud error monitoring & reporting tool CoBox uses called <a href="https://www.bugsnag.com/" target="_blank">bugsnag</a>. To learn more you can visit our <a href="https://gitlab.com/coboxcoop/readme/-/wikis/Testing" target="_blank">wiki.</a> Providing an email is optional, but very helpful.</p>
   </Modal>
 
-  <p>Welcome to CoBox. How do you want to be known to your peers?</p>
+  <p>Welcome to CoBox. How do you want to be known to your friends?</p>
   <form @submit.prevent="onSubmitName">
     <input v-model="name" class="has-ok-button" type="text" placeholder="My name" />
     <button type="submit">Ok</button>

@@ -1,7 +1,7 @@
 <template>
 <Screen :back="{name: 'spaces'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div class="content">
-    <p>Hi {{$store.getters['profile/myName']}}, what would you like to do?</p>
+    <p>What would you like to do?</p>
 
     <NavList>
     <RouterLink :to="{name: 'spaces-join'}" v-shortkey="['ctrl', 'j']" @shortkey.native="navigate({name: 'spaces-join'})">Join a folder</RouterLink>
