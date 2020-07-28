@@ -23,7 +23,7 @@
     <div v-for="peer in peers" :key="peer.publicKey">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
     </div>
-    <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite friend</RouterLink>
+    <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite collaborator</RouterLink>
   </NavList>
 
   <br />
@@ -63,7 +63,7 @@ export default {
     peerCountString() {
       const count = this.$store.getters['spaces/peerCount'](this.space.address)
 
-      return `${count} friend{count != 1 ? 's' : ''}`
+      return `${count} friend${count != 1 ? 's' : ''}`
     },
     space() {
       return this.$store.getters['spaces/single'](this.$route.params.address)
