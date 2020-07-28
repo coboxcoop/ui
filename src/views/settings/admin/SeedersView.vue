@@ -10,7 +10,7 @@
     <RouterLink v-for="seeder in seeders" :key="seeder.address" class="seeder" :to="{name: 'seeder', params: {address: seeder.address}}">
     <Dot color="magenta" :address="seeder.address" /> {{seeder.name}}
     </RouterLink>
-    <small>Interested in signing up to offer services to the cooperative cloud. Become a backbone super node. Message us at info@magmacollective.org</small>
+    <small>If you would like to join as a backbone peer in the CoBox network, do get in touch! info@magmacollective.com</small>
   </NavList>
 </Screen>
 </template>
