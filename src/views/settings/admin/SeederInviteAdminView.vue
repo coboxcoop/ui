@@ -37,7 +37,9 @@ export default {
   },
   data: () => ({
     inviteCode: '',
-    publicKey: ''
+    publicKey: '',
+    address: '',
+    name: ''
   }),
   computed: {
     seeder() {
@@ -51,6 +53,7 @@ export default {
       }
     },
     async onSubmitInvite() {
+      const seeder = this.seeder.address
       const {seeder: {address}, publicKey} = this
 
       try {
