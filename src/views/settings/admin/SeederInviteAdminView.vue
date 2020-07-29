@@ -8,7 +8,7 @@
     <p>To invite your friend to be an admin of this seeder, please provide their CoBox key.</p>
 
     <form @submit.prevent="onSubmitInvite">
-      <input class="has-ok-button" type="text" placeholder="Friends CoBox address" v-model="publicKey" />
+      <input class="has-ok-button" type="text" placeholder="Friends CoBox Key" v-model="publicKey" />
       <button type="submit">Ok</button>
     </form>
   </div>
