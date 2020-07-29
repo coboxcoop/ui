@@ -7,11 +7,11 @@
       </RouterLink>
       <RouterLink to="/" class="logo">
         <img src="@/assets/images/icons/CoBox-icon.png" class="cloud" />
-        <h1>CoBox</h1>
+        <h1>{{heading}}</h1>
       </RouterLink>
     </div>
 
-    <RouterLink :to="{name: 'settings'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'settings'})" class="settings">
+    <RouterLink :to="{name: 'settings'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'settings'})" class="settings" v-if="settings">
       <img src="@/assets/images/icons/settings.svg" />
     </RouterLink>
   </div>
@@ -82,7 +82,15 @@ export default {
     TriangleIcon
   },
   props: {
-    back: Object
+    back: Object,
+    settings: {
+      type: Boolean,
+      default: true
+    },
+    heading: {
+      type: String,
+      default: 'CoBox'
+    }
   },
   methods: {
     shortKeyAction(event) {
