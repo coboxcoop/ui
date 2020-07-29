@@ -6,7 +6,8 @@
     </div>
   </template>
 
-  Encrypted folders you're seeding:
+  <div style="height: 1.6rem" />
+  <small>Encrypted folders you're seeding:</small>
   <NavList>
     <div v-for="replicate in replicates" :key="replicate.value.content.address">
       {{replicate.value.content.name}}

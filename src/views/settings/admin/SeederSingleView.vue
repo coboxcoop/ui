@@ -12,15 +12,14 @@
     <RouterLink :to="{name: 'seeder-folders'}" v-shortkey="['ctrl', 'f']" @shortkey.native="navigate({name: 'seeder-folders'})">Seeds</RouterLink>
   </NavList>
 
-  <br />
+  <div style="height: 1.6rem" />
 
-  <RouterLink :to="{name: 'seeder-invite'}" v-shortkey="['ctrl', 'a']" @shortkey.native="navigate({name: 'seeder-invite'})">Add admin</RouterLink>
-
-  Seeder admins:
+  <small>Seeder admins:</small>
   <NavList>
     <div v-for="peer in peers" :key="peer.data.author">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
     </div>
+    <RouterLink :to="{name: 'seeder-invite'}" v-shortkey="['ctrl', 'a']" @shortkey.native="navigate({name: 'seeder-invite'})">Add admin</RouterLink>
   </NavList>
 </Screen>
 </template>
