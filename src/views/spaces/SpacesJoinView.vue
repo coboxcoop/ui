@@ -2,6 +2,7 @@
 <Screen :back="{name: 'spaces-init'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <Modal :show="showInfo" @close="showInfo = false">
     <p>This invite will be encrypted to your CoBox key, so only you can use it. It's safe to receive it via an insecure messaging application.</p>
+    <small>When first joining the folder CoBox will start syncing the files directly from your friend or Seeders. This may take a while depending on the size of the folder. Keep CoBox running on initial sync.</small>
   </Modal>
 
   <div class="page">
