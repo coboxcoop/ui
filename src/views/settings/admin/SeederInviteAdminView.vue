@@ -36,7 +36,8 @@ export default {
     CopyKey
   },
   data: () => ({
-    inviteCode: ''
+    inviteCode: '',
+    publicKey: ''
   }),
   computed: {
     seeder() {
