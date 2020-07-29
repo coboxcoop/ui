@@ -9,7 +9,7 @@
   <br />
   <NavList>
     <RouterLink :to="{name: 'seeder-add-seed'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'seeder-add-seed'})">Seed a folder</RouterLink>
-    <RouterLink :to="{name: 'seeder-folders'}" v-shortkey="['ctrl', 'f']" @shortkey.native="navigate({name: 'seeder-folders'})">Encrypted folders being seeded</RouterLink>
+    <RouterLink :to="{name: 'seeder-folders'}" v-shortkey="['ctrl', 'f']" @shortkey.native="navigate({name: 'seeder-folders'})">Seeds</RouterLink>
   </NavList>
 
   <br />
