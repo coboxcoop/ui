@@ -17,7 +17,7 @@
       <p>To invite a friend provide their CoBox key to make them a secure invite code.</p>
 
       <form @submit.prevent="onSubmitInvite">
-        <input class="has-ok-button" type="text" placeholder="Friends CoBox key" v-model="publicKey" />
+        <input class="has-ok-button" type="text" placeholder="Friends CoBox Key" v-model="publicKey" />
         <button type="submit">Ok</button>
       </form>
     </div>
