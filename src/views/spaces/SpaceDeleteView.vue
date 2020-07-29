@@ -86,7 +86,8 @@ export default {
         this.$store.dispatch('error/handle', e)
       }
 
-      this.$router.replace({name: 'spaces'})
+      await this.$router.replace('/')
+      window.location.reload()
     }
   }
 }
