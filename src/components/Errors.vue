@@ -23,7 +23,7 @@
 .bubble {
   position: absolute;
   bottom: 0; left: 0;
-  color: var(--fg);
+  color: var(--bg);
   padding: 1.6rem;
   width: 100%;
   // border-radius: 0.4rem;
