@@ -12,6 +12,8 @@ import SpaceDeleteView                  from '@/views/spaces/SpaceDeleteView.vue
 import SeedersView                      from '@/views/settings/admin/SeedersView.vue'
 import SeedersJoinView                  from '@/views/settings/admin/SeedersJoinView.vue'
 import SeederSingleView                 from '@/views/settings/admin/SeederSingleView.vue'
+import SeederFoldersSeedingView         from '@/views/settings/admin/SeederFoldersSeedingView.vue'
+import SeederSeedFolderView             from '@/views/settings/admin/SeederSeedFolderView.vue'
 import SeederInviteAdminView            from '@/views/settings/admin/SeederInviteAdminView.vue'
 import ExportView                       from '@/views/settings/ExportView.vue'
 import ImportView                       from '@/views/settings/ImportView.vue'
@@ -42,6 +44,8 @@ const routes = [
   {path: '/settings/admin/seeders',                     name: 'seeders',                         component: SeedersView},
   {path: '/settings/admin/seeders/join',                name: 'seeders-join',                    component: SeedersJoinView},
   {path: '/settings/admin/seeders/:address',            name: 'seeder',                          component: SeederSingleView},
+  {path: '/settings/admin/seeders/:address/seed',       name: 'seeder-add-seed',                 component: SeederSeedFolderView},
+  {path: '/settings/admin/seeders/:address/seed',       name: 'seeder-folders',                  component: SeederFoldersSeedingView},
   {path: '/settings/admin/seeders/:address/invite',     name: 'seeder-invite',                   component: SeederInviteAdminView}
 ]
 

@@ -2,24 +2,17 @@
   <Screen :back="{name: 'seeders'}" v-if="seeder">
   <template v-slot:header>
     <div class="header">
-      Seeder: {{seeder.name}}
+      {{seeder.name}}
     </div>
   </template>
 
-  <br />
+  Encrypted folders you're seeding:
   <NavList>
-    <RouterLink :to="{name: 'seeder-add-seed'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'seeder-add-seed'})">Seed a folder</RouterLink>
-    <RouterLink :to="{name: 'seeder-folders'}" v-shortkey="['ctrl', 'f']" @shortkey.native="navigate({name: 'seeder-folders'})">Encrypted folders being seeded</RouterLink>
-  </NavList>
-
-  <br />
-
-  <RouterLink :to="{name: 'seeder-invite'}" v-shortkey="['ctrl', 'a']" @shortkey.native="navigate({name: 'seeder-invite'})">Add admin</RouterLink>
-
-  Seeder admins:
-  <NavList>
-    <div v-for="peer in peers" :key="peer.data.author">
-      <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
+    <div v-for="replicate in replicates" :key="replicate.value.content.address">
+      {{replicate.value.content.name}}
+      <div v-if="author = replicateAuthor(replicate)">
+        Added by {{author.data.content.name}}
+      </div>
     </div>
   </NavList>
 </Screen>
