@@ -6,14 +6,18 @@
       <Plus />
     </RouterLink>
   </template>
-  <NavList>
-  <RouterLink v-for="space in spaces" :key="space.address" class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
-      <div>
-        {{space.name}}
-      </div>
-      <div class="stat" v-if="stat(space.address)">{{stat(space.address).size | bytes}}</div>
-    </RouterLink>
-  </NavList>
+
+  <div v-if="!spaces.length" class="help">
+    Welcome to CoBox! To get started, create your first folder by cklicking the plus button above.
+  </div>
+  <div v-else>
+    <NavList>
+      <RouterLink v-for="space in spaces" :key="space.address" class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
+        <div>{{space.name}}</div>
+        <div class="stat" v-if="stat(space.address)">{{stat(space.address).size | bytes}}</div>
+      </RouterLink>
+    </NavList>
+  </div>
 </Screen>
 </template>
 
@@ -38,6 +42,10 @@ footer {
     height: 0.85em;
     margin-bottom: -0.07em;
   }
+}
+.help {
+  border-top: 1px solid;
+  padding-top: 0.6rem;
 }
 </style>
 
