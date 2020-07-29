@@ -1,5 +1,5 @@
 <template>
-  <Screen :back="{name: 'seeder', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+<Screen :back="{name: 'seeder', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <div v-if="inviteCode">
     <p>Please send the following invite code to your friend. This will make them an admin of this seeder.</p>
     <CopyKey :value="inviteCode" />
@@ -44,6 +44,9 @@ export default {
   computed: {
     seeder() {
       return this.$store.getters['seeders/single'](this.$route.params.address)
+    },
+    space() {
+      return this.$store.state.spaces.data
     }
   },
   methods: {
@@ -53,7 +56,6 @@ export default {
       }
     },
     async onSubmitInvite() {
-      const seeder = this.seeder.address
       const {seeder: {address}, publicKey} = this
 
       try {
@@ -73,11 +75,6 @@ export default {
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
-    }
-  },
-  computed: {
-    space() {
-      return this.$store.state.spaces.data
     }
   }
 }
