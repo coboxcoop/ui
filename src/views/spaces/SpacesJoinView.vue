@@ -3,7 +3,7 @@
   <div class="page">
     <p>To join a folder, send your CoBox key to a friend that can invite you.</p>
 
-    <small>Your CoBox key:</small>
+    <small>Your CoBox key</small>
     <CopyKey :value="$store.getters['profile/myPublicKey']" />
 
     <p>What is the invite code of the folder?</p>
