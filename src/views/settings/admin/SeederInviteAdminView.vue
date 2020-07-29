@@ -47,9 +47,9 @@
 </style>
 
 <script>
-import Screen from '@/components/Screen.vue'
+import Screen  from '@/components/Screen.vue'
 import CopyKey from '@/components/CopyKey.vue'
-import Modal        from '@/components/Modal.vue'
+import Modal   from '@/components/Modal.vue'
 
 export default {
   components: {

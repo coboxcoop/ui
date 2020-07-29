@@ -8,7 +8,9 @@
   </template>
 
   <div v-if="!spaces.length" class="help">
-    Welcome to CoBox! To get started, create your first folder by cklicking the plus button above.
+    <p>To get started, create your first encrypted folder by clicking the plus button above. You'll be able to invite friends to access this folder.</p>
+
+    <small>CoBox v1 sprout release works best for files which are not changing; archives, photos, music, movies.</small>
   </div>
   <div v-else>
     <NavList>
