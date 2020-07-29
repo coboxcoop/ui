@@ -70,10 +70,12 @@ sup {
 p {
   margin-bottom: 1em;
 }
-p a {
-  text-decoration: underline;
-  &:hover {
-    text-decoration: none;
+p, small  {
+  a {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 h2 {
