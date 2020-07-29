@@ -44,9 +44,6 @@ export default {
   computed: {
     seeder() {
       return this.$store.getters['seeders/single'](this.$route.params.address)
-    },
-    space() {
-      return this.$store.state.spaces.data
     }
   },
   methods: {
