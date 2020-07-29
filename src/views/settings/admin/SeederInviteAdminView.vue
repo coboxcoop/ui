@@ -49,11 +49,23 @@ export default {
         this.$router.push(to)
       }
     },
+    async onSubmitInvite() {
+      const {seeder: {address}, publicKey} = this
+
+      try {
+        const data = await this.$store.dispatch('seeders/createInvite', {address, publicKey})
+        this.inviteCode = data.content.code
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+
+      this.publicKey = ''
+    },
     async onSubmit() {
       try {
-        await this.$store.dispatch('spaces/acceptInvite', this.inviteCode)
+        await this.$store.dispatch('seeders/acceptInvite', this.inviteCode)
         this.inviteCode = ''
-        this.$router.replace({name: 'spaces'})
+        this.$router.replace({name: 'seeders'})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
