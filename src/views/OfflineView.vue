@@ -7,8 +7,8 @@
   </p>
   <p>
     If the server won't reload<br />please zip this folder<br />
-    `~/.cobox/1/logs/`<br /> and send to <br />
-    bugs@cobox.cloud<br />
+    `{{logsPath}}`<br /> and send to <br />
+    <a href="mailto:bugs@cobox.cloud">bugs@cobox.cloud</a><br />
   </p>
 </div>
 </template>
@@ -18,6 +18,11 @@ export default {
   methods: {
     reload() {
       window.location.reload()
+    }
+  },
+  computed: {
+    logsPath() {
+      return this.$store.getters['system/logsPath']
     }
   }
 }
