@@ -52,7 +52,7 @@ export default {
         this.$store.dispatch('settings/update', {email: value})
       }
     }
-  },
+  }
 }
 </script>
 

@@ -98,6 +98,16 @@ export default {
         this.$router.push(to)
       }
     }
+  },
+  computed: {
+    email: {
+      get() {
+        return this.$store.state.settings.email
+      },
+      set(value) {
+        this.$store.dispatch('settings/update', {email: value})
+      }
+    }
   }
 }
 </script>
