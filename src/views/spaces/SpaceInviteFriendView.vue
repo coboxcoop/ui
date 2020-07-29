@@ -1,5 +1,9 @@
 <template>
 <Screen :back="{name: 'space', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+  <Modal :show="showInfo" @close="showInfo = false">
+    <p>This invite will be encrypted to your friend's CoBox key, so only they can use it. It's safe to pass to them via an insecure messaging application. Once added this friend's access to the folder cannot be revoked.</p>
+  </Modal>
+
   <template v-slot:header>
     <div class="header">
       <div>
@@ -14,10 +18,12 @@
       <CopyKey :value="inviteCode" />
     </div>
     <div v-else>
-      <p>To invite a friend provide their CoBox key to make them a secure invite code.</p>
+      <div class="info">
+        <p>To invite a friend provide their CoBox key to make them a secure invite code. <img @click="showInfo = true" v-shortkey="['ctrl', 'i']" @shortkey="navigate(showInfo = true)" src="@/assets/images/icons/info.svg" /></p>
+      </div>
 
       <form @submit.prevent="onSubmitInvite">
-        <input class="has-ok-button" type="text" placeholder="Friends CoBox Key" v-model="publicKey" />
+        <input class="has-ok-button" type="text" placeholder="Friend's CoBox Key" v-model="publicKey" />
         <button type="submit">Ok</button>
       </form>
     </div>
@@ -30,18 +36,35 @@
   border-top: 1px solid var(--fg);
   padding-top: 0.6rem;
 }
+.info {
+  display: flex;
+  align-items: center;
+  p {
+    flex: 1;
+    img {
+      margin-bottom: -0.1em;
+      cursor: pointer;
+      html.dark & {
+        filter: invert(1);
+      }
+    }
+  }
+}
 </style>
 
 <script>
-import Screen from '@/components/Screen.vue'
+import Screen  from '@/components/Screen.vue'
 import CopyKey from '@/components/CopyKey.vue'
+import Modal   from '@/components/Modal.vue'
 
 export default {
   components: {
     Screen,
-    CopyKey
+    CopyKey,
+    Modal
   },
   data: () => ({
+    showInfo: false,
     inviteCode: '',
     publicKey: ''
   }),

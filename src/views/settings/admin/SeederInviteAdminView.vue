@@ -1,7 +1,7 @@
 <template>
 <Screen :back="{name: 'seeder', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
   <Modal :show="showInfo" @close="showInfo = false">
-    <p>This invite will be encrypted to your friends CoBox key, so only they can use it. It's safe to pass to them via an insecure messaging application.</p>
+    <p>This invite will be encrypted to your friend's CoBox key, so only they can use it. It's safe to pass to them via an insecure messaging application. Once added this admin access cannot be revoked.</p>
   </Modal>
 
   <div v-if="inviteCode">
@@ -14,7 +14,7 @@
     </div>
 
     <form @submit.prevent="onSubmitInvite">
-      <input class="has-ok-button" type="text" placeholder="Friends CoBox Key" v-model="publicKey" />
+      <input class="has-ok-button" type="text" placeholder="Friend's CoBox Key" v-model="publicKey" />
       <button type="submit">Ok</button>
     </form>
   </div>
