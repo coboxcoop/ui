@@ -3,7 +3,7 @@
   <template v-slot:header>
     <div class="header">
       <div>
-        {{space.name}}
+        Folder > {{space.name}}
       </div>
       <div class="stat">{{stat.size | bytes}}</div>
     </div>
@@ -11,7 +11,7 @@
 
   <NavList>
     <a href="#" @click.prevent="openMount" v-shortkey="['ctrl', 'o']" @shortkey="openMount">Open folder</a>
-    <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Folder health</RouterLink>
+    <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Health</RouterLink>
     <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'd']" @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">Delete</RouterLink>
   </NavList>
   

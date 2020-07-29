@@ -1,5 +1,13 @@
 <template>
 <Screen :back="{name: 'space', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
+  <template v-slot:header>
+    <div class="header">
+      <div>
+        Folder > {{space.name}} > Invite 
+      </div>
+    </div>
+  </template>
+
   <div class="page">
     <div v-if="inviteCode">
       <p>Please send the following invite code to your friend.</p>

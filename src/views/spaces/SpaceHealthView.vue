@@ -3,7 +3,7 @@
   <template v-slot:header>
     <div class="header">
       <div>
-        {{space.name}} health
+        Folder > {{space.name}} > Health
       </div>
       <div class="stat">{{stat.size | bytes}}</div>
     </div>

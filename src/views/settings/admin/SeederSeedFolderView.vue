@@ -2,7 +2,7 @@
   <Screen :back="{name: 'seeder', params: {address: seeder.address}}" v-if="seeder">
   <template v-slot:header>
     <div class="header">
-      Seeder: {{seeder.name}}
+      Seeder > {{seeder.name}} > Seed folder
     </div>
   </template>
 

@@ -3,7 +3,7 @@
   <template v-slot:header>
     <div class="header">
       <div>
-        <SpaceIcon :address="space.address" /> {{space.name}}
+        Folder > {{space.name}} > Delete
       </div>
       <div class="stat">{{stat.size | bytes}}</div>
     </div>
@@ -43,8 +43,6 @@
 <script>
 import Screen from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
-import SpaceIcon from '@/components/SpaceIcon.vue'
-import UserIcon from '@/components/UserIcon.vue'
 import Plus from '@/components/Plus.vue'
 import CopyKey from '@/components/CopyKey.vue'
 import ToggleSwitch from '@/components/ToggleSwitch.vue'
@@ -52,8 +50,6 @@ import {api} from '@/api'
 
 export default {
   components: {
-    SpaceIcon,
-    UserIcon,
     Screen,
     NavList,
     Plus,

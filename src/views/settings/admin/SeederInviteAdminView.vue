@@ -16,6 +16,10 @@
 </template>
 
 <style scoped lang="scss">
+.header {
+  display: flex;
+  justify-content: space-between;
+}
 .page {
   border-top: 1px solid var(--fg);
   padding-top: 0.6rem;
