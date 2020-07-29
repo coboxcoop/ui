@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import Screen from '@/components/Screen.vue'
+import Screen  from '@/components/Screen.vue'
 import NavList from '@/components/NavList.vue'
-import Dot from '@/components/Dot.vue'
-import Plus from '@/components/Plus.vue'
+import Dot     from '@/components/Dot.vue'
+import Plus    from '@/components/Plus.vue'
 
 export default {
   components: {
