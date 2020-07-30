@@ -60,7 +60,8 @@ export default {
       try {
         await this.$store.dispatch('seeders/acceptInvite', this.inviteCode)
         this.inviteCode = ''
-        this.$router.replace({name: 'seeders'})
+        await this.$router.replace({name: 'seeders'})
+        window.location.reload()
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }

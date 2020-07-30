@@ -68,7 +68,8 @@ export default {
       try {
         await this.$store.dispatch('spaces/acceptInvite', this.inviteCode)
         this.inviteCode = ''
-        this.$router.replace({name: 'spaces'})
+        await this.$router.replace({name: 'spaces'})
+        window.location.reload()
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
