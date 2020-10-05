@@ -67,7 +67,6 @@ export default ({api, events}) => ({
       try {
         await api.post(`/spaces/${address}/connections`, {address, name})
         commit('connected', {address, connected: true})
-        await dispatch('mount', {address, name})
       } catch(e) {
         const msg = e.response.data && e.response.data.errors && e.response.data.errors[0].msg
         if(msg && msg.match('open connection')) {
