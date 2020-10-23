@@ -101,11 +101,20 @@ export default {
       return this.$store.getters['spaces/mounted'](this.space.address)
     }
   },
+  watch: {
+    mounted() {
+      this.setMounted()
+    }
+  },
   methods: {
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
         this.$router.push(to)
       }
+    },
+    setMounted() {
+      const act = this.$store.getters['spaces/mounted'](this.space.address) ? 'add' : 'remove'
+      document.documentElement.classList[act]('mounted')
     },
     async toggleMount() {
       if(this.mounted) {
