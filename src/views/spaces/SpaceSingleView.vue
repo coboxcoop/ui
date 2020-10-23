@@ -14,10 +14,8 @@
     <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Health</RouterLink>
     <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'd']" @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">Delete</RouterLink>
     <div class="switch">
-      <label>Mount Folder {{isMounted}}</label>
-      <!-- FIXME: change toggle visual based on mounted status
-           look at how current toggle visual logic works and replicate -->
-      <ToggleSwitch @input="toggleMount" :value="isMounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
+      <label>Mount Folder mounted:{{mounted}}</label>
+      <ToggleSwitch @input="toggleMount" :value="mounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
     </div>
   </NavList>
   
@@ -79,8 +77,7 @@ export default {
   },
   data: () => ({
     publicKey: '',
-    inviteCode: '',
-    isMounted: ''
+    inviteCode: ''
   }),
   computed: {
     peerCountString() {
@@ -111,13 +108,13 @@ export default {
       }
     },
     async toggleMount() {
-      if(this.mounted) {
-        this.isMounted = true
-        await this.mountFolder()
-      } else {
-        this.isMounted = false
-        await this.unmountFolder()
-      }
+      // if(this.mounted) {
+      //   this.isMounted = true
+      //   await this.mountFolder()
+      // } else {
+      //   this.isMounted = false
+      //   await this.unmountFolder()
+      // }
     },
     async mountFolder() {
       try {
