@@ -108,13 +108,11 @@ export default {
       }
     },
     async toggleMount() {
-      // if(this.mounted) {
-      //   this.isMounted = true
-      //   await this.mountFolder()
-      // } else {
-      //   this.isMounted = false
-      //   await this.unmountFolder()
-      // }
+      if(this.mounted) {
+        await this.mountFolder()
+      } else {
+        await this.unmountFolder()
+      }
     },
     async mountFolder() {
       try {
