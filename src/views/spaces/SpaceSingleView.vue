@@ -77,7 +77,8 @@ export default {
   },
   data: () => ({
     publicKey: '',
-    inviteCode: ''
+    inviteCode: '',
+    mounted: false
   }),
   computed: {
     peerCountString() {
@@ -113,12 +114,12 @@ export default {
       }
     },
     setMounted() {
-      const act = this.$store.getters['spaces/mounted'](this.space.address) ? 'add' : 'remove'
-      document.documentElement.classList[act]('mounted')
+      this.mounted = this.mounted()
     },
     async toggleMount() {
       if(this.mounted) {
         await this.mountFolder()
+        this.mounted = this.mounted() 
       } else {
         await this.unmountFolder()
       }
@@ -137,7 +138,6 @@ export default {
         this.$store.dispatch('error/handle', e)
       }
     },
-    
     async onSubmitInvite() {
       const {space: {address}, publicKey} = this
 
