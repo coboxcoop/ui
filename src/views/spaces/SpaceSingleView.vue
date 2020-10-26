@@ -14,8 +14,10 @@
     <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Health</RouterLink>
     <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'd']" @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">Delete</RouterLink>
     <div class="switch">
-      <label>Mount Folder mounted:{{mounted}}</label>
-      <ToggleSwitch @input="toggleMount" :value="mounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
+      <label>Mount Folder isMounted:{{ isMounted }}</label>
+      <!-- 1. on initialisation, check server to see if space is already mounted, render based on response
+           2. upon subsequent clicks, emit corresponding api calls (mount/unmount), render accordingly-->
+      <ToggleSwitch @input="toggleMount" :value="isMounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
     </div>
   </NavList>
   
@@ -78,7 +80,7 @@ export default {
   data: () => ({
     publicKey: '',
     inviteCode: '',
-    mounted: false
+    isMounted: false
   }),
   computed: {
     peerCountString() {
@@ -102,42 +104,38 @@ export default {
       return this.$store.getters['spaces/mounted'](this.space.address)
     }
   },
-  watch: {
-    mounted() {
-      this.setMounted()
-    }
-  },
   methods: {
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
         this.$router.push(to)
       }
     },
-    setMounted() {
-      this.mounted = this.mounted()
+    toggleMount() {
+      this.$store.dispatch('spaces/toggleMount')(this.space.address)
     },
-    async toggleMount() {
-      if(this.mounted) {
-        await this.mountFolder()
-        this.mounted = this.mounted() 
-      } else {
-        await this.unmountFolder()
-      }
-    },
-    async mountFolder() {
-      try {
-        await this.$store.dispatch('spaces/mount', this.space)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
-    async unmountFolder() {
-      try {
-        await this.$store.dispatch('spaces/unmount', this.space)
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
+    // async toggleMount() {
+    //   if(this.mounted()) {
+    //     await this.mountFolder()
+    //     this.isMounted = true
+    //   } else {
+    //     await this.unmountFolder()
+    //     this.isMounted = false
+    //   }
+    // },
+    // async mountFolder() {
+    //   try {
+    //     await this.$store.dispatch('spaces/mount', this.space)
+    //   } catch(e) {
+    //     this.$store.dispatch('error/handle', e)
+    //   }
+    // },
+    // async unmountFolder() {
+    //   try {
+    //     await this.$store.dispatch('spaces/unmount', this.space)
+    //   } catch(e) {
+    //     this.$store.dispatch('error/handle', e)
+    //   }
+    // },
     async onSubmitInvite() {
       const {space: {address}, publicKey} = this
 

@@ -88,6 +88,19 @@ export default ({api, events}) => ({
         throw(e)
       }
     },
+    async toggleMount({commit, dispatch}, {address, name}) {
+      // mount / unmount action to server based on state       
+      if(mounted) {
+        dispatch('mount', {address, name})
+        await dispatch('fetch')
+        return data
+      } else {
+        dispatch('unmount', {address, name})
+        await dispatch('fetch')
+        return data
+      }
+      }
+    },
     async mount({commit}, {address, name}) {
       try {
         await api.post(`/spaces/${address}/mounts`, {address, name})
