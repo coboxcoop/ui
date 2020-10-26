@@ -14,10 +14,10 @@
     <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Health</RouterLink>
     <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'd']" @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">Delete</RouterLink>
     <div class="switch">
-      <label>Mount Folder isMounted:{{ isMounted }}</label>
+      <label>Mount Folder mounted:{{ mounted }}</label>
       <!-- 1. on initialisation, check server to see if space is already mounted, render based on response
            2. upon subsequent clicks, emit corresponding api calls (mount/unmount), render accordingly-->
-      <ToggleSwitch @input="toggleMount" :value="isMounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
+      <ToggleSwitch @input="toggleMount" :value="mounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
     </div>
   </NavList>
   
@@ -79,8 +79,7 @@ export default {
   },
   data: () => ({
     publicKey: '',
-    inviteCode: '',
-    isMounted: false
+    inviteCode: ''
   }),
   computed: {
     peerCountString() {
@@ -110,32 +109,30 @@ export default {
         this.$router.push(to)
       }
     },
-    toggleMount() {
-      this.$store.dispatch('spaces/toggleMount')(this.space.address)
-    },
     // async toggleMount() {
-    //   if(this.mounted()) {
-    //     await this.mountFolder()
-    //     this.isMounted = true
-    //   } else {
-    //     await this.unmountFolder()
-    //     this.isMounted = false
-    //   }
+    //   this.$store.dispatch('spaces/toggleMount')(this.space.address)
     // },
-    // async mountFolder() {
-    //   try {
-    //     await this.$store.dispatch('spaces/mount', this.space)
-    //   } catch(e) {
-    //     this.$store.dispatch('error/handle', e)
-    //   }
-    // },
-    // async unmountFolder() {
-    //   try {
-    //     await this.$store.dispatch('spaces/unmount', this.space)
-    //   } catch(e) {
-    //     this.$store.dispatch('error/handle', e)
-    //   }
-    // },
+    async toggleMount() {
+      if(this.mounted()) {
+        await this.mountFolder()
+      } else {
+        await this.unmountFolder()
+      }
+    },
+    async mountFolder() {
+      try {
+        await this.$store.dispatch('spaces/mount', this.space.address)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+    },
+    async unmountFolder() {
+      try {
+        await this.$store.dispatch('spaces/unmount', this.space.address)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+    },
     async onSubmitInvite() {
       const {space: {address}, publicKey} = this
 

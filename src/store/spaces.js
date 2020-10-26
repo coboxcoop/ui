@@ -88,9 +88,9 @@ export default ({api, events}) => ({
         throw(e)
       }
     },
-    async toggleMount({commit, dispatch}, {address, name}) {
+    async toggleMount({commit, dispatch, state}, {address, name}) {
       // mount / unmount action to server based on state       
-      if(mounted) {
+      if(mounted(state)) {
         dispatch('mount', {address, name})
         await dispatch('fetch')
         return data
@@ -98,7 +98,6 @@ export default ({api, events}) => ({
         dispatch('unmount', {address, name})
         await dispatch('fetch')
         return data
-      }
       }
     },
     async mount({commit}, {address, name}) {
