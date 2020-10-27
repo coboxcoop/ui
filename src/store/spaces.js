@@ -26,6 +26,15 @@ export default ({api, events}) => ({
       const {data} = await api.get(`/spaces/${address}/drive/stat`)
       commit('receiveStat', {address, stat: data})
     },
+    async getAllMounts({state, dispatch}) {
+      await Promise.all(state.data.map(({address}) => {
+        return dispatch('getMounts', {address})
+      }))
+    },
+    async getMounts({commit}, {address}) {
+      const {data} = await api.get(`/spaces/mounts`)
+      commit('mounted', {address, mounted: data})
+    },
     async getAllPeers({state, dispatch}) {
       await Promise.all(state.data.map(({address, name}) => {
         return dispatch('getPeers', address)
