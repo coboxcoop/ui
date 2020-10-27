@@ -25,7 +25,7 @@
 
   <NavList>
     <div v-for="peer in peers" :key="peer.publicKey">
-      <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
+      <UserIcon :address="peer.data.author" /> {{peer.data.content.name}} , {{peer.data.author}}
     </div>
     <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite friend</RouterLink>
   </NavList>
