@@ -14,9 +14,7 @@
     <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Health</RouterLink>
     <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'd']" @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">Delete</RouterLink>
     <div class="switch">
-      <label>Mount Folder mounted:{{ mounted }}</label>
-      <!-- 1. on initialisation, check server to see if space is already mounted, render based on response
-           2. upon subsequent clicks, emit corresponding api calls (mount/unmount), render accordingly-->
+      <label>Mount Folder</label>
       <ToggleSwitch @input="toggleMount" :value="mounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
     </div>
   </NavList>
@@ -109,26 +107,23 @@ export default {
         this.$router.push(to)
       }
     },
-    // async toggleMount() {
-    //   this.$store.dispatch('spaces/toggleMount')(this.space.address)
-    // },
     async toggleMount() {
-      if(this.mounted()) {
-        await this.mountFolder()
-      } else {
+      if(this.mounted) {
         await this.unmountFolder()
+      } else {
+        await this.mountFolder()
       }
     },
     async mountFolder() {
       try {
-        await this.$store.dispatch('spaces/mount', this.space.address)
+        await this.$store.dispatch('spaces/mount', this.space)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
     },
     async unmountFolder() {
       try {
-        await this.$store.dispatch('spaces/unmount', this.space.address)
+        await this.$store.dispatch('spaces/unmount', this.space)
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
