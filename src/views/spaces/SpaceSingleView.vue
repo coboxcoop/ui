@@ -10,13 +10,13 @@
   </template>
 
   <NavList>
-    <a href="#" @click.prevent="openMount" v-shortkey="['ctrl', 'o']" @shortkey="openMount">Open folder</a>
-    <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Health</RouterLink>
-    <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'd']" @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">Delete</RouterLink>
     <div class="switch">
       <label>Mount Folder</label>
       <ToggleSwitch @input="toggleMount" :value="mounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
     </div>
+    <a href="#" @click.prevent="openMount" v-shortkey="['ctrl', 'o']" @shortkey="openMount">Open folder</a>
+    <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Health</RouterLink>
+    <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'd']" @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">Delete</RouterLink>
   </NavList>
   
   <div style="height: 1.6rem" />
@@ -24,10 +24,11 @@
   <h2>{{peerCountString}}</h2>
 
   <NavList>
-    <div v-for="peer in peers" :key="peer.publicKey">
-      <UserIcon :address="peer.data.author" /> {{peer.data.content.name}} , {{peer.data.author}}
-    </div>
     <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite friend</RouterLink>
+    <div v-for="peer in peers" :key="peer.publicKey">
+      <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
+      <CopyKey :value="peer.data.author" />
+    </div>
   </NavList>
 
   <br />
