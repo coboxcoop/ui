@@ -27,6 +27,7 @@
     <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite friend</RouterLink>
     <div v-for="peer in peers" :key="peer.publicKey">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
+      <!-- FIXME: CopyKey styling in this context  -->
       <CopyKey :value="peer.data.author" />
     </div>
   </NavList>
