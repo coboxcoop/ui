@@ -6,17 +6,14 @@
   <NavList>
     <RouterLink v-for="space in spaces" :key="space.address" class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
       <div>{{space.name}}</div>
-      <div>Contacts list here. {{space.address}}</div>
-      <!-- 1. nested query? 
-           2. for each space in spaces 
-           3. show peers in each space
-           4. getting this.space is not known-->
+      <div>{{space.address}}</div>
       <NavList>
-        <div v-for="peer in peers" :key="peer.publicKey">
+        <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
           <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
           <CopyKey :value="peer.data.author" />
         </div>
       </NavList>
+      <br />
     </RouterLink>
   </NavList>
 </Screen>
@@ -38,15 +35,15 @@ export default {
   computed: {
     spaces() {
       return this.$store.state.spaces.data
-    },
-    space() {
-      return this.$store.getters['spaces/single'](this.$route.params.address)
-    },
-    peers() {
-      return this.$store.getters['spaces/peers'](this.space.address)
     }
   },
   methods: {
+    getSpace(address) {
+      return this.$store.getters['spaces/single'](address)
+    },
+    getPeers(address) {
+      return this.$store.getters['spaces/peers'](address)
+    },
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
         this.$router.push(to)
