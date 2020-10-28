@@ -23,8 +23,11 @@
     <!--  FIXME:
           1. Show list of friends (like in single folder view)
           2. List folders shared with this friend (with links to folders)-->
-    <RouterLink v-for="space in spaces">
-    </RouterLink>
+    <div v-for="space in spaces" :key="space.address">
+      <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
+        {{peer.data.content.name}}
+      </div>
+    </div>
 
   </NavList>
 </Screen>
@@ -46,6 +49,11 @@ export default {
   computed: {
     spaces() {
       return this.$store.state.spaces.data
+    },
+    uniqueFriends() {
+      var vm = this;
+      return function (keyname)
+      // https://stackoverflow.com/questions/42845338/vue-js-v-for-filter-by-unique
     }
   },
   methods: {
