@@ -12,6 +12,9 @@
     <RouterLink :to="{name: 'advanced'}" v-shortkey="['ctrl', 'shift', 'a']" @shortkey.native="navigate({name: 'advanced'})">
       Advanced
     </RouterLink>
+    <RouterLink :to="{name: 'contacts'}" v-shortkey="['ctrl', 'c']" @shortkey.native="navigate({name: 'contacts'})">
+      Contacts
+    </RouterLink>
     <RouterLink :to="{name: 'manage-keys'}" v-shortkey="['ctrl', 'k']" @shortkey.native="navigate({name: 'manage-keys'})">
       Manage Keys
     </RouterLink>

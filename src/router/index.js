@@ -22,6 +22,7 @@ import ManageKeysView                   from '@/views/settings/ManageKeysView.vu
 import AdvancedView                     from '@/views/settings/AdvancedView.vue'
 import AccessibilityView                from '@/views/settings/AccessibilityView.vue'
 import ProfileView                      from '@/views/settings/ProfileView.vue'
+import ContactsView                     from '@/views/settings/ContactsView.vue'
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,7 @@ const routes = [
   {path: '/settings/profile',                           name: 'profile',                         component: ProfileView},
   {path: '/settings/advanced',                          name: 'advanced',                        component: AdvancedView},
   {path: '/settings/accessibility',                     name: 'accessibility',                   component: AccessibilityView},
+  {path: '/settings/contacts',                          name: 'contacts',                        component: ContactsView},
   {path: '/settings/keys',                              name: 'manage-keys',                     component: ManageKeysView},
   {path: '/settings/keys/export',                       name: 'secrets-export',                  component: ExportView},
   {path: '/settings/keys/import',                       name: 'secrets-import',                  component: ImportView},
