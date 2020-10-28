@@ -8,7 +8,7 @@
 
 <style lang="scss" scoped>
 .copy-key {
-  margin-bottom: 1em;
+  /* margin-bottom: 1em; */
   cursor: pointer;
 }
 .copy {
