@@ -25,8 +25,9 @@
           2. List folders shared with this friend (with links to folders)-->
     <div v-for="space in spaces" :key="space.address">
       <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
-        {{peer.data.content.name}}
+        {{uniquePeers(peer.data.author)}}
       </div>
+      {{peers}}
     </div>
 
   </NavList>
@@ -46,14 +47,23 @@ export default {
     UserIcon,
     CopyKey
   },
+  data: function() {
+    return {
+      peers: {}
+    }
+  },
   computed: {
     spaces() {
       return this.$store.state.spaces.data
     },
-    uniqueFriends() {
-      var vm = this;
-      return function (keyname)
+    uniquePeers(peer) {
+      // FIXME: for By Friend
       // https://stackoverflow.com/questions/42845338/vue-js-v-for-filter-by-unique
+      if(this.peers.includes(peer)) {
+        console.log('includes ' + peer)
+      } else {
+        this.peers.push(peer)
+      }
     }
   },
   methods: {
