@@ -20,15 +20,17 @@
       <br />
     </RouterLink>
     <div>By Friend:</div>
-    <!--  FIXME:
-          1. Show list of friends (like in single folder view)
-          2. List folders shared with this friend (with links to folders)-->
-    <div v-for="space in spaces" :key="space.address">
-      <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
-        {{uniquePeers(peer.data.author)}}
+      <div>
+        <!--  FIXME:
+              1. Show list of friends (like in single folder view)
+              2. List folders shared with this friend (with links to folders)-->
+        <div v-for="space in spaces" :key="space.address">
+          <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
+            {{uniquePeers(peer.data.author)}}
+          </div>
+        </div>
+        {{peers}}
       </div>
-      {{peers}}
-    </div>
 
   </NavList>
 </Screen>
@@ -49,20 +51,19 @@ export default {
   },
   data: function() {
     return {
-      peers: {}
+      peers: []
     }
   },
   computed: {
     spaces() {
       return this.$store.state.spaces.data
     },
-    uniquePeers(peer) {
-      // FIXME: for By Friend
-      // https://stackoverflow.com/questions/42845338/vue-js-v-for-filter-by-unique
-      if(this.peers.includes(peer)) {
-        console.log('includes ' + peer)
-      } else {
-        this.peers.push(peer)
+    uniquePeers: function() {
+      return function (peer) {
+        if(this.peers.includes(peer)) {
+        } else {
+          this.peers.push(peer)
+        }
       }
     }
   },
