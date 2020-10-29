@@ -26,7 +26,7 @@
             {{uniquePeers(peer.data, space)}}
           </div>
         </div>
-        <li v-for="peer in peers">
+        <li v-for="peer in contacts.peers">
         <!--  FIXME:
               2. List folders shared with this friend (with links to folders)-->
           {{ peer.content.name }}
@@ -53,6 +53,9 @@ export default {
   },
   data: function() {
     return {
+      // FIXME:
+      // contacts aggregates information with peer as primary
+      // gathers space info under peer 
       contacts: {
         peers: {
           author: '',
@@ -70,8 +73,11 @@ export default {
       return this.$store.state.spaces.data
     },
     uniquePeers() {
-      // check if hashmap contains key
-      // if it doesn't then add the information
+      // FIXME:
+      // gather which spaces (name, address) a peer belongs to
+      // each peer should have a single entry, with many spaces 
+      // method should check if peer exists. if yes, then check if entry for address.
+      // if peer doesn't yet exist then create new entry
       return function (peer, space) {
         if(peer.author in this.contacts) {
         } else {
