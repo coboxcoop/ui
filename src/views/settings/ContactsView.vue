@@ -29,7 +29,8 @@
         <li v-for="peer in peers">
         <!--  FIXME:
               2. List folders shared with this friend (with links to folders)-->
-          {{ peer }}
+          {{ peer.content.name }}
+          {{ peer.author }}
         </li>
       </div>
 
@@ -52,7 +53,16 @@ export default {
   },
   data: function() {
     return {
-      peers: []
+      contacts: {
+        peers: {
+          author: '',
+          name: '',
+          spaces : {
+            name: '',
+            address: ''
+          }
+        }
+      }
     }
   },
   computed: {
@@ -60,14 +70,19 @@ export default {
       return this.$store.state.spaces.data
     },
     uniquePeers() {
+      // check if hashmap contains key
+      // if it doesn't then add the information
       return function (peer, space) {
-        console.log(space.name)
-        console.log(space.address)
-        console.log(peer.content.name)
-        console.log(peer.author)
-        if(this.peers.includes(peer)) {
+        if(peer.author in this.contacts) {
         } else {
-          this.peers.push(peer)
+          this.contacts = {
+            ...this.contacts,
+            this.contacts.peers[peer.author] = something
+            console.log(space.name)
+            console.log(space.address)
+            console.log(peer.content.name)
+            console.log(peer.author)
+          }
         }
       }
     }
