@@ -21,15 +21,14 @@
     </RouterLink>
     <div>By Friend:</div>
       <div>
-        <!--  FIXME:
-              1. Show list of friends (like in single folder view)
-              2. List folders shared with this friend (with links to folders)-->
         <div v-for="space in spaces" :key="space.address">
           <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
             {{uniquePeers(peer.data.author)}}
           </div>
         </div>
         <li v-for="peer in peers">
+        <!--  FIXME:
+              2. List folders shared with this friend (with links to folders)-->
           {{ peer }}
         </li>
       </div>
@@ -60,7 +59,7 @@ export default {
     spaces() {
       return this.$store.state.spaces.data
     },
-    uniquePeers: function() {
+    uniquePeers() {
       return function (peer) {
         if(this.peers.includes(peer)) {
         } else {
@@ -70,9 +69,6 @@ export default {
     }
   },
   methods: {
-    getSpace(address) {
-      return this.$store.getters['spaces/single'](address)
-    },
     getPeers(address) {
       return this.$store.getters['spaces/peers'](address)
     },
