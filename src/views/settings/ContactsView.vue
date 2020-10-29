@@ -23,7 +23,7 @@
       <div>
         <div v-for="space in spaces" :key="space.address">
           <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
-            {{uniquePeers(peer.data.author)}}
+            {{uniquePeers(peer.data, space)}}
           </div>
         </div>
         <li v-for="peer in peers">
@@ -60,7 +60,11 @@ export default {
       return this.$store.state.spaces.data
     },
     uniquePeers() {
-      return function (peer) {
+      return function (peer, space) {
+        console.log(space.name)
+        console.log(space.address)
+        console.log(peer.content.name)
+        console.log(peer.author)
         if(this.peers.includes(peer)) {
         } else {
           this.peers.push(peer)
