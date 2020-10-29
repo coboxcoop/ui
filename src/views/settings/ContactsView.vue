@@ -29,7 +29,9 @@
             {{uniquePeers(peer.data.author)}}
           </div>
         </div>
-        {{peers}}
+        <li v-for="peer in peers">
+          {{ peer }}
+        </li>
       </div>
 
   </NavList>
