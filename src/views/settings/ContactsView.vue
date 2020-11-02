@@ -54,7 +54,7 @@ export default {
   data: function() {
     return {
       // FIXME:
-      // contacts aggregates information with peer as primary
+      // contacts aggregates information with peer as primary key
       // gathers space info under peer 
       contacts: {
         peers: {
@@ -78,12 +78,13 @@ export default {
       // each peer should have a single entry, with many spaces 
       // method should check if peer exists. if yes, then check if entry for address.
       // if peer doesn't yet exist then create new entry
+      // https://stackoverflow.com/questions/30578254/does-vue-js-have-a-built-in-way-to-add-a-copy-of-a-persistent-object-to-a-repeat
       return function (peer, space) {
         if(peer.author in this.contacts) {
         } else {
           this.contacts = {
             ...this.contacts,
-            this.contacts.peers[peer.author] = something
+            contacts[peers][author] : 'somethingi'
             console.log(space.name)
             console.log(space.address)
             console.log(peer.content.name)
