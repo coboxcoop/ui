@@ -29,7 +29,7 @@
         <li v-for="peer in contacts.peers">
         <!--  FIXME:
               2. List folders shared with this friend (with links to folders)-->
-          {{ peer.content.name }}
+          {{ peer.name }}
           {{ peer.author }}
         </li>
       </div>
@@ -57,14 +57,7 @@ export default {
       // contacts aggregates information with peer as primary key
       // gathers space info under peer 
       contacts: {
-        peers: {
-          author: '',
-          name: '',
-          spaces : {
-            name: '',
-            address: ''
-          }
-        }
+        peers: []
       }
     }
   },
@@ -80,16 +73,23 @@ export default {
       // if peer doesn't yet exist then create new entry
       // https://stackoverflow.com/questions/30578254/does-vue-js-have-a-built-in-way-to-add-a-copy-of-a-persistent-object-to-a-repeat
       return function (peer, space) {
-        if(peer.author in this.contacts) {
+        if(peer.author in this.contacts.peers) {
         } else {
-          this.contacts = {
-            ...this.contacts,
-            contacts[peers][author] : 'somethingi'
-            console.log(space.name)
-            console.log(space.address)
-            console.log(peer.content.name)
-            console.log(peer.author)
-          }
+          console.log("peer: ", peer)
+          console.log("space: ", space)
+          this.contacts.peers = [
+            ...this.contacts.peers,
+            { author: peer.author,
+              name: peer.content.name,
+              // array of space objects
+              spaces : [ space ]
+              }
+            // contacts[peers][author] : 'something',
+            // console.log(space.name),
+            // console.log(space.address),
+            // console.log(peer.content.name),
+            // console.log(peer.author)
+          ]
         }
       }
     }
