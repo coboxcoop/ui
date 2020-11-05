@@ -20,20 +20,15 @@
       <br />
     </RouterLink>
     <div>By Friend:</div>
-      <div>
-        <div v-for="space in spaces" :key="space.address">
-          <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
-            {{uniquePeers(peer.data, space)}}
-          </div>
+    <div>
+      <div v-for="(peer, author) in allPeers" :key="author">
+        <div>{{peer.data.content.name}}</div>
+        <div v-for="space in peer.spaces" :key="space.address">
+          {{space.name}}
+          {{space.address}}
         </div>
-        <li v-for="peer in contacts.peers">
-        <!--  FIXME:
-              2. List folders shared with this friend (with links to folders)-->
-          {{ peer.name }}
-          {{ peer.author }}
-        </li>
       </div>
-
+    </div>
   </NavList>
 </Screen>
 </template>
@@ -51,48 +46,29 @@ export default {
     UserIcon,
     CopyKey
   },
-  data: function() {
-    return {
-      // FIXME:
-      // contacts aggregates information with peer as primary key
-      // gathers space info under peer 
-      contacts: {
-        peers: []
-      }
-    }
-  },
   computed: {
+    allPeers() {
+      let peers = {}
+
+      this.spaces.forEach(space => {
+        const spacePeers = this.getPeers(space.address)
+
+        if(Array.isArray(spacePeers)) spacePeers.forEach(peer => {
+          const address = peer.data.author
+          let spacePeer = peers[address] || peer
+
+          spacePeer.spaces = spacePeer.spaces || []
+          if(!spacePeer.spaces.find(({address}) => space.address == address)) spacePeer.spaces.push(space)
+
+          peers[address] = spacePeer
+        })
+      })
+
+      return peers
+    },
     spaces() {
       return this.$store.state.spaces.data
     },
-    uniquePeers() {
-      // FIXME:
-      // gather which spaces (name, address) a peer belongs to
-      // each peer should have a single entry, with many spaces 
-      // method should check if peer exists. if yes, then check if entry for address.
-      // if peer doesn't yet exist then create new entry
-      // https://stackoverflow.com/questions/30578254/does-vue-js-have-a-built-in-way-to-add-a-copy-of-a-persistent-object-to-a-repeat
-      return function (peer, space) {
-        if(peer.author in this.contacts.peers) {
-        } else {
-          console.log("peer: ", peer)
-          console.log("space: ", space)
-          this.contacts.peers = [
-            ...this.contacts.peers,
-            { author: peer.author,
-              name: peer.content.name,
-              // array of space objects
-              spaces : [ space ]
-              }
-            // contacts[peers][author] : 'something',
-            // console.log(space.name),
-            // console.log(space.address),
-            // console.log(peer.content.name),
-            // console.log(peer.author)
-          ]
-        }
-      }
-    }
   },
   methods: {
     getPeers(address) {
