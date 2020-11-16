@@ -8,9 +8,12 @@
       <div v-for="(peer, author) in allPeers" :key="author">
         <UserIcon :address="peer.data.author"/> {{peer.data.content.name}}
         <CopyKey :value="peer.data.author" />
+        <small> Folders in common</small>
         <pre v-for="space in peer.spaces" :key="space.address">
-          {{space.name}}
-          {{space.address}}
+          <RouterLink :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
+          <div>{{space.name}}</div>
+          <div>{{space.address}}</div>
+          </RouterLink>
         </pre>
       </div>
     </div>

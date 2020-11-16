@@ -4,12 +4,11 @@
     Contacts > By Folder
   </template>
   <NavList>
-    <!--  FIXME:
-          1. fix router links, should only be clickable for folder name, not friends
-          2. general fixes required for CopyKey styling in this context-->
-    <RouterLink v-for="space in spaces" :key="space.address" class="space" :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
+    <div v-for="space in spaces" :key="space.address" class="space" >
+      <RouterLink :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
       <div>{{space.name}}</div>
       <div>{{space.address}}</div>
+      </RouterLink>
       <NavList>
         <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
           <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
@@ -17,7 +16,7 @@
         </div>
       </NavList>
       <br />
-    </RouterLink>
+    </div>
   </NavList>
 </Screen>
 </template>
