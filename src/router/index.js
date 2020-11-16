@@ -24,6 +24,7 @@ import AccessibilityView                from '@/views/settings/AccessibilityView
 import ProfileView                      from '@/views/settings/ProfileView.vue'
 import ContactsView                     from '@/views/settings/ContactsView.vue'
 import ContactsFriendView               from '@/views/settings/ContactsFriendView.vue'
+import ContactsFriendFoldersView        from '@/views/settings/ContactsFriendFoldersView.vue'
 import ContactsFolderView               from '@/views/settings/ContactsFolderView.vue'
 
 Vue.use(VueRouter)
@@ -43,6 +44,7 @@ const routes = [
   {path: '/settings/accessibility',                     name: 'accessibility',                   component: AccessibilityView},
   {path: '/settings/contacts',                          name: 'contacts',                        component: ContactsView},
   {path: '/settings/contacts/friend',                   name: 'contacts-friend',                 component: ContactsFriendView},
+  {path: '/settings/contacts/friend/folders',           name: 'contacts-friend-folders',         component: ContactsFriendFoldersView},
   {path: '/settings/contacts/folder',                   name: 'contacts-folder',                 component: ContactsFolderView},
   {path: '/settings/keys',                              name: 'manage-keys',                     component: ManageKeysView},
   {path: '/settings/keys/export',                       name: 'secrets-export',                  component: ExportView},

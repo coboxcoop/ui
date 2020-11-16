@@ -1,15 +1,21 @@
 <template>
 <Screen :back="{name: 'contacts'}">
   <template v-slot:header>
-    Contacts > By Friend
+    Contacts > By Friend > Folders
   </template>
   <NavList>
-    <div>
-      <div v-for="(peer, author) in allPeers" :key="author">
-        <UserIcon :address="peer.data.author"/> {{peer.data.content.name}}
-        <CopyKey :value="peer.data.author" />
-        <RouterLink :to="{name: 'contacts-friend-folders', params: {peer: eer }}" > Folders in common</RouterLink>
-      </div>
+    <div :peer="peer">
+      <!-- <div v&#45;for="(peer, author) in allPeers" :key="author"> -->
+        peer: {{ peer }}
+        <!-- <UserIcon :address="author.peer.data.author"/> {{author.peer.data.content.name}} -->
+        <!-- <CopyKey :value="author.peer.data.author" /> -->
+        <!-- <pre v&#45;for="space in peer.spaces" :key="space.address"> -->
+        <!--   <RouterLink :to="{name: 'space', params: {address: space.address}}" v&#45;shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})"> -->
+        <!--   <div>{{space.name}}</div> -->
+        <!--   <div>{{space.address}}</div> -->
+        <!--   </RouterLink> -->
+        <!-- </pre> -->
+      <!-- </div> -->
     </div>
   </NavList>
 </Screen>
@@ -27,6 +33,9 @@ export default {
     NavList,
     UserIcon,
     CopyKey
+  },
+  props: {
+    peer: Object
   },
   computed: {
     allPeers() {
