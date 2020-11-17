@@ -23,9 +23,9 @@ import AdvancedView                     from '@/views/settings/AdvancedView.vue'
 import AccessibilityView                from '@/views/settings/AccessibilityView.vue'
 import ProfileView                      from '@/views/settings/ProfileView.vue'
 import ContactsView                     from '@/views/settings/ContactsView.vue'
-import ContactsFriendView               from '@/views/settings/ContactsFriendView.vue'
-import ContactsFriendFoldersView        from '@/views/settings/ContactsFriendFoldersView.vue'
-import ContactsFolderView               from '@/views/settings/ContactsFolderView.vue'
+import ContactsFriendsView              from '@/views/settings/ContactsFriendsView.vue'
+import ContactsFriendsFoldersView       from '@/views/settings/ContactsFriendsFoldersView.vue'
+import ContactsFoldersView              from '@/views/settings/ContactsFoldersView.vue'
 
 Vue.use(VueRouter)
 
@@ -43,9 +43,9 @@ const routes = [
   {path: '/settings/advanced',                          name: 'advanced',                        component: AdvancedView},
   {path: '/settings/accessibility',                     name: 'accessibility',                   component: AccessibilityView},
   {path: '/settings/contacts',                          name: 'contacts',                        component: ContactsView},
-  {path: '/settings/contacts/friend',                   name: 'contacts-friend',                 component: ContactsFriendView},
-  {path: '/settings/contacts/friend/folders',           name: 'contacts-friend-folders',         component: ContactsFriendFoldersView},
-  {path: '/settings/contacts/folder',                   name: 'contacts-folder',                 component: ContactsFolderView},
+  {path: '/settings/contacts/friends',                  name: 'contacts-friends',                component: ContactsFriendsView},
+  {path: '/settings/contacts/friends/:address/folders', name: 'contacts-friends-folders',        component: ContactsFriendsFoldersView},
+  {path: '/settings/contacts/folders',                  name: 'contacts-folders',                component: ContactsFoldersView},
   {path: '/settings/keys',                              name: 'manage-keys',                     component: ManageKeysView},
   {path: '/settings/keys/export',                       name: 'secrets-export',                  component: ExportView},
   {path: '/settings/keys/import',                       name: 'secrets-import',                  component: ImportView},

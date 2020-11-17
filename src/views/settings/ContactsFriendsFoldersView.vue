@@ -1,14 +1,22 @@
 <template>
 <Screen :back="{name: 'contacts'}">
   <template v-slot:header>
-    Contacts > By Friend
+    Contacts > By Friend > Folders
   </template>
   <NavList>
+    <!-- FIXME: trying to pass singular peer from index to show only 
+                folders in common for a single friend
+                grab $route.params and filter results by author-->
     <div>
       <div v-for="(peer, author) in allPeers" :key="author">
-        <UserIcon :address="peer.data.author"/> {{peer.data.content.name}}
-        <CopyKey :value="peer.data.author" />
-        <RouterLink :to="{name: 'contacts-friend-folders', params: {peer: eer }}" > Folders in common</RouterLink>
+        <UserIcon :address="$route.params.address"/> {{peer.data.content.name}}
+        <CopyKey :value="$route.params.address" />
+        <pre v-for="space in peer.spaces" :key="space.address">
+          <RouterLink :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
+          <div>{{space.name}}</div>
+          <div>{{space.address}}</div>
+          </RouterLink>
+        </pre>
       </div>
     </div>
   </NavList>

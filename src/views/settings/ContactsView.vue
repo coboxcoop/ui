@@ -5,10 +5,8 @@
   </template>
 
   <NavList>
-    <RouterLink :to="{name: 'contacts-folder'}" v-shortkey="['ctrl', 'f']" @shortkey.native="navigate({name: 'contacts-folder'})" >By folder</RouterLink>
-    <RouterLink :to="{name: 'contacts-friend'}" v-shortkey="['ctrl', 'alt', 'f']" @shortkey.native="navigate({name: 'contacts-friend'})" >By friends</RouterLink>
-  </NavList>
-</Screen>
+    <RouterLink :to="{name: 'contacts-folders'}" v-shortkey="['ctrl', 'f']" @shortkey.native="navigate({name: 'contacts-folders'})" >By folder</RouterLink>
+    <RouterLink :to="{name: 'contacts-friends'}" v-shortkey="['ctrl', 'alt', 'f']" @shortkey.native="navigate({name: 'contacts-friends'})" >By friends</RouterLink>
   </NavList>
 </Screen>
 </template>
