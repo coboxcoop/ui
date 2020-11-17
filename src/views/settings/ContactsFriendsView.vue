@@ -8,8 +8,7 @@
       <div v-for="(peer, author) in allPeers" :key="author">
         <UserIcon :address="peer.data.author"/> {{peer.data.content.name}}
         <CopyKey type="text" :value="peer.data.author" />
-        <RouterLink :to="{name: 'contacts-friends-folders', params: {address: peer.data.author}}"> Folders in common</RouterLink>
-        <pre>peer: {{peer}}</pre>
+        <RouterLink :to="{name: 'contacts-friends-folders', params: {address: peer.data.author, name: peer.data.content.name}}"> <small>Folders in common</small></RouterLink>
       </div>
     </div>
   </NavList>
@@ -32,7 +31,7 @@ export default {
   computed: {
     allPeers() {
       let peers = {}
-
+      // FIXME:
       // unique() would allow you to pass something in
       // have a look at API
       // function uniq (array) {

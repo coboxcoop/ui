@@ -1,22 +1,20 @@
 <template>
-<Screen :back="{name: 'contacts'}">
+<Screen :back="{name: 'contacts-friends'}">
   <template v-slot:header>
     Contacts > By Friend > Folders
   </template>
   <NavList>
-    <!-- FIXME: trying to pass singular peer from index to show only 
-                folders in common for a single friend
-                grab $route.params and filter results by author-->
     <div>
+      <UserIcon :address="$route.params.address"/> {{$route.params.name}}
+      <CopyKey :value="$route.params.address" />
+      <small>Folders in common</small>
       <div v-for="(peer, author) in allPeers" :key="author">
-        <UserIcon :address="$route.params.address"/> {{peer.data.content.name}}
-        <CopyKey :value="$route.params.address" />
-        <pre v-for="space in peer.spaces" :key="space.address">
-          <RouterLink :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
-          <div>{{space.name}}</div>
-          <div>{{space.address}}</div>
-          </RouterLink>
-        </pre>
+        <div v-for="space in peerSpaces(allPeers)" :key="author">
+            <RouterLink :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
+            <div>{{space.name}}</div>
+            <div>{{space.address}}</div>
+            </RouterLink>
+        </div>
       </div>
     </div>
   </NavList>
@@ -36,17 +34,10 @@ export default {
     UserIcon,
     CopyKey
   },
-  computed: {
+  methods: {
     allPeers() {
       let peers = {}
 
-      // unique() would allow you to pass something in
-      // have a look at API
-      // function uniq (array) {
-      // if (!Array.isArray(array)) array = [array]
-      // return Array.from(new Set(array))
-      // }
-      // @cobox/repository/util.js
       this.spaces.forEach(space => {
         const spacePeers = this.getPeers(space.address)
 
@@ -63,11 +54,19 @@ export default {
 
       return peers
     },
-    spaces() {
-      return this.$store.state.spaces.data
+    peerSpaces(allPeers) {
+      // FIXME:
+      // filter allPeers to display folders of an individual peer
+      // https://stackoverflow.com/questions/5072136/javascript-filter-for-objects/37616104#37616104
+      // let spaces = []
+      // this.spaces.forEach(space => {
+      //   spaces.push(space)
+      // })
+      // return spaces
+      // let allPeers = allPeers()
+      console.warn(allPeers)
+      // return allPeers
     },
-  },
-  methods: {
     getPeers(address) {
       return this.$store.getters['spaces/peers'](address)
     },
