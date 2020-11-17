@@ -10,9 +10,11 @@
       <small>Folders in common</small>
       <div v-for="(peer, author) in allPeers" :key="author">
         <div v-for="space in peerSpaces(allPeers)" :key="author">
-            <RouterLink :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
-            <div>{{space.name}}</div>
-            <div>{{space.address}}</div>
+            <RouterLink 
+              :to="{name: 'space', params: {address: space.address}}" 
+              v-shortkey="['ctrl', 'enter' ]" 
+              @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
+              <pre>{{Object.entries(space.spaces)}}</pre>
             </RouterLink>
         </div>
       </div>
@@ -34,7 +36,7 @@ export default {
     UserIcon,
     CopyKey
   },
-  methods: {
+  computed: {
     allPeers() {
       let peers = {}
 
@@ -54,18 +56,32 @@ export default {
 
       return peers
     },
+    spaces() {
+      return this.$store.state.spaces.data
+    }
+  },
+  methods: {
     peerSpaces(allPeers) {
       // FIXME:
       // filter allPeers to display folders of an individual peer
       // https://stackoverflow.com/questions/5072136/javascript-filter-for-objects/37616104#37616104
-      // let spaces = []
-      // this.spaces.forEach(space => {
-      //   spaces.push(space)
-      // })
-      // return spaces
-      // let allPeers = allPeers()
-      console.warn(allPeers)
-      // return allPeers
+      console.log(allPeers)
+      Object.filter = (obj, predicate) =>
+        Object.keys(obj)
+              .filter( key => predicate(obj[key]) )
+              .reduce( (res,key) =>  (res[key] = obj[key], res), {});
+
+      let filtered = Object.filter(allPeers, peer => peer.data.author === this.$route.params.address);
+
+      console.warn( typeof filtered)
+      console.warn(filtered)
+      // function uniq (array) {
+      //   if (!Array.isArray(array)) array = [array]
+      //   return Array.from(new Set(array))
+      // }
+      //
+      // return uniq(filtered)
+      return filtered
     },
     getPeers(address) {
       return this.$store.getters['spaces/peers'](address)

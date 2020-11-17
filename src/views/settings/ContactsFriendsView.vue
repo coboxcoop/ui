@@ -8,7 +8,10 @@
       <div v-for="(peer, author) in allPeers" :key="author">
         <UserIcon :address="peer.data.author"/> {{peer.data.content.name}}
         <CopyKey type="text" :value="peer.data.author" />
-        <RouterLink :to="{name: 'contacts-friends-folders', params: {address: peer.data.author, name: peer.data.content.name}}"> <small>Folders in common</small></RouterLink>
+        <RouterLink 
+          :to="{name: 'contacts-friends-folders', params: {address: peer.data.author, name: peer.data.content.name}}"> 
+          <small>Folders in common</small>
+        </RouterLink>
       </div>
     </div>
   </NavList>

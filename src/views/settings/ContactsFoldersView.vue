@@ -4,10 +4,16 @@
     Contacts > By Folder
   </template>
   <NavList>
-    <div v-for="space in spaces" :key="space.address" class="space" >
-      <RouterLink :to="{name: 'space', params: {address: space.address}}" v-shortkey="['ctrl', 'enter' ]" @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
-      <div>{{space.name}}</div>
-      <div>{{space.address}}</div>
+    <div 
+      v-for="space in spaces" 
+      :key="space.address" 
+      class="space" >
+      <RouterLink 
+        :to="{name: 'space', params: {address: space.address}}" 
+        v-shortkey="['ctrl', 'enter' ]" 
+        @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
+        <div>{{space.name}}</div>
+        <div>{{space.address}}</div>
       </RouterLink>
       <NavList>
         <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
