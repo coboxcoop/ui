@@ -8,13 +8,13 @@
       <UserIcon :address="$route.params.address"/> {{$route.params.name}}
       <CopyKey :value="$route.params.address" />
       <small>Folders in common</small>
-      <div v-for="(peer, author) in allPeers" :key="author">
-        <div v-for="space in peerSpaces(allPeers)" :key="author">
+      <div v-for="(peer, author, space) in peerSpaces(allPeers)" :key="author">
+        <div v-for="n in 4" >
             <RouterLink 
               :to="{name: 'space', params: {address: space.address}}" 
               v-shortkey="['ctrl', 'enter' ]" 
               @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
-              <pre>{{Object.entries(space.spaces)}}</pre>
+              <pre>peer.spaces.name: {{peer.spaces[n].name}}</pre>
             </RouterLink>
         </div>
       </div>
