@@ -6,11 +6,16 @@
   <NavList>
     <div>
       <div v-for="(peer, author) in allPeers" :key="author">
-        <UserIcon :address="peer.data.author"/> {{peer.data.content.name}}
+        <RouterLink
+          :to="{name: 'contacts-friend',
+                params: {address: peer.data.author,
+                         name: peer.data.content.name}}">
+          <UserIcon :address="peer.data.author"/> {{peer.data.content.name}}
+        </RouterLink>
         <CopyKey type="text" :value="peer.data.author" />
-        <RouterLink 
-          :to="{name: 'contacts-friends-folders', params: {address: peer.data.author, name: peer.data.content.name}}"> 
-          <small>Folders in common</small>
+        <RouterLink
+          :to="{name: 'contacts-friend', params: {address: peer.data.author, name: peer.data.content.name}}">
+        <small>{{foldersCommonCountString(peer.spaces)}}</small>
         </RouterLink>
       </div>
     </div>
@@ -63,6 +68,11 @@ export default {
     },
   },
   methods: {
+    foldersCommonCountString(spaces) {
+      const count = spaces.length 
+
+      return `${count} folder${count != 1 ? 's' : ''} in common`
+    },
     getPeers(address) {
       return this.$store.getters['spaces/peers'](address)
     },

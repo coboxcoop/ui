@@ -12,12 +12,17 @@
         :to="{name: 'space', params: {address: space.address}}" 
         v-shortkey="['ctrl', 'enter' ]" 
         @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
-        <div>{{space.name}}</div>
-        <div class="address">{{space.address}}</div>
+        <UserIcon :address="space.address" /> {{space.name}}
       </RouterLink>
+      <CopyKey :value="space.address" />
       <NavList>
         <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
-          <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
+          <RouterLink
+            :to="{name: 'contacts-friend',
+                  params: {address: peer.data.author,
+                           name: peer.data.content.name}}">
+            <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
+          </RouterLink>
           <CopyKey :value="peer.data.author" />
         </div>
       </NavList>
@@ -29,24 +34,9 @@
 
 <style lang="scss" scoped>
 // FIXME:
-//      * fix styling for folder addresses
-//      * rm copy key from folders peers 
-//      * add link to peer profile page where peers mentioned
-//      * fix route for peer profile page (remove folders)
 //      * fix linting to split RouterLink etc in all views
 //      * peer name not persisting on page refresh (loses RouterLink params)
 //      * move logic from views -> store && use lodash for filter method
-.address {
-  position: relative;
-  outline: none;
-  // border-bottom: 1px solid var(--fg);
-  width: 100%;
-  padding: 0.6rem 0;
-  background: linear-gradient(to right, var(--fg-0) 0, var(--fg-1) 1.2em);
-  padding-right: 1em;
-  padding-left: 1.5em;
-  right: 0;
-}
 </style>
 
 <script>
