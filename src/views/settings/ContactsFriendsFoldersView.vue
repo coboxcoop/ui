@@ -9,12 +9,12 @@
       <CopyKey :value="$route.params.address" />
       <small>Folders in common</small>
       <div v-for="(peer, author, space) in peerSpaces(allPeers)" :key="author">
-        <div v-for="n in 4" >
-            <RouterLink 
-              :to="{name: 'space', params: {address: space.address}}" 
-              v-shortkey="['ctrl', 'enter' ]" 
+        <div v-for="n in (peer.spaces.length - 1)" >
+            <RouterLink
+              :to="{name: 'space', params: {address: space.address}}"
+              v-shortkey="['ctrl', 'enter' ]"
               @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
-              <pre>peer.spaces.name: {{peer.spaces[n].name}}</pre>
+              <pre>{{peer.spaces[n].name}}</pre>
             </RouterLink>
         </div>
       </div>
@@ -62,10 +62,6 @@ export default {
   },
   methods: {
     peerSpaces(allPeers) {
-      // FIXME:
-      // filter allPeers to display folders of an individual peer
-      // https://stackoverflow.com/questions/5072136/javascript-filter-for-objects/37616104#37616104
-      console.log(allPeers)
       Object.filter = (obj, predicate) =>
         Object.keys(obj)
               .filter( key => predicate(obj[key]) )
@@ -73,14 +69,6 @@ export default {
 
       let filtered = Object.filter(allPeers, peer => peer.data.author === this.$route.params.address);
 
-      console.warn( typeof filtered)
-      console.warn(filtered)
-      // function uniq (array) {
-      //   if (!Array.isArray(array)) array = [array]
-      //   return Array.from(new Set(array))
-      // }
-      //
-      // return uniq(filtered)
       return filtered
     },
     getPeers(address) {
