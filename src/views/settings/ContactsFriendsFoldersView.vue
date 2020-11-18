@@ -11,10 +11,11 @@
       <div v-for="(peer, author, space) in peerSpaces(allPeers)" :key="author">
         <div v-for="sharedSpace in peer.spaces" >
             <RouterLink
-              :to="{name: 'space', params: {address: space.address}}"
+              :to="{name: 'space', params: {address: sharedSpace.address}}"
               v-shortkey="['ctrl', 'enter' ]"
-              @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
+              @shortkey.native="navigate({name: 'space', params: {address: sharedSpace.address}})">
               <pre>{{sharedSpace.name}}</pre>
+              <pre>{{sharedSpace.address}}</pre>
             </RouterLink>
         </div>
       </div>
