@@ -8,8 +8,8 @@
       <UserIcon :address="$route.params.address"/> {{$route.params.name}}
       <CopyKey :value="$route.params.address" />
       <br />
-      <small>Folders in common</small>
       <div v-for="(peer, author, space) in peerSpaces(allPeers)" :key="author">
+        <small>{{foldersCommonCountString(peer.spaces)}}</small>
         <div v-for="sharedSpace in peer.spaces" >
             <RouterLink
               :to="{name: 'space', params: {address: sharedSpace.address}}"
@@ -63,6 +63,11 @@ export default {
     }
   },
   methods: {
+    foldersCommonCountString(spaces) {
+      const count = spaces.length 
+
+      return `${count} folder${count != 1 ? 's' : ''} in common`
+    },
     peerSpaces(allPeers) {
       Object.filter = (obj, predicate) =>
         Object.keys(obj)
