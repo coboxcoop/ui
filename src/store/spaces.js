@@ -114,6 +114,19 @@ export default ({api, events}) => ({
       } catch(e) {
         throw(e)
       }
+    },
+    peerSpaces({allPeers, address}) {
+      // Object.filter = (obj, predicate) =>
+      //   Object.keys(obj)
+      //         .filter( key => predicate(obj[key]) )
+      //         .reduce( (res,key) =>  (res[key] = obj[key], res), {});
+      // console.log('hello peerSpaces')
+      // console.log(`allPeers: ${allPeers}`)
+      // console.log(`address: ${address}`)
+
+      let filtered = _.filter(allPeers, peer => peer === address);
+
+      return filtered
     }
   },
   mutations: {
@@ -198,7 +211,6 @@ export default ({api, events}) => ({
 
       const spaces = getters['spaces']
       spaces.forEach(space => {
-        console.log('hello')
         const spacePeers = getters['peers'](space.address)
 
         if(Array.isArray(spacePeers)) spacePeers.forEach(peer => {

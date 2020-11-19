@@ -8,7 +8,8 @@
       <UserIcon :address="$route.params.address"/> {{$route.params.name}}
       <CopyKey :value="$route.params.address" />
       <br />
-      <div v-for="(peer, author, space) in peerSpaces(allPeers)" :key="author">
+      <!-- <pre>{{allPeers}}</pre> -->
+      <div v-for="(peer, author, space) in peerSpaces(allPeers, $route.params.address)" :key="author">
         <small>{{foldersCommonCountString(peer.spaces)}}</small>
         <div v-for="sharedSpace in peer.spaces" >
             <RouterLink
@@ -49,15 +50,17 @@ export default {
 
       return `${count} folder${count != 1 ? 's' : ''} in common`
     },
-    peerSpaces(allPeers) {
-      Object.filter = (obj, predicate) =>
-        Object.keys(obj)
-              .filter( key => predicate(obj[key]) )
-              .reduce( (res,key) =>  (res[key] = obj[key], res), {});
-
-      let filtered = Object.filter(allPeers, peer => peer.data.author === this.$route.params.address);
-
-      return filtered
+    peerSpaces(allPeers, address) {
+      // Object.filter = (obj, predicate) =>
+      //   Object.keys(obj)
+      //         .filter( key => predicate(obj[key]) )
+      //         .reduce( (res,key) =>  (res[key] = obj[key], res), {});
+      //
+      // let filtered = Object.filter(allPeers, peer => peer.data.author === this.$route.params.address);
+      //
+      // return filtered
+      // console.log(`address: ${address}`)
+      return this.$store.dispatch('spaces/peerSpaces', {allPeers, address})
     },
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
