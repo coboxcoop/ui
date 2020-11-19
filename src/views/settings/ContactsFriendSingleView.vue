@@ -59,9 +59,6 @@ export default {
 
       return filtered
     },
-    getPeers(address) {
-      return this.$store.getters['spaces/peers'](address)
-    },
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
         this.$router.push(to)

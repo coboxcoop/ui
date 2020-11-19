@@ -47,9 +47,6 @@ export default {
 
       return `${count} folder${count != 1 ? 's' : ''} in common`
     },
-    getPeers(address) {
-      return this.$store.getters['spaces/peers'](address)
-    },
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
         this.$router.push(to)
