@@ -39,14 +39,7 @@ export default {
   computed: {
     allPeers() {
       let peers = {}
-      // FIXME:
-      // unique() would allow you to pass something in
-      // have a look at API
-      // function uniq (array) {
-      // if (!Array.isArray(array)) array = [array]
-      // return Array.from(new Set(array))
-      // }
-      // @cobox/repository/util.js
+
       this.spaces.forEach(space => {
         const spacePeers = this.getPeers(space.address)
 

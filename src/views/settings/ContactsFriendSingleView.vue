@@ -8,7 +8,7 @@
       <UserIcon :address="$route.params.address"/> {{$route.params.name}}
       <CopyKey :value="$route.params.address" />
       <br />
-      <pre>{{allPeers($route.params.address)}}</pre>
+      <pre>{{allPeers}}</pre>
       <!-- <div v&#45;for="(peer, author, space) in peerSpaces(allPeers($route.params.address))" :key="author"> -->
       <!--   <small>{{foldersCommonCountString(peer.spaces)}}</small> -->
       <!--   <div v&#45;for="sharedSpace in peer.spaces" > -->
@@ -40,13 +40,8 @@ export default {
     CopyKey
   },
   computed: {
-    spaces() {
-      return this.$store.state.spaces.data
-    }
-  },
-  methods: {
-    allPeers(address) {
-      return this.$store.getters['spaces/allPeers'](address)
+    allPeers() {
+      return this.$store.getters['spaces/allPeers']
       // let peers = {}
       //
       // this.spaces.forEach(space => {
@@ -65,6 +60,11 @@ export default {
       //
       // return peers
     },
+    spaces() {
+      return this.$store.state.spaces.data
+    }
+  },
+  methods: {
     foldersCommonCountString(spaces) {
       const count = spaces.length 
 
