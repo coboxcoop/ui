@@ -27,9 +27,7 @@
     <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite friend</RouterLink>
     <div v-for="peer in peers" :key="peer.publicKey">
       <RouterLink
-        :to="{name: 'contacts-friend',
-              params: {address: peer.data.author,
-                       name: peer.data.content.name}}">
+        :to="{name: 'contacts-friend', params: {address: peer.data.author, name: peer.data.content.name}}">
         <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
       </RouterLink>
       <CopyKey :value="peer.data.author" />

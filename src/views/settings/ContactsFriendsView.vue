@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     foldersCommonCountString(spaces) {
-      const count = spaces.length 
+      const count = spaces.length
 
       return `${count} folder${count != 1 ? 's' : ''} in common`
     },
