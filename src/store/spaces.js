@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export default ({api, events}) => ({
   namespaced: true,
   state: {
@@ -144,6 +146,9 @@ export default ({api, events}) => ({
     }
   },
   getters: {
+    spaces(state) {
+      return state.data
+    },
     index(state) {
       return state.data.length
     },
@@ -187,6 +192,36 @@ export default ({api, events}) => ({
       })
 
       return counts.reduce((sum, num) => num + sum, 0)
+    },
+    allPeers(state, getters) {
+      const peers = state.peers
+      // FIXME:
+      // unique() would allow you to pass something in
+      // have a look at API
+      // function uniq (array) {
+      // if (!Array.isArray(array)) array = [array]
+      // return Array.from(new Set(array))
+      // }
+      // @cobox/repository/util.js
+      const spaces = getters['spaces']
+      console.log(`spaces: ${ typeof spaces}`)
+      spaces.forEach(space => {
+        const spacePeers = getters['peers'](address)
+        console.log(`spacePeers: ${spacePeers}`)
+
+        if(Array.isArray(spacePeers)) spacePeers.forEach(peer => {
+          console.log(`peer.data.author ${peer.data.author}`)
+          const address = peer.data.author
+          let spacePeer = peers[address] || peer
+
+          spacePeer.spaces = spacePeer.spaces || []
+          if(!spacePeer.spaces.find(({address}) => space.address == address)) spacePeer.spaces.push(space)
+
+          peers[address] = spacePeer
+        })
+      })
+
+      return peers
     }
   }
 })

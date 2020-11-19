@@ -5,11 +5,11 @@
   </template>
   <NavList>
     <div>
-      <div v-for="(peer, author) in allPeers" :key="author">
+      <div
+        v-for="(peer, author) in allPeers" 
+        :key="author">
         <RouterLink
-          :to="{name: 'contacts-friend',
-                params: {address: peer.data.author,
-                         name: peer.data.content.name}}">
+          :to="{name: 'contacts-friend', params: {address: peer.data.author, name: peer.data.content.name}}">
           <UserIcon :address="peer.data.author"/> {{peer.data.content.name}}
         </RouterLink>
         <CopyKey type="text" :value="peer.data.author" />

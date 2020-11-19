@@ -34,9 +34,10 @@
 
 <style lang="scss" scoped>
 // FIXME:
-//      * fix linting to split RouterLink etc in all views
-//      * peer name not persisting on page refresh (loses RouterLink params)
-//      * move logic from views -> store && use lodash for filter method
+//  * add number of peers in each folder /settings/contacts/folders (like peerCountString)
+//  * fix linting to split RouterLink etc in all views
+//  * peer name not persisting on page refresh (loses RouterLink params)
+//  * move logic from views -> store && use lodash for filter method
 </style>
 
 <script>
