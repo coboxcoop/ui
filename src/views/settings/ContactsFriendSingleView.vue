@@ -8,19 +8,18 @@
       <UserIcon :address="$route.params.address"/> {{$route.params.name}}
       <CopyKey :value="$route.params.address" />
       <br />
-      <pre>{{allPeers}}</pre>
-      <!-- <div v&#45;for="(peer, author, space) in peerSpaces(allPeers($route.params.address))" :key="author"> -->
-      <!--   <small>{{foldersCommonCountString(peer.spaces)}}</small> -->
-      <!--   <div v&#45;for="sharedSpace in peer.spaces" > -->
-      <!--       <RouterLink -->
-      <!--         :to="{name: 'space', params: {address: sharedSpace.address}}" -->
-      <!--         v&#45;shortkey="['ctrl', 'enter' ]" -->
-      <!--         @shortkey.native="navigate({name: 'space', params: {address: sharedSpace.address}})"> -->
-      <!--         <UserIcon :address="sharedSpace.address" /> {{sharedSpace.name}} -->
-      <!--       </RouterLink> -->
-      <!--       <CopyKey :value="sharedSpace.address" /> -->
-      <!--   </div> -->
-      <!-- </div> -->
+      <div v-for="(peer, author, space) in peerSpaces(allPeers)" :key="author">
+        <small>{{foldersCommonCountString(peer.spaces)}}</small>
+        <div v-for="sharedSpace in peer.spaces" >
+            <RouterLink
+              :to="{name: 'space', params: {address: sharedSpace.address}}"
+              v-shortkey="['ctrl', 'enter' ]"
+              @shortkey.native="navigate({name: 'space', params: {address: sharedSpace.address}})">
+              <UserIcon :address="sharedSpace.address" /> {{sharedSpace.name}}
+            </RouterLink>
+            <CopyKey :value="sharedSpace.address" />
+        </div>
+      </div>
     </div>
   </NavList>
 </Screen>
@@ -42,26 +41,6 @@ export default {
   computed: {
     allPeers() {
       return this.$store.getters['spaces/allPeers']
-      // let peers = {}
-      //
-      // this.spaces.forEach(space => {
-      //   const spacePeers = this.getPeers(space.address)
-      //
-      //   if(Array.isArray(spacePeers)) spacePeers.forEach(peer => {
-      //     const address = peer.data.author
-      //     let spacePeer = peers[address] || peer
-      //
-      //     spacePeer.spaces = spacePeer.spaces || []
-      //     if(!spacePeer.spaces.find(({address}) => space.address == address)) spacePeer.spaces.push(space)
-      //
-      //     peers[address] = spacePeer
-      //   })
-      // })
-      //
-      // return peers
-    },
-    spaces() {
-      return this.$store.state.spaces.data
     }
   },
   methods: {

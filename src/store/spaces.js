@@ -200,7 +200,6 @@ export default ({api, events}) => ({
       spaces.forEach(space => {
         console.log('hello')
         const spacePeers = getters['peers'](space.address)
-        console.log(`spacePeers: ${spacePeers}`)
 
         if(Array.isArray(spacePeers)) spacePeers.forEach(peer => {
           const address = peer.data.author

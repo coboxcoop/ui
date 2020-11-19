@@ -38,27 +38,8 @@ export default {
   },
   computed: {
     allPeers() {
-      let peers = {}
-
-      this.spaces.forEach(space => {
-        const spacePeers = this.getPeers(space.address)
-
-        if(Array.isArray(spacePeers)) spacePeers.forEach(peer => {
-          const address = peer.data.author
-          let spacePeer = peers[address] || peer
-
-          spacePeer.spaces = spacePeer.spaces || []
-          if(!spacePeer.spaces.find(({address}) => space.address == address)) spacePeer.spaces.push(space)
-
-          peers[address] = spacePeer
-        })
-      })
-
-      return peers
-    },
-    spaces() {
-      return this.$store.state.spaces.data
-    },
+      return this.$store.getters['spaces/allPeers']
+    }
   },
   methods: {
     foldersCommonCountString(spaces) {
