@@ -124,7 +124,9 @@ export default ({api, events}) => ({
       // console.log(`allPeers: ${allPeers}`)
       // console.log(`address: ${address}`)
 
-      let filtered = _.filter(allPeers, peer => peer === address);
+      // FIXME: 
+      //  * not sure how to refactor this
+      let filtered = _.filter(allPeers, peer => peer.data.author === address);
 
       return filtered
     }
@@ -207,6 +209,8 @@ export default ({api, events}) => ({
       return counts.reduce((sum, num) => num + sum, 0)
     },
     allPeers(state, getters) {
+      // FIXME: 
+      //  * refactor this method as shouldn't be mutating
       let peers = {}
 
       const spaces = getters['spaces']
