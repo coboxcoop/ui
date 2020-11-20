@@ -12,7 +12,6 @@ export default ({api, events}) => ({
   actions: {
     async subscribe() {
       events.on('peer/connection', event => {
-        console.warn('event sub', event)
       })
     },
     async fetch({commit, dispatch}) {
@@ -115,21 +114,6 @@ export default ({api, events}) => ({
         throw(e)
       }
     },
-    peerSpaces({allPeers, address}) {
-      // Object.filter = (obj, predicate) =>
-      //   Object.keys(obj)
-      //         .filter( key => predicate(obj[key]) )
-      //         .reduce( (res,key) =>  (res[key] = obj[key], res), {});
-      // console.log('hello peerSpaces')
-      // console.log(`allPeers: ${allPeers}`)
-      // console.log(`address: ${address}`)
-
-      // FIXME: 
-      //  * not sure how to refactor this
-      let filtered = _.filter(allPeers, peer => peer.data.author === address);
-
-      return filtered
-    }
   },
   mutations: {
     receiveData(state, data) {
@@ -229,6 +213,28 @@ export default ({api, events}) => ({
       })
 
       return peers
+    },
+    peerSpaces(state, getters) {
+      // Object.filter = (obj, predicate) =>
+      //   Object.keys(obj)
+      //         .filter( key => predicate(obj[key]) )
+      //         .reduce( (res,key) =>  (res[key] = obj[key], res), {});
+      // console.log('hello peerSpaces')
+      // console.log(`allPeers: ${allPeers}`)
+      // console.log(`address: ${address}`)
+
+      // FIXME: 
+      //  * not sure how to refactor this
+      // return address => {
+      //   return (address in state.peers) && state.peers[address]
+      // }
+      console.warn('hello')
+      return address => {
+        const allPeers = getters['allPeers'](address)
+        let filtered = _.filter(allPeers, peer => peer.data.author === address);
+
+        return filtered
+      }
     }
   }
 })
