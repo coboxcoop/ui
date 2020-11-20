@@ -61,7 +61,6 @@ export default {
       try {
         const {address} = await this.$store.dispatch('spaces/create', this.spaceName)
         this.spaceName = ''
-        console.warn({space: address})
         await this.$router.push({name: 'space', params: {address}})
         window.location.reload()
       } catch(e) {
