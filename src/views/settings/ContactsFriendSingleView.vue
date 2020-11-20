@@ -8,8 +8,7 @@
       <UserIcon :address="$route.params.address"/> {{$route.params.name}}
       <CopyKey :value="$route.params.address" />
       <br />
-      <!-- <pre>{{allPeers}}</pre> -->
-      <div v-for="(peer, author, space) in peerSpaces" :key="author">
+      <div v-for="(peer, author, space) in peerSpaces($route.params.address)" :key="author">
         <small>{{foldersCommonCountString(peer.spaces)}}</small>
         <div v-for="sharedSpace in peer.spaces" >
             <RouterLink
@@ -45,8 +44,8 @@ export default {
     }
   },
   methods: {
-    peerSpaces() {
-      return this.$store.getters['spaces/peerSpaces'](this.$route.params.address)
+    peerSpaces(address) {
+      return this.$store.getters['spaces/peerSpaces'](address)
     },
     foldersCommonCountString(spaces) {
       const count = spaces.length 

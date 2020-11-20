@@ -206,8 +206,8 @@ export default ({api, events}) => ({
           let spacePeer = peers[address] || peer
 
           spacePeer.spaces = spacePeer.spaces || []
-          if(!spacePeer.spaces.find(({address}) => space.address == address)) spacePeer.spaces.push(space)
-
+          spacePeer.spaces.push(space)
+          spacePeer.spaces = _.uniq(spacePeer.spaces)
           peers[address] = spacePeer
         })
       })
@@ -215,22 +215,8 @@ export default ({api, events}) => ({
       return peers
     },
     peerSpaces(state, getters) {
-      // Object.filter = (obj, predicate) =>
-      //   Object.keys(obj)
-      //         .filter( key => predicate(obj[key]) )
-      //         .reduce( (res,key) =>  (res[key] = obj[key], res), {});
-      // console.log('hello peerSpaces')
-      // console.log(`allPeers: ${allPeers}`)
-      // console.log(`address: ${address}`)
-
-      // FIXME: 
-      //  * not sure how to refactor this
-      // return address => {
-      //   return (address in state.peers) && state.peers[address]
-      // }
-      console.warn('hello')
       return address => {
-        const allPeers = getters['allPeers'](address)
+        const allPeers = getters['allPeers']
         let filtered = _.filter(allPeers, peer => peer.data.author === address);
 
         return filtered

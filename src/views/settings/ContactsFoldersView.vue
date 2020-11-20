@@ -33,7 +33,6 @@
 
 <style lang="scss" scoped>
 // FIXME:
-//  * move logic from views -> store && use lodash for filter method
 //  * fix linting to split RouterLink etc in all views
 //  * peer name not persisting on page refresh (loses RouterLink params)
 </style>
