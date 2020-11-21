@@ -33,8 +33,13 @@
 
 <style lang="scss" scoped>
 // FIXME:
-//  * fix linting to split RouterLink etc in all views
 //  * peer name not persisting on page refresh (loses RouterLink params)
+//  * fix styling of 'Copy' buttons throughout and new strategy
+//  * styling for friend profile page
+//  * go through new views and add shortkeys
+//  * update wiki with shortkeys
+//  * rm this style block if not being used
+//  * add testing for these new features
 </style>
 
 <script>

@@ -1,8 +1,8 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { mount, createLocalVue } from "@vue/test-utils"
 import VueRouter                 from "vue-router"
-import ContactsView              from '@/views/settings/ContactsView.vue'
-import ContactsFoldersView       from '@/views/settings/ContactsFoldersView.vue'
-import routes                    from '@/router/index.js'
+import ContactsView              from "@/views/settings/ContactsView.vue"
+import ContactsFoldersView       from "@/views/settings/ContactsFoldersView.vue"
+import routes                    from "@/router/index.js"
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)
@@ -12,9 +12,11 @@ jest.mock("@/views/settings/ContactsFoldersView", () => ({
   render: h => h("div")
 }))
 
-describe('ContactsView.vue', () => {
-  it('renders a child component via routing', async () => {
-    const router = new VueRouter({ routes })
+describe("ContactsView", () => {
+  it("renders a child component via routing", async () => {
+    // https://stackoverflow.com/questions/60137827/uncaught-typeerror-routes-foreach-is-not-a-function
+    // const router = new VueRouter({ routes })
+    const router = routes
     const wrapper = mount(ContactsView, {
       localVue,
       router
