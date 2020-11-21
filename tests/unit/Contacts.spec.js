@@ -1,8 +1,8 @@
 import { mount, createLocalVue } from '@vue/test-utils'
-import VueRouter from "vue-router"
-import ContactsView from '@/views/settings/ContactsView.vue'
-import ContactsFoldersView from '@/views/settings/ContactsFoldersView.vue'
-import routes from '@/router/index.js'
+import VueRouter                 from "vue-router"
+import ContactsView              from '@/views/settings/ContactsView.vue'
+import ContactsFoldersView       from '@/views/settings/ContactsFoldersView.vue'
+import routes                    from '@/router/index.js'
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)
@@ -20,9 +20,10 @@ describe('ContactsView.vue', () => {
       router
     })
 
-    router.push("/contacts-folders-view")
+    router.push("/settings/contacts/folders")
     await wrapper.vm.$nextTick()
 
     expect(wrapper.findComponent(ContactsFoldersView).exists()).toBe(true)
+    console.log(router.currentRoute)
   })
 })
