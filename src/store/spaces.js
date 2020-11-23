@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import _filter from 'lodash/filter'
+import _uniq from 'lodash/uniq'
 
 export default ({api, events}) => ({
   namespaced: true,
@@ -207,7 +208,7 @@ export default ({api, events}) => ({
 
           spacePeer.spaces = spacePeer.spaces || []
           spacePeer.spaces.push(space)
-          spacePeer.spaces = _.uniq(spacePeer.spaces)
+          spacePeer.spaces = _uniq(spacePeer.spaces)
           peers[address] = spacePeer
         })
       })
@@ -217,7 +218,7 @@ export default ({api, events}) => ({
     peerSpaces(state, getters) {
       return address => {
         const allPeers = getters['allPeers']
-        let filtered = _.filter(allPeers, peer => peer.data.author === address);
+        let filtered = _filter(allPeers, peer => peer.data.author === address);
 
         return filtered
       }

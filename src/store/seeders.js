@@ -1,4 +1,8 @@
-import _ from 'lodash'
+import _map     from 'lodash/map'
+import _values  from 'lodash/values'
+import _groupBy from 'lodash/groupBy'
+import _last    from 'lodash/last'
+import _sortBy  from 'lodash/sortBy'
 
 export default ({api, events}) => ({
   namespaced: true,
