@@ -1,8 +1,9 @@
-import { mount, createLocalVue } from "@vue/test-utils"
+import { mount, createLocalVue, RouterLinkStub } from "@vue/test-utils"
 import VueRouter                 from "vue-router"
 import routes                    from "@/router/index.js"
 import TriangleIcon              from "@/components/TriangleIcon.vue"
 import MeHeader                  from "@/components/MeHeader.vue"
+import SettingsView              from "@/views/settings/SettingsView.vue"
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)
@@ -11,6 +12,11 @@ const shortkey = jest.fn()
 
 jest.mock("@/components/TriangleIcon.vue", () => ({
   name: "TriangleIcon",
+  render: h => h("div")
+}))
+
+jest.mock("@/views/settings/SettingsView.vue", () => ({
+  name: "SettingsView",
   render: h => h("div")
 }))
 
@@ -68,33 +74,34 @@ describe("MeHeader.vue", () => {
       },
     })
 
-    console.log(wrapper.html())
     const byId = wrapper.find('a.settings')
     expect(byId.exists()).toBe(true)
   })
 
   it("renders homepage via routing", async () => {
-    // https://stackoverflow.com/questions/60137827/uncaught-typeerror-routes-foreach-is-not-a-function
-    // const router = new VueRouter({ routes })
     const router = routes
     const shortkey = jest.fn()
-    const wrapper = mount(ContactsView, {
+    const wrapper = mount(MeHeader, {
       localVue,
       router,
+      propsData: {
+        settings: true
+      },
       stubs: {
-        Screen: true,
-        NavList: true
+        TriangleIcon: true,
+        RouterLink: RouterLinkStub
       },
       directives: {
         shortkey
       }
     })
 
-    router.push("/settings/contacts/folders")
+    router.push("/settings")
     await wrapper.vm.$nextTick()
 
     console.log(router.currentRoute)
     console.log(wrapper.html())
-    // expect(wrapper.findComponent(ContactsFoldersView).exists()).toBe(true)
+    // expect(wrapper.findComponent(SettingsView).exists()).toBe(true)
+    expect(wrapper.find(RouterLinkStub).props().to).toBe('/settings')
   })
 })
