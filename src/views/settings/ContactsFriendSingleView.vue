@@ -17,7 +17,6 @@
               @shortkey.native="navigate({name: 'space', params: {address: sharedSpace.address}})">
               <UserIcon :address="sharedSpace.address" /> {{sharedSpace.name}}
             </RouterLink>
-            <CopyKey :value="sharedSpace.address" />
         </div>
       </div>
     </div>

@@ -12,7 +12,6 @@
           :to="{name: 'contacts-friend', params: {address: peer.data.author, name: peer.data.content.name}}">
           <UserIcon :address="peer.data.author"/> {{peer.data.content.name}}
         </RouterLink>
-        <CopyKey type="text" :value="peer.data.author" />
         <RouterLink
           :to="{name: 'contacts-friend', params: {address: peer.data.author, name: peer.data.content.name}}">
         <small>{{foldersCommonCountString(peer.spaces)}}</small>

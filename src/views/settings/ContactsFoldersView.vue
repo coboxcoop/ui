@@ -22,7 +22,6 @@
             :to="{name: 'contacts-friend', params: {address: peer.data.author, name: peer.data.content.name}}">
             <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
           </RouterLink>
-          <CopyKey :value="peer.data.author" />
         </div>
       </NavList>
       <br />
