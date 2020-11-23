@@ -32,13 +32,11 @@
 <style lang="scss" scoped>
 // FIXME:
 //  * peer name not persisting on page refresh (loses RouterLink params)
-//  * fix styling of 'Copy' buttons throughout and new strategy
 //  * styling for friend profile page
 //  * go through new views and add shortkeys
 //  * this can include numbered shortcuts for friends index (props index)
 //  * update wiki with shortkeys
 //  * rm this style block if not being used
-//  * add testing for these new features
 </style>
 
 <script>

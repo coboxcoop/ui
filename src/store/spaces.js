@@ -194,8 +194,6 @@ export default ({api, events}) => ({
       return counts.reduce((sum, num) => num + sum, 0)
     },
     allPeers(state, getters) {
-      // FIXME: 
-      //  * refactor this method as shouldn't be mutating
       let peers = {}
 
       const spaces = getters['spaces']
