@@ -153,11 +153,11 @@ export default ({api, events}) => ({
 
         const replicates = entries
 
-        const grouped = _.map(_.values(
-          _.groupBy(replicates, r => {
+        const grouped = _map(_values(
+          _groupBy(replicates, r => {
             return r.value.content.address
           })
-        ), space => _.last(_.sortBy(space, 'timestamp')))
+        ), space => _last(_sortBy(space, 'timestamp')))
 
         return grouped
       }
