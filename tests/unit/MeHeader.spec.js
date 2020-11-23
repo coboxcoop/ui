@@ -15,10 +15,10 @@ jest.mock("@/components/TriangleIcon.vue", () => ({
   render: h => h("div")
 }))
 
-jest.mock("@/views/settings/SettingsView.vue", () => ({
-  name: "SettingsView",
-  render: h => h("div")
-}))
+// jest.mock("@/views/settings/SettingsView.vue", () => ({
+//   name: "SettingsView",
+//   render: h => h("div")
+// }))
 
 describe("MeHeader.vue", () => {
   it("displays correct heading", async () => {
@@ -78,9 +78,8 @@ describe("MeHeader.vue", () => {
     expect(byId.exists()).toBe(true)
   })
 
-  it("renders homepage via routing", async () => {
-    const router = routes
-    const shortkey = jest.fn()
+  it("renders settings via routing", async () => {
+    // https://lmiller1990.github.io/vue-testing-handbook/vue-router.html#writing-the-test
     const wrapper = mount(MeHeader, {
       localVue,
       router,
@@ -89,7 +88,7 @@ describe("MeHeader.vue", () => {
       },
       stubs: {
         TriangleIcon: true,
-        RouterLink: RouterLinkStub
+        SettingsView: false
       },
       directives: {
         shortkey
@@ -102,6 +101,6 @@ describe("MeHeader.vue", () => {
     console.log(router.currentRoute)
     console.log(wrapper.html())
     // expect(wrapper.findComponent(SettingsView).exists()).toBe(true)
-    expect(wrapper.find(RouterLinkStub).props().to).toBe('/settings')
+    expect(wrapper.find(SettingsView).exists()).toBe(true)
   })
 })
