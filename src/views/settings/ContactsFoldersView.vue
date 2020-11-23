@@ -12,9 +12,8 @@
         :to="{name: 'space', params: {address: space.address}}" 
         v-shortkey="['ctrl', 'enter' ]" 
         @shortkey.native="navigate({name: 'space', params: {address: space.address}})">
-        <UserIcon :address="space.address" /> {{space.name}}
+        {{space.name}}
       </RouterLink>
-      <CopyKey :value="space.address" />
       <h2>{{peerCountString(space.address)}}</h2>
       <NavList>
         <div v-for="peer in getPeers(space.address)" :key="peer.publicKey">
@@ -36,6 +35,7 @@
 //  * fix styling of 'Copy' buttons throughout and new strategy
 //  * styling for friend profile page
 //  * go through new views and add shortkeys
+//  * this can include numbered shortcuts for friends index (props index)
 //  * update wiki with shortkeys
 //  * rm this style block if not being used
 //  * add testing for these new features
