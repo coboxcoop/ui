@@ -10,7 +10,7 @@ import './bugsnag'
 Vue.config.productionTip = false
 
 Vue.use(VueShortkey)
-Vue.use(vSelect)
+Vue.component('v-select', vSelect)
 
 new Vue({
   router,
