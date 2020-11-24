@@ -26,6 +26,8 @@
         <input class="has-ok-button" type="text" placeholder="Friend's CoBox Key" v-model="publicKey" />
         <button type="submit">Ok</button>
       </form>
+
+      <v-select :options="[1,2,3,4]"></v-select>
     </div>
   </div>
 </Screen>
