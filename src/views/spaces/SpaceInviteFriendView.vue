@@ -30,7 +30,10 @@
       <div>
         <div>Add existing contact</div>
       </div>
-      <pre>{{ allPeers }}</pre>
+      <!-- <pre>{{ allPeers }}</pre> -->
+      <!-- <pre>{{ Object.entries(allPeers) }}</pre> -->
+      <!-- <pre>{{ Object.keys(allPeers) }}</pre> -->
+      <pre>{{ selectOptions }}</pre>
       <!-- <v&#45;select peers -->
       <!--           :value.sync="selected" -->
       <!--           :options="selectOptions"> -->
@@ -87,8 +90,11 @@ export default {
       return this.$store.getters['spaces/allPeers']
     },
     selectOptions() {
-      return this.allPeers.map(p => ({label: p.data.content.name, value: p.data.author}))
-    }
+      const peers = Object.entries(this.allPeers)
+      return peers.map(p => 
+        // ( p.map(val => ({ label: val.data.content.name, value: val.data.author})))
+        ( p.map(val => ({ label: val})))
+    )}
   },
   methods: {
     navigate(to) {
