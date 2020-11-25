@@ -27,7 +27,15 @@
         <button type="submit">Ok</button>
       </form>
 
-      <v-select :options="[1,2,3,4]"></v-select>
+      <div>
+        <div>Add existing contact</div>
+      </div>
+      <pre>{{ allPeers }}</pre>
+      <!-- <v&#45;select peers -->
+      <!--           :value.sync="selected" -->
+      <!--           :options="selectOptions"> -->
+      <!-- </v&#45;select> -->
+
     </div>
   </div>
 </Screen>
@@ -68,8 +76,20 @@ export default {
   data: () => ({
     showInfo: false,
     inviteCode: '',
-    publicKey: ''
+    publicKey: '',
+    selected: []
   }),
+  computed: {
+    space() {
+      return this.$store.getters['spaces/single'](this.$route.params.address)
+    },
+    allPeers() {
+      return this.$store.getters['spaces/allPeers']
+    },
+    selectOptions() {
+      return this.allPeers.map(p => ({label: p.data.content.name, value: p.data.author}))
+    }
+  },
   methods: {
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
@@ -96,11 +116,6 @@ export default {
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }
-    }
-  },
-  computed: {
-    space() {
-      return this.$store.getters['spaces/single'](this.$route.params.address)
     }
   }
 }

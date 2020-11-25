@@ -37,6 +37,7 @@
 //  * this can include numbered shortcuts for friends index (props index)
 //  * update wiki with shortkeys
 //  * rm this style block if not being used
+//  * allFriends global method needed for autocomplete
 </style>
 
 <script>
