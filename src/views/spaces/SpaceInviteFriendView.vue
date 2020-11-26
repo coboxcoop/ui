@@ -31,8 +31,10 @@
         <div>Add existing contact</div>
       </div>
       <v-select peers
+                placeholder="Type to search e.g. 'g'"
                 :value.sync="selected"
-                :options="selectOptions">
+                :options="selectOptions"
+                @input="changedLabel">
       </v-select>
 
     </div>
@@ -92,6 +94,9 @@ export default {
     }
   },
   methods: {
+    changedLabel(event) {
+      this.selected = event
+    },
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
         this.$router.push(to)
