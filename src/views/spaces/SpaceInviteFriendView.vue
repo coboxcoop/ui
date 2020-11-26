@@ -30,14 +30,10 @@
       <div>
         <div>Add existing contact</div>
       </div>
-      <!-- <pre>{{ allPeers }}</pre> -->
-      <!-- <pre>{{ Object.entries(allPeers) }}</pre> -->
-      <!-- <pre>{{ Object.keys(allPeers) }}</pre> -->
-      <pre>{{ selectOptions }}</pre>
-      <!-- <v&#45;select peers -->
-      <!--           :value.sync="selected" -->
-      <!--           :options="selectOptions"> -->
-      <!-- </v&#45;select> -->
+      <v-select peers
+                :value.sync="selected"
+                :options="selectOptions">
+      </v-select>
 
     </div>
   </div>
@@ -91,10 +87,9 @@ export default {
     },
     selectOptions() {
       const peers = Object.entries(this.allPeers)
-      return peers.map(p => 
-        // ( p.map(val => ({ label: val.data.content.name, value: val.data.author})))
-        ( p.map(val => ({ label: val})))
-    )}
+      return peers.map(([address, p]) => ({label: p.data.content.name, value: address})
+      )
+    }
   },
   methods: {
     navigate(to) {
