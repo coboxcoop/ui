@@ -23,19 +23,23 @@
       </div>
 
       <form @submit.prevent="onSubmitInvite">
-        <input class="has-ok-button" type="text" placeholder="Friend's CoBox Key" v-model="publicKey" />
-        <button type="submit">Ok</button>
+          <input class="has-ok-button" type="text" placeholder="Friend's CoBox Key" v-model="publicKey" />
+          <button type="submit">Ok</button>
       </form>
 
-      <div>
-        <div>Add existing contact</div>
-      </div>
+      <div>Or select an existing contact</div>
+      <pre>selected.value: {{selected.value}}</pre>
+      <pre>publicKey: {{publicKey.value}}</pre>
       <v-select peers
                 placeholder="Type to search e.g. 'g'"
-                :value.sync="selected"
+                v-model="publicKey"
+                :value="selected.value"
                 :options="selectOptions"
-                @input="changedLabel">
+                @input="changedLabel"
+                @submit.prevent="onSubmitInvite">
       </v-select>
+
+      <!-- <pre>{{selectOptions}}</pre> -->
 
     </div>
   </div>
