@@ -10,6 +10,10 @@
   </template>
 
   <NavList>
+    <div class="switch">
+      <label>Mount Folder</label>
+      <ToggleSwitch @input="toggleMount" :value="mounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
+    </div>
     <a href="#" @click.prevent="openMount" v-shortkey="['ctrl', 'o']" @shortkey="openMount">Open folder</a>
     <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Health</RouterLink>
     <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'd']" @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">Delete</RouterLink>
@@ -39,21 +43,37 @@
 .space-icon {
   margin-right: 0.3rem;
 }
+.switch {
+  display: flex;
+  align-items: center;
+  label {
+    flex: 1;
+    img {
+      margin-bottom: -0.1em;
+      cursor: pointer;
+      html.dark & {
+        filter: invert(1);
+      }
+    }
+  }
+}
 </style>
 
 <script>
-import Screen from '@/components/Screen.vue'
-import NavList from '@/components/NavList.vue'
-import UserIcon from '@/components/UserIcon.vue'
-import CopyKey from '@/components/CopyKey.vue'
-import {api} from '@/api'
+import Screen       from '@/components/Screen.vue'
+import NavList      from '@/components/NavList.vue'
+import UserIcon     from '@/components/UserIcon.vue'
+import CopyKey      from '@/components/CopyKey.vue'
+import ToggleSwitch from '@/components/ToggleSwitch.vue'
+import {api}        from '@/api'
 
 export default {
   components: {
     UserIcon,
     Screen,
     NavList,
-    CopyKey
+    CopyKey,
+    ToggleSwitch
   },
   data: () => ({
     publicKey: '',
@@ -76,12 +96,36 @@ export default {
     },
     info() {
       return this.$store.state.system.info
+    },
+    mounted() {
+      return this.$store.getters['spaces/mounted'](this.space.address)
     }
   },
   methods: {
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
         this.$router.push(to)
+      }
+    },
+    async toggleMount() {
+      if(this.mounted) {
+        await this.unmountFolder()
+      } else {
+        await this.mountFolder()
+      }
+    },
+    async mountFolder() {
+      try {
+        await this.$store.dispatch('spaces/mount', this.space)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
+      }
+    },
+    async unmountFolder() {
+      try {
+        await this.$store.dispatch('spaces/unmount', this.space)
+      } catch(e) {
+        this.$store.dispatch('error/handle', e)
       }
     },
     async onSubmitInvite() {

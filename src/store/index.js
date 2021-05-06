@@ -51,6 +51,7 @@ export default new Vuex.Store({
       await dispatch('spaces/fetch')
       await dispatch('spaces/getAllPeers')
       await dispatch('spaces/getAllStats')
+      await dispatch('spaces/getAllMounts')
       await dispatch('seeders/fetch')
       await dispatch('seeders/getAllPeers')
       await dispatch('seeders/getAllReplicates')
