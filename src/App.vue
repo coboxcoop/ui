@@ -1,97 +1,21 @@
 <template>
 <div id="app"> 
   <transition name="fade">
-    <OfflineView v-if="offline" />
-    <div v-else-if="ready" class="yield">
-      <div v-if="hasName">
-        <ManualBugReport v-if="$store.state.settings.bugReportIcon && $store.state.settings.betaTester" />
-        <transition name="route">
-          <router-view />
-        </transition>
-      </div>
-      <OnboardingView v-else />
-    </div>
+    <NoUiView/>
   </transition>
-  <Errors />
 </div>
 </template>
 
 <script>
-import OnboardingView from '@/views/OnboardingView.vue'
-import OfflineView from '@/views/OfflineView.vue'
-import Errors from '@/components/Errors.vue'
-import ManualBugReport from '@/components/ManualBugReport.vue'
+import NoUiView from '@/views/NoUiView.vue'
 
 export default {
   components: {
-    Errors,
-    OnboardingView,
-    OfflineView,
-    ManualBugReport
-  },
-  async mounted() {
-    await this.$store.dispatch('init')
-
-    this.setDark()
-    this.setShortkey()
-    this.setErrorMessages()
-
-    if(this.hasName) {
-      await this.$store.dispatch('fetchAllData')
-      await this.$store.dispatch('initData')
-    } else {
-      this.$router.replace({name: 'spaces'})
-    }
-  },
-  computed: {
-    ready() {
-      return this.$store.state.ready
-    },
-    offline() {
-      return this.$store.state.system.offline
-    },
-    hasName() {
-      return this.$store.getters['profile/hasName']
-    },
-    dark() {
-      return this.$store.state.settings.dark
-    },
-    shortkey() {
-      return this.$store.state.settings.shortkey
-    },
-    errorMessages() {
-      return this.$store.state.settings.errorMessages
-    }
-  },
-  watch: {
-    $route() {
-      this.$store.dispatch('error/dismiss')
-    },
-    dark() {
-      this.setDark()
-    },
-    shortkey() {
-      this.setShortkey()
-    },
-    errorMessages() {
-      this.setErrorMessages()
-    }
+    NoUiView,
   },
   methods: {
     reload() {
       window.location.reload()
-    },
-    setDark() {
-      const act = this.$store.state.settings.dark ? 'add' : 'remove'
-      document.documentElement.classList[act]('dark')
-    },
-    setShortkey() {
-      const act = this.$store.state.settings.shortkey ? 'add' :'remove'
-      document.documentElement.classList[act]('shortkey')
-    },
-    setErrorMessages() {
-      const act = this.$store.state.settings.errorMessages ? 'add' :'remove'
-      document.documentElement.classList[act]('errorMessages')
     }
   }
 }
