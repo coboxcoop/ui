@@ -26,6 +26,8 @@
   <NavList>
     <div v-for="peer in peers" :key="peer.publicKey">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
+      <div v-if="peer.online">online</div>
+      <div v-else="peer.timestamp">last seen at: {{ peer.timestamp || 'never' }}</div>
     </div>
     <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite friend</RouterLink>
   </NavList>
@@ -92,7 +94,11 @@ export default {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
     peers() {
-      return this.$store.getters['spaces/peers'](this.space.address)
+      const peers = this.$store.getters['spaces/peers'](this.space.address) || []
+      return peers.map((peer) => {
+        const presence = this.$store.getters['peers/byPublicKey'](peer.data.author)
+        return { ...peer, ...presence }
+      })
     },
     info() {
       return this.$store.state.system.info

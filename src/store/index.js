@@ -6,6 +6,7 @@ import {api, events} from '@/api'
 import error from '@/store/error'
 import spaces from '@/store/spaces'
 import profile from '@/store/profile'
+import peers from '@/store/peers'
 import seeders from '@/store/seeders'
 import system from '@/store/system'
 import backup from '@/store/backup'
@@ -17,6 +18,7 @@ export default new Vuex.Store({
   modules: {
     settings: settings({api, events}),
     system: system({api, events}),
+    peers: peers({api, events}),
     spaces: spaces({api, events}),
     profile: profile({api, events}),
     seeders: seeders({api, events}),
@@ -29,25 +31,28 @@ export default new Vuex.Store({
     ready: false
   },
   mutations: {
-    ready(state) {
+    ready (state) {
       state.ready = true
     }
   },
   actions: {
-    async init({dispatch, commit}) {
-      dispatch('spaces/subscribe')
+    async init ({dispatch, commit}) {
       dispatch('system/fetchLogs')
 
       await dispatch('system/fetch')
       await dispatch('profile/fetch')
+      await dispatch('peers/fetch')
+      await dispatch('peers/subscribe')
 
       commit('ready')
     },
-    async initData({dispatch}) {
+
+    async initData ({dispatch}) {
       await dispatch('spaces/joinAll')
       await dispatch('seeders/joinAll')
     },
-    async fetchAllData({dispatch, state}) {
+
+    async fetchAllData ({dispatch, state}) {
       await dispatch('spaces/fetch')
       await dispatch('spaces/getAllPeers')
       await dispatch('spaces/getAllStats')
@@ -56,7 +61,7 @@ export default new Vuex.Store({
       await dispatch('seeders/getAllPeers')
       await dispatch('seeders/getAllReplicates')
 
-      if(this.state.poll) setTimeout(() => dispatch('fetchAllData'), state.pollInterval)
+      if (this.state.poll) setTimeout(() => dispatch('fetchAllData'), state.pollInterval)
     }
   }
 })
