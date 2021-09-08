@@ -26,6 +26,8 @@
   <NavList>
     <div v-for="peer in peers" :key="peer.publicKey">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
+      <!-- TODO: we should render a onlineness icon here -->
+      <!-- TODO: we should render the last seen timestamp here, we might want a fallback / default option too -->
     </div>
     <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite friend</RouterLink>
   </NavList>
@@ -93,6 +95,31 @@ export default {
     },
     peers() {
       return this.$store.getters['spaces/peers'](this.space.address)
+      // TODO: based on this space's peers, we want to fetch
+      // the peer's presence object from our peer state,
+      // we can use the public key getter defined in our $store
+      // we have the peerId / public key available for each peer
+      // from the spaces/peers getter, which contains peer/about messages
+      // e.g. a peer/about message returned by the space/peers getter
+      // looks like this:
+      //
+      // {
+      //   type: 'peer/about',
+      //   author: peerId,
+      //   version: 1.0.0,
+      //   content: { name: 'my-funky-name' }
+      // }
+      //
+      // we want to add online and lastSeenAt so it looks like this:
+      //
+      // {
+      //   type: 'peer/about',
+      //   author: peerId,
+      //   version: string
+      //   content: { name: string }
+      //   lastSeenAt: timestamp
+      //   online: boolean
+      // }
     },
     info() {
       return this.$store.state.system.info

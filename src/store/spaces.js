@@ -8,6 +8,7 @@ export default ({api, events}) => ({
     peers: {}
   },
   actions: {
+    // TODO: we dont need this... its not being used anywhere
     async subscribe() {
       events.on('peer/connection', event => {
         console.warn('event sub', event)

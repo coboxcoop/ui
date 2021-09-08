@@ -1,5 +1,6 @@
 import {EventEmitter} from 'events'
 import axios from 'axios'
+import WebSocket from 'ws'
 
 const port = process.env.VUE_APP_API_PORT
 
