@@ -1,5 +1,5 @@
 <template>
-<Dot class="user-icon" :color="color" />
+  <Dot class="user-icon" :color="color" />
 </template>
 
 <script>

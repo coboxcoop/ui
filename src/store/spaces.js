@@ -188,6 +188,12 @@ export default ({api, events}) => ({
       })
 
       return counts.reduce((sum, num) => num + sum, 0)
+    },
+    seederCount(state, getters) {
+      return address => {
+        // TODO: we need a count of the space's seeders here!
+        return 0
+      }
     }
   }
 })
