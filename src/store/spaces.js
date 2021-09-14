@@ -8,68 +8,62 @@ export default ({api, events}) => ({
     peers: {}
   },
   actions: {
-    // TODO: we dont need this... its not being used anywhere
-    async subscribe() {
-      events.on('peer/connection', event => {
-        console.warn('event sub', event)
-      })
-    },
-    async fetch({commit, dispatch}) {
+    async fetch ({commit, dispatch}) {
       const {data} = await api.get('/spaces')
       commit('receiveData', data)
     },
-    async getAllStats({state, dispatch}) {
+    async getAllStats ({state, dispatch}) {
       await Promise.all(state.data.map(({address}) => {
         return dispatch('getStat', {address})
       }))
     },
-    async getStat({commit}, {address}) {
+    async getStat ({commit}, {address}) {
       const {data} = await api.get(`/spaces/${address}/drive/stat`)
       commit('receiveStat', {address, stat: data})
     },
-    async getAllMounts({state, dispatch}) {
+    async getAllMounts ({state, dispatch}) {
       await Promise.all(state.data.map(({address}) => {
         return dispatch('getMounts', {address})
       }))
     },
-    async getMounts({commit}, {address}) {
+    async getMounts ({commit}, {address}) {
       const {data} = await api.get(`/spaces/mounts`)
       commit('mounted', {address, mounted: data})
     },
-    async getAllPeers({state, dispatch}) {
+    async getAllPeers ({state, dispatch}) {
       await Promise.all(state.data.map(({address, name}) => {
         return dispatch('getPeers', address)
       }))
     },
-    async getPeers({commit, dispatch}, address) {
+    async getPeers ({commit, dispatch}, address) {
       const {data} = await api.get(`/spaces/${address}/peers`)
       commit('receivePeers', {address, peers: data})
     },
-    async create({dispatch}, name) {
+    async create ({dispatch}, name) {
       const {data, data: {address}} = await api.post('/spaces', {name})
       dispatch('join', {address, name})
       await dispatch('fetch')
       return data
     },
-    async delete({}, {address}) {
+    async delete ({}, {address}) {
       const {data} = await api.delete(`/spaces/${address}`)
       await dispatch('fetch')
       return data
     },
-    async acceptInvite({dispatch}, code) {
+    async acceptInvite ({dispatch}, code) {
       const {data} = await api.get('/spaces/invites/accept', {params: {code}})
       await dispatch('fetch')
     },
-    async createInvite({}, {address, publicKey}) {
+    async createInvite ({}, {address, publicKey}) {
       const {data} = await api.post(`/spaces/${address}/invites`, {address, publicKey})
       return data
     },
-    async joinAll({state, dispatch}) {
+    async joinAll ({state, dispatch}) {
       await Promise.all(state.data.map(({address, name}) => {
         return dispatch('join', {address, name})
       }))
     },
-    async join({dispatch, commit}, {address, name}) {
+    async join ({dispatch, commit}, {address, name}) {
       // FIXME
       // When joining the swarm for each space, an error is thrown if we have already joined.
       // Since there is no way to fetch the joined status for space, we will ignore the error
@@ -77,16 +71,16 @@ export default ({api, events}) => ({
       try {
         await api.post(`/spaces/${address}/connections`, {address, name})
         commit('connected', {address, connected: true})
-      } catch(e) {
+      } catch (e) {
         const msg = e.response.data && e.response.data.errors && e.response.data.errors[0].msg
-        if(msg && msg.match('open connection')) {
+        if (msg && msg.match('open connection')) {
           commit('connected', {address, connected: true})
         } else {
-          throw(e)
+          throw (e)
         }
       }
     },
-    async leave({commit, dispatch}, {address, name}) {
+    async leave ({commit, dispatch}, {address, name}) {
       // FIXME
       // As with spaces/join -- we need a way to check if the server has already joined the swarm
       // before joining or leaving
@@ -94,50 +88,50 @@ export default ({api, events}) => ({
         await api.delete(`/spaces/${address}/connections`, {address, name})
         commit('connected', {address, connected: false})
         await dispatch('unmount', {address, name})
-      } catch(e) {
-        throw(e)
+      } catch (e) {
+        throw (e)
       }
     },
-    async mount({commit}, {address, name}) {
+    async mount ({commit}, {address, name}) {
       try {
         await api.post(`/spaces/${address}/mounts`, {address, name})
         commit('mounted', {address, mounted: true})
-      } catch(e) {
-        throw(e)
+      } catch (e) {
+        throw (e)
       }
     },
-    async unmount({commit}, {address, name}) {
+    async unmount ({commit}, {address, name}) {
       try {
         await api.delete(`/spaces/${address}/mounts`, {address, name})
         commit('mounted', {address, mounted: false})
-      } catch(e) {
-        throw(e)
+      } catch (e) {
+        throw (e)
       }
     }
   },
   mutations: {
-    receiveData(state, data) {
+    receiveData (state, data) {
       state.data = data
     },
-    receiveStat(state, {address, stat}) {
+    receiveStat (state, {address, stat}) {
       state.stat = {
         ...state.stat,
         [address]: stat
       }
     },
-    receivePeers(state, {address, peers}) {
+    receivePeers (state, {address, peers}) {
       state.peers = {
         ...state.peers,
         [address]: peers
       }
     },
-    connected(state, {address, connected}) {
+    connected (state, {address, connected}) {
       state.connections = {
         ...state.connections,
         [address]: connected
       }
     },
-    mounted(state, {address, mounted}) {
+    mounted (state, {address, mounted}) {
       state.mounts = {
         ...state.mounts,
         [address]: mounted
@@ -145,44 +139,44 @@ export default ({api, events}) => ({
     }
   },
   getters: {
-    index(state) {
+    index (state) {
       return state.data.length
     },
-    count(state) {
+    count (state) {
       return state.data.length
     },
-    single(state) {
+    single (state) {
       return address => {
         return state.data.find(g => g.address === address)
       }
     },
-    connected(state) {
+    connected (state) {
       return address => {
         return (address in state.connections) && state.connections[address]
       }
     },
-    stat(state) {
+    stat (state) {
       return address => {
         return (address in state.stat) && state.stat[address]
       }
     },
-    mounted(state) {
+    mounted (state) {
       return address => {
         return (address in state.mounts) && state.mounts[address]
       }
     },
-    peers(state) {
+    peers (state) {
       return address => {
         return (address in state.peers) && state.peers[address]
       }
     },
-    peerCount(state, getters) {
+    peerCount (state, getters) {
       return address => {
         const peers = getters['peers'](address)
         return peers ? peers.length : 0
       }
     },
-    allPeerCount(state, getters) {
+    allPeerCount (state, getters) {
       const counts = state.data.map(g => {
         return getters['peerCount'](g.address)
       })
