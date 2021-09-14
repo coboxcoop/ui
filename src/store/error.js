@@ -4,10 +4,10 @@ export default ({api, events}) => ({
     message: null
   },
   actions: {
-    handle({commit, rootGetters}, e) {
-      if(rootGetters['settings/errorMessages']) {
-        if(e.response && e.response.data) {
-          if('errors' in e.response.data) {
+    handle ({commit, rootGetters}, e) {
+      if (rootGetters['settings/errorMessages']) {
+        if (e.response && e.response.data) {
+          if ('errors' in e.response.data) {
             const message = e.response.data.errors.map(error => {
               return error.msg
             }).join(', ')
@@ -17,15 +17,15 @@ export default ({api, events}) => ({
         commit('receiveMessage', e.message)
       }
     },
-    dismiss({commit}) {
+    dismiss ({commit}) {
       commit('dismiss')
     }
   },
   mutations: {
-    receiveMessage(state, message) {
+    receiveMessage (state, message) {
       state.message = message
     },
-    dismiss(state) {
+    dismiss (state) {
       state.message = null
     }
   }
