@@ -3,14 +3,14 @@ import Vuex from 'vuex'
 
 import {api, events} from '@/api'
 
+import backup from '@/store/backup'
 import error from '@/store/error'
-import spaces from '@/store/spaces'
+import peers from '@/store/peers'
 import profile from '@/store/profile'
 import seeders from '@/store/seeders'
-import system from '@/store/system'
-import backup from '@/store/backup'
 import settings from '@/store/settings'
-// TODO: we should import our peers store file
+import spaces from '@/store/spaces'
+import system from '@/store/system'
 
 Vue.use(Vuex)
 
@@ -21,6 +21,7 @@ export default new Vuex.Store({
     system: system({api, events}),
     spaces: spaces({api, events}),
     profile: profile({api, events}),
+    peers: peers({api, events}),
     seeders: seeders({api, events}),
     backup: backup({api, events}),
     error: error({api, events})
@@ -37,14 +38,9 @@ export default new Vuex.Store({
   },
   actions: {
     async init ({dispatch, commit}) {
-      // TODO: spaces/subscribe doesn't actually do anything,
-      // see store/spaces.js#actions#subscribe
-      // so we can delete this, and the subscribe function too!
-      dispatch('spaces/subscribe')
       dispatch('system/fetchLogs')
       await dispatch('system/fetch')
       await dispatch('profile/fetch')
-
       commit('ready')
     },
     async initData ({dispatch}) {
@@ -52,6 +48,7 @@ export default new Vuex.Store({
       await dispatch('seeders/joinAll')
     },
     async fetchAllData ({dispatch, state}) {
+      await dispatch('peers/fetch')
       await dispatch('spaces/fetch')
       await dispatch('spaces/getAllPeers')
       await dispatch('spaces/getAllStats')
@@ -59,9 +56,7 @@ export default new Vuex.Store({
       await dispatch('seeders/fetch')
       await dispatch('seeders/getAllPeers')
       await dispatch('seeders/getAllReplicates')
-      // TODO:
-      // 1. we want to dispatch the peers fetch action here
-      // 2. we want to dispatch the peers subscribe action too so we receive websocket updates
+      await dispatch('peers/subscribe')
 
       if (this.state.poll) {
         setTimeout(() => dispatch('fetchAllData'), state.pollInterval)
