@@ -26,6 +26,7 @@
   <NavList>
     <div v-for="peer in peers" :key="peer.publicKey">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
+
       <!-- TODO: we should render a onlineness icon here -->
       <!-- TODO: we should render the last seen timestamp here, we might want a fallback / default option too -->
     </div>
@@ -67,6 +68,7 @@ import NavList      from '@/components/NavList.vue'
 import UserIcon     from '@/components/UserIcon.vue'
 import CopyKey      from '@/components/CopyKey.vue'
 import ToggleSwitch from '@/components/ToggleSwitch.vue'
+import Dot          from '@/components/Dot.vue'
 import {api}        from '@/api'
 
 export default {
@@ -75,7 +77,8 @@ export default {
     Screen,
     NavList,
     CopyKey,
-    ToggleSwitch
+    ToggleSwitch,
+    Dot
   },
   data: () => ({
     publicKey: '',
@@ -94,32 +97,16 @@ export default {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
     peers() {
-      return this.$store.getters['spaces/peers'](this.space.address)
-      // TODO: based on this space's peers, we want to fetch
-      // the peer's presence object from our peer state,
-      // we can use the public key getter defined in our $store
-      // we have the peerId / public key available for each peer
-      // from the spaces/peers getter, which contains peer/about messages
-      // e.g. a peer/about message returned by the space/peers getter
-      // looks like this:
-      //
-      // {
-      //   type: 'peer/about',
-      //   author: peerId,
-      //   version: 1.0.0,
-      //   content: { name: 'my-funky-name' }
-      // }
-      //
-      // we want to add online and lastSeenAt so it looks like this:
-      //
-      // {
-      //   type: 'peer/about',
-      //   author: peerId,
-      //   version: string
-      //   content: { name: string }
-      //   lastSeenAt: timestamp
-      //   online: boolean
-      // }
+      let peers = this.$store.getters['spaces/peers'](this.space.address)
+      if (peers) {
+        for (let peer of peers) {
+          let peerInfo = this.$store.getters['peers/byPublicKey'](peer.data.author)
+          peer.data.lastSeenAt = peerInfo.lastSeenAt
+          peer.data.online = peerInfo.online
+        }
+      }
+      // some peers in the peers array do not exist in our peer's lastSeen state object (see peer's store) - in this case their lastSeenAt & online properties will have a value of 'undefined'
+      return peers
     },
     info() {
       return this.$store.state.system.info
