@@ -2,52 +2,54 @@ export default ({api, events}) => ({
   namespaced: true,
   state: {
     data: {
-      // [peerId]: {
+      // peerId: {
+      //   peerId: string,
       //   lastSeenAt: timestamp,
       //   online: boolean
-      // },
-      // [peerId]: {
-      //   lastSeenAt: timestamp,
-      //   online: boolean
-      // },
-      // ...
+      // }
     }
   },
   actions: {
     async subscribe ({commit}) {
       events.on('peer/connection', payload => {
-        // TODO: we need to add this individual data point
-        // to the state object in much the same way as we
-        // do when we fetch...
+        commit('updatePeerLastSeen', payload)
       })
     },
     async fetch ({commit}) {
       try {
+        // returns an array of objects
         const {data} = await api.get('/peers')
-        // returns:
-        // [{
-        //   peerId: string,
-        //   lastSeenAt: timestamp,
-        //   online: boolean
-        // }, ... ]
-        commit('receiveData', data)
+        commit('storePeerLastSeen', data)
       } catch (err) {
         console.error(err)
       }
     }
   },
   mutations: {
-    receiveData (state, data) {
-      for (const peer in data) {
-        state.data[peer.peerId] = peer
+    storePeerLastSeen (state, data) {
+      for (let peer of data) {
+        state.data[peer.peerId] = {
+          peerId: peer.peerId,
+          lastSeenAt: peer.lastSeenAt,
+          online: peer.online
+        }
+      }
+    },
+
+    updatePeerLastSeen (state, payload) {
+      state.data[payload.value.peerId] = {
+        peerId: payload.value.peerId,
+        lastSeenAt: payload.value.lastSeenAt,
+        online: payload.value.online
       }
     }
   },
   getters: {
-    // TODO: create a getter to accesss
-    // a peer object by the peer's public key
-    byPublicKey (state) {
-      // ...
+    // accesss a peer object by the peer's public key
+    byPublicKey (state, {peerId}) {
+      return peerId => {
+        return (peerId in state.data) && state.data[peerId]
+      }
     }
   }
 })
