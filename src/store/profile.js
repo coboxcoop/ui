@@ -5,7 +5,7 @@ export default ({api, events}) => ({
     alternates: []
   },
   actions: {
-    async fetch ({commit}) {
+    async fetch({commit}) {
       let res
       res = await api.get('/profile')
       commit('receiveData', res.data)
@@ -13,36 +13,36 @@ export default ({api, events}) => ({
       res = await api.get('/session')
       commit('receiveAlternates', res.data)
     },
-    async updateName ({commit}, name) {
+    async updateName({commit}, name) {
       let n = name.trim()
-      if (!n) n = 'Anonymous'
+      if(!n) n = 'Anonymous'
       const {data} = await api.patch('/profile', {name: n})
       commit('receiveData', data)
     },
-    async switch ({commit}, id) {
+    async switch({commit}, id) {
       const res = await api.put(`/session/${id}`)
       window.location.reload()
     }
   },
   mutations: {
-    receiveData (state, data) {
+    receiveData(state, data) {
       state.data = data
     },
-    receiveAlternates (state, data) {
+    receiveAlternates(state, data) {
       state.alternates = data
     }
   },
   getters: {
-    myName (state) {
+    myName(state) {
       return state.data && state.data.name
     },
-    myPublicKey (state) {
+    myPublicKey(state) {
       return state.data && state.data.publicKey
     },
-    hasName (state) {
+    hasName(state) {
       return !!(state.data && state.data.name)
     },
-    keyColor () {
+    keyColor() {
       return key => {
         const nums = [
           key.slice(0, 5),
@@ -56,14 +56,14 @@ export default ({api, events}) => ({
         return `hsl(${h}, ${s}, ${l})`
       }
     },
-    myKeyColor (state, getters) {
+    myKeyColor(state, getters) {
       const key = state.data && state.data.publicKey
-      if (key) return getters['keyColor'](key)
+      if(key) return getters['keyColor'](key)
     },
-    me (state) {
+    me(state) {
       return state.data
     },
-    alternates (state, getters) {
+    alternates(state, getters) {
       return state.alternates.filter(({publicKey}) => publicKey !== getters.myPublicKey)
     }
   }
