@@ -1,7 +1,6 @@
 export default ({api, events}) => ({
   namespaced: true,
-  state: {
-    data: [],
+  state: { data: [],
     connections: {},
     mounts: {},
     stat: {},
@@ -26,14 +25,9 @@ export default ({api, events}) => ({
       const {data} = await api.get(`/spaces/${address}/drive/stat`)
       commit('receiveStat', {address, stat: data})
     },
-    async getAllMounts({state, dispatch}) {
-      await Promise.all(state.data.map(({address}) => {
-        return dispatch('getMounts', {address})
-      }))
-    },
-    async getMounts({commit}, {address}) {
+    async getAllMounts({commit, dispatch}) {
       const {data} = await api.get(`/spaces/mounts`)
-      commit('mounted', {address, mounted: data})
+      commit('mounted', {mounted: data})
     },
     async getAllPeers({state, dispatch}) {
       await Promise.all(state.data.map(({address, name}) => {
@@ -50,7 +44,7 @@ export default ({api, events}) => ({
       await dispatch('fetch')
       return data
     },
-    async delete({}, {address}) {
+    async delete({dispatch}, {address}) {
       const {data} = await api.delete(`/spaces/${address}`)
       await dispatch('fetch')
       return data
@@ -99,8 +93,8 @@ export default ({api, events}) => ({
     },
     async mount({commit}, {address, name}) {
       try {
-        await api.post(`/spaces/${address}/mounts`, {address, name})
-        commit('mounted', {address, mounted: true})
+        const {data} = await api.post(`/spaces/${address}/mounts`, {address, name})
+        commit('mounted', { mounted: { [address]: data.location } })
       } catch(e) {
         throw(e)
       }
@@ -108,7 +102,7 @@ export default ({api, events}) => ({
     async unmount({commit}, {address, name}) {
       try {
         await api.delete(`/spaces/${address}/mounts`, {address, name})
-        commit('mounted', {address, mounted: false})
+        commit('mounted', { mounted: { [address]: null } })
       } catch(e) {
         throw(e)
       }
@@ -139,7 +133,7 @@ export default ({api, events}) => ({
     mounted(state, {address, mounted}) {
       state.mounts = {
         ...state.mounts,
-        [address]: mounted
+        ...mounted
       }
     }
   },
@@ -167,7 +161,7 @@ export default ({api, events}) => ({
     },
     mounted(state) {
       return address => {
-        return (address in state.mounts) && state.mounts[address]
+        return (address in state.mounts) && Boolean(state.mounts[address])
       }
     },
     peers(state) {

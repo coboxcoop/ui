@@ -1,33 +1,43 @@
 <template>
-<div id="app"> 
-  <transition name="fade">
-    <OfflineView v-if="offline" />
-    <div v-else-if="ready" class="yield">
-      <div v-if="hasName">
-        <ManualBugReport v-if="$store.state.settings.bugReportIcon && $store.state.settings.betaTester" />
-        <transition name="route">
-          <router-view />
-        </transition>
-      </div>
-      <OnboardingView v-else />
+  <div id="app">
+    <LoadingView v-if="loading && offline" />
+    <OfflineView v-else-if="offline" />
+    <div v-else>
+      <transition name='fade'>
+      <LoadingView v-if="loading"/>
+        <div v-else class="yield">
+          <LockView v-if="locked" />
+          <div v-else-if="hasName">
+            <ManualBugReport v-if="$store.state.settings.bugReportIcon && $store.state.settings.betaTester" />
+            <transition name="route">
+              <router-view />
+            </transition>
+          </div>
+          <OnboardingView v-else />
+        </div>
+      </transition>
     </div>
-  </transition>
-  <Errors />
-</div>
+    <Errors />
+  </div>
 </template>
 
 <script>
 import OnboardingView from '@/views/OnboardingView.vue'
 import OfflineView from '@/views/OfflineView.vue'
+import LoadingView from '@/views/LoadingView.vue'
 import Errors from '@/components/Errors.vue'
 import ManualBugReport from '@/components/ManualBugReport.vue'
+import LockView from '@/views/LockView.vue'
+import Spinner from '@/components/Spinner.vue'
 
 export default {
   components: {
     Errors,
     OnboardingView,
     OfflineView,
-    ManualBugReport
+    LockView,
+    LoadingView,
+    ManualBugReport,
   },
   async mounted() {
     await this.$store.dispatch('init')
@@ -36,19 +46,20 @@ export default {
     this.setShortkey()
     this.setErrorMessages()
 
-    if(this.hasName) {
-      await this.$store.dispatch('fetchAllData')
-      await this.$store.dispatch('initData')
-    } else {
-      this.$router.replace({name: 'spaces'})
-    }
+    this.$router.replace({name: 'spaces'})
   },
   computed: {
+    loading () {
+      return this.$store.state.loading
+    },
     ready() {
       return this.$store.state.ready
     },
     offline() {
       return this.$store.state.system.offline
+    },
+    locked() {
+      return this.$store.state.auth.locked
     },
     hasName() {
       return this.$store.getters['profile/hasName']

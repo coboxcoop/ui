@@ -7,7 +7,8 @@ const settings = retrieveState()
 
 export let bugsnagEnabled = false
 
-if(settings.betaTester) {
+// only use the bugsnag api if we're in production
+if(settings.betaTester && process.env.NODE_ENV !== 'development') {
   Bugsnag.start({
     apiKey: 'f00b1e53db5b1ea6ece4789036536eb5',
     plugins: [new BugsnagPluginVue()],

@@ -22,7 +22,7 @@ export default ({api, events}) => ({
       try {
         const {data} = await api.get('/system')
         commit('receive', data)
-      } catch(e) {
+      } catch (e) {
         commit('offline')
       }
 

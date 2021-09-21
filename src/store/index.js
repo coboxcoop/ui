@@ -1,7 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import {api, events} from '@/api'
+import {
+  api,
+  events,
+  openWS,
+  closeWS
+} from '@/api'
 
 import error from '@/store/error'
 import spaces from '@/store/spaces'
@@ -10,11 +15,13 @@ import seeders from '@/store/seeders'
 import system from '@/store/system'
 import backup from '@/store/backup'
 import settings from '@/store/settings'
+import auth from '@/store/auth'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
+    auth: auth({api, events, openWS, closeWS}),
     settings: settings({api, events}),
     system: system({api, events}),
     spaces: spaces({api, events}),
@@ -26,28 +33,52 @@ export default new Vuex.Store({
   state: {
     poll: false,
     pollInterval: 3000,
-    ready: false
+    ready: false,
+    loading: true
   },
   mutations: {
+    loading(state) {
+      state.loading = true
+    },
+    loaded(state) {
+      setTimeout(() => {
+        state.loading = false
+      }, 750)
+    },
     ready(state) {
       state.ready = true
     }
   },
   actions: {
     async init({dispatch, commit}) {
-      dispatch('spaces/subscribe')
-      dispatch('system/fetchLogs')
-
-      await dispatch('system/fetch')
-      await dispatch('profile/fetch')
-
-      commit('ready')
+      commit('loading')
+      try {
+        await dispatch('system/fetch')
+        commit('ready')
+        await dispatch('auth/check')
+        await dispatch('fetchAllData')
+        await dispatch('initData')
+        openWS()
+      } catch (err) {
+        console.error(err)
+      } finally {
+        commit('loaded')
+      }
     },
     async initData({dispatch}) {
-      await dispatch('spaces/joinAll')
+      await dispatch('spaces/joinAll'),
       await dispatch('seeders/joinAll')
     },
     async fetchAllData({dispatch, state}) {
+      // TODO: a better solution than to get all data on initial load
+      // would be to fetch the relevant information as we hit the correct view,
+      // using vuejs's mounted function
+      //
+      // for example, getAllPeers, getAllStats and getAllMounts are irrelevant
+      // on the landing page, the data is only useful on the actual SpaceSingleView
+      await dispatch('profile/fetch')
+      await dispatch('system/fetchLogs')
+      await dispatch('spaces/subscribe')
       await dispatch('spaces/fetch')
       await dispatch('spaces/getAllPeers')
       await dispatch('spaces/getAllStats')
@@ -55,8 +86,6 @@ export default new Vuex.Store({
       await dispatch('seeders/fetch')
       await dispatch('seeders/getAllPeers')
       await dispatch('seeders/getAllReplicates')
-
-      if(this.state.poll) setTimeout(() => dispatch('fetchAllData'), state.pollInterval)
     }
   }
 })

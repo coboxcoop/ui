@@ -6,17 +6,12 @@ export default ({api, events}) => ({
   },
   actions: {
     async fetch({commit}) {
-      let res
-      res = await api.get('/profile')
+      const res = await api.get('/identities/current')
       commit('receiveData', res.data)
-
-      res = await api.get('/session')
-      commit('receiveAlternates', res.data)
     },
-    async updateName({commit}, name) {
-      let n = name.trim()
-      if(!n) n = 'Anonymous'
-      const {data} = await api.patch('/profile', {name: n})
+    async updateName({commit, getters}, name = 'Anonymous') {
+      const pubKey = getters.myPublicKey
+      const {data} = await api.patch(`/identities/${pubKey}`, { name })
       commit('receiveData', data)
     },
     async switch({commit}, id) {

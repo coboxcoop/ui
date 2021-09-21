@@ -5,7 +5,7 @@
   "license": "AGPL-3.0-or-later",
   "author": "magma-collective",
   "scripts": {
-    "dev": "vue-cli-service serve",
+    "dev": "NODE_ENV=development vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit"
