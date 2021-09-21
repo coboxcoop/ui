@@ -21,6 +21,9 @@
     <RouterLink :to="{name: 'profile'}" v-shortkey="['ctrl', 'p']" @shortkey.native="navigate({name: 'profile'})">
       Profile
     </RouterLink>
+    <a href='#' v-shortkey="['ctrl', 'q']" @click="logout">
+      Logout
+    </a>
   </NavList>
   <div class="footer">CoBox {{info.version}}, UI {{uiVersion}}</div>
 </Screen>
@@ -51,6 +54,12 @@ export default {
     }
   },
   methods: {
+    async logout () {
+      await this.$store.dispatch('auth/logout')
+      // reset default route to 'spaces', we return
+      // to the root page on a second login
+      this.$router.replace({name: 'spaces'})
+    },
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
         this.$router.push(to)

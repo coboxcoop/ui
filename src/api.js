@@ -3,29 +3,33 @@ import axios from 'axios'
 
 const port = process.env.VUE_APP_API_PORT
 
-const socketEndpoints = {
-  api: `ws://localhost:${port}/api`
-}
-
 export const baseURL = `http://localhost:${port}/api`
 
-export const api = axios.create({baseURL})
+export const api = axios.create({baseURL, withCredentials: true})
 
 export const events = new EventEmitter()
 
-Object.keys(socketEndpoints).forEach(name => {
-  const endpoint = socketEndpoints[name]
-  const ws = new WebSocket(endpoint)
+var socket = null
 
-  ws.onerror = err => console.error(name, err)
-  ws.onopen = () => console.info(name, 'socket opened')
-  ws.onclose = () => console.info(name, 'socket closed')
+export function openWS () {
+  if (socket) return
+  socket = new WebSocket(`ws://localhost:${port}/api`)
 
-  ws.onmessage = event => {
+  socket.onerror = (err) => console.error(err)
+  socket.onopen = () => console.info('socket opened')
+  socket.onclose = () => console.info('socket closed')
+
+  socket.onmessage = event => {
     const payload = JSON.parse(event.data)
     // FIXME: Some ambiguity in the payload response?
     const type = payload.type || (payload.data ? payload.data.type : null)
-    console.info(name, type, payload)
+    console.info(type, payload)
     events.emit(type, payload)
   }
-})
+}
+
+export function closeWS () {
+  if (!socket) return
+  socket.close()
+  socket = null
+}

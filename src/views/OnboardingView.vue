@@ -34,7 +34,6 @@
 
 <style scoped lang="scss">
 .me-header {
-  // border-bottom: 1px solid;
   margin-bottom: 0.8rem;
 }
 .container {
@@ -80,8 +79,8 @@ export default {
   methods: {
     async onSubmitName() {
       try {
-        this.name = this.name.trim()
-        await this.$store.dispatch('profile/updateName', this.name)
+        const name = this.name.trim()
+        await this.$store.dispatch('profile/updateName', name)
         this.name = ''
         if(this.$route.name !== 'spaces') this.$router.replace({name: 'spaces'})
         await this.$store.dispatch('fetchAllData')
