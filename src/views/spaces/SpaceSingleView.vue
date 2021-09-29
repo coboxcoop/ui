@@ -26,9 +26,10 @@
   <NavList>
     <div v-for="peer in peers" :key="peer.publicKey">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
-
-      <!-- TODO: we should render a onlineness icon here -->
-      <!-- TODO: we should render the last seen timestamp here, we might want a fallback / default option too -->
+      <WifiIcon v-if="peer.data.online" />
+      <br />
+      <div v-if="!peer.data.online && peer.data.lastSeenAt" class="last-seen"> Last seen at: {{new Date(peer.data.lastSeenAt).toString().slice(0, 21)}} 
+      </div>
     </div>
     <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite friend</RouterLink>
   </NavList>
@@ -44,6 +45,7 @@
   justify-content: space-between;
 }
 .space-icon {
+  color: green;
   margin-right: 0.3rem;
 }
 .switch {
@@ -60,6 +62,14 @@
     }
   }
 }
+.last-seen {
+  font-size: 1.6rem;
+  text-align: right;
+}
+.wifi {
+  position: absolute;
+  right: 0;
+}
 </style>
 
 <script>
@@ -68,7 +78,7 @@ import NavList      from '@/components/NavList.vue'
 import UserIcon     from '@/components/UserIcon.vue'
 import CopyKey      from '@/components/CopyKey.vue'
 import ToggleSwitch from '@/components/ToggleSwitch.vue'
-import Dot          from '@/components/Dot.vue'
+import WifiIcon     from '@/components/WifiIcon.vue'
 import {api}        from '@/api'
 
 export default {
@@ -78,7 +88,7 @@ export default {
     NavList,
     CopyKey,
     ToggleSwitch,
-    Dot
+    WifiIcon
   },
   data: () => ({
     publicKey: '',
@@ -105,7 +115,7 @@ export default {
           peer.data.online = peerInfo.online
         }
       }
-      // some peers in the peers array do not exist in our peer's lastSeen state object (see peer's store) - in this case their lastSeenAt & online properties will have a value of 'undefined'
+      // TODO: some peers in the peers array do not exist in our peer's lastSeen state object (see peer's store) - in this case their lastSeenAt & online properties will have a value of 'undefined' => why would they not exist?
       return peers
     },
     info() {
