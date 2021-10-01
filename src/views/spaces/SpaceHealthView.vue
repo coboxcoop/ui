@@ -34,7 +34,7 @@
         </div>
         <div style="margin: 2rem 5rem 0 0;">
           <p style="font-size: 12pt">
-            seeders have sync'ed<br>
+            seeders have sync'd<br>
             within the last {{ toleranceString }}
           </p>
         </div>
@@ -43,17 +43,17 @@
 
     <div style="display: flex; justify-content: space-between">
       <h2>{{seederCountString}}</h2>
-      <!-- TODO: this is a crappy unicode solution, probs just wanna use an arrow icon instead -->
       <div @click="sort" style="margin-bottom: -3rem;">
-        <span style="font-size: 10pt; display: inline-block; vertical-align: top; margin-right: 1rem;">order by sync</span>
-        <span style="font-size: 36pt; vertical-align: top; cursor: pointer;">{{ sortOrderString }}</span>
+        <span class="sync-order">order by sync</span>
+        <ChevronUpIcon v-if="this.sortDirection==='asc'"/>
+        <ChevronDownIcon v-if="this.sortDirection!=='asc'"/>
       </div>
     </div>
     <NavList>
       <!-- TODO: peers here must be the list of seeders from lastSync! -->
       <div v-for="peer in sortedPeers" :key="peer.publicKey">
           <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
-          <p style="font-size: 10pt; display: block; padding: 0.8rem 0 0 0;">{{ lastSyncString(peer) }}</p>
+          <p class="last-sync">{{ lastSyncString(peer) }}</p>
         </div>
       </div>
       </NavList>
@@ -81,6 +81,25 @@
   display: flex;
   justify-content: space-between;
 }
+.sync-order {
+  font-size: 10pt;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 0.5rem;
+  margin-right: 0rem;
+}
+.sort-order {
+  font-size: 36pt;
+  vertical-align: top;
+  cursor: pointer;
+}
+.last-sync {
+  font-size: 10pt;
+  display: block;
+  padding: 0.2rem 0 0 0;
+  margin-bottom: 0em;
+  text-align: right;
+}
 .offset {
   margin: 1rem 0 0 1rem;
 }
@@ -94,6 +113,8 @@ import HealthIcon from '@/components/HealthIcon.vue'
 import CopyKey from '@/components/CopyKey.vue'
 import UserIcon from '@/components/UserIcon.vue'
 import {api} from '@/api'
+import ChevronUpIcon from '@/components/ChevronUp.vue'
+import ChevronDownIcon from '@/components/ChevronDown.vue'
 
 export default {
   components: {
@@ -102,7 +123,9 @@ export default {
     CopyKey,
     Fraction,
     HealthIcon,
-    UserIcon
+    UserIcon,
+    ChevronUpIcon,
+    ChevronDownIcon
   },
   data () {
     return {
@@ -134,7 +157,7 @@ export default {
         const day = date.getDay() > 10 ? date.getDay() : `0${date.getDay()}`
         const month = date.getMonth() > 10 ? date.getMonth() : `0${date.getMonth()}`
         const year = date.getFullYear().toString().slice(2, 4)
-        return `last sync at ${hour}:${minute} on ${day}/${month}/${year}`
+        return `last sync'd at ${hour}:${minute} on ${day}/${month}/${year}`
       }
     },
     space () {
