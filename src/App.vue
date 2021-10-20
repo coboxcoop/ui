@@ -4,10 +4,10 @@
     <OfflineView v-if="offline" />
     <div v-else-if="ready" class="yield">
       <div v-if="hasName">
-        <ManualBugReport v-if="$store.state.settings.bugReportIcon && $store.state.settings.betaTester" />
         <transition name="route">
           <router-view />
         </transition>
+        <ManualBugReport v-if="$store.state.settings.bugReportIcon && $store.state.settings.betaTester" />
       </div>
       <OnboardingView v-else />
     </div>
