@@ -28,8 +28,7 @@
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
       <WifiIcon v-if="peer.data.online" />
       <br />
-      <div v-if="!peer.data.online && peer.data.lastSeenAt" class="last-seen"> Last seen at: {{new Date(peer.data.lastSeenAt).toString().slice(0, 21)}} 
-      </div>
+      <div v-if="!peer.data.online && peer.data.lastSeenAt" class="last-seen">{{ lastSeenString(peer) }}</div>
     </div>
     <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite friend</RouterLink>
   </NavList>
@@ -63,7 +62,10 @@
   }
 }
 .last-seen {
+  display: block;
   font-size: 1.6rem;
+  margin-bottom: 0em;
+  padding: 0.2rem 0 0 0;
   text-align: right;
 }
 .wifi {
@@ -110,6 +112,7 @@ export default {
       let peers = this.$store.getters['spaces/peers'](this.space.address)
       if (peers) {
         for (let peer of peers) {
+          console.log('PEER: ', peer)
           let peerInfo = this.$store.getters['peers/byPublicKey'](peer.data.author)
           peer.data.lastSeenAt = peerInfo.lastSeenAt
           peer.data.online = peerInfo.online
@@ -123,6 +126,17 @@ export default {
     },
     mounted() {
       return this.$store.getters['spaces/mounted'](this.space.address)
+    },
+    lastSeenString(peer) {
+      return peer => {
+        const date = new Date(peer.data.lastSeenAt)
+        const hour = date.getHours() > 10 ? date.getHours() : `0${date.getHours()}`
+        const minute = date.getMinutes() > 10 ? date.getMinutes() : `0${date.getMinutes()}`
+        const day = date.getDay() > 10 ? date.getDay() : `0${date.getDay()}`
+        const month = date.getMonth() > 10 ? date.getMonth() : `0${date.getMonth()}`
+        const year = date.getFullYear().toString().slice(2, 4)
+        return `last seen at ${hour}:${minute} on ${day}/${month}/${year}`
+      }
     }
   },
   methods: {
