@@ -46,15 +46,15 @@
       <div @click="sort" style="margin-bottom: -3rem;">
         <span class="sync-order">order by sync</span>
         <ChevronUpIcon v-if="this.sortDirection==='asc'"/>
-        <ChevronDownIcon v-if="this.sortDirection!=='asc'"/>
+        <ChevronDownIcon v-if="this.sortDirection==='desc'"/>
       </div>
     </div>
     <NavList>
       <!-- TODO: peers here must be the list of seeders from lastSync! -->
       <div v-for="peer in sortedPeers" :key="peer.publicKey">
           <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
+          <WifiIcon v-if="peer.data.online" />
           <p class="last-sync">{{ lastSyncString(peer) }}</p>
-        </div>
       </div>
       </NavList>
     <br />
@@ -94,27 +94,32 @@
   cursor: pointer;
 }
 .last-sync {
-  font-size: 10pt;
   display: block;
-  padding: 0.2rem 0 0 0;
+  font-size: 1.6rem;
   margin-bottom: 0em;
+  padding: 0.2rem 0 0 0;
   text-align: right;
 }
 .offset {
   margin: 1rem 0 0 1rem;
 }
+.wifi {
+  position: absolute;
+  right: 0;
+}
 </style>
 
 <script>
-import Screen from '@/components/Screen.vue'
-import NavList from '@/components/NavList.vue'
-import Fraction from '@/components/Fraction.vue'
-import HealthIcon from '@/components/HealthIcon.vue'
-import CopyKey from '@/components/CopyKey.vue'
-import UserIcon from '@/components/UserIcon.vue'
-import {api} from '@/api'
-import ChevronUpIcon from '@/components/ChevronUp.vue'
-import ChevronDownIcon from '@/components/ChevronDown.vue'
+import Screen           from '@/components/Screen.vue'
+import NavList          from '@/components/NavList.vue'
+import Fraction         from '@/components/Fraction.vue'
+import HealthIcon       from '@/components/HealthIcon.vue'
+import CopyKey          from '@/components/CopyKey.vue'
+import UserIcon         from '@/components/UserIcon.vue'
+import {api}            from '@/api'
+import ChevronUpIcon    from '@/components/ChevronUp.vue'
+import ChevronDownIcon  from '@/components/ChevronDown.vue'
+import WifiIcon         from '@/components/WifiIcon.vue'
 
 export default {
   components: {
@@ -125,39 +130,44 @@ export default {
     HealthIcon,
     UserIcon,
     ChevronUpIcon,
-    ChevronDownIcon
+    ChevronDownIcon,
+    WifiIcon
   },
   data () {
     return {
-      sortDirection: 'asc'
+      sortDirection: 'desc',
+      sorted: []
     }
   },
   computed: {
     seederCountString () {
+      // spaces/seederCount does not yet return anything
       const count = this.$store.getters['spaces/seederCount'](this.space.address)
       return `${count} seeder${count != 1 ? 's' : ''}`
     },
     toleranceString() {
       const space = this.space
+      console.log('SPACE: ', space)
       return `${space.tolerance || 0} day${space.tolerance != 1 ? 's' : ''}`
     },
     thresholdString () {
       const space = this.space
       return `${space.threshold || 0} backup${space.threshold != 1 ? 's' : ''}`
     },
-    sortOrderString () {
-      return this.sortDirection === 'asc' ? String.fromCodePoint(0x02C7) : String.fromCodePoint(0x02C6)
-    },
     lastSyncString (peer) {
       return peer => {
         // Vanilla javascript is DEEPLY upsetting when it comes to rendering a 24 hour clock
-        const date = new Date(peer.lastSyncAt || Date.now())
+        const date = new Date(peer.data.timestamp || Date.now())
+        console.log('DATE: ', date)
+        console.log('NOW: ', new Date(Date.now()))
         const hour = date.getHours() > 10 ? date.getHours() : `0${date.getHours()}`
         const minute = date.getMinutes() > 10 ? date.getMinutes() : `0${date.getMinutes()}`
-        const day = date.getDay() > 10 ? date.getDay() : `0${date.getDay()}`
-        const month = date.getMonth() > 10 ? date.getMonth() : `0${date.getMonth()}`
+        const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`
+        const month = date.getMonth()+1
+        const monthzero = month >= 10 ? month : `0${month}`
         const year = date.getFullYear().toString().slice(2, 4)
-        return `last sync'd at ${hour}:${minute} on ${day}/${month}/${year}`
+        console.log()
+        return `last sync'd at ${hour}:${minute} on ${day}/${monthzero}/${year}`
       }
     },
     space () {
@@ -169,8 +179,8 @@ export default {
     sortedPeers () {
       const peers = this.$store
         .getters['spaces/peers'](this.space.address) || []
-
-      return peers.sort((a, b) => a.lastSyncAt > b.lastSyncAt ? 1 : -1)
+      this.sorted = peers.sort((a, b) => a.data.timestamp - b.data.timestamp ? 1 : -1)
+      return this.sorted
     }
   },
   methods: {
@@ -180,7 +190,8 @@ export default {
       }
     },
     sort () {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
+      this.sorted = this.sorted.reverse()
+      this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc'
     }
   }
 }
