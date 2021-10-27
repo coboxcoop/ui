@@ -15,7 +15,6 @@ import system from '@/store/system'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  // TODO: we should add our peers module so we can dispatch actions
   modules: {
     settings: settings({api, events}),
     system: system({api, events}),
@@ -53,10 +52,12 @@ export default new Vuex.Store({
       await dispatch('spaces/getAllPeers')
       await dispatch('spaces/getAllStats')
       await dispatch('spaces/getAllMounts')
+      await dispatch('spaces/getLastSync')
       await dispatch('seeders/fetch')
       await dispatch('seeders/getAllPeers')
       await dispatch('seeders/getAllReplicates')
       await dispatch('peers/subscribe')
+      await dispatch('spaces/subscribe')
 
       if (this.state.poll) {
         setTimeout(() => dispatch('fetchAllData'), state.pollInterval)

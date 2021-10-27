@@ -35,7 +35,6 @@ export default ({api, events}) => ({
         }
       }
     },
-
     updatePeerLastSeen (state, payload) {
       state.data[payload.value.peerId] = {
         peerId: payload.value.peerId,
