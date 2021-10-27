@@ -24,13 +24,13 @@
           <small>Threshold: {{ thresholdString }}</small>
           <small>Tolerance: {{ toleranceString }}</small>
         </div>
-        <HealthIcon color="healthColour" />
+        <RouterLink :to="{name: 'health-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'health-settings'})" class="health-settings"><HealthIcon color="healthColour" /></RouterLink>
       </div>
       <div class="section">
         <div style="margin: 2rem 0 1rem 2rem;">
           <Fraction
-            v-bind:numerator="space.syncedSeeders"
-            v-bind:denominator="space.seederCount" />
+            v-bind:numerator="syncedSeeders"
+            v-bind:denominator="seederCount" />
         </div>
         <div style="margin: 2rem 5rem 0 0;">
           <p style="font-size: 12pt">
@@ -50,15 +50,17 @@
       </div>
     </div>
     <NavList>
-      <!-- TODO: peers here must be the list of seeders from lastSync! -->
       <div v-for="peer in sortedPeers" :key="peer.publicKey">
           <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
           <WifiIcon v-if="peer.data.online" />
-          <p class="last-sync">{{ lastSyncString(peer) }}</p>
+          <br />
+          <!-- TODO: figure out why this doesn't show up until chevron click -->
+          <div class="last-sync">{{ lastSyncString(peer) }}</div>
       </div>
+      <RouterLink :to="{name: 'health-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'health-settings'})" class="health-settings">Edit health settings</RouterLink>
+
       </NavList>
     <br />
-
   </Screen>
 </template>
 
@@ -140,35 +142,52 @@ export default {
     }
   },
   computed: {
+    seederCount () {
+      const count = this.$store.getters['spaces/peerCount'](this.space.address)
+      return count
+    },
     seederCountString () {
-      // spaces/seederCount does not yet return anything
-      const count = this.$store.getters['spaces/seederCount'](this.space.address)
+      // what is the difference between a space's peers & seeders?
+      const count = this.$store.getters['spaces/peerCount'](this.space.address)
       return `${count} seeder${count != 1 ? 's' : ''}`
     },
     toleranceString() {
-      const space = this.space
-      console.log('SPACE: ', space)
-      return `${space.tolerance || 0} day${space.tolerance != 1 ? 's' : ''}`
+      // const space = this.space
+      const tolerance = this.$store.getters['spaces/tolerance'](this.space.address)
+      return `${tolerance || 0} day${tolerance != 1 ? 's' : ''}`
     },
     thresholdString () {
-      const space = this.space
-      return `${space.threshold || 0} backup${space.threshold != 1 ? 's' : ''}`
+      // const space = this.space
+      const threshold = this.$store.getters['spaces/threshold'](this.space.address)
+      return `${threshold || 0} backup${threshold != 1 ? 's' : ''}`
     },
     lastSyncString (peer) {
       return peer => {
-        // Vanilla javascript is DEEPLY upsetting when it comes to rendering a 24 hour clock
-        const date = new Date(peer.data.timestamp || Date.now())
-        console.log('DATE: ', date)
-        console.log('NOW: ', new Date(Date.now()))
-        const hour = date.getHours() > 10 ? date.getHours() : `0${date.getHours()}`
-        const minute = date.getMinutes() > 10 ? date.getMinutes() : `0${date.getMinutes()}`
-        const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`
-        const month = date.getMonth()+1
-        const monthzero = month >= 10 ? month : `0${month}`
-        const year = date.getFullYear().toString().slice(2, 4)
-        console.log()
-        return `last sync'd at ${hour}:${minute} on ${day}/${monthzero}/${year}`
+          if (peer.data.lastSyncAt) {
+          // Vanilla javascript is DEEPLY upsetting when it comes to rendering a 24 hour clock
+          const date = new Date(peer.data.lastSyncAt)
+          const hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
+          const minute = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
+          const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`
+          const month = date.getMonth()+1
+          const monthzero = month >= 10 ? month : `0${month}`
+          const year = date.getFullYear().toString().slice(2, 4)
+          console.log()
+          return `last sync'd at ${hour}:${minute} on ${day}/${monthzero}/${year}`
+        }
       }
+    },
+    syncedSeeders () {
+      const peers = this.$store.getters['spaces/peers'](this.space.address) || []
+      const tolerance = this.$store.getters['spaces/tolerance'](this.space.address)
+      const limit = Date.now() - (tolerance * 86400000)
+      let count = 0
+      for (const peer of peers) {
+        if (peer.data.lastSyncAt > limit) {
+          count ++
+          }
+      }
+      return count
     },
     space () {
       return this.$store.getters['spaces/single'](this.$route.params.address)
@@ -177,9 +196,9 @@ export default {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
     sortedPeers () {
-      const peers = this.$store
-        .getters['spaces/peers'](this.space.address) || []
-      this.sorted = peers.sort((a, b) => a.data.timestamp - b.data.timestamp ? 1 : -1)
+      const peers = this.$store.getters['spaces/peers'](this.space.address) || []
+      // TODO: remove 'me' from this list OR set me.data.lastSyncAt to Date.now()
+      this.sorted = peers.sort((a, b) => a.data.lastSyncAt - b.data.lastSyncAt)
       return this.sorted
     }
   },
