@@ -15,9 +15,7 @@ export const events = new EventEmitter()
 
 Object.keys(socketEndpoints).forEach(name => {
   const endpoint = socketEndpoints[name]
-  console.log('ENDPOINT: ', endpoint)
   const ws = new WebSocket(endpoint)
-  console.log('WS: ', ws)
 
   ws.onerror = err => console.error(name, err)
   ws.onopen = () => console.info(name, 'socket opened')
@@ -25,7 +23,6 @@ Object.keys(socketEndpoints).forEach(name => {
 
   ws.onmessage = event => {
     const payload = JSON.parse(event.data)
-    console.log('PAYLOAD: ', payload)
     // FIXME: Some ambiguity in the payload response?
     const type = payload.type || (payload.data ? payload.data.type : null)
     console.info(name, type, payload)
