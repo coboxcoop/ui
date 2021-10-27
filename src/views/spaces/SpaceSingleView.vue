@@ -112,7 +112,6 @@ export default {
       let peers = this.$store.getters['spaces/peers'](this.space.address)
       if (peers) {
         for (let peer of peers) {
-          console.log('PEER: ', peer)
           let peerInfo = this.$store.getters['peers/byPublicKey'](peer.data.author)
           peer.data.lastSeenAt = peerInfo.lastSeenAt
           peer.data.online = peerInfo.online
