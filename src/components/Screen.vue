@@ -9,6 +9,9 @@
   <div class="inner">
     <slot />
   </div>
+  <div class="footer">
+    <ManualBugReport v-if="$store.state.settings.bugReportIcon && $store.state.settings.betaTester" />
+  </div>
 </div>
 </template>
 
@@ -51,17 +54,29 @@ header {
   padding: 1.6rem;
   padding-top: 0;
 }
+.footer {
+  position: relative;
+  bottom: 0; right: 0;
+  z-index: 2;
+  width: 100%;
+  background: var(--bg);
+  padding: 1.6rem;
+  padding-bottom: 0;
+}
 </style>
 
 <script>
 import MeHeader from '@/components/MeHeader.vue'
+import ManualBugReport from '@/components/ManualBugReport.vue'
+
 
 export default {
   props: {
     back: Object
   },
   components: {
-    MeHeader
+    MeHeader,
+    ManualBugReport
   }
 }
 </script>
