@@ -13,37 +13,57 @@
     <small>Folder address</small>
     <CopyKey :value="space.address" />
   </div>
-  <!-- NavTable? component? -->
-  <div class="nav">
-    <div class="col">
-      <a class="nav-item" href="#" @click.prevent="openMount" v-shortkey="['ctrl', 'o']" @shortkey="openMount">
+
+  <NavTable>
+    <template v-slot:left>
+      <a v-if="mounted" class="nav-item" href="#" @click.prevent="openMount" v-shortkey="['ctrl', 'o']" @shortkey="openMount">
         <label>Open</label>
         <FolderIcon />
       </a>
-      <div class="nav-item">
-        <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Health</RouterLink>
+      <div v-else class="nav-item">
+        <label style="text-decoration: line-through">Open</label>
         <FolderIcon />
       </div>
-      <div class="nav-item">
-        <RouterLink class="nav-item" :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite</RouterLink>
+      <RouterLink
+        class="nav-item"
+        :to="{name: 'space-health'}"
+        v-shortkey="['ctrl', 'h']"
+        @shortkey.native="navigate({name: 'space-health'})">
+        <label>Health</label>
+        <img src="@/assets/images/icons/health-heart-small.png" alt="">
+      </RouterLink>
+      <RouterLink
+        class="nav-item"
+        :to="{name: 'space-invite'}"
+        v-shortkey="['ctrl', 'i']"
+        @shortkey.native="navigate({name: 'space-invite'})">
+        <label>Invite</label>
         <InviteIcon />
-      </div>
-    </div>
-    <div class="col">
+      </RouterLink>
+    </template>
+    <template v-slot:right>
       <div class="nav-item switch">
         <label>Mount</label>
         <ToggleSwitch @input="toggleMount" :value="mounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
       </div>
-      <div class="nav-item">
-        <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'd']" @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">Delete</RouterLink>
+      <RouterLink
+        class="nav-item"
+        :to="{name: 'space-delete', params: {address: $route.params.address}}"
+        v-shortkey="['ctrl', 'd']" 
+        @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">
+        <label>Delete</label>
         <DeleteIcon />
-      </div>
-      <div class="nav-item">
-        <RouterLink :to="{name: 'health-settings'}" v-shortkey="['ctrl', 's']" @shortkey.native="navigate({name: 'health-settings'})">Settings</RouterLink>
+      </RouterLink>
+      <RouterLink
+        class="nav-item"
+        :to="{name: 'health-settings'}"
+        v-shortkey="['ctrl', 's']"
+        @shortkey.native="navigate({name: 'health-settings'})">
+        <label>Settings</label>
         <SettingsIcon />
-      </div>
-    </div>
-  </div>
+      </RouterLink>
+    </template>
+  </NavTable>
 
   <div style="height: 1.6rem" />
 
@@ -68,9 +88,6 @@
   display: flex;
   justify-content: space-between;
 }
-.address {
-  margin-bottom: 1rem;
-}
 .space-icon {
   color: green;
   margin-right: 0.3rem;
@@ -89,24 +106,29 @@
     }
   }
 }
-.nav {
-  display: flex; 
-}
-.nav .col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.nav .nav-item a {
-  text-decoration: none;
-}
 .nav-item {
   display: flex;
-  margin-bottom: 1rem;
-  padding: 0.1rem 0.25rem 0.1rem 0.25rem;
+  text-decoration: none;
+  padding: 0.5rem 1rem 0.5rem 0;
   justify-content: space-between;
-  border-bottom: 1px solid var(--fg);
+  cursor: pointer;
+  label {
+    cursor: pointer;
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--fg);
+  }
+  svg {
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  img {
+    max-height: 24px;
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
 }
 .last-seen {
   display: block;
@@ -124,6 +146,7 @@
 <script>
 import Screen       from '@/components/Screen.vue'
 import NavList      from '@/components/NavList.vue'
+import NavTable     from '@/components/NavTable.vue'
 import UserIcon     from '@/components/UserIcon.vue'
 import CopyKey      from '@/components/CopyKey.vue'
 import ToggleSwitch from '@/components/ToggleSwitch.vue'
@@ -139,6 +162,7 @@ export default {
     UserIcon,
     Screen,
     NavList,
+    NavTable,
     CopyKey,
     ToggleSwitch,
     WifiIcon,
