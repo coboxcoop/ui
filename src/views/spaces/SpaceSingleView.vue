@@ -110,15 +110,11 @@ export default {
     },
     peers() {
       let peers = this.$store.getters['spaces/peers'](this.space.address)
+      let me = this.$store.getters['profile/myPublicKey']
       if (peers) {
-        for (let peer of peers) {
-          let peerInfo = this.$store.getters['peers/byPublicKey'](peer.data.author)
-          peer.data.lastSeenAt = peerInfo.lastSeenAt
-          peer.data.online = peerInfo.online
-        }
+        peers = peers.filter(peer => peer.data.author !== me)
+        return peers
       }
-      // TODO: some peers in the peers array do not exist in our peer's lastSeen state object (see peer's store) - in this case their lastSeenAt & online properties will have a value of 'undefined' => why would they not exist?
-      return peers
     },
     info() {
       return this.$store.state.system.info
@@ -128,13 +124,17 @@ export default {
     },
     lastSeenString(peer) {
       return peer => {
-        const date = new Date(peer.data.lastSeenAt)
-        const hour = date.getHours() > 10 ? date.getHours() : `0${date.getHours()}`
-        const minute = date.getMinutes() > 10 ? date.getMinutes() : `0${date.getMinutes()}`
-        const day = date.getDay() > 10 ? date.getDay() : `0${date.getDay()}`
-        const month = date.getMonth() > 10 ? date.getMonth() : `0${date.getMonth()}`
-        const year = date.getFullYear().toString().slice(2, 4)
-        return `last seen at ${hour}:${minute} on ${day}/${month}/${year}`
+        if (peer.data.lastSeenAt) {
+          const date = new Date(peer.data.lastSeenAt)
+          const hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
+          const minute = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
+          const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`
+          const month = date.getMonth()+1
+          const monthzero = month >= 10 ? month : `0${month}`
+          const year = date.getFullYear().toString().slice(2, 4)
+          return `last seen at ${hour}:${minute} on ${day}/${month}/${year}`
+        }
+        else { return `never seen` }
       }
     }
   },
