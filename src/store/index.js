@@ -5,7 +5,6 @@ import {api, events} from '@/api'
 
 import backup from '@/store/backup'
 import error from '@/store/error'
-import peers from '@/store/peers'
 import profile from '@/store/profile'
 import seeders from '@/store/seeders'
 import settings from '@/store/settings'
@@ -20,7 +19,6 @@ export default new Vuex.Store({
     system: system({api, events}),
     spaces: spaces({api, events}),
     profile: profile({api, events}),
-    peers: peers({api, events}),
     seeders: seeders({api, events}),
     backup: backup({api, events}),
     error: error({api, events})
@@ -47,16 +45,15 @@ export default new Vuex.Store({
       await dispatch('seeders/joinAll')
     },
     async fetchAllData ({dispatch, state}) {
-      await dispatch('peers/fetch')
       await dispatch('spaces/fetch')
       await dispatch('spaces/getAllPeers')
       await dispatch('spaces/getAllStats')
       await dispatch('spaces/getAllMounts')
+      await dispatch('spaces/getLastSeen')
       await dispatch('spaces/getLastSync')
       await dispatch('seeders/fetch')
       await dispatch('seeders/getAllPeers')
       await dispatch('seeders/getAllReplicates')
-      await dispatch('peers/subscribe')
       await dispatch('spaces/subscribe')
 
       if (this.state.poll) {
