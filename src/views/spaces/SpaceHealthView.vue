@@ -50,15 +50,13 @@
       </div>
     </div>
     <NavList>
-      <div v-for="peer in sortedPeers" :key="peer.publicKey">
+      <div v-for="peer in sortedPeers" :key="peer.data.author">
           <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
           <WifiIcon v-if="peer.data.online" />
           <br />
-          <!-- TODO: figure out why this doesn't show up until chevron click -->
           <div class="last-sync">{{ lastSyncString(peer) }}</div>
       </div>
       <RouterLink :to="{name: 'health-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'health-settings'})" class="health-settings">Edit health settings</RouterLink>
-
       </NavList>
     <br />
   </Screen>
@@ -163,7 +161,7 @@ export default {
     },
     lastSyncString (peer) {
       return peer => {
-          if (peer.data.lastSyncAt) {
+        if (peer.data.lastSyncAt) {
           // Vanilla javascript is DEEPLY upsetting when it comes to rendering a 24 hour clock
           const date = new Date(peer.data.lastSyncAt)
           const hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
@@ -172,22 +170,20 @@ export default {
           const month = date.getMonth()+1
           const monthzero = month >= 10 ? month : `0${month}`
           const year = date.getFullYear().toString().slice(2, 4)
-          console.log()
           return `last sync'd at ${hour}:${minute} on ${day}/${monthzero}/${year}`
         }
       }
     },
     syncedSeeders () {
-      const peers = this.$store.getters['spaces/peers'](this.space.address) || []
+      let peers = this.$store.getters['spaces/peers'](this.space.address)
+      const me = this.$store.getters['profile/myPublicKey']
       const tolerance = this.$store.getters['spaces/tolerance'](this.space.address)
       const limit = Date.now() - (tolerance * 86400000)
-      let count = 0
-      for (const peer of peers) {
-        if (peer.data.lastSyncAt > limit) {
-          count ++
-          }
+      if (peers) {
+        peers = peers.filter(peer => peer.data.author !== me)
+        peers = peers.filter(peer => peer.data.lastSyncAt > limit)
+        return peers.length
       }
-      return count
     },
     space () {
       return this.$store.getters['spaces/single'](this.$route.params.address)
@@ -195,12 +191,19 @@ export default {
     stat () {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
+
     sortedPeers () {
-      const peers = this.$store.getters['spaces/peers'](this.space.address) || []
-      // TODO: remove 'me' from this list OR set me.data.lastSyncAt to Date.now()
-      this.sorted = peers.sort((a, b) => a.data.lastSyncAt - b.data.lastSyncAt)
+      let peers = this.$store.getters['spaces/peers'](this.space.address)
+      let me = this.$store.getters['profile/myPublicKey']
+      if (peers) {
+        peers = peers.filter(peer => peer.data.author !== me)
+        this.sorted = peers.sort((a, b) => a.data.lastSyncAt - b.data.lastSyncAt)
+        if (this.sortDirection === 'desc') {
+          return this.sorted
+        } else return this.sorted.reverse()
+      }
       return this.sorted
-    }
+    },
   },
   methods: {
     navigate(to) {
@@ -209,7 +212,6 @@ export default {
       }
     },
     sort () {
-      this.sorted = this.sorted.reverse()
       this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc'
     }
   }
