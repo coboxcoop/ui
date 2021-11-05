@@ -1,3 +1,5 @@
+import Vue from "vue"
+
 export default ({api, events}) => ({
   namespaced: true,
   state: {
@@ -8,15 +10,21 @@ export default ({api, events}) => ({
     peers: {}
   },
   actions: {
-    async subscribe ({commit}) {
-      console.info('subscribed to space/last-sync')
+    async subscribe ({commit, dispatch}) {
       events.on('space/last-sync', payload => {
         commit('updateLastSync', payload)
       })
+      events.on('peer/connection', payload => {
+        commit('updateLastSeen', payload)
+      })
     },
-    async fetch ({commit, dispatch}) {
-      const {data} = await api.get('/spaces')
-      commit('receiveData', data)
+    async fetch ({commit}) {
+      try {
+        const {data} = await api.get('/spaces')
+        commit('receiveData', data)
+      } catch (err) {
+        console.error(err)
+      }
     },
     async getAllStats ({state, dispatch}) {
       await Promise.all(state.data.map(({address}) => {
@@ -44,6 +52,13 @@ export default ({api, events}) => ({
     async getPeers ({commit, dispatch}, address) {
       const {data} = await api.get(`/spaces/${address}/peers`)
       commit('receivePeers', {address, peers: data})
+    },
+    async getLastSeen ({state, commit}) {
+      // returns an array of objects
+      const {data} = await api.get('/peers')
+      for (const address in state.peers) {
+        commit('receiveLastSeen', {address, peers: data})
+      }
     },
     async getLastSync ({state, dispatch}) {
       await Promise.all(state.data.map(({address}) => {
@@ -161,9 +176,12 @@ export default ({api, events}) => ({
       for (const el of state.peers[address]) {
         data.forEach((peer) => {
           if (peer.peerId === el.data.author) {
-            el.data.lastSyncAt = peer.lastSyncAt
+            el.data = Object.assign({}, el.data, {
+              lastSyncAt: peer.lastSyncAt
+            })
             let index = data.indexOf(peer)
             delete data[index]
+            // el.data.lastSyncAt = peer.lastSyncAt
           }
         })
       }
@@ -173,6 +191,28 @@ export default ({api, events}) => ({
         if (payload.data.peerId === el.data.author) {
           el.data.lastSyncAt = payload.data.lastSyncAt
         }
+      }
+    },
+    receiveLastSeen (state, {address, peers}) {
+      state.peers[address].forEach(el => {
+        peers.forEach((peer) => {
+          if (peer.peerId === el.data.author) {
+            el.data = Object.assign({}, el.data, {
+              lastSeenAt: peer.lastSeenAt,
+              online: peer.online
+            })
+          }
+        })
+      })
+    },
+    updateLastSeen (state, payload) {
+      for (const el in state.peers) {
+        state.peers[el].forEach((peer) => {
+          if (payload.key === peer.data.author) {
+            Vue.set(peer.data, 'lastSeenAt', payload.value.lastSeenAt)
+            Vue.set(peer.data, 'online', payload.value.online)
+          }
+        })
       }
     },
     // DRAFT function needs testing once view is complete
@@ -217,10 +257,14 @@ export default ({api, events}) => ({
         return (address in state.peers) && state.peers[address]
       }
     },
-    peerCount (state, getters) {
+    peerCount (state, getters, rootState, rootGetters) {
       return address => {
-        const peers = getters['peers'](address)
-        return peers ? peers.length : 0
+        let peers = getters['peers'](address)
+        const me = rootGetters['profile/myPublicKey']
+        if (peers) {
+          peers = peers.filter(peer => peer.data.author !== me)
+          return peers.length
+        } else return 0
       }
     },
     lastSyncAt (state) {
