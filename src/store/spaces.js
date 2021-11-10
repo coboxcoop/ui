@@ -70,6 +70,7 @@ export default ({api, events}) => ({
       commit('receiveLastSync', {address, data})
     },
     async changeSettings ({commit}, {address, threshold, tolerance}) {
+      tolerance = tolerance * 86400000
       await api.patch(`/spaces/${address}/settings`, {threshold, tolerance})
       commit('updateSettings', {address, threshold, tolerance})
     },
@@ -288,7 +289,7 @@ export default ({api, events}) => ({
         const space = state.data.find(g => g.address === address)
         let values = {
           threshold: space.threshold,
-          tolerance: space.tolerance
+          tolerance: space.tolerance / 86400000
         }
         return values
       }
