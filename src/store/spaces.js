@@ -69,9 +69,8 @@ export default ({api, events}) => ({
       const {data} = await api.get(`/spaces/${address}/last-sync`)
       commit('receiveLastSync', {address, data})
     },
-    // DRAFT function needs testing once view is complete
-    async updateSettings ({commit}, {address, threshold, tolerance}) {
-      await api.put(`/spaces/${address}/settings`, {threshold, tolerance})
+    async changeSettings ({commit}, {address, threshold, tolerance}) {
+      await api.patch(`/spaces/${address}/settings`, {threshold, tolerance})
       commit('updateSettings', {address, threshold, tolerance})
     },
     async create ({dispatch}, name) {
@@ -189,7 +188,7 @@ export default ({api, events}) => ({
     updateLastSync (state, payload) {
       for (const el of state.peers[payload.address]) {
         if (payload.data.peerId === el.data.author) {
-          el.data.lastSyncAt = payload.data.lastSyncAt
+          Vue.set(el.data, 'lastSyncAt', payload.data.lastSyncAt)
         }
       }
     },
@@ -215,12 +214,11 @@ export default ({api, events}) => ({
         })
       }
     },
-    // DRAFT function needs testing once view is complete
     updateSettings (state, {address, threshold, tolerance}) {
-      for (const el of state.data) {
+      for (let el of state.data) {
         if (el.address === address) {
-          el.threshold = threshold
-          el.tolerance = tolerance
+          Vue.set(el, 'threshold', threshold)
+          Vue.set(el, 'tolerance', tolerance)
         }
       }
     }
@@ -285,16 +283,14 @@ export default ({api, events}) => ({
         return 0
       }
     },
-    threshold (state) {
+    settings (state) {
       return address => {
         const space = state.data.find(g => g.address === address)
-        return space.threshold
-      }
-    },
-    tolerance (state) {
-      return address => {
-        const space = state.data.find(g => g.address === address)
-        return space.tolerance
+        let values = {
+          threshold: space.threshold,
+          tolerance: space.tolerance
+        }
+        return values
       }
     }
   }
