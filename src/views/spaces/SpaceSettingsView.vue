@@ -1,86 +1,115 @@
 <template>
 <Screen 
-    :back="{name: 'space-health', params: {address: space.address}}"
-    v-if="space" 
-    v-shortkey="['ctrl', 'p']" 
-    @shortkey.native="navigate({name: 'space-health'})">
+    :back="{name: 'space', params: {address: space.address}}"
+    v-if="space"
+    v-shortkey="['ctrl', 'p']"
+    @shortkey.native="navigate({name: 'profile'})">
 
   <template v-slot:header>
     <div class="header">
       <div>
-          Folder > {{space.name}} > Health Settings
+          Folder > {{space.name}} > Settings
       </div>
       <div class="stat">{{stat.size | bytes}}</div>
     </div>
   </template>
 
-  <NavList>
-    <form @submit.prevent="submitSettings">
+    <div class="settings">
+      <form class="form" @submit.prevent="onSave">
+        <p class="title">Threshold:</p>
+        <div class="line">
+          <span><input v-model="threshold" type="text" placeholder="no." ref="thresholdInput" @focus="editThreshold = true" @change="onSave()"/></span>
+          <span class="blind"><img src="@/assets/images/icons/edit.svg" /> {{threshold}} <img src="@/assets/images/icons/edit.svg" /></span>
+          <span class="type">backups</span>
+        </div>
+        <p class="description">Min. number of backups; each peer or seeder count as one backup</p>
+      </form>
+      <br />
+      <form class="form" @submit.prevent="onSave">
+        <p class="title">Tolerance:</p>
+        <div class="line">
+          <span><input v-model="tolerance" type="text" placeholder="no." ref="toleranceInput" @focus="editTolerance = true" @change="onSave()"/></span>
+          <span class="blind"><img src="@/assets/images/icons/edit.svg" /> {{tolerance}} <img src="@/assets/images/icons/edit.svg" /></span>
+          <span class="type">days</span>
+        </div>
+        <p class="description">Max. number of days since last backup</p>
+      </form>
+    </div>
 
-        <label>Threshold:</label>
-        <select v-model="threshold" class="selected">
-        <option>0</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        </select>
-        <label>backups</label>
-        <p class="description">Minimum number of backups</p>
-    <br />
-      <label>Tolerance:</label>
-        <select v-model="tolerance" class="selected">
-        <option>0</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        </select>
-        <label>days</label>
-      <p class="description">Max days between backups</p>
-    </form>
-    </NavList>
-    <br>
-        <!-- TODO: connect submit.prevent functionality to this button -->
-    <button class="button" type="submit">Save new settings</button>
  <br />
 </Screen>
 </template>
 
 <style lang="scss" scoped>
-.settings small {
-  display: block;
-  margin: 0.6rem 0;
-}
 .header {
   display: flex;
   justify-content: space-between;
 }
-// fix this shade of black
-.selected {
+.settings {
+  display: inline-block;
+  text-align: left;
+}
+form {
+  margin-top: 2rem;
+  display: inline-block;
   position: relative;
-  width: 1.8em;
-  text-align: center;
-  background-color: #0a0a0a;
-  color: #fff;
-  outline-width: 57px;
-  height: 1.8em;
-  line-height: 2em;
+  &:hover .blind img:last-of-type {
+    visibility: visible;
+  }
+  input {
+    border-bottom: transparent;
+  }
+}
+.title {
+  font-size: 1em;
+  margin-bottom: 0;
+}
+.line {
+  display: flex;
+  box-sizing: border-box;
+}
+input {
+  display: inline-block;
+  text-align: right;
+  vertical-align: bottom;
+  margin: 0.4rem;
+  border: 1rem;
+  width: 100%;
+  &:focus + .blind, &:active + .blind {
+    opacity: 0;
+  }
+}
+.blind {
+  color: transparent;
+  pointer-events: none;
+  margin: 0.4rem;
+  border: 1rem;
+  padding: 1rem;
+  padding-right: 2rem;
+  padding-left: 0;
+  img {
+    position: absolute;
+    visibility: hidden;
+    html.dark & {
+      filter: invert(1);
+    }
+  }
+}
+.type {
+  margin: 0.4rem;
+  border: 1rem;
+  padding: 0.6rem;
+  width: 100%;
+  text-align: left;
+  vertical-align: bottom;
 }
 .description {
   display: block;
+  width: 100%;
   font-size: 1.6rem;
   margin-bottom: 0em;
   padding: 0.2rem 0 0 0;
-  text-align: right;
-}
-.button {
-  margin-top: auto;
-  width: 100%;
+  text-align: left;
 }
 </style>
 
@@ -92,16 +121,17 @@ import {api}        from '@/api'
 
 export default {
   components: {
-    UserIcon,
     Screen,
-    NavList,
   },
   data: () => ({
-    publicKey: '',
-    inviteCode: '',
+    editThreshold: false,
+    editTolerance: false,
     threshold: '',
     tolerance: ''
   }),
+  mounted() {
+    this.setValues()
+  },
   computed: {
     space() {
       return this.$store.getters['spaces/single'](this.$route.params.address)
@@ -119,22 +149,20 @@ export default {
         this.$router.push(to)
       }
     },
-    async toggleMount() {
-      if(this.mounted) {
-        await this.unmountFolder()
-      } else {
-        await this.mountFolder()
-      }
+    setValues () {
+      const values = this.$store.getters['spaces/settings'](this.space.address)
+      this.threshold = values.threshold
+      this.tolerance = values.tolerance
     },
-    // DRAFT function - bind threshold & tolerance to select drop-down inputs
-    async submitSettings() {
-      const {space: {address}, threshold, tolerance} = this
-      try {
-        const data = await this.$store.dispatch('spaces/updateSettings', {address, threshold, tolerance})
-      } catch(e) {
-        this.$store.dispatch('error/handle', e)
-      }
-    },
+    async onSave() {
+      this.editThreshold = false
+      this.editTolerance = false
+      await this.$store.dispatch('spaces/changeSettings', {
+        address: this.space.address,
+        threshold: this.threshold,
+        tolerance: this.tolerance
+      })
+    }
   }
 }
 </script>
