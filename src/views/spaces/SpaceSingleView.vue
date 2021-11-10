@@ -16,6 +16,7 @@
     </div>
     <a href="#" @click.prevent="openMount" v-shortkey="['ctrl', 'o']" @shortkey="openMount">Open folder</a>
     <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Health</RouterLink>
+    <RouterLink :to="{name: 'space-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'space-settings'})">Settings</RouterLink>
     <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'd']" @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">Delete</RouterLink>
   </NavList>
   
