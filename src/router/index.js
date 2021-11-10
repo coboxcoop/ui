@@ -34,7 +34,7 @@ const routes = [
   {path: '/folders/:address',                           name: 'space',                           component: SpaceSingleView},
   {path: '/folders/:address/invite',                    name: 'space-invite',                    component: SpaceInviteFriendView},
   {path: '/folders/:address/health',                    name: 'space-health',                    component: SpaceHealthView},
-  {path: '/folders/:address/health-settings',           name: 'health-settings',                 component: SpaceSettingsView},
+  {path: '/folders/:address/settings',                  name: 'space-settings',                  component: SpaceSettingsView},
   {path: '/folders/:address/delete',                    name: 'space-delete',                    component: SpaceDeleteView},
   {path: '/settings',                                   name: 'settings',                        component: SettingsView},
   {path: '/settings/profile',                           name: 'profile',                         component: ProfileView},
