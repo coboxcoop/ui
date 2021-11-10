@@ -24,7 +24,7 @@
           <small>Threshold: {{ thresholdString }}</small>
           <small>Tolerance: {{ toleranceString }}</small>
         </div>
-        <RouterLink :to="{name: 'health-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'health-settings'})" class="health-settings"><HealthIcon color="healthColour" /></RouterLink>
+        <RouterLink :to="{name: 'space-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'space-settings'})"><HealthIcon color="healthColour" /></RouterLink>
       </div>
       <div class="section">
         <div style="margin: 2rem 0 1rem 2rem;">
@@ -56,7 +56,6 @@
           <br />
           <div class="last-sync">{{ lastSyncString(peer) }}</div>
       </div>
-      <RouterLink :to="{name: 'health-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'health-settings'})" class="health-settings">Edit health settings</RouterLink>
       </NavList>
     <br />
   </Screen>
@@ -145,18 +144,15 @@ export default {
       return count
     },
     seederCountString () {
-      // what is the difference between a space's peers & seeders?
       const count = this.$store.getters['spaces/peerCount'](this.space.address)
       return `${count} seeder${count != 1 ? 's' : ''}`
     },
     toleranceString() {
-      // const space = this.space
-      const tolerance = this.$store.getters['spaces/tolerance'](this.space.address)
+      const {tolerance} = this.$store.getters['spaces/settings'](this.space.address)
       return `${tolerance || 0} day${tolerance != 1 ? 's' : ''}`
     },
     thresholdString () {
-      // const space = this.space
-      const threshold = this.$store.getters['spaces/threshold'](this.space.address)
+      const {threshold} = this.$store.getters['spaces/settings'](this.space.address)
       return `${threshold || 0} backup${threshold != 1 ? 's' : ''}`
     },
     lastSyncString (peer) {
@@ -177,7 +173,7 @@ export default {
     syncedSeeders () {
       let peers = this.$store.getters['spaces/peers'](this.space.address)
       const me = this.$store.getters['profile/myPublicKey']
-      const tolerance = this.$store.getters['spaces/tolerance'](this.space.address)
+      const {tolerance} = this.$store.getters['spaces/settings'](this.space.address)
       const limit = Date.now() - (tolerance * 86400000)
       if (peers) {
         peers = peers.filter(peer => peer.data.author !== me)
