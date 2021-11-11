@@ -20,11 +20,11 @@
     <div class="summary">
       <div class="section">
         <div class="settings">
-          <small>Status: {{ space.status || 'Unknown' }}</small>
+          <small>Status: {{ status }}</small>
           <small>Threshold: {{ thresholdString }}</small>
           <small>Tolerance: {{ toleranceString }}</small>
         </div>
-        <RouterLink :to="{name: 'space-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'space-settings'})"><HealthIcon color="healthColour" /></RouterLink>
+        <RouterLink :to="{name: 'space-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'space-settings'})"><HealthIcon :colour="colour" /></RouterLink>
       </div>
       <div class="section">
         <div style="margin: 2rem 0 1rem 2rem;">
@@ -135,7 +135,8 @@ export default {
   data () {
     return {
       sortDirection: 'desc',
-      sorted: []
+      sorted: [],
+      colour: 'white'
     }
   },
   computed: {
@@ -179,6 +180,23 @@ export default {
         peers = peers.filter(peer => peer.data.author !== me)
         peers = peers.filter(peer => peer.data.lastSyncAt > limit)
         return peers.length
+      }
+    },
+    status () {
+      let syncd = this.syncedSeeders
+      let seeders = this.seederCount
+      if (syncd >= seeders) { 
+        this.colour = 'green'
+        return "Healthy"
+      } else if (syncd >= seeders/2) { 
+        this.colour = 'amber'
+        return "OK"
+      } else if (syncd < seeders/2) { 
+        this.colour = 'red'
+        return "At risk"
+      } else { 
+        this.colour = 'white'
+        return 'Unknown'
       }
     },
     space () {
