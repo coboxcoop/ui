@@ -18,7 +18,7 @@
       <form class="form" @submit.prevent="onSave">
         <p class="title">Threshold:</p>
         <div class="line">
-          <span><input v-model="threshold" type="text" placeholder="no." ref="thresholdInput" @focus="editThreshold = true" @change="onSave()"/></span>
+          <span><input v-model.number="threshold" type="text" placeholder="no." ref="thresholdInput" @focus="editThreshold = true" @change="onSave()"/></span>
           <span class="blind"><img src="@/assets/images/icons/edit.svg" /> {{threshold}} <img src="@/assets/images/icons/edit.svg" /></span>
           <span class="type">backups</span>
         </div>
@@ -28,7 +28,7 @@
       <form class="form" @submit.prevent="onSave">
         <p class="title">Tolerance:</p>
         <div class="line">
-          <span><input v-model="tolerance" type="text" placeholder="no." ref="toleranceInput" @focus="editTolerance = true" @change="onSave()"/></span>
+          <span><input v-model.number="tolerance" type="text" placeholder="no." ref="toleranceInput" @focus="editTolerance = true" @change="onSave()"/></span>
           <span class="blind"><img src="@/assets/images/icons/edit.svg" /> {{tolerance}} <img src="@/assets/images/icons/edit.svg" /></span>
           <span class="type">days</span>
         </div>
