@@ -157,11 +157,15 @@ export default {
     async onSave() {
       this.editThreshold = false
       this.editTolerance = false
-      await this.$store.dispatch('spaces/changeSettings', {
-        address: this.space.address,
-        threshold: this.threshold,
-        tolerance: this.tolerance
-      })
+      if (typeof this.threshold === "number" && typeof this.tolerance === "number") {
+        await this.$store.dispatch('spaces/changeSettings', {
+          address: this.space.address,
+          threshold: this.threshold,
+          tolerance: this.tolerance
+        })
+      } else {
+        this.setValues()
+      }
     }
   }
 }
