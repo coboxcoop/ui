@@ -80,7 +80,7 @@ export default ({api, events}) => ({
       await dispatch('fetch')
       return data
     },
-    async delete ({}, {address}) {
+    async delete ({dispatch}, {address}) {
       const {data} = await api.delete(`/spaces/${address}`)
       await dispatch('fetch')
       return data
@@ -181,7 +181,6 @@ export default ({api, events}) => ({
             })
             let index = data.indexOf(peer)
             delete data[index]
-            // el.data.lastSyncAt = peer.lastSyncAt
           }
         })
       }
