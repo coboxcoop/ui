@@ -14,9 +14,12 @@ export default ({api, events}) => ({
       events.on('space/last-sync', payload => {
         commit('updateLastSync', payload)
       })
-      events.on('peer/connection', payload => {
-        commit('updateLastSeen', payload)
-      })
+      // events.on('peer/about', payload => {
+      //   commit('addPeerToSpace', {
+      //     address: payload.address,
+      //     peer: payload.data
+      //   })
+      // })
     },
     async fetch ({commit}) {
       try {
@@ -53,13 +56,6 @@ export default ({api, events}) => ({
       const {data} = await api.get(`/spaces/${address}/peers`)
       commit('receivePeers', {address, peers: data})
     },
-    async getLastSeen ({state, commit}) {
-      // returns an array of objects
-      const {data} = await api.get('/peers')
-      for (const address in state.peers) {
-        commit('receiveLastSeen', {address, peers: data})
-      }
-    },
     async getLastSync ({state, dispatch}) {
       await Promise.all(state.data.map(({address}) => {
         return dispatch('peersLastSync', address)
@@ -78,6 +74,8 @@ export default ({api, events}) => ({
       const {data, data: {address}} = await api.post('/spaces', {name})
       await dispatch('join', {address, name})
       commit('receiveSpace', data)
+      await dispatch('getPeers', address)
+      await dispatch('getStat', {address})
       return {address}
     },
     async delete ({dispatch}, {address}) {
@@ -157,6 +155,9 @@ export default ({api, events}) => ({
         [address]: stat
       }
     },
+    addPeerToSpace (state, {address, peer}) {
+      state.peers[address].push(peer)
+    },
     receivePeers (state, {address, peers}) {
       state.peers = {
         ...state.peers,
@@ -193,28 +194,6 @@ export default ({api, events}) => ({
         if (payload.data.peerId === el.data.author) {
           Vue.set(el.data, 'lastSyncAt', payload.data.lastSyncAt)
         }
-      }
-    },
-    receiveLastSeen (state, {address, peers}) {
-      state.peers[address].forEach(el => {
-        peers.forEach((peer) => {
-          if (peer.peerId === el.data.author) {
-            el.data = Object.assign({}, el.data, {
-              lastSeenAt: peer.lastSeenAt,
-              online: peer.online
-            })
-          }
-        })
-      })
-    },
-    updateLastSeen (state, payload) {
-      for (const el in state.peers) {
-        state.peers[el].forEach((peer) => {
-          if (payload.key === peer.data.author) {
-            Vue.set(peer.data, 'lastSeenAt', payload.value.lastSeenAt)
-            Vue.set(peer.data, 'online', payload.value.online)
-          }
-        })
       }
     },
     updateSettings (state, {address, threshold, tolerance}) {

@@ -27,9 +27,9 @@
   <NavList>
     <div v-for="peer in peers" :key="peer.publicKey">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
-      <WifiIcon v-if="peer.data.online" />
+      <WifiIcon v-if="peer.online" />
       <br />
-      <div v-if="!peer.data.online && peer.data.lastSeenAt" class="last-seen">{{ lastSeenString(peer) }}</div>
+      <div v-if="!peer.online && peer.lastSeenAt" class="last-seen">{{ lastSeenString(peer) }}</div>
     </div>
     <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite friend</RouterLink>
   </NavList>
@@ -110,12 +110,17 @@ export default {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
     peers() {
-      let peers = this.$store.getters['spaces/peers'](this.space.address)
-      let me = this.$store.getters['profile/myPublicKey']
-      if (peers) {
-        peers = peers.filter(peer => peer.data.author !== me)
-        return peers
+      const peers = []
+      const me = this.$store.getters['profile/myPublicKey']
+      // fetch all space members (peer/about messages in space hypercores)
+      const spacePeers = this.$store.getters['spaces/peers'](this.space.address)
+      for (const peer of spacePeers) {
+        if (peer.data.author == me) continue
+        // fetch the global peer data, containing network info, for this space member
+        const peerData = this.$store.getters['peers/byPublicKey'](peer.data.author)
+        peers.push({ ...peer, ...peerData })
       }
+      return peers
     },
     info() {
       return this.$store.state.system.info
@@ -125,8 +130,8 @@ export default {
     },
     lastSeenString(peer) {
       return peer => {
-        if (peer.data.lastSeenAt) {
-          const date = new Date(peer.data.lastSeenAt)
+        if (peer.lastSeenAt) {
+          const date = new Date(peer.lastSeenAt)
           const hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
           const minute = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
           const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`
