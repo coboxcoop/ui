@@ -74,11 +74,11 @@ export default ({api, events}) => ({
       await api.patch(`/spaces/${address}/settings`, {threshold, tolerance})
       commit('updateSettings', {address, threshold, tolerance})
     },
-    async create ({dispatch}, name) {
+    async create ({commit,dispatch}, name) {
       const {data, data: {address}} = await api.post('/spaces', {name})
-      dispatch('join', {address, name})
-      await dispatch('fetch')
-      return data
+      await dispatch('join', {address, name})
+      commit('receiveSpace', data)
+      return {address}
     },
     async delete ({dispatch}, {address}) {
       const {data} = await api.delete(`/spaces/${address}`)
@@ -147,6 +147,9 @@ export default ({api, events}) => ({
   mutations: {
     receiveData (state, data) {
       state.data = data
+    },
+    receiveSpace (state, space) {
+      state.data.push(space)
     },
     receiveStat (state, {address, stat}) {
       state.stat = {
