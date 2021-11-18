@@ -7,19 +7,36 @@ export default ({api, events}) => ({
     connections: {},
     mounts: {},
     stat: {},
-    peers: {}
+    peers: {},
+    seeders: {
+      // [spaceId]: {
+      //    [peerId]: {
+      //      lastSyncAt: timestamp
+      //    }
+      // }
+    }
   },
   actions: {
     async subscribe ({commit, dispatch}) {
       events.on('space/last-sync', payload => {
+        // to update last sync, amend the existing payload with the current one
+        // for this space, for this peer
+        // state.seeders[payload.address][payload.peerId] = payload
         commit('updateLastSync', payload)
+        // in the health page, the getter will have spaceId / address
+        // this.space.address
+        // there's a list of peers in the state object for that address
+        // const peers = state.seeders[this.space.address]
+        // for (const peer of peers) {
+        //   store.getters['peers/byPublicKey'](peer.peerId)
+        // }
       })
-      // events.on('peer/about', payload => {
-      //   commit('addPeerToSpace', {
-      //     address: payload.address,
-      //     peer: payload.data
-      //   })
-      // })
+      events.on('peer/about', payload => {
+        commit('updatePeers', {
+          address: payload.address,
+          peer: payload.data
+        })
+      })
     },
     async fetch ({commit}) {
       try {
@@ -155,14 +172,14 @@ export default ({api, events}) => ({
         [address]: stat
       }
     },
-    addPeerToSpace (state, {address, peer}) {
-      state.peers[address].push(peer)
-    },
     receivePeers (state, {address, peers}) {
       state.peers = {
         ...state.peers,
         [address]: peers
       }
+    },
+    updatePeers (state, {address, peer}) {
+      state.peers[address].push(peer)
     },
     connected (state, {address, connected}) {
       state.connections = {
