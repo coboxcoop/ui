@@ -211,6 +211,13 @@ export default {
       let me = this.$store.getters['profile/myPublicKey']
       if (peers) {
         peers = peers.filter(peer => peer.data.author !== me)
+        peers.forEach(peer => {
+          let global = this.$store.getters['peers/byPublicKey'](peer.data.author)
+          peer.data = {
+            ...peer.data,
+            online: global.online
+          }
+        })
         this.sorted = peers.sort((a, b) => a.data.lastSyncAt - b.data.lastSyncAt)
         if (this.sortDirection === 'desc') {
           return this.sorted
