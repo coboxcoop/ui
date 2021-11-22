@@ -25,7 +25,7 @@
   <h2>{{peerCountString}}</h2>
 
   <NavList>
-    <div v-for="peer in peers" :key="peer.publicKey">
+    <div v-for="peer in peers" :key="peer.data.author">
       <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
       <WifiIcon v-if="peer.online" />
       <br />
@@ -114,13 +114,15 @@ export default {
       const me = this.$store.getters['profile/myPublicKey']
       // fetch all space members (peer/about messages in space hypercores)
       const spacePeers = this.$store.getters['spaces/peers'](this.space.address)
-      for (const peer of spacePeers) {
-        if (peer.data.author == me) continue
-        // fetch the global peer data, containing network info, for this space member
-        const peerData = this.$store.getters['peers/byPublicKey'](peer.data.author)
-        peers.push({ ...peer, ...peerData })
+      if (spacePeers) {
+        for (const peer of spacePeers) {
+          if (peer.data.author === me) continue
+          // fetch the global peer data, containing network info, for this space member
+          const peerData = this.$store.getters['peers/byPublicKey'](peer.data.author)
+          peers.push({ ...peer, ...peerData })
+        }
+        return peers
       }
-      return peers
     },
     info() {
       return this.$store.state.system.info
