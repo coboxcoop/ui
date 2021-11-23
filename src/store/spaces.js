@@ -19,17 +19,7 @@ export default ({api, events}) => ({
   actions: {
     async subscribe ({commit, dispatch}) {
       events.on('space/last-sync', payload => {
-        // to update last sync, amend the existing payload with the current one
-        // for this space, for this peer
-        // state.seeders[payload.address][payload.peerId] = payload
         commit('updateLastSync', payload)
-        // in the health page, the getter will have spaceId / address
-        // this.space.address
-        // there's a list of peers in the state object for that address
-        // const peers = state.seeders[this.space.address]
-        // for (const peer of peers) {
-        //   store.getters['peers/byPublicKey'](peer.peerId)
-        // }
       })
       events.on('peer/about', payload => {
         commit('updatePeers', {
@@ -194,23 +184,29 @@ export default ({api, events}) => ({
       }
     },
     receiveLastSync (state, {address, data}) {
-      for (const el of state.peers[address]) {
-        data.forEach((peer) => {
-          if (peer.peerId === el.data.author) {
-            el.data = Object.assign({}, el.data, {
-              lastSyncAt: peer.lastSyncAt
-            })
-            let index = data.indexOf(peer)
-            delete data[index]
+      const spacePeers = state.peers[address]
+      if (data) {
+        for (const el in data) {
+          let seeder = data[el]
+          let namedPeer = spacePeers.find(peer => peer.data.author === seeder.peerId)
+          if (namedPeer) {
+            seeder = {
+              ...seeder,
+              name: namedPeer.data.content.name
+            }
+            data[el] = seeder
           }
-        })
+        }
+      }
+      state.seeders = {
+        ...state.seeders,
+        [address]: data
       }
     },
     updateLastSync (state, payload) {
-      for (const el of state.peers[payload.address]) {
-        if (payload.data.peerId === el.data.author) {
-          Vue.set(el.data, 'lastSyncAt', payload.data.lastSyncAt)
-        }
+      state.seeders[payload.address][payload.data.peerId] = {
+        ...state.seeders[payload.address][payload.data.peerId],
+        lastSyncAt: payload.data.lastSyncAt
       }
     },
     updateSettings (state, {address, threshold, tolerance}) {
@@ -254,6 +250,11 @@ export default ({api, events}) => ({
         return (address in state.peers) && state.peers[address]
       }
     },
+    seeders (state) {
+      return address => {
+        return (address in state.seeders) && state.seeders[address]
+      }
+    },
     peerCount (state, getters, rootState, rootGetters) {
       return address => {
         let peers = getters['peers'](address)
@@ -264,11 +265,6 @@ export default ({api, events}) => ({
         } else return 0
       }
     },
-    lastSyncAt (state) {
-      return address => {
-        return (address in state.lastSyncAt) && state.lastSyncAt[address]
-      }
-    },
     allPeerCount (state, getters) {
       const counts = state.data.map(g => {
         return getters['peerCount'](g.address)
@@ -276,10 +272,14 @@ export default ({api, events}) => ({
 
       return counts.reduce((sum, num) => num + sum, 0)
     },
-    seederCount (state, getters) {
+    seederCount (state, getters, rootState, rootGetters) {
       return address => {
-        // TODO: we need a count of the space's seeders here!
-        return 0
+        let seeders = getters['seeders'](address)
+        const me = rootGetters['profile/myPublicKey']
+        if (seeders) {
+          delete seeders[me]
+          return Object.keys(seeders).length
+        } else return 0
       }
     },
     settings (state) {
