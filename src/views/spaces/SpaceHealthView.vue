@@ -50,11 +50,11 @@
       </div>
     </div>
     <NavList>
-      <div v-for="peer in sortedPeers" :key="peer.data.author">
-          <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
-          <WifiIcon v-if="peer.data.online" />
+      <div v-for="seeder in sortedSeeders" :key="seeder.peerId">
+          <UserIcon :address="seeder.peerId" /> {{seeder.name ? seeder.name : seeder.peerId.slice(0,4)}}
+          <WifiIcon v-if="seeder.online" />
           <br />
-          <div class="last-sync">{{ lastSyncString(peer) }}</div>
+          <div class="last-sync">{{ lastSyncString(seeder) }}</div>
       </div>
       </NavList>
     <br />
@@ -156,11 +156,11 @@ export default {
       const {threshold} = this.$store.getters['spaces/settings'](this.space.address)
       return `${threshold || 0} backup${threshold != 1 ? 's' : ''}`
     },
-    lastSyncString (peer) {
-      return peer => {
-        if (peer.data.lastSyncAt) {
+    lastSyncString (seeder) {
+      return seeder => {
+        if (seeder.lastSyncAt) {
           // Vanilla javascript is DEEPLY upsetting when it comes to rendering a 24 hour clock
-          const date = new Date(peer.data.lastSyncAt)
+          const date = new Date(seeder.lastSyncAt)
           const hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
           const minute = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
           const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`
@@ -172,14 +172,20 @@ export default {
       }
     },
     syncedSeeders () {
-      let peers = this.$store.getters['spaces/peers'](this.space.address)
+      let seeders = this.$store.getters['spaces/seeders'](this.space.address)
       const me = this.$store.getters['profile/myPublicKey']
       const {tolerance} = this.$store.getters['spaces/settings'](this.space.address)
       const limit = Date.now() - (tolerance * 86400000)
-      if (peers) {
-        peers = peers.filter(peer => peer.data.author !== me)
-        peers = peers.filter(peer => peer.data.lastSyncAt > limit)
-        return peers.length
+      let syncdArray = []
+      if (seeders) {
+        delete seeders[me]
+        for (const el in seeders) {
+          let seeder = seeders[el]
+          if (seeder.lastSyncAt > limit) {
+            syncdArray.push(seeder)
+          }
+        }
+        return syncdArray.length
       }
     },
     status () {
@@ -206,25 +212,28 @@ export default {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
 
-    sortedPeers () {
-      let peers = this.$store.getters['spaces/peers'](this.space.address)
+    sortedSeeders () {
+      let seeders = this.$store.getters['spaces/seeders'](this.space.address)
       let me = this.$store.getters['profile/myPublicKey']
-      if (peers) {
-        peers = peers.filter(peer => peer.data.author !== me)
-        peers.forEach(peer => {
-          let global = this.$store.getters['peers/byPublicKey'](peer.data.author)
-          peer.data = {
-            ...peer.data,
+      let sortArray = []
+      if (seeders) {
+        delete seeders[me]
+        for (const el in seeders) {
+          let seeder = seeders[el]
+          let global = this.$store.getters['peers/byPublicKey'](seeder.peerId)
+          seeder = {
+            ...seeder,
             online: global.online
           }
-        })
-        this.sorted = peers.sort((a, b) => a.data.lastSyncAt - b.data.lastSyncAt)
+        sortArray.push(seeder)
+        }
+        this.sorted = sortArray.sort((a, b) => a.lastSyncAt - b.lastSyncAt)
         if (this.sortDirection === 'desc') {
           return this.sorted
         } else return this.sorted.reverse()
       }
       return this.sorted
-    },
+    }
   },
   methods: {
     navigate(to) {
