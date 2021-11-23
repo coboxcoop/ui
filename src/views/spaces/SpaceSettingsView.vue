@@ -20,9 +20,9 @@
         <div class="line">
           <span><input v-model.number="threshold" type="text" placeholder="no." ref="thresholdInput" @focus="editThreshold = true" @change="onSave()"/></span>
           <span class="blind"><img src="@/assets/images/icons/edit.svg" /> {{threshold}} <img src="@/assets/images/icons/edit.svg" /></span>
-          <span class="type">backups</span>
+          <span class="type">{{backupString(this.threshold)}}</span>
         </div>
-        <p class="description">Min. number of backups; each peer or seeder count as one backup</p>
+        <p class="description">Min. number of backups; each peer or seeder count as one backup. You cannot choose a threshold that is higher than the number of seeders seeing your space. You currently have {{ seederString(this.seeders )}}</p>
       </form>
       <br />
       <form class="form" @submit.prevent="onSave">
@@ -30,7 +30,7 @@
         <div class="line">
           <span><input v-model.number="tolerance" type="text" placeholder="no." ref="toleranceInput" @focus="editTolerance = true" @change="onSave()"/></span>
           <span class="blind"><img src="@/assets/images/icons/edit.svg" /> {{tolerance}} <img src="@/assets/images/icons/edit.svg" /></span>
-          <span class="type">days</span>
+          <span class="type">{{daysString(this.tolerance)}}</span>
         </div>
         <p class="description">Max. number of days since last backup</p>
       </form>
@@ -127,7 +127,8 @@ export default {
     editThreshold: false,
     editTolerance: false,
     threshold: '',
-    tolerance: ''
+    tolerance: '',
+    seeders: ''
   }),
   mounted() {
     this.setValues()
@@ -142,6 +143,23 @@ export default {
     info() {
       return this.$store.state.system.info
     },
+    seederString(seeders) {
+      return seeders => {
+        if (seeders) {
+        return `${seeders} seeder${seeders != 1 ? 's.' : '.'}`
+        }
+      }
+    },
+    daysString(tolerance) {
+      return tolerance => {
+        return `day${tolerance != 1 ? 's' : ''}`
+      }
+    },
+    backupString(threshold) {
+      return threshold => {
+        return `backup${threshold != 1 ? 's' : ''}`
+      }
+    }
   },
   methods: {
     navigate(to) {
@@ -153,11 +171,16 @@ export default {
       const values = this.$store.getters['spaces/settings'](this.space.address)
       this.threshold = values.threshold
       this.tolerance = values.tolerance
+      this.seeders = this.$store.getters['spaces/seederCount'](this.space.address)
+
     },
     async onSave() {
       this.editThreshold = false
       this.editTolerance = false
-      if (typeof this.threshold === "number" && typeof this.tolerance === "number") {
+      if (typeof this.threshold === "number"
+          && this.threshold <= this.seeders
+          && typeof this.tolerance === "number"
+          ) {
         await this.$store.dispatch('spaces/changeSettings', {
           address: this.space.address,
           threshold: this.threshold,
