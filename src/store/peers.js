@@ -1,53 +1,40 @@
+import Vue from "vue"
+
 export default ({api, events}) => ({
   namespaced: true,
   state: {
-    data: {
-      // peerId: {
-      //   peerId: string,
-      //   lastSeenAt: timestamp,
-      //   online: boolean
-      // }
-    }
+    peers: {}
   },
   actions: {
-    async subscribe ({commit}) {
-      events.on('peer/connection', payload => {
-        commit('updatePeerLastSeen', payload)
+    async subscribe ({commit, dispatch}) {
+      events.on('peer/connection', peer => {
+        commit('updatePeer', peer)
       })
     },
-    async fetch ({commit}) {
-      try {
-        // returns an array of objects
-        const {data} = await api.get('/peers')
-        commit('storePeerLastSeen', data)
-      } catch (err) {
-        console.error(err)
-      }
+    async fetch ({state, commit}) {
+      // returns an array of objects
+      const {data} = await api.get('/peers')
+      commit('receivePeers', data)
     }
   },
   mutations: {
-    storePeerLastSeen (state, data) {
-      for (let peer of data) {
-        state.data[peer.peerId] = {
-          peerId: peer.peerId,
-          lastSeenAt: peer.lastSeenAt,
-          online: peer.online
-        }
+    receivePeers (state, peers) {
+      state.peers = {
+        ...state.peers,
+        ...peers
       }
     },
-    updatePeerLastSeen (state, payload) {
-      state.data[payload.value.peerId] = {
-        peerId: payload.value.peerId,
-        lastSeenAt: payload.value.lastSeenAt,
-        online: payload.value.online
+    updatePeer (state, peer) {
+      state.peers = {
+        ...state.peers,
+        [peer.peerId]: peer
       }
     }
   },
   getters: {
-    // accesss a peer object by the peer's public key
-    byPublicKey (state, {peerId}) {
-      return peerId => {
-        return (peerId in state.data) && state.data[peerId]
+    byPublicKey (state) {
+      return (peerId) => {
+        return (peerId in state.peers) && state.peers[peerId]
       }
     }
   }

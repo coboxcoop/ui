@@ -1,3 +1,5 @@
+import Vue from "vue"
+
 export default ({api, events}) => ({
   namespaced: true,
   state: {
@@ -5,18 +7,34 @@ export default ({api, events}) => ({
     connections: {},
     mounts: {},
     stat: {},
-    peers: {}
+    peers: {},
+    seeders: {
+      // [spaceId]: {
+      //    [peerId]: {
+      //      lastSyncAt: timestamp
+      //    }
+      // }
+    }
   },
   actions: {
-    async subscribe ({commit}) {
-      console.info('subscribed to space/last-sync')
+    async subscribe ({commit, dispatch}) {
       events.on('space/last-sync', payload => {
         commit('updateLastSync', payload)
       })
+      events.on('peer/about', payload => {
+        commit('updatePeers', {
+          address: payload.address,
+          peer: payload.data
+        })
+      })
     },
-    async fetch ({commit, dispatch}) {
-      const {data} = await api.get('/spaces')
-      commit('receiveData', data)
+    async fetch ({commit}) {
+      try {
+        const {data} = await api.get('/spaces')
+        commit('receiveData', data)
+      } catch (err) {
+        console.error(err)
+      }
     },
     async getAllStats ({state, dispatch}) {
       await Promise.all(state.data.map(({address}) => {
@@ -54,25 +72,31 @@ export default ({api, events}) => ({
       const {data} = await api.get(`/spaces/${address}/last-sync`)
       commit('receiveLastSync', {address, data})
     },
-    // DRAFT function needs testing once view is complete
-    async updateSettings ({commit}, {address, threshold, tolerance}) {
-      await api.put(`/spaces/${address}/settings`, {threshold, tolerance})
+    async changeSettings ({commit}, {address, threshold, tolerance}) {
+      tolerance = tolerance * 86400000
+      await api.patch(`/spaces/${address}/settings`, {threshold, tolerance})
       commit('updateSettings', {address, threshold, tolerance})
     },
-    async create ({dispatch}, name) {
+    async create ({commit, dispatch}, name) {
       const {data, data: {address}} = await api.post('/spaces', {name})
-      dispatch('join', {address, name})
-      await dispatch('fetch')
-      return data
+      await dispatch('join', {address, name})
+      commit('receiveSpace', data)
+      await dispatch('getPeers', address)
+      await dispatch('getStat', {address})
+      return {address}
     },
-    async delete ({}, {address}) {
+    async delete ({dispatch}, {address}) {
       const {data} = await api.delete(`/spaces/${address}`)
       await dispatch('fetch')
       return data
     },
-    async acceptInvite ({dispatch}, code) {
-      const {data} = await api.get('/spaces/invites/accept', {params: {code}})
-      await dispatch('fetch')
+    async acceptInvite ({commit, dispatch}, code) {
+      const {data, data: {address, name}} = await api.get('/spaces/invites/accept', {params: {code}})
+      await dispatch('join', {address, name})
+      commit('receiveSpace', data)
+      await dispatch('getPeers', address)
+      await dispatch('getStat', {address})
+      return {address}
     },
     async createInvite ({}, {address, publicKey}) {
       const {data} = await api.post(`/spaces/${address}/invites`, {address, publicKey})
@@ -133,6 +157,9 @@ export default ({api, events}) => ({
     receiveData (state, data) {
       state.data = data
     },
+    receiveSpace (state, space) {
+      state.data.push(space)
+    },
     receiveStat (state, {address, stat}) {
       state.stat = {
         ...state.stat,
@@ -144,6 +171,9 @@ export default ({api, events}) => ({
         ...state.peers,
         [address]: peers
       }
+    },
+    updatePeers (state, {address, peer}) {
+      state.peers[peer.author] = peer
     },
     connected (state, {address, connected}) {
       state.connections = {
@@ -158,29 +188,36 @@ export default ({api, events}) => ({
       }
     },
     receiveLastSync (state, {address, data}) {
-      for (const el of state.peers[address]) {
-        data.forEach((peer) => {
-          if (peer.peerId === el.data.author) {
-            el.data.lastSyncAt = peer.lastSyncAt
-            let index = data.indexOf(peer)
-            delete data[index]
+      const spacePeers = state.peers[address]
+      if (data) {
+        for (const el in data) {
+          let seeder = data[el]
+          let namedPeer = spacePeers[seeder.peerId] || {}
+          if (namedPeer) {
+            seeder = {
+              ...seeder,
+              name: namedPeer.content.name
+            }
+            data[el] = seeder
           }
-        })
+        }
+      }
+      state.seeders = {
+        ...state.seeders,
+        [address]: data
       }
     },
     updateLastSync (state, payload) {
-      for (const el of state.peers[payload.address]) {
-        if (payload.data.peerId === el.data.author) {
-          el.data.lastSyncAt = payload.data.lastSyncAt
-        }
+      state.seeders[payload.address][payload.data.peerId] = {
+        ...state.seeders[payload.address][payload.data.peerId],
+        lastSyncAt: payload.data.lastSyncAt
       }
     },
-    // DRAFT function needs testing once view is complete
     updateSettings (state, {address, threshold, tolerance}) {
-      for (const el of state.data) {
+      for (let el of state.data) {
         if (el.address === address) {
-          el.threshold = threshold
-          el.tolerance = tolerance
+          Vue.set(el, 'threshold', threshold)
+          Vue.set(el, 'tolerance', tolerance)
         }
       }
     }
@@ -214,18 +251,19 @@ export default ({api, events}) => ({
     },
     peers (state) {
       return address => {
-        return (address in state.peers) && state.peers[address]
+        return state.peers[address] || {}
       }
     },
-    peerCount (state, getters) {
+    seeders (state) {
+      return address => {
+        return (address in state.seeders) && state.seeders[address]
+      }
+    },
+    peerCount (state, getters, rootState, rootGetters) {
       return address => {
         const peers = getters['peers'](address)
-        return peers ? peers.length : 0
-      }
-    },
-    lastSyncAt (state) {
-      return address => {
-        return (address in state.lastSyncAt) && state.lastSyncAt[address]
+        const me = rootGetters['profile/myPublicKey']
+        return Object.keys(peers).filter(peerId => peerId !== me).length
       }
     },
     allPeerCount (state, getters) {
@@ -235,22 +273,24 @@ export default ({api, events}) => ({
 
       return counts.reduce((sum, num) => num + sum, 0)
     },
-    seederCount (state, getters) {
+    seederCount (state, getters, rootState, rootGetters) {
       return address => {
-        // TODO: we need a count of the space's seeders here!
-        return 0
+        let seeders = getters['seeders'](address)
+        const me = rootGetters['profile/myPublicKey']
+        if (seeders) {
+          delete seeders[me]
+          return Object.keys(seeders).length
+        } else return 0
       }
     },
-    threshold (state) {
+    settings (state) {
       return address => {
         const space = state.data.find(g => g.address === address)
-        return space.threshold
-      }
-    },
-    tolerance (state) {
-      return address => {
-        const space = state.data.find(g => g.address === address)
-        return space.tolerance
+        let values = {
+          threshold: space.threshold,
+          tolerance: space.tolerance / 86400000
+        }
+        return values
       }
     }
   }

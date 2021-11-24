@@ -66,10 +66,9 @@ export default {
     },
     async onSubmit() {
       try {
-        await this.$store.dispatch('spaces/acceptInvite', this.inviteCode)
+        const {address} = await this.$store.dispatch('spaces/acceptInvite', this.inviteCode)
         this.inviteCode = ''
-        await this.$router.replace({name: 'spaces'})
-        window.location.reload()
+        await this.$router.push({name: 'space', params: {address}})
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }

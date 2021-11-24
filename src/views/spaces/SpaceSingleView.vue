@@ -70,11 +70,11 @@
   <h2>{{peerCountString}}</h2>
 
   <NavList>
-    <div v-for="peer in peers" :key="peer.publicKey">
-      <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
-      <WifiIcon v-if="peer.data.online" />
+    <div v-for="peer in peers" :key="peer.author">
+      <UserIcon :address="peer.author" /> {{peer.content.name}}
+      <WifiIcon v-if="peer.online" />
       <br />
-      <div v-if="!peer.data.online && peer.data.lastSeenAt" class="last-seen">{{ lastSeenString(peer) }}</div>
+      <div v-if="!peer.online && peer.lastSeenAt" class="last-seen">{{ lastSeenString(peer) }}</div>
     </div>
   </NavList>
 
@@ -188,15 +188,17 @@ export default {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
     peers() {
-      let peers = this.$store.getters['spaces/peers'](this.space.address)
-      if (peers) {
-        for (let peer of peers) {
-          let peerInfo = this.$store.getters['peers/byPublicKey'](peer.data.author)
-          peer.data.lastSeenAt = peerInfo.lastSeenAt
-          peer.data.online = peerInfo.online
-        }
+      const peers = []
+      const me = this.$store.getters['profile/myPublicKey']
+      // fetch all space members (peer/about messages in space hypercores)
+      const spacePeers = this.$store.getters['spaces/peers'](this.space.address) || {}
+      for (const peerId of Object.keys(spacePeers)) {
+        if (peerId === me) continue
+        const peer = spacePeers[peerId]
+        // fetch the global peer data, containing network info, for this space member
+        const peerData = this.$store.getters['peers/byPublicKey'](peerId)
+        peers.push({ ...peer, ...peerData })
       }
-      // TODO: some peers in the peers array do not exist in our peer's lastSeen state object (see peer's store) - in this case their lastSeenAt & online properties will have a value of 'undefined' => why would they not exist?
       return peers
     },
     info() {
@@ -207,13 +209,17 @@ export default {
     },
     lastSeenString(peer) {
       return peer => {
-        const date = new Date(peer.data.lastSeenAt)
-        const hour = date.getHours() > 10 ? date.getHours() : `0${date.getHours()}`
-        const minute = date.getMinutes() > 10 ? date.getMinutes() : `0${date.getMinutes()}`
-        const day = date.getDay() > 10 ? date.getDay() : `0${date.getDay()}`
-        const month = date.getMonth() > 10 ? date.getMonth() : `0${date.getMonth()}`
-        const year = date.getFullYear().toString().slice(2, 4)
-        return `last seen at ${hour}:${minute} on ${day}/${month}/${year}`
+        if (peer.lastSeenAt) {
+          const date = new Date(peer.lastSeenAt)
+          const hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
+          const minute = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
+          const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`
+          const month = date.getMonth()+1
+          const monthzero = month >= 10 ? month : `0${month}`
+          const year = date.getFullYear().toString().slice(2, 4)
+          return `last seen at ${hour}:${minute} on ${day}/${month}/${year}`
+        }
+        else { return `never seen` }
       }
     }
   },

@@ -20,11 +20,11 @@
     <div class="summary">
       <div class="section">
         <div class="settings">
-          <small>Status: {{ space.status || 'Unknown' }}</small>
+          <small>Status: {{ status }}</small>
           <small>Threshold: {{ thresholdString }}</small>
           <small>Tolerance: {{ toleranceString }}</small>
         </div>
-        <RouterLink :to="{name: 'health-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'health-settings'})" class="health-settings"><HealthIcon color="healthColour" /></RouterLink>
+        <RouterLink :to="{name: 'space-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'space-settings'})"><HealthIcon :colour="colour" /></RouterLink>
       </div>
       <div class="section">
         <div style="margin: 2rem 0 1rem 2rem;">
@@ -50,15 +50,12 @@
       </div>
     </div>
     <NavList>
-      <div v-for="peer in sortedPeers" :key="peer.publicKey">
-          <UserIcon :address="peer.data.author" /> {{peer.data.content.name}}
-          <WifiIcon v-if="peer.data.online" />
+      <div v-for="seeder in sortedSeeders" :key="seeder.peerId">
+          <UserIcon :address="seeder.peerId" /> {{seeder.name ? seeder.name : seeder.peerId.slice(0,4)}}
+          <WifiIcon v-if="seeder.online" />
           <br />
-          <!-- TODO: figure out why this doesn't show up until chevron click -->
-          <div class="last-sync">{{ lastSyncString(peer) }}</div>
+          <div class="last-sync">{{ lastSyncString(seeder) }}</div>
       </div>
-      <RouterLink :to="{name: 'health-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'health-settings'})" class="health-settings">Edit health settings</RouterLink>
-
       </NavList>
     <br />
   </Screen>
@@ -138,7 +135,8 @@ export default {
   data () {
     return {
       sortDirection: 'desc',
-      sorted: []
+      sorted: [],
+      colour: 'white'
     }
   },
   computed: {
@@ -147,47 +145,65 @@ export default {
       return count
     },
     seederCountString () {
-      // what is the difference between a space's peers & seeders?
       const count = this.$store.getters['spaces/peerCount'](this.space.address)
       return `${count} seeder${count != 1 ? 's' : ''}`
     },
     toleranceString() {
-      // const space = this.space
-      const tolerance = this.$store.getters['spaces/tolerance'](this.space.address)
+      const {tolerance} = this.$store.getters['spaces/settings'](this.space.address)
       return `${tolerance || 0} day${tolerance != 1 ? 's' : ''}`
     },
     thresholdString () {
-      // const space = this.space
-      const threshold = this.$store.getters['spaces/threshold'](this.space.address)
+      const {threshold} = this.$store.getters['spaces/settings'](this.space.address)
       return `${threshold || 0} backup${threshold != 1 ? 's' : ''}`
     },
-    lastSyncString (peer) {
-      return peer => {
-          if (peer.data.lastSyncAt) {
+    lastSyncString (seeder) {
+      return seeder => {
+        if (seeder.lastSyncAt) {
           // Vanilla javascript is DEEPLY upsetting when it comes to rendering a 24 hour clock
-          const date = new Date(peer.data.lastSyncAt)
+          const date = new Date(seeder.lastSyncAt)
           const hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
           const minute = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
           const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`
           const month = date.getMonth()+1
           const monthzero = month >= 10 ? month : `0${month}`
           const year = date.getFullYear().toString().slice(2, 4)
-          console.log()
           return `last sync'd at ${hour}:${minute} on ${day}/${monthzero}/${year}`
         }
       }
     },
     syncedSeeders () {
-      const peers = this.$store.getters['spaces/peers'](this.space.address) || []
-      const tolerance = this.$store.getters['spaces/tolerance'](this.space.address)
+      let seeders = this.$store.getters['spaces/seeders'](this.space.address)
+      const me = this.$store.getters['profile/myPublicKey']
+      const {tolerance} = this.$store.getters['spaces/settings'](this.space.address)
       const limit = Date.now() - (tolerance * 86400000)
-      let count = 0
-      for (const peer of peers) {
-        if (peer.data.lastSyncAt > limit) {
-          count ++
+      let syncdArray = []
+      if (seeders) {
+        delete seeders[me]
+        for (const el in seeders) {
+          let seeder = seeders[el]
+          if (seeder.lastSyncAt > limit) {
+            syncdArray.push(seeder)
           }
+        }
+        return syncdArray.length
       }
-      return count
+    },
+    status () {
+      let syncd = this.syncedSeeders
+      let seeders = this.seederCount
+      if (syncd >= seeders) { 
+        this.colour = 'green'
+        return "Healthy"
+      } else if (syncd >= seeders/2) { 
+        this.colour = 'amber'
+        return "OK"
+      } else if (syncd < seeders/2) { 
+        this.colour = 'red'
+        return "At risk"
+      } else { 
+        this.colour = 'white'
+        return 'Unknown'
+      }
     },
     space () {
       return this.$store.getters['spaces/single'](this.$route.params.address)
@@ -195,10 +211,26 @@ export default {
     stat () {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
-    sortedPeers () {
-      const peers = this.$store.getters['spaces/peers'](this.space.address) || []
-      // TODO: remove 'me' from this list OR set me.data.lastSyncAt to Date.now()
-      this.sorted = peers.sort((a, b) => a.data.lastSyncAt - b.data.lastSyncAt)
+    sortedSeeders () {
+      let spacePeers = this.$store.getters['spaces/peers'](this.space.address)
+      let seeders = this.$store.getters['spaces/seeders'](this.space.address)
+      let me = this.$store.getters['profile/myPublicKey']
+      let sortArray = []
+      if (seeders) {
+        for (const el in seeders) {
+          let seeder = seeders[el]
+          let lastSync = this.$store.getters['peers/byPublicKey'](seeder.peerId)
+          seeder = {
+            ...seeder,
+            online: lastSync.online
+          }
+        sortArray.push(seeder)
+        }
+        this.sorted = sortArray.sort((a, b) => a.lastSyncAt - b.lastSyncAt)
+        if (this.sortDirection === 'desc') {
+          return this.sorted
+        } else return this.sorted.reverse()
+      }
       return this.sorted
     }
   },
@@ -209,7 +241,6 @@ export default {
       }
     },
     sort () {
-      this.sorted = this.sorted.reverse()
       this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc'
     }
   }

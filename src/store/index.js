@@ -5,9 +5,9 @@ import {api, events} from '@/api'
 
 import backup from '@/store/backup'
 import error from '@/store/error'
-import peers from '@/store/peers'
 import profile from '@/store/profile'
 import seeders from '@/store/seeders'
+import peers from '@/store/peers'
 import settings from '@/store/settings'
 import spaces from '@/store/spaces'
 import system from '@/store/system'
@@ -48,14 +48,17 @@ export default new Vuex.Store({
     },
     async fetchAllData ({dispatch, state}) {
       await dispatch('peers/fetch')
+
       await dispatch('spaces/fetch')
       await dispatch('spaces/getAllPeers')
       await dispatch('spaces/getAllStats')
       await dispatch('spaces/getAllMounts')
       await dispatch('spaces/getLastSync')
+
       await dispatch('seeders/fetch')
       await dispatch('seeders/getAllPeers')
       await dispatch('seeders/getAllReplicates')
+
       await dispatch('peers/subscribe')
       await dispatch('spaces/subscribe')
 
