@@ -9,17 +9,62 @@
     </div>
   </template>
 
-  <NavList>
-    <div class="switch">
-      <label>Mount Folder</label>
-      <ToggleSwitch @input="toggleMount" :value="mounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
-    </div>
-    <a href="#" @click.prevent="openMount" v-shortkey="['ctrl', 'o']" @shortkey="openMount">Open folder</a>
-    <RouterLink :to="{name: 'space-health'}" v-shortkey="['ctrl', 'h']" @shortkey.native="navigate({name: 'space-health'})">Health</RouterLink>
-    <RouterLink :to="{name: 'space-settings'}" v-shortkey="['ctrl', 't']" @shortkey.native="navigate({name: 'space-settings'})">Settings</RouterLink>
-    <RouterLink :to="{name: 'space-delete', params: {address: $route.params.address}}" v-shortkey="['ctrl', 'd']" @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">Delete</RouterLink>
-  </NavList>
-  
+  <div class="address">
+    <small>Folder address</small>
+    <CopyKey :value="space.address" />
+  </div>
+
+  <NavTable>
+    <template v-slot:left>
+      <a v-if="mounted" class="nav-item" href="#" @click.prevent="openMount" v-shortkey="['ctrl', 'o']" @shortkey="openMount">
+        <label>Open</label>
+        <FolderIcon />
+      </a>
+      <div v-else class="nav-item">
+        <label style="text-decoration: line-through">Open</label>
+        <FolderIcon />
+      </div>
+      <RouterLink
+        class="nav-item"
+        :to="{name: 'space-health'}"
+        v-shortkey="['ctrl', 'h']"
+        @shortkey.native="navigate({name: 'space-health'})">
+        <label>Health</label>
+        <img src="@/assets/images/icons/health-heart-small.png" alt="">
+      </RouterLink>
+      <RouterLink
+        class="nav-item"
+        :to="{name: 'space-invite'}"
+        v-shortkey="['ctrl', 'i']"
+        @shortkey.native="navigate({name: 'space-invite'})">
+        <label>Invite</label>
+        <InviteIcon />
+      </RouterLink>
+    </template>
+    <template v-slot:right>
+      <div class="nav-item switch">
+        <label>Mount</label>
+        <ToggleSwitch @input="toggleMount" :value="mounted" v-shortkey="['ctrl', 'm']" @shortkey.native="toggleMount" />
+      </div>
+      <RouterLink
+        class="nav-item"
+        :to="{name: 'space-delete', params: {address: $route.params.address}}"
+        v-shortkey="['ctrl', 'd']" 
+        @shortkey.native="navigate({name: 'space-delete', params: {address: $route.params.address}})">
+        <label>Delete</label>
+        <DeleteIcon />
+      </RouterLink>
+      <RouterLink
+        class="nav-item"
+        :to="{name: 'health-settings'}"
+        v-shortkey="['ctrl', 's']"
+        @shortkey.native="navigate({name: 'health-settings'})">
+        <label>Settings</label>
+        <SettingsIcon />
+      </RouterLink>
+    </template>
+  </NavTable>
+
   <div style="height: 1.6rem" />
 
   <h2>{{peerCountString}}</h2>
@@ -31,7 +76,6 @@
       <br />
       <div v-if="!peer.online && peer.lastSeenAt" class="last-seen">{{ lastSeenString(peer) }}</div>
     </div>
-    <RouterLink :to="{name: 'space-invite'}" v-shortkey="['ctrl', 'i']" @shortkey.native="navigate({name: 'space-invite'})">Invite friend</RouterLink>
   </NavList>
 
   <br />
@@ -62,6 +106,30 @@
     }
   }
 }
+.nav-item {
+  display: flex;
+  text-decoration: none;
+  padding: 0.5rem 1rem 0.5rem 0;
+  justify-content: space-between;
+  cursor: pointer;
+  label {
+    cursor: pointer;
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--fg);
+  }
+  svg {
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  img {
+    max-height: 24px;
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+}
 .last-seen {
   display: block;
   font-size: 1.6rem;
@@ -78,10 +146,15 @@
 <script>
 import Screen       from '@/components/Screen.vue'
 import NavList      from '@/components/NavList.vue'
+import NavTable     from '@/components/NavTable.vue'
 import UserIcon     from '@/components/UserIcon.vue'
 import CopyKey      from '@/components/CopyKey.vue'
 import ToggleSwitch from '@/components/ToggleSwitch.vue'
 import WifiIcon     from '@/components/WifiIcon.vue'
+import FolderIcon   from '@/components/FolderIcon.vue'
+import DeleteIcon   from '@/components/DeleteIcon.vue'
+import InviteIcon   from '@/components/InviteIcon.vue'
+import SettingsIcon from '@/components/SettingsIcon.vue'
 import {api}        from '@/api'
 
 export default {
@@ -89,9 +162,14 @@ export default {
     UserIcon,
     Screen,
     NavList,
+    NavTable,
     CopyKey,
     ToggleSwitch,
-    WifiIcon
+    WifiIcon,
+    FolderIcon,
+    DeleteIcon,
+    InviteIcon,
+    SettingsIcon
   },
   data: () => ({
     publicKey: '',
