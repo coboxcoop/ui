@@ -83,6 +83,7 @@ export default ({api, events}) => ({
       commit('receiveSpace', data)
       await dispatch('getPeers', address)
       await dispatch('getStat', {address})
+      await dispatch('peersLastSync', address)
       return {address}
     },
     async delete ({dispatch}, {address}) {
@@ -159,6 +160,7 @@ export default ({api, events}) => ({
     },
     receiveSpace (state, space) {
       state.data.push(space)
+      state.seeders[space.address] = {}
     },
     receiveStat (state, {address, stat}) {
       state.stat = {
@@ -173,7 +175,10 @@ export default ({api, events}) => ({
       }
     },
     updatePeers (state, {address, peer}) {
-      state.peers[peer.author] = peer
+      state.peers[address] = {
+        ...(state.peers[address] || {}),
+        [peer.author]: peer
+      }
     },
     connected (state, {address, connected}) {
       state.connections = {
@@ -208,9 +213,13 @@ export default ({api, events}) => ({
       }
     },
     updateLastSync (state, payload) {
-      state.seeders[payload.address][payload.data.peerId] = {
-        ...state.seeders[payload.address][payload.data.peerId],
-        lastSyncAt: payload.data.lastSyncAt
+      const spacePeers = state.peers[payload.address]
+      state.seeders[payload.address] = {
+        ...(state.seeders[payload.address] || {}),
+        [payload.data.peerId]: {
+          ...payload.data,
+          name: spacePeers[payload.data.peerId].name
+        }
       }
     },
     updateSettings (state, {address, threshold, tolerance}) {
