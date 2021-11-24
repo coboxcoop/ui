@@ -56,9 +56,9 @@
       </RouterLink>
       <RouterLink
         class="nav-item"
-        :to="{name: 'health-settings'}"
+        :to="{name: 'space-settings'}"
         v-shortkey="['ctrl', 's']"
-        @shortkey.native="navigate({name: 'health-settings'})">
+        @shortkey.native="navigate({name: 'space-settings'})">
         <label>Settings</label>
         <SettingsIcon />
       </RouterLink>
