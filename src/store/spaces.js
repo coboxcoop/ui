@@ -77,7 +77,7 @@ export default ({api, events}) => ({
       await api.patch(`/spaces/${address}/settings`, {threshold, tolerance})
       commit('updateSettings', {address, threshold, tolerance})
     },
-    async create ({commit,dispatch}, name) {
+    async create ({commit, dispatch}, name) {
       const {data, data: {address}} = await api.post('/spaces', {name})
       await dispatch('join', {address, name})
       commit('receiveSpace', data)
@@ -90,9 +90,13 @@ export default ({api, events}) => ({
       await dispatch('fetch')
       return data
     },
-    async acceptInvite ({dispatch}, code) {
-      const {data} = await api.get('/spaces/invites/accept', {params: {code}})
-      await dispatch('fetch')
+    async acceptInvite ({commit, dispatch}, code) {
+      const {data, data: {address, name}} = await api.get('/spaces/invites/accept', {params: {code}})
+      await dispatch('join', {address, name})
+      commit('receiveSpace', data)
+      await dispatch('getPeers', address)
+      await dispatch('getStat', {address})
+      return {address}
     },
     async createInvite ({}, {address, publicKey}) {
       const {data} = await api.post(`/spaces/${address}/invites`, {address, publicKey})
@@ -169,7 +173,7 @@ export default ({api, events}) => ({
       }
     },
     updatePeers (state, {address, peer}) {
-      state.peers[address].push(peer)
+      state.peers[peer.author] = peer
     },
     connected (state, {address, connected}) {
       state.connections = {
@@ -188,11 +192,11 @@ export default ({api, events}) => ({
       if (data) {
         for (const el in data) {
           let seeder = data[el]
-          let namedPeer = spacePeers.find(peer => peer.data.author === seeder.peerId)
+          let namedPeer = spacePeers[seeder.peerId] || {}
           if (namedPeer) {
             seeder = {
               ...seeder,
-              name: namedPeer.data.content.name
+              name: namedPeer.content.name
             }
             data[el] = seeder
           }
@@ -247,7 +251,7 @@ export default ({api, events}) => ({
     },
     peers (state) {
       return address => {
-        return (address in state.peers) && state.peers[address]
+        return state.peers[address] || {}
       }
     },
     seeders (state) {
@@ -257,12 +261,9 @@ export default ({api, events}) => ({
     },
     peerCount (state, getters, rootState, rootGetters) {
       return address => {
-        let peers = getters['peers'](address)
+        const peers = getters['peers'](address)
         const me = rootGetters['profile/myPublicKey']
-        if (peers) {
-          peers = peers.filter(peer => peer.data.author !== me)
-          return peers.length
-        } else return 0
+        return Object.keys(peers).filter(peerId => peerId !== me).length
       }
     },
     allPeerCount (state, getters) {

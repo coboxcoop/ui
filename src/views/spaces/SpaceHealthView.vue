@@ -211,19 +211,18 @@ export default {
     stat () {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
-
     sortedSeeders () {
+      let spacePeers = this.$store.getters['spaces/peers'](this.space.address)
       let seeders = this.$store.getters['spaces/seeders'](this.space.address)
       let me = this.$store.getters['profile/myPublicKey']
       let sortArray = []
       if (seeders) {
-        delete seeders[me]
         for (const el in seeders) {
           let seeder = seeders[el]
-          let global = this.$store.getters['peers/byPublicKey'](seeder.peerId)
+          let lastSync = this.$store.getters['peers/byPublicKey'](seeder.peerId)
           seeder = {
             ...seeder,
-            online: global.online
+            online: lastSync.online
           }
         sortArray.push(seeder)
         }
