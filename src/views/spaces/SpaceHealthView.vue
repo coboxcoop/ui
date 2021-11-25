@@ -178,9 +178,9 @@ export default {
       const limit = Date.now() - (tolerance * 86400000)
       let syncdArray = []
       if (seeders) {
-        delete seeders[me]
         for (const el in seeders) {
           let seeder = seeders[el]
+          if (seeder.peerId == me) continue
           if (seeder.lastSyncAt > limit) {
             syncdArray.push(seeder)
           }
@@ -191,7 +191,10 @@ export default {
     status () {
       let syncd = this.syncedSeeders
       let seeders = this.seederCount
-      if (syncd >= seeders) { 
+      if (seeders < 1) {
+        this.colour = 'red'
+        return "At risk"
+      } else if (syncd >= seeders) {
         this.colour = 'green'
         return "Healthy"
       } else if (syncd >= seeders/2) { 
@@ -219,12 +222,13 @@ export default {
       if (seeders) {
         for (const el in seeders) {
           let seeder = seeders[el]
+          if (seeder.peerId == me) continue
           let lastSync = this.$store.getters['peers/byPublicKey'](seeder.peerId)
           seeder = {
             ...seeder,
             online: lastSync.online
           }
-        sortArray.push(seeder)
+          sortArray.push(seeder)
         }
         this.sorted = sortArray.sort((a, b) => a.lastSyncAt - b.lastSyncAt)
         if (this.sortDirection === 'desc') {
