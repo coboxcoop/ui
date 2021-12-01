@@ -1,16 +1,7 @@
 <template>
   <div class="health-icon">
-    <div v-if="colour === 'green'">
-      <img style="margin: 1rem 1rem 0 0; height: 6rem;" src="@/assets/images/icons/health-green.png" alt="green cobox heart icon">
-    </div>
-    <div v-else-if="colour === 'amber'">
-      <img style="margin: 1rem 1rem 0 0; height: 6rem;" src="@/assets/images/icons/health-amber.png" alt="amber cobox heart icon">
-    </div>
-    <div v-else-if="colour === 'red'">
-      <img style="margin: 1rem 1rem 0 0; height: 6rem;" src="@/assets/images/icons/health-red.png" alt="red cobox heart icon">
-    </div>
-    <div v-else-if="colour === 'white'">
-      <img style="margin: 1rem 1rem 0 0; height: 6rem;" src="@/assets/images/icons/health-white.png" alt="white cobox heart icon">
+    <div v-if="validColour">
+      <img style="margin: 1rem 1rem 0 0; height: 6rem;" :src="require(`@/assets/images/icons/health-${this.colour}.png`)" alt="cobox heart icon">
     </div>
   </div>
 </template>
@@ -23,6 +14,11 @@ export default {
       default: 'white'
     }
   },
+  methods: {
+    validColour () {
+      return ['green', 'red', 'amber', 'white'].includes(this.colour)
+    }
+  }
 }
 </script>
 
