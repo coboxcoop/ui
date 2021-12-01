@@ -8,13 +8,7 @@ export default ({api, events}) => ({
     mounts: {},
     stat: {},
     peers: {},
-    seeders: {
-      // [spaceId]: {
-      //    [peerId]: {
-      //      lastSyncAt: timestamp
-      //    }
-      // }
-    }
+    seederPeers: {}
   },
   actions: {
     async subscribe ({commit, dispatch}) {
@@ -163,7 +157,7 @@ export default ({api, events}) => ({
     },
     receiveSpace (state, space) {
       state.data.push(space)
-      state.seeders[space.address] = {}
+      state.seederPeers[space.address] = {}
     },
     receiveStat (state, {address, stat}) {
       state.stat = {
@@ -177,10 +171,10 @@ export default ({api, events}) => ({
         [address]: peers
       }
     },
-    // NB. the seeders object is provided with the peer's name & peerId here, as when a peer first joins
+    // NB. the seederPeers object is provided with the peer's name & peerId here, as when a peer first joins
     // a space, space/last-sync msgs fire through the websocket before a peer/about message has been
     // received. It is therefore not possible to store the seeder's info & name yet. As peer/about msgs are
-    // relatively rare, they can be used to update the seeders object, and then last-sync data manually
+    // relatively rare, they can be used to update the seederPeers object, and then last-sync data manually
     // fetched through an api call to ensure all the health-view data is populated. This trade-off allows
     // users to view full data on the space health view without needing to first do some manual action
     // (such as adding files to the space) that triggers more space/last-sync msgs to arrive. There
@@ -191,8 +185,8 @@ export default ({api, events}) => ({
         ...(state.peers[address] || {}),
         [peer.author]: peer
       }
-      state.seeders[address] = {
-        ...(state.seeders[address] || {}),
+      state.seederPeers[address] = {
+        ...(state.seederPeers[address] || {}),
         [peer.author]: {
           name: peer.content.name,
           peerId: peer.author
@@ -226,16 +220,16 @@ export default ({api, events}) => ({
           }
         }
       }
-      state.seeders = {
-        ...state.seeders,
+      state.seederPeers = {
+        ...state.seederPeers,
         [address]: data
       }
     },
     updateLastSync (state, payload) {
       const spacePeers = state.peers[payload.address]
       if (spacePeers[payload.data.peerId]) {
-        state.seeders[payload.address] = {
-          ...(state.seeders[payload.address] || {}),
+        state.seederPeers[payload.address] = {
+          ...(state.seederPeers[payload.address] || {}),
           [payload.data.peerId]: {
             ...payload.data,
             name: spacePeers[payload.data.peerId].content.name
@@ -284,9 +278,9 @@ export default ({api, events}) => ({
         return state.peers[address] || {}
       }
     },
-    seeders (state) {
+    seederPeers (state) {
       return address => {
-        return (address in state.seeders) && state.seeders[address]
+        return (address in state.seederPeers) && state.seederPeers[address]
       }
     },
     peerCount (state, getters, rootState, rootGetters) {
@@ -305,10 +299,10 @@ export default ({api, events}) => ({
     },
     seederCount (state, getters, rootState, rootGetters) {
       return address => {
-        const seeders = getters['seeders'](address)
+        const seederPeers = getters['seederPeers'](address)
         const me = rootGetters['profile/myPublicKey']
-        if (seeders) {
-          return Object.keys(seeders).filter(peerId => peerId !== me).length
+        if (seederPeers) {
+          return Object.keys(seederPeers).filter(peerId => peerId !== me).length
         } else return 0
       }
     },
