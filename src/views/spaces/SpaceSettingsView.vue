@@ -168,9 +168,8 @@ export default {
       }
     },
     setValues () {
-      const values = this.$store.getters['spaces/settings'](this.space.address)
-      this.threshold = values.threshold
-      this.tolerance = values.tolerance
+      this.threshold = this.space.threshold
+      this.tolerance = this.space.tolerance / 86400000
       this.seeders = this.$store.getters['spaces/seederCount'](this.space.address)
 
     },
