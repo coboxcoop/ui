@@ -29,8 +29,8 @@
       <div class="section">
         <div style="margin: 2rem 0 1rem 2rem;">
           <Fraction
-            v-bind:numerator="syncedSeeders"
-            v-bind:denominator="seederCount" />
+            v-bind:numerator="syncedSeederPeers"
+            v-bind:denominator="seederPeerCount" />
         </div>
         <div style="margin: 2rem 5rem 0 0;">
           <p style="font-size: 12pt">
@@ -42,19 +42,19 @@
     </div>
 
     <div style="display: flex; justify-content: space-between">
-      <h2>{{seederCountString}}</h2>
+      <h2>{{seederPeerCountString}}</h2>
       <div @click="sort" style="margin-bottom: -3rem;">
         <span class="sync-order">order by sync</span>
-        <ChevronUpIcon v-if="this.sortDirection==='asc'"/>
-        <ChevronDownIcon v-if="this.sortDirection==='desc'"/>
+        <ChevronUpIcon v-if="this.sortDirection===1"/>
+        <ChevronDownIcon v-if="this.sortDirection===-1"/>
       </div>
     </div>
     <NavList>
-      <div v-for="seeder in sortedSeeders" :key="seeder.peerId">
-          <UserIcon :address="seeder.peerId" /> {{seeder.name ? seeder.name : seeder.peerId.slice(0,4)}}
-          <WifiIcon v-if="seeder.online" />
+      <div v-for="seederPeer in sortedSeederPeers" :key="seederPeer.peerId">
+          <UserIcon :address="seederPeer.peerId" /> {{seederPeer.name ? seederPeer.name : seederPeer.peerId.slice(0,4)}}
+          <WifiIcon v-if="seederPeer.online" />
           <br />
-          <div class="last-sync">{{ lastSyncString(seeder) }}</div>
+          <div class="last-sync">{{ lastSyncString(seederPeer) }}</div>
       </div>
       </NavList>
     <br />
@@ -135,18 +135,18 @@ export default {
   },
   data () {
     return {
-      sortDirection: 'desc',
+      sortDirection: 1,
       sorted: [],
       colour: 'white'
     }
   },
   computed: {
-    seederCount () {
-      const count = this.$store.getters['spaces/peerCount'](this.space.address)
+    seederPeerCount () {
+      const count = this.$store.getters['spaces/seederPeerCount'](this.space.address)
       return count
     },
-    seederCountString () {
-      const count = this.$store.getters['spaces/peerCount'](this.space.address)
+    seederPeerCountString () {
+      const count = this.$store.getters['spaces/seederPeerCount'](this.space.address)
       return `${count} seeder${count != 1 ? 's' : ''}`
     },
     toleranceString() {
@@ -157,45 +157,46 @@ export default {
       const {threshold} = this.$store.getters['spaces/settings'](this.space.address)
       return `${threshold || 0} backup${threshold != 1 ? 's' : ''}`
     },
-    lastSyncString (seeder) {
-      return seeder => {
-        if (seeder.lastSyncAt) {
-          const timestamp = formatTimestamp(seeder.lastSyncAt)
+    lastSyncString (seederPeer) {
+      return seederPeer => {
+        if (seederPeer.lastSyncAt) {
+          const timestamp = formatTimestamp(seederPeer.lastSyncAt)
           return `last sync'd at ${timestamp}`
         }
         else return `never sync'd`
       }
     },
-    syncedSeeders () {
-      let seeders = this.$store.getters['spaces/seeders'](this.space.address)
+    syncedSeederPeers () {
+      let seederPeers = this.$store.getters['spaces/seederPeers'](this.space.address)
+      console.info('seederPeers: ', seederPeers)
       const me = this.$store.getters['profile/myPublicKey']
-      const {tolerance} = this.$store.getters['spaces/settings'](this.space.address)
-      const limit = Date.now() - (tolerance * 86400000)
+      const tolerance = this.space.tolerance
+      const limit = Date.now() - tolerance
       let syncdArray = []
-      if (seeders) {
-        for (const el in seeders) {
-          let seeder = seeders[el]
-          if (seeder.peerId == me) continue
-          if (seeder.lastSyncAt > limit) {
-            syncdArray.push(seeder)
+      if (seederPeers) {
+        for (const el in seederPeers) {
+          let seederPeer = seederPeers[el]
+          if (seederPeer.peerId == me) continue
+          if (seederPeer.lastSyncAt > limit) {
+            syncdArray.push(seederPeer)
           }
         }
-        return syncdArray.length
+      return syncdArray.length
       }
     },
     status () {
-      let syncd = this.syncedSeeders
-      let seeders = this.seederCount
-      if (seeders < 1) {
+      let syncd = this.syncedSeederPeers
+      let seederPeers = this.seederPeerCount
+      if (seederPeers < 1) {
         this.colour = 'red'
         return "At risk"
-      } else if (syncd >= seeders) {
+      } else if (syncd >= seederPeers) {
         this.colour = 'green'
         return "Healthy"
-      } else if (syncd >= seeders/2) { 
+      } else if (syncd >= seederPeers/2) {
         this.colour = 'amber'
         return "OK"
-      } else if (syncd < seeders/2) { 
+      } else if (syncd < seederPeers/2) {
         this.colour = 'red'
         return "At risk"
       } else { 
@@ -209,28 +210,24 @@ export default {
     stat () {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
-    sortedSeeders () {
-      let seeders = this.$store.getters['spaces/seeders'](this.space.address)
+    sortedSeederPeers () {
+      let seederPeers = this.$store.getters['spaces/seederPeers'](this.space.address)
       let me = this.$store.getters['profile/myPublicKey']
       let sortArray = []
-      if (seeders) {
-        for (const el in seeders) {
-          let seeder = seeders[el]
-          if (seeder.peerId == me) continue
-          let lastSync = this.$store.getters['peers/byPublicKey'](seeder.peerId)
-          seeder = {
-            ...seeder,
+      if (seederPeers) {
+        for (const el in seederPeers) {
+          let seederPeer = seederPeers[el]
+          if (seederPeer.peerId == me) continue
+          let lastSync = this.$store.getters['peers/byPublicKey'](seederPeer.peerId)
+          seederPeer = {
+            ...seederPeer,
             online: lastSync.online
           }
-          sortArray.push(seeder)
+          sortArray.push(seederPeer)
         }
-        let ascending = this.sortDirection === 'asc' ? 1 : -1
-        this.sorted = sortArray.sort((a, b) => a.lastSyncAt < b.lastSyncAt ? ascending : -ascending)
-        // if (this.sortDirection === 'desc') {
-        //   return this.sorted
-        // } else return this.sorted.reverse()
+        sortArray.sort((a, b) => a.lastSyncAt < b.lastSyncAt ? this.sortDirection : -this.sortDirection)
       }
-      return this.sorted
+      return sortArray
     }
   },
   methods: {
@@ -240,7 +237,7 @@ export default {
       }
     },
     sort () {
-      this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc'
+      this.sortDirection = -this.sortDirection
     }
   }
 }
