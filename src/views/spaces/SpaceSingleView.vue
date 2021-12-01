@@ -156,6 +156,7 @@ import DeleteIcon   from '@/components/DeleteIcon.vue'
 import InviteIcon   from '@/components/InviteIcon.vue'
 import SettingsIcon from '@/components/SettingsIcon.vue'
 import {api}        from '@/api'
+import {formatTimestamp}  from '@/utils'
 
 export default {
   components: {
@@ -210,16 +211,10 @@ export default {
     lastSeenString(peer) {
       return peer => {
         if (peer.lastSeenAt) {
-          const date = new Date(peer.lastSeenAt)
-          const hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
-          const minute = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
-          const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`
-          const month = date.getMonth()+1
-          const monthzero = month >= 10 ? month : `0${month}`
-          const year = date.getFullYear().toString().slice(2, 4)
-          return `last seen at ${hour}:${minute} on ${day}/${month}/${year}`
+          const timestamp = formatTimestamp(peer.lastSeenAt)
+          return `last seen at ${timestamp}`
         }
-        else { return `never seen` }
+        else { return 'never seen' }
       }
     }
   },

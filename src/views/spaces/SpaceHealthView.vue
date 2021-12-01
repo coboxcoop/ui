@@ -119,6 +119,7 @@ import {api}            from '@/api'
 import ChevronUpIcon    from '@/components/ChevronUp.vue'
 import ChevronDownIcon  from '@/components/ChevronDown.vue'
 import WifiIcon         from '@/components/WifiIcon.vue'
+import {formatTimestamp}from '@/utils'
 
 export default {
   components: {
@@ -159,16 +160,10 @@ export default {
     lastSyncString (seeder) {
       return seeder => {
         if (seeder.lastSyncAt) {
-          // Vanilla javascript is DEEPLY upsetting when it comes to rendering a 24 hour clock
-          const date = new Date(seeder.lastSyncAt)
-          const hour = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
-          const minute = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
-          const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`
-          const month = date.getMonth()+1
-          const monthzero = month >= 10 ? month : `0${month}`
-          const year = date.getFullYear().toString().slice(2, 4)
-          return `last sync'd at ${hour}:${minute} on ${day}/${monthzero}/${year}`
+          const timestamp = formatTimestamp(seeder.lastSyncAt)
+          return `last sync'd at ${timestamp}`
         }
+        else return `never sync'd`
       }
     },
     syncedSeeders () {
@@ -215,7 +210,6 @@ export default {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
     sortedSeeders () {
-      let spacePeers = this.$store.getters['spaces/peers'](this.space.address)
       let seeders = this.$store.getters['spaces/seeders'](this.space.address)
       let me = this.$store.getters['profile/myPublicKey']
       let sortArray = []
@@ -230,10 +224,11 @@ export default {
           }
           sortArray.push(seeder)
         }
-        this.sorted = sortArray.sort((a, b) => a.lastSyncAt - b.lastSyncAt)
-        if (this.sortDirection === 'desc') {
-          return this.sorted
-        } else return this.sorted.reverse()
+        let ascending = this.sortDirection === 'asc' ? 1 : -1
+        this.sorted = sortArray.sort((a, b) => a.lastSyncAt < b.lastSyncAt ? ascending : -ascending)
+        // if (this.sortDirection === 'desc') {
+        //   return this.sorted
+        // } else return this.sorted.reverse()
       }
       return this.sorted
     }
