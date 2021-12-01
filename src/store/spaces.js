@@ -297,7 +297,7 @@ export default ({api, events}) => ({
 
       return counts.reduce((sum, num) => num + sum, 0)
     },
-    seederCount (state, getters, rootState, rootGetters) {
+    seederPeerCount (state, getters, rootState, rootGetters) {
       return address => {
         const seederPeers = getters['seederPeers'](address)
         const me = rootGetters['profile/myPublicKey']
