@@ -3,12 +3,35 @@ import Vue from "vue"
 export default ({api, events}) => ({
   namespaced: true,
   state: {
+    // TODO: state storage could be dramatically simplified by just making data an object...
+    // since none of these data points are used anywhere outside the space view, we always
+    // have the spaceId, so we can always get/put the relevant data...
     data: [],
-    connections: {},
-    mounts: {},
-    stat: {},
-    peers: {},
-    seederPeers: {}
+    connections: {
+      // [spaceId]: bool
+    },
+    mounts: {
+      // [spaceId]: bool
+    },
+    stat: {
+      // [spaceId]: object
+    },
+    peers: {
+      // [spaceId]: {
+      //   [peerId]: {
+      //     type: string
+      //     author: string,
+      //     content: { name: string }
+      //   }
+      // }
+    },
+    seederPeers: {
+      // [spaceId]: {
+      //    [peerId]: {
+      //      lastSyncAt: timestamp
+      //    }
+      // }
+    }
   },
   actions: {
     async subscribe ({commit, dispatch}) {
@@ -20,9 +43,6 @@ export default ({api, events}) => ({
           address: payload.address,
           peer: payload.data
         })
-        // see note below by 'updatePeers' mutation
-        // for why peersLastSync is called here
-        dispatch('peersLastSync', payload.address)
       })
     },
     async fetch ({commit}) {
@@ -171,26 +191,10 @@ export default ({api, events}) => ({
         [address]: peers
       }
     },
-    // NB. the seederPeers object is provided with the peer's name & peerId here, as when a peer first joins
-    // a space, space/last-sync msgs fire through the websocket before a peer/about message has been
-    // received. It is therefore not possible to store the seeder's info & name yet. As peer/about msgs are
-    // relatively rare, they can be used to update the seederPeers object, and then last-sync data manually
-    // fetched through an api call to ensure all the health-view data is populated. This trade-off allows
-    // users to view full data on the space health view without needing to first do some manual action
-    // (such as adding files to the space) that triggers more space/last-sync msgs to arrive. There
-    // may well be a better way to do this that doesn't require an extra api call , but currently, without
-    // doing that, there will be no 'last-sync' timestamp available until related user-actions take place.
     updatePeers (state, {address, peer}) {
       state.peers[address] = {
         ...(state.peers[address] || {}),
         [peer.author]: peer
-      }
-      state.seederPeers[address] = {
-        ...(state.seederPeers[address] || {}),
-        [peer.author]: {
-          name: peer.content.name,
-          peerId: peer.author
-        }
       }
     },
     connected (state, {address, connected}) {
@@ -206,35 +210,21 @@ export default ({api, events}) => ({
       }
     },
     receiveLastSync (state, {address, data}) {
-      const spacePeers = state.peers[address]
-      if (data) {
-        for (const el in data) {
-          let seeder = data[el]
-          let namedPeer = spacePeers[seeder.peerId] || {}
-          if (namedPeer) {
-            seeder = {
-              ...seeder,
-              name: namedPeer.content.name
-            }
-            data[el] = seeder
-          }
-        }
-      }
       state.seederPeers = {
         ...state.seederPeers,
         [address]: data
       }
     },
     updateLastSync (state, payload) {
-      const spacePeers = state.peers[payload.address]
-      if (spacePeers[payload.data.peerId]) {
-        state.seederPeers[payload.address] = {
-          ...(state.seederPeers[payload.address] || {}),
-          [payload.data.peerId]: {
-            ...payload.data,
-            name: spacePeers[payload.data.peerId].content.name
-          }
-        }
+      // {
+      //   data: {
+      //     peerId: string
+      //     lastSyncAt: timestamp
+      //   }
+      // }
+      state.seederPeers[payload.address] = {
+        ...(state.seederPeers[payload.address] || {}),
+        [payload.data.peerId]: payload.data
       }
     },
     updateSettings (state, {address, threshold, tolerance}) {

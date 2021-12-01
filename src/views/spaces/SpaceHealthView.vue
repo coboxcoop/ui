@@ -29,7 +29,7 @@
       <div class="section">
         <div style="margin: 2rem 0 1rem 2rem;">
           <Fraction
-            v-bind:numerator="syncedSeederPeers"
+            v-bind:numerator="syncedSeederPeers.length"
             v-bind:denominator="seederPeerCount" />
         </div>
         <div style="margin: 2rem 5rem 0 0;">
@@ -51,7 +51,7 @@
     </div>
     <NavList>
       <div v-for="seederPeer in sortedSeederPeers" :key="seederPeer.peerId">
-          <UserIcon :address="seederPeer.peerId" /> {{seederPeer.name ? seederPeer.name : seederPeer.peerId.slice(0,4)}}
+          <UserIcon :address="seederPeer.peerId" /> {{seederPeer.content && seederPeer.content.name ? seederPeer.content.name : seederPeer.peerId.slice(0,8)}}
           <WifiIcon v-if="seederPeer.online" />
           <br />
           <div class="last-sync">{{ lastSyncString(seederPeer) }}</div>
@@ -141,6 +141,9 @@ export default {
     }
   },
   computed: {
+    // TODO: in future using mapToGetters would remove this kind of code entirely
+    // we only then need to define the relevant getters and make them available using
+    // mapToGetters, so many computed properties can be refactored into getters
     seederPeerCount () {
       const count = this.$store.getters['spaces/seederPeerCount'](this.space.address)
       return count
@@ -166,26 +169,48 @@ export default {
         else return `never sync'd`
       }
     },
-    syncedSeederPeers () {
-      let seederPeers = this.$store.getters['spaces/seederPeers'](this.space.address)
-      console.info('seederPeers: ', seederPeers)
-      const me = this.$store.getters['profile/myPublicKey']
-      const tolerance = this.space.tolerance
-      const limit = Date.now() - tolerance
-      let syncdArray = []
-      if (seederPeers) {
-        for (const el in seederPeers) {
-          let seederPeer = seederPeers[el]
-          if (seederPeer.peerId == me) continue
-          if (seederPeer.lastSyncAt > limit) {
-            syncdArray.push(seederPeer)
-          }
+    seederPeers () {
+      // fetch all space/last-sync messages for this address
+      const seeders = this.$store.getters['spaces/seederPeers'](this.space.address)
+      // fetch all peer/about messages for this address
+      const spacePeers = this.$store.getters['spaces/peers'](this.space.address)
+      // create a new object to return
+      const merged = {}
+      // first we iterate over all those we know have a name
+      // there will be less of these and will blend with existing record if exists
+      for (const [peerId, peer] of Object.entries(spacePeers)) {
+        const seeder = seeders[peerId]
+        if (seeder) {
+          merged[peerId] = Object.assign({}, seeders[peerId], peer)
+        } else {
+          merged[peerId] = peer
         }
-      return syncdArray.length
       }
+      // then we iterate only those we haven't seen, (we continue if it exists)
+      for (const [peerId, seeder] of Object.entries(seeders)) {
+        if (merged[peerId]) continue
+        merged[peerId] = seeder
+      }
+      return merged
+    },
+    syncedSeederPeers () {
+      // sync'ed seeder peers does not contain peer/about messages
+      // this is only peer's we've actually met!
+      const seederPeers = this.$store.getters['spaces/seederPeers'](this.space.address) || {}
+      const me = this.$store.getters['profile/myPublicKey']
+      const {tolerance} = this.$store.getters['spaces/settings'](this.space.address)
+      const limit = Date.now() - (tolerance * 86400000)
+      const synced = []
+      for (const [peerId, peer] of Object.entries(seederPeers)) {
+        if (peerId === me) continue
+        if (peer.lastSyncAt > limit) {
+          synced.push(peer)
+        }
+      }
+      return synced
     },
     status () {
-      let syncd = this.syncedSeederPeers
+      let syncd = this.syncedSeederPeers.length
       let seederPeers = this.seederPeerCount
       if (seederPeers < 1) {
         this.colour = 'red'
@@ -211,23 +236,14 @@ export default {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
     sortedSeederPeers () {
-      let seederPeers = this.$store.getters['spaces/seederPeers'](this.space.address)
       let me = this.$store.getters['profile/myPublicKey']
-      let sortArray = []
-      if (seederPeers) {
-        for (const el in seederPeers) {
-          let seederPeer = seederPeers[el]
-          if (seederPeer.peerId == me) continue
-          let lastSync = this.$store.getters['peers/byPublicKey'](seederPeer.peerId)
-          seederPeer = {
-            ...seederPeer,
-            online: lastSync.online
-          }
-          sortArray.push(seederPeer)
-        }
-        sortArray.sort((a, b) => a.lastSyncAt < b.lastSyncAt ? this.sortDirection : -this.sortDirection)
+      const seeders = []
+      for (const [peerId, peer] of Object.entries(this.seederPeers)) {
+        if (peerId === me) continue
+        const peerData = this.$store.getters['peer/byPublicKey']
+        seeders.push({ ...peerData, ...peer })
       }
-      return sortArray
+      return seeders.sort((a, b) => a.lastSyncAt < b.lastSyncAt ? this.sortDirection : -this.sortDirection)
     }
   },
   methods: {
