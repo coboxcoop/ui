@@ -51,7 +51,8 @@
     </div>
     <NavList>
       <div v-for="seederPeer in sortedSeederPeers" :key="seederPeer.peerId">
-          <UserIcon :address="seederPeer.peerId" /> {{seederPeer.content && seederPeer.content.name ? seederPeer.content.name : seederPeer.peerId.slice(0,8)}}
+          <UserIcon :peerId="seederPeer.peerId" />
+          {{ seederPeerId(seederPeer) }}
           <WifiIcon v-if="seederPeer.online" />
           <br />
           <div class="last-sync">{{ lastSyncString(seederPeer) }}</div>
@@ -144,6 +145,13 @@ export default {
     // TODO: in future using mapToGetters would remove this kind of code entirely
     // we only then need to define the relevant getters and make them available using
     // mapToGetters, so many computed properties can be refactored into getters
+    seederPeerId () {
+      return seederPeer => {
+        return seederPeer.content && seederPeer.content.name
+          ? seederPeer.content.name
+          : seederPeer.peerId.slice(0,8)
+      }
+    },
     seederPeerCount () {
       const count = this.$store.getters['spaces/seederPeerCount'](this.space.address)
       return count
@@ -236,7 +244,7 @@ export default {
       return this.$store.getters['spaces/stat'](this.space.address)
     },
     sortedSeederPeers () {
-      let me = this.$store.getters['profile/myPublicKey']
+      const me = this.$store.getters['profile/myPublicKey']
       const seeders = []
       for (const [peerId, peer] of Object.entries(this.seederPeers)) {
         if (peerId === me) continue
