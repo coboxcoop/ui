@@ -71,7 +71,7 @@
 
   <NavList>
     <div v-for="peer in peers" :key="peer.author">
-      <UserIcon :address="peer.author" /> {{peer.content.name}}
+      <UserIcon :peerId="peer.author" /> {{peer.content.name}}
       <WifiIcon v-if="peer.online" />
       <br />
       <div v-if="!peer.online && peer.lastSeenAt" class="last-seen">{{ lastSeenString(peer) }}</div>
