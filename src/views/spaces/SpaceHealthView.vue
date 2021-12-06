@@ -199,6 +199,11 @@ export default {
         if (merged[peerId]) continue
         merged[peerId] = seeder
       }
+      // add online-ness for rendering of wifi icon
+      for (const peerId of Object.keys(merged)) {
+        const online = this.$store.getters['peers/byPublicKey'](peerId)
+        merged[peerId] = Object.assign(merged[peerId], online)
+      }
       return merged
     },
     syncedSeederPeers () {

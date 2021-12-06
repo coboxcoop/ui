@@ -3,7 +3,13 @@ import Vue from "vue"
 export default ({api, events}) => ({
   namespaced: true,
   state: {
-    peers: {}
+    peers: {
+      // [peerId]: {
+      //   lastSeenAt: timestamp
+      //   online: bool
+      //   peerId: string
+      // }
+    }
   },
   actions: {
     async subscribe ({commit, dispatch}) {
@@ -29,6 +35,7 @@ export default ({api, events}) => ({
         ...state.peers,
         [peer.peerId]: peer
       }
+      console.info('peers: ', state.peers)
     }
   },
   getters: {
