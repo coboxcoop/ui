@@ -170,7 +170,7 @@ export default {
     setValues () {
       this.threshold = this.space.threshold
       this.tolerance = this.space.tolerance / 86400000
-      this.seeders = this.$store.getters['spaces/seederCount'](this.space.address)
+      this.seeders = this.$store.getters['spaces/seederPeerCount'](this.space.address)
 
     },
     async onSave() {
