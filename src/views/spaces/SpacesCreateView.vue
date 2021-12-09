@@ -41,6 +41,7 @@
 <script>
 import Screen from '@/components/Screen.vue'
 import Modal  from '@/components/Modal.vue'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -52,6 +53,7 @@ export default {
     spaceName: ''
   }),
   methods: {
+    ...mapActions('spaces', ['create']),
     navigate(to) {
       if (this.$store.state.settings.shortkey) {
         this.$router.push(to)
@@ -59,11 +61,10 @@ export default {
     },
     async onSubmit() {
       try {
-        const {address} = await this.$store.dispatch('spaces/create', this.spaceName)
+        const {address} = await this.create(this.spaceName)
         this.spaceName = ''
         console.warn({space: address})
         await this.$router.push({name: 'space', params: {address}})
-        window.location.reload()
       } catch(e) {
         this.$store.dispatch('error/handle', e)
       }

@@ -1,5 +1,5 @@
 <template>
-<Dot class="user-icon" :color="color" />
+  <Dot class="user-icon" :color="color" />
 </template>
 
 <script>
@@ -7,14 +7,14 @@ import Dot from '@/components/Dot.vue'
 
 export default {
   props: {
-    address: String
+    peerId: String
   },
   components: {
     Dot
   },
   computed: {
     color() {
-      return this.$store.getters['profile/keyColor'](this.address)
+      return this.$store.getters['profile/keyColor'](this.peerId)
     }
   }
 }

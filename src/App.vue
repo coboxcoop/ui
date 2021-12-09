@@ -4,7 +4,6 @@
     <OfflineView v-if="offline" />
     <div v-else-if="ready" class="yield">
       <div v-if="hasName">
-        <ManualBugReport v-if="$store.state.settings.bugReportIcon && $store.state.settings.betaTester" />
         <transition name="route">
           <router-view />
         </transition>
@@ -20,14 +19,12 @@
 import OnboardingView from '@/views/OnboardingView.vue'
 import OfflineView from '@/views/OfflineView.vue'
 import Errors from '@/components/Errors.vue'
-import ManualBugReport from '@/components/ManualBugReport.vue'
 
 export default {
   components: {
     Errors,
     OnboardingView,
-    OfflineView,
-    ManualBugReport
+    OfflineView
   },
   async mounted() {
     await this.$store.dispatch('init')
