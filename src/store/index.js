@@ -53,7 +53,7 @@ export default new Vuex.Store({
       await dispatch('spaces/getAllPeers')
       await dispatch('spaces/getAllStats')
       await dispatch('spaces/getAllMounts')
-      await dispatch('spaces/getLastSync')
+      await dispatch('spaces/getAllLastSync')
 
       await dispatch('seeders/fetch')
       await dispatch('seeders/getAllPeers')

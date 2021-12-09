@@ -39,10 +39,7 @@ export default ({api, events}) => ({
         commit('updateLastSync', payload)
       })
       events.on('peer/about', payload => {
-        commit('updatePeers', {
-          address: payload.address,
-          peer: payload.data
-        })
+        commit('updatePeers', payload)
       })
     },
     async fetch ({commit}) {
@@ -80,12 +77,12 @@ export default ({api, events}) => ({
       const {data} = await api.get(`/spaces/${address}/peers`)
       commit('receivePeers', {address, peers: data})
     },
-    async getLastSync ({state, dispatch}) {
+    async getAllLastSync ({state, dispatch}) {
       await Promise.all(state.data.map(({address}) => {
-        return dispatch('peersLastSync', address)
+        return dispatch('getLastSync', address)
       }))
     },
-    async peersLastSync ({commit}, address) {
+    async getLastSync ({commit}, address) {
       const {data} = await api.get(`/spaces/${address}/last-sync`)
       commit('receiveLastSync', {address, data})
     },
@@ -100,7 +97,7 @@ export default ({api, events}) => ({
       commit('receiveSpace', data)
       await dispatch('getPeers', address)
       await dispatch('getStat', {address})
-      await dispatch('peersLastSync', address)
+      await dispatch('getLastSync', address)
       return {address}
     },
     async delete ({dispatch}, {address}) {
@@ -191,7 +188,7 @@ export default ({api, events}) => ({
         [address]: peers
       }
     },
-    updatePeers (state, {address, peer}) {
+    updatePeers (state, {address, data: peer}) {
       state.peers[address] = {
         ...(state.peers[address] || {}),
         [peer.author]: peer
@@ -217,6 +214,7 @@ export default ({api, events}) => ({
     },
     updateLastSync (state, payload) {
       // {
+      //   address: string,
       //   data: {
       //     peerId: string
       //     lastSyncAt: timestamp
