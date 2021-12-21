@@ -81,10 +81,11 @@ export default ({api, events}) => ({
       const {data} = await api.get(`/spaces/${address}/last-sync`)
       commit('receiveLastSync', {address, data})
     },
-    async changeSettings ({commit}, {address, threshold, tolerance}) {
-      tolerance = tolerance * 86400000
-      await api.patch(`/spaces/${address}/settings`, {threshold, tolerance})
-      commit('updateSettings', {address, threshold, tolerance})
+    async update ({commit}, {address, params}) {
+      console.log(params)
+      const {data} = await api.patch(`/spaces/${address}`, params)
+      console.log(data)
+      commit('updateSettings', {address, data})
     },
     async create ({commit, dispatch}, name) {
       const {data, data: {address}} = await api.post('/spaces', {name})
@@ -220,11 +221,11 @@ export default ({api, events}) => ({
         [payload.data.peerId]: payload.data
       }
     },
-    updateSettings (state, {address, threshold, tolerance}) {
+    updateSettings (state, {address, data}) {
       for (let el of state.data) {
         if (el.address === address) {
-          Vue.set(el, 'threshold', threshold)
-          Vue.set(el, 'tolerance', tolerance)
+          Vue.set(el, 'threshold', data.threshold)
+          Vue.set(el, 'tolerance', data.tolerance)
         }
       }
     }

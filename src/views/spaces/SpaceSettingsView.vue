@@ -22,7 +22,7 @@
           <span class="blind"><img src="@/assets/images/icons/edit.svg" /> {{threshold}} <img src="@/assets/images/icons/edit.svg" /></span>
           <span class="type">{{backupString(this.threshold)}}</span>
         </div>
-        <p class="description">Min. number of backups; each peer or seeder count as one backup. You cannot choose a threshold that is higher than the number of seeders seeing your space. You currently have {{ seederString(this.seeders )}}</p>
+        <p class="description">Min. number of backups; each peer or seeder count as one backup. You currently have {{ seederString(this.seeders) }}</p>
       </form>
       <br />
       <form class="form" @submit.prevent="onSave">
@@ -145,9 +145,11 @@ export default {
     },
     seederString(seeders) {
       return seeders => {
-        if (seeders) {
-        return `${seeders} seeder${seeders != 1 ? 's.' : '.'}`
-        }
+        return seeders > 1
+          ? `${seeders} seeders.`
+          : seeders == 1
+            ? `${seeders} seeder.`
+            : '0 seeders.'
       }
     },
     daysString(tolerance) {
@@ -168,26 +170,34 @@ export default {
       }
     },
     setValues () {
-      this.threshold = this.space.threshold
-      this.tolerance = this.space.tolerance / 86400000
+      this.threshold = parseInt(this.space.threshold)
+      this.tolerance = parseInt(this.space.tolerance / 86400000)
       this.seeders = this.$store.getters['spaces/seederPeerCount'](this.space.address)
-
     },
     async onSave() {
       this.editThreshold = false
       this.editTolerance = false
-      if (typeof this.threshold === "number"
-          && this.threshold <= this.seeders
-          && typeof this.tolerance === "number"
-          ) {
-        await this.$store.dispatch('spaces/changeSettings', {
-          address: this.space.address,
-          threshold: this.threshold,
-          tolerance: this.tolerance
-        })
-      } else {
-        this.setValues()
+      if (typeof this.threshold !== "number" || this.threshold < 0) {
+        const err = new Error('Threshold must be a non-negative integer')
+        await this.$store.dispatch('error/handle', err)
+        this.threshold = this.space.threshold
+        return
       }
+      if (typeof this.tolerance !== "number" || this.tolerance < 0) {
+        const err = new Error('Tolerance must be a non-negative integer')
+        await this.$store.dispatch('error/handle', err)
+        this.tolerance = this.space.threshold
+        return
+      }
+      const params = {
+        threshold: parseInt(this.threshold),
+        tolerance: parseInt(this.tolerance * 86400000)
+      }
+      await this.$store.dispatch('spaces/update', {
+        address: this.space.address,
+        params
+      })
+      this.setValues()
     }
   }
 }

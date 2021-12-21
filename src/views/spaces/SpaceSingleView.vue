@@ -200,6 +200,7 @@ export default {
         const peerData = this.$store.getters['peers/byPublicKey'](peerId)
         peers.push({ ...peer, ...peerData })
       }
+      console.log(peers)
       return peers
     },
     info() {
