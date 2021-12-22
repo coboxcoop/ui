@@ -169,6 +169,12 @@ export default {
         this.$router.push(to)
       }
     },
+    validateNonNegativeInteger (name, param) {
+      if (typeof param !== "number" || param < 0) {
+        this[name] = param
+        throw new Error(`${name} must be a non-negative integer`)
+      }
+    }
     setValues () {
       this.threshold = parseInt(this.space.threshold)
       this.tolerance = parseInt(this.space.tolerance / 86400000)
@@ -177,26 +183,20 @@ export default {
     async onSave() {
       this.editThreshold = false
       this.editTolerance = false
-      if (typeof this.threshold !== "number" || this.threshold < 0) {
-        const err = new Error('Threshold must be a non-negative integer')
+      try {
+        validateNonNegativeInteger('threshold', this.threshold)
+        validateNonNegativeInteger('tolerance', this.tolerance)
+        const params = {
+          threshold: parseInt(this.threshold),
+          tolerance: parseInt(this.tolerance * 86400000)
+        }
+        await this.$store.dispatch('spaces/update', {
+          address: this.space.address,
+          params
+        })
+      } catch (err) {
         await this.$store.dispatch('error/handle', err)
-        this.threshold = this.space.threshold
-        return
       }
-      if (typeof this.tolerance !== "number" || this.tolerance < 0) {
-        const err = new Error('Tolerance must be a non-negative integer')
-        await this.$store.dispatch('error/handle', err)
-        this.tolerance = this.space.threshold
-        return
-      }
-      const params = {
-        threshold: parseInt(this.threshold),
-        tolerance: parseInt(this.tolerance * 86400000)
-      }
-      await this.$store.dispatch('spaces/update', {
-        address: this.space.address,
-        params
-      })
       this.setValues()
     }
   }

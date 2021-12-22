@@ -82,9 +82,7 @@ export default ({api, events}) => ({
       commit('receiveLastSync', {address, data})
     },
     async update ({commit}, {address, params}) {
-      console.log(params)
       const {data} = await api.patch(`/spaces/${address}`, params)
-      console.log(data)
       commit('updateSettings', {address, data})
     },
     async create ({commit, dispatch}, name) {
