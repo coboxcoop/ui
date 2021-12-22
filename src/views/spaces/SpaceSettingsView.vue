@@ -174,7 +174,7 @@ export default {
         this[name] = param
         throw new Error(`${name} must be a non-negative integer`)
       }
-    }
+    },
     setValues () {
       this.threshold = parseInt(this.space.threshold)
       this.tolerance = parseInt(this.space.tolerance / 86400000)
