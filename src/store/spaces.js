@@ -87,8 +87,8 @@ export default ({api, events}) => ({
     },
     async create ({commit, dispatch}, name) {
       const {data, data: {address}} = await api.post('/spaces', {name})
-      await dispatch('join', {address, name})
       commit('receiveSpace', data)
+      await dispatch('join', {address, name})
       await dispatch('getPeers', address)
       await dispatch('getStat', {address})
       await dispatch('getLastSync', address)
@@ -101,14 +101,14 @@ export default ({api, events}) => ({
     },
     async acceptInvite ({commit, dispatch}, code) {
       const {data, data: {address, name}} = await api.get('/spaces/invites/accept', {params: {code}})
-      await dispatch('join', {address, name})
       commit('receiveSpace', data)
+      await dispatch('join', {address, name})
       await dispatch('getPeers', address)
       await dispatch('getStat', {address})
       return {address}
     },
-    async createInvite ({}, {address, publicKey}) {
-      const {data} = await api.post(`/spaces/${address}/invites`, {address, publicKey})
+    async createInvite ({dispatch}, {address, publicKey}) {
+      const {data} = await api.post(`/spaces/${address}/invites`, {publicKey})
       return data
     },
     async joinAll ({state, dispatch}) {

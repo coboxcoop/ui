@@ -59,17 +59,12 @@ export default new Vuex.Store({
         commit('ready')
         await dispatch('auth/check')
         await dispatch('fetchAllData')
-        await dispatch('initData')
         openWS()
       } catch (err) {
         console.error(err)
       } finally {
         commit('loaded')
       }
-    },
-    async initData({dispatch}) {
-      await dispatch('spaces/joinAll')
-      await dispatch('seeders/joinAll')
     },
     async fetchAllData({dispatch, state}) {
       // TODO: a better solution than to get all data on initial load
@@ -91,6 +86,8 @@ export default new Vuex.Store({
       await dispatch('seeders/getAllReplicates')
       await dispatch('peers/subscribe')
       await dispatch('spaces/subscribe')
+      await dispatch('spaces/joinAll')
+      await dispatch('seeders/joinAll')
 
       if (this.state.poll) {
         setTimeout(() => dispatch('fetchAllData'), state.pollInterval)

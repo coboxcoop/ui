@@ -26,7 +26,6 @@ export default ({api, events, openWS, closeWS}) => ({
       }
       await Promise.all([
         dispatch('fetchAllData', null, { root: true }),
-        dispatch('initData', null, { root: true })
       ])
       commit('unlock')
     },
