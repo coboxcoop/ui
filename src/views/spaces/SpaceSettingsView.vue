@@ -184,8 +184,8 @@ export default {
       this.editThreshold = false
       this.editTolerance = false
       try {
-        validateNonNegativeInteger('threshold', this.threshold)
-        validateNonNegativeInteger('tolerance', this.tolerance)
+        this.validateNonNegativeInteger('threshold', this.threshold)
+        this.validateNonNegativeInteger('tolerance', this.tolerance)
         const params = {
           threshold: parseInt(this.threshold),
           tolerance: parseInt(this.tolerance * 86400000)
